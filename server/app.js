@@ -9,7 +9,6 @@ var cors = require('cors');
 var routes = require('./routes/index');
 var projects = require('./routes/projects');
 
-
 var app = express();
 
 // view engine setup
@@ -31,7 +30,7 @@ app.use('/projects', projects);
 
 
 app.all('*', function(req, res, next) {
-    res.set('Access-Control-Allow-Origin', 'http://localhost');
+    res.set('Access-Control-Allow-Origin', '*');
     res.set('Access-Control-Allow-Credentials', true);
     res.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT');
     res.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');
