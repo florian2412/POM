@@ -4,9 +4,11 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 
 var routes = require('./routes/index');
 var projects = require('./routes/projects');
+
 
 var app = express();
 
@@ -21,8 +23,23 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+app.use(cors());
+
 app.use('/', routes);
 app.use('/projects', projects);
+
+
+app.all('*', function(req, res, next) {
+    res.set('Access-Control-Allow-Origin', 'http://localhost');
+    res.set('Access-Control-Allow-Credentials', true);
+    res.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT');
+    res.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');
+    if ('OPTIONS' == req.method) return res.send(200);
+    next();
+});
+
+
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
@@ -58,6 +75,7 @@ module.exports = app;
 
 
 
+
 // Gestion BDD MongoDB
 
 var mongoose = require('mongoose');
@@ -69,4 +87,3 @@ mongoose.connect('mongodb://localhost/dbPOM', function(err) {
         console.log('Connection successful');
     }
 });
-

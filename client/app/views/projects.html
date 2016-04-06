@@ -1,0 +1,32 @@
+<ul ng-controller="ProjectsCtrl">
+	<li ng-repeat="project in projects">
+		{{ project.name }}
+	</li>
+</ul>
+
+<!--<script src="../scripts/controllers/projects.js"></script>-->
+
+<!--
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('customersCtrl', function($scope, $http) {
+        $http.get("customers.php").then(function(response) {
+            $scope.myData = response.data.records;
+        });
+    });
+</script>
+
+angular.module('pomApp')
+.controller('ProjectsCtrl', function () {
+
+$http.get('http://localhost:3000/projects')
+.success(function(data, status, headers, config) {
+$scope.projects = data;
+})
+.error(function(error, status, headers, config) {
+console.log(status);
+console.log("Error occured");
+});
+
+
+});-->
