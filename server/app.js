@@ -64,9 +64,9 @@ var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/dbPOM', function(err) {
     if(err) {
-        console.log('connection error', err);
+        console.log('Connection error', err);
     } else {
-        console.log('connection successful');
+        console.log('Connection successful');
     }
 });
 
