@@ -11,9 +11,11 @@ router.get('/', function(req, res, next) {
     Project.find(function (err, projects) {
         if (err)
 			return next(err);
-   		res.json(projects);
+        res.json(projects);
+        
    	});
 });
+
 
 /* POST /projects */
 router.post('/', function(req, res, next) {
