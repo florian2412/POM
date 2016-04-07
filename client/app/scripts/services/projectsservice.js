@@ -7,11 +7,14 @@
  * # projectsService
  * Service in the pomApp.
  */
-angular.module('pomApp')
-    .factory('projectsService', function ($http) {
-      return{
+angular.module('pomApp').factory('projectsService', function ($http) {
+    return{
         getAllProjects: function(){
-          return $http.jsonp("http://localhost:3000/projects?callback=JSON_CALLBACK");
+            return  $http({ method: 'GET', url: 'http://localhost:3000/projects' });
+        },
+
+        getProjectById: function(id){
+            return  $http({ method: 'GET', url: 'http://localhost:3000/projects/' + id});
         }
       }
     });
