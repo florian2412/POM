@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var bodyParser = require('body-parser');
 
 var mongoose = require('mongoose');
 var Project = require('../models/Project.js');
@@ -7,7 +8,9 @@ var Project = require('../models/Project.js');
 
 /* GET projects listing. */
 router.get('/', function(req, res, next) {
-	Project.find(function (err, projects) {
+	console.log(res);
+    Project.find(function (err, projects) {
+        console.log(projects);
 		if (err)
 			return next(err);
    		res.json(projects);
@@ -16,11 +19,14 @@ router.get('/', function(req, res, next) {
 
 /* POST /projects */
 router.post('/', function(req, res, next) {
-  Project.create(req.body, function (err, projects) {
-    if (err) 
-    	return next(err);
-    res.json(projects);
-  });
+  Project.create(req.body, function (err) {
+      console.log(req.body);
+
+       if (err)
+            return next(err);
+
+      res.json(req.body);
+      });
 });
 
 /* GET /projects/id */

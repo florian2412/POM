@@ -1,8 +1,14 @@
 <ul ng-controller="ProjectsCtrl">
-	<!--<li ng-repeat="project in projects">
-		{{ project.name }}
-	</li>-->
-    <h3>Id premier projet {{ id }}</h3>
 
-    <h3>Date début premier projet {{ date }}</h3>
+    <li ng-repeat="project in projects">
+		{{ project._id }}
+        {{ project.date_debut }}
+	</li>
+
+
+
+
+
+    <!--<h3>Date début premier projet {{ date }}</h3>-->
+
 </ul>
