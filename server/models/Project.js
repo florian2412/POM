@@ -1,4 +1,8 @@
-
+/**
+ *
+ * Modèle de données pour un Projet stocké dans Mongo
+ *
+ */
 
 var mongoose = require('mongoose');
 

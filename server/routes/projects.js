@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
 
-var mongoose = require('mongoose');
+//var mongoose = require('mongoose');
 var Project = require('../models/Project.js');
 
 
@@ -15,7 +15,6 @@ router.get('/', function(req, res, next) {
         
    	});
 });
-
 
 /* POST /projects */
 router.post('/', function(req, res, next) {

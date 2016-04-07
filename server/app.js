@@ -6,8 +6,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
-var routes = require('./routes/index');
+// Variables de routes
 var projects = require('./routes/projects');
+var collaborators = require('./routes/collaborators');
+var tasks = require('./routes/tasks');
 
 var app = express();
 
@@ -25,8 +27,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(cors());
 
-app.use('/', routes);
 app.use('/projects', projects);
+app.use('/collaborators', collaborators);
+app.use('/tasks', tasks);
 
 
 app.all('*', function(req, res, next) {
@@ -73,16 +76,13 @@ app.use(function(err, req, res, next) {
 module.exports = app;
 
 
-
-
-// Gestion BDD MongoDB
-
+// Connexion BDD Mongo avec module mongoose
 var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/dbPOM', function(err) {
     if(err) {
-        console.log('Connection error', err);
+        console.log('Connection error !', err);
     } else {
-        console.log('Connection successful');
+        console.log('Connection successful  !');
     }
 });

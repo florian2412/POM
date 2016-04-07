@@ -1,12 +1,26 @@
-# pom
+# POM
+Plan, Organize & Manage
 
-This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
-version 0.15.1.
 
-## Build & development
+## Pré requis
 
-Run `grunt` for building and `grunt serve` for preview.
+Git
+Node.js
+MongoDb
 
-## Testing
+## Installation
 
-Running `grunt test` will run the unit tests with karma.
+Dans le répertoire client :
+    npm install (avec sudo si besoin)
+    bower install
+
+Dans le répertoire serveur :
+    npm install (avec sudo si besoin)
+
+## Lancement du serveur et de POM
+
+Linux
+    Lancer le fichier install.sh, l'application se lance dans votre navigateur par défaut
+
+Windows
+    TODO
