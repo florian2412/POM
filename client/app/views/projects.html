@@ -1,14 +1,33 @@
-<ul ng-controller="ProjectsCtrl">
+<section ng-controller="ProjectsCtrl">
 
-    <li ng-repeat="project in projects">
-		{{ project._id }}
-        {{ project.date_debut }}
-	</li>
-
+<table class="table table-stripped table-hover">
+	<thead>
+      <tr>
+        <th>Nom</th>
+        <th>Chef de projet</th>
+        <th>Date début</th>
+        <th>Date fin</th>
+        <th>Statut</th>
+        <th>Collaborateurs</th>
+        <th>Date modification</th>
+      </tr>
+    </thead>
+    <tbody>
+	    <tr ng-repeat="project in projects">
+			<td>{{ project.nom }}</td>
+			<td>{{ project.chef_projet }}</td>
+			<td>{{ project.date_debut }}</td>
+			<td>{{ project.date_fin }}</td>
+			<td>{{ project.statut }}</td>
+			<td>{{ project.collaborateurs }}</td>
+			<td>{{ project.infos_techniques.modification }}</td>
+		</tr>
+	</tbody>
+</table>
 
 
 
 
     <!--<h3>Date début premier projet {{ date }}</h3>-->
 
-</ul>
+</section>

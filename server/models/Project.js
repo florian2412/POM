@@ -11,8 +11,8 @@ var schemaProject = mongoose.Schema({
     statut : String, // En cours, Terminé, Annulé, Supprimé
     collaborateurs: [ String ],
     infos_techniques: {
-        creation: Date,
-        modification: Date
+        creation: { type: Date, default: Date.now },
+        modification:  { type: Date, default: Date.now }
     },
     ligne_budgetaire: String
 
