@@ -18,6 +18,7 @@ angular.module('pomApp').controller('ProjectsCtrl', function ($scope, $http, pro
             console.log("Success !");
             console.log(data[0]);
             console.log(status);
+            $scope.projects = data;
             $scope.id = data[0]._id;
         })
         .error(function (err) {
