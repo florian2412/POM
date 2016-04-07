@@ -8,10 +8,8 @@ var Project = require('../models/Project.js');
 
 /* GET projects listing. */
 router.get('/', function(req, res, next) {
-	console.log(res);
     Project.find(function (err, projects) {
-        console.log(projects);
-		if (err)
+        if (err)
 			return next(err);
    		res.json(projects);
    	});
@@ -20,13 +18,10 @@ router.get('/', function(req, res, next) {
 /* POST /projects */
 router.post('/', function(req, res, next) {
   Project.create(req.body, function (err) {
-      console.log(req.body);
-
-       if (err)
-            return next(err);
-
+      if (err)
+          return next(err);
       res.json(req.body);
-      });
+  });
 });
 
 /* GET /projects/id */
