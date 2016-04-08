@@ -1,33 +1,35 @@
 <section ng-controller="ProjectsCtrl">
-
-<table class="table table-stripped table-hover">
+<table class="table table-striped table-hover">
 	<thead>
       <tr>
         <th>Nom</th>
         <th>Chef de projet</th>
         <th>Date début</th>
-        <th>Date fin</th>
         <th>Statut</th>
         <th>Collaborateurs</th>
         <th>Date modification</th>
       </tr>
     </thead>
     <tbody>
-	    <tr ng-repeat="project in projects">
-			<td>{{ project.nom }}</td>
+	    <tr ng-repeat="project in projects" ng-switch on="project.statut">
+			<td><a ng-click="getProjectById(project._id)">{{ project.nom }}</a></td>
 			<td>{{ project.chef_projet }}</td>
-			<td>{{ project.date_debut }}</td>
-			<td>{{ project.date_fin }}</td>
-			<td>{{ project.statut }}</td>
+			<td>{{ project.date_debut | date:'dd/MM/yyyy' }}</td>
+			<td ng-switch-when="En cours"><span class="glyphicon glyphicon-exclamation-sign" style="color: orange;font-size:1.5em;"></td>
+			<td ng-switch-when="Terminé"><span class="glyphicon glyphicon-ok-circle" style="color:green;font-size:1.5em;"></td>
+			<td ng-switch-when="Annulé"><span class="glyphicon glyphicon-remove-circle" style="color:red;font-size:1.5em;"></td>
 			<td>{{ project.collaborateurs }}</td>
-			<td>{{ project.infos_techniques.modification }}</td>
+			<td>{{ project.infos_techniques.modification | date:'dd/MM/yyyy' }}</td>
 		</tr>
 	</tbody>
 </table>
 
+<div> 
+<p>Détail du projet</p>
+	{{projectDetail._id}}
+	</br>
+	{{projectDetail.nom}}
+</div>
 
-
-
-    <!--<h3>Date début premier projet {{ date }}</h3>-->
-
+<i class="fa fa-car fa-5x"></i>
 </section>

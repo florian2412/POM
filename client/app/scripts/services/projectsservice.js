@@ -15,8 +15,6 @@ angular.module('pomApp').factory('projectsService', function ($http) {
 
         getProjectById: function(id){
             return  $http({ method: 'GET', url: 'http://localhost:3000/projects/' + id});
-        }
-        
-        
+        } 
       }
     });

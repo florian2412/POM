@@ -1,8 +1,8 @@
 <!doctype html>
-<html>
+<html ng-app="pomApp">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title ng-bind="'POM - ' + title">POM</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -10,13 +10,15 @@
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="bower_components/bower-bootswatch-paper/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
+
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="pomApp">
+  <body>
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -40,15 +42,16 @@
 
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#/">Accueil</a></li>
+            <ul class="nav navbar-nav" id="my_navbar">
+              <li><a href="#/">Accueil</a></li>
               <li><a ng-href="#/projects">Projets</a></li>
+              <li><a ng-href="#/">Statistiques</a></li>
               <li><a ng-href="#/">Préférences</a></li>
               <li><a ng-href="#/about">A propos</a></li>
               <li><a ng-href="#/">Aide</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a ng-href="#/"><span class="glyphicon glyphicon-log-in"></span>Se connecter</a></li>
+              <li><a ng-href="#/login">Se connecter</a></li>
             </ul>
           </div>
         </div>
@@ -91,7 +94,15 @@
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/controllers/projects.js"></script>
+        <script src="scripts/controllers/login.js"></script>
         <script src="scripts/services/projectsservice.js"></script>
         <!-- endbuild -->
+    <script>
+    $('.nav > li > a[ng-href="'+window.location.hash+'"]').parent().addClass('active');
+    $(".nav li").on("click", function() {
+      $(".nav li").removeClass("active");
+      $(this).addClass("active");
+    });
+    </script>
 </body>
 </html>

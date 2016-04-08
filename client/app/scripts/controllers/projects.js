@@ -9,34 +9,34 @@
  */
 angular.module('pomApp').controller('ProjectsCtrl', function ($scope, $http, projectsService) {
 
-    //var this.id;
+    $scope.showAllProjects = function(){
+        projectsService.getAllProjects()
+            .success(function (data, status) {
+                $scope.projects = data;
+            })
+            .error(function (err) {
+                console.error("Error !");
+                console.error(err);
+            });
+    }
+   
 
+    $scope.getProjectById = function(id){
+        projectsService.getProjectById(id)
+            .success(function (data, status) {
+                console.log("Success !");
+                console.log(data);
+                $scope.projectDetail = data;
+            })
+            .error(function (err) {
+                console.error("Error !");
+                console.error(err);
+            });
+    };
 
-
-    projectsService.getAllProjects()
-        .success(function (data, status) {
-            console.log("Success !");
-            console.log(data[0]);
-            console.log(status);
-            $scope.projects = data;
-            $scope.id = data[0]._id;
-        })
-        .error(function (err) {
-            console.error("Error !");
-            console.error(err);
-        });
-
-    projectsService.getProjectById($scope.id)
-        .success(function (data, status) {
-            console.log("Success !");
-            console.log(status);
-            $scope.date = data[0].dateDebut;
-        })
-        .error(function (err) {
-            console.error("Error !");
-            console.error(err);
-        });
-
-
+    // Permet de lancer au chargement de la page : récupère tous les projets
+    $scope.$on('$viewContentLoaded', function() {
+        $scope.showAllProjects();
+    });
 });
 
