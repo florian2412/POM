@@ -24,7 +24,7 @@ angular.module('pomApp').factory('projectsService', function ($http) {
         },
 
         createProject: function(data){
-          var dataJson = " { \"name\": " + "NOUVEAU PROJET" + "} ";
+          var dataJson = " { \"nom\": " + "\"NOUVEAU PROJET\"" + "} ";
 
           return  $http({
             method: 'POST',
