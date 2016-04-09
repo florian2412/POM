@@ -11,7 +11,7 @@ var schemaCollaborator = mongoose.Schema({
     prenom: String,
     pseudo: String,
     mot_de_passe: String, // TODO Voir pour crypter
-    manager: String,
+    manager: mongoose.Schema.ObjectId,
     status: String,
     cout_horaire: Number
 });

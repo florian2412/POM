@@ -8,17 +8,17 @@ var mongoose = require('mongoose');
 
 var schemaProject = mongoose.Schema({
     nom: String,
-    chef_projet: String,
+    chef_projet: mongoose.Schema.ObjectId,
     date_debut: { type: Date, default: Date.now },
     date_fin_theorique: Date,
     date_fin_reelle: Date,
     statut : String, // En cours, Terminé, Annulé, Supprimé
-    collaborateurs: [ String ],
+    collaborateurs: [ mongoose.Schema.ObjectId ],
     infos_techniques: {
         creation: { type: Date, default: Date.now },
         modification:  { type: Date, default: Date.now }
     },
-    ligne_budgetaire: String
+    ligne_budgetaire: mongoose.Schema.ObjectId
 
 });
 

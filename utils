@@ -1,0 +1,42 @@
+
+{
+    nom: String,
+    chef_projet: mongoose.Schema.ObjectId,
+    date_debut: { type: Date, default: Date.now },
+    date_fin_theorique: Date,
+    date_fin_reelle: Date,
+    statut : String, // En cours, Terminé, Annulé, Supprimé
+    collaborateurs: [ mongoose.Schema.ObjectId ],
+    infos_techniques: {
+        creation: { type: Date, default: Date.now },
+        modification:  { type: Date, default: Date.now }
+    },
+    ligne_budgetaire: mongoose.Schema.ObjectId
+});
+
+{ nom: "Projet 1", date_fin_theorique: 25/01/2017, statut : "En cours" }
+
+
+
+curl -H "Content-Type: application/json" -X POST -d '{ "nom": "Projet 1", "date_fin_theorique": 25/01/2017, "statut" : "En cours", "chef_projet":"5708c71f39b30d061eed8004" }' http://localhost:3000/projects
+
+
+
+
+{ "nom": "Pussacq","prenom": "Florian","pseudo": "florian2412","mot_de_passe": "azerty","status": "Developpeur","cout_horaire": 250}
+
+
+curl -H "Content-Type: application/json" -X POST -d '{ "nom": "Pussacq","prenom": "Florian","pseudo": "florian2412","mot_de_passe": "azerty","status": "Developpeur","cout_horaire": 250}' http://localhost:3000/collaborators
+
+
+
+var schemaTask = mongoose.Schema({
+    libelle: String,
+    date_debut: Date,
+    date_fin: Date,
+    statut : String,
+    projet: mongoose.Schema.ObjectId,
+    collaborateurs: [ mongoose.Schema.ObjectId ]
+});
+
+curl -H "Content-Type: application/json" -X POST -d '{"username":"xyz","password":"xyz"}' http://localhost:3000/tasks
