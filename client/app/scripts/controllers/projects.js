@@ -58,6 +58,19 @@ angular.module('pomApp').controller('ProjectsCtrl', function ($scope, $location,
             });
     };
 
+
+    $scope.createProject = function() {
+      projectsService.createProject()
+        .success(function (data) {
+          console.log(data);
+
+        })
+        .error(function (err) {
+          console.log(err);
+        });
+    };
+   
+
     // Permet de lancer au chargement de la page : récupère tous les projets
     $scope.$on('$viewContentLoaded', function() {
         $scope.showAllProjects();
