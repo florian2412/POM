@@ -60,7 +60,14 @@ angular.module('pomApp').controller('ProjectsCtrl', function ($scope, $location,
 
 
     $scope.createProject = function() {
+
       var data = "{ \"nom\": " + "\"NOUVEAU PROJET\"" + "} ";
+
+      /*
+      var nom = $scope.nameNewProject;
+      console.log(nom);
+      */
+
       projectsService.createProject(data)
         .success(function (data) {
           console.log(data);
