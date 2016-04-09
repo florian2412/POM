@@ -44,6 +44,7 @@
             <ul class="nav navbar-nav" id="my_navbar">
               <li><a href="#/">Accueil</a></li>
               <li><a ng-href="#/projects">Projets</a></li>
+              <li><a ng-href="#/collaborators">Collaborateurs</a></li>
               <li><a ng-href="#/">Statistiques</a></li>
               <li><a ng-href="#/">Préférences</a></li>
               <li><a ng-href="#/about">A propos</a></li>
@@ -97,6 +98,7 @@
         <script src="scripts/services/projectsService.js"></script>
         <script src="scripts/services/collaboratorsService.js"></script>
 
+        <script src="scripts/controllers/collaborators.js"></script>
         <!-- endbuild -->
     <script>
     $('.nav > li > a[ng-href="'+window.location.hash+'"]').parent().addClass('active');

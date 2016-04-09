@@ -20,7 +20,7 @@ angular.module('pomApp').controller('ProjectsCtrl', function ($scope, $http, pro
             });
     };
 
-  $scope.getNameCollaboratorById = function(id) {
+  $scope.getCollaboratorById = function(id) {
     collaboratorsService.getCollaboratorById(id)
       .success(function (data) {
         console.log("Success !");

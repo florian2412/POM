@@ -36,6 +36,11 @@ pomApp.config(function ($routeProvider) {
         controller: 'LoginCtrl',
         controllerAs: 'login'
       })
+      .when('/collaborators', {
+        templateUrl: 'views/collaborators.html',
+        controller: 'CollaboratorsCtrl',
+        controllerAs: 'collaborators'
+      })
       .otherwise({
         title : 'Home',
         redirectTo: '/'

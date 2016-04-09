@@ -13,7 +13,7 @@
     <tbody>
 	    <tr ng-repeat="project in projects" ng-switch on="project.statut">
 			<td><a ng-click="getProjectById(project._id)">{{ project.nom }}</a></td>
-			<td>{{ project.chef_projet }}</td>
+			<td><a ng-click="getCollaboratorById(project.chef_projet)">{{ project.chef_projet }}</a></td>
 			<td>{{ project.date_debut | date:'dd/MM/yyyy' }}</td>
 			<td ng-switch-when="En cours"><span class="glyphicon glyphicon-exclamation-sign" style="color: orange;font-size:1.5em;"></td>
 			<td ng-switch-when="Terminé"><span class="glyphicon glyphicon-ok-circle" style="color:green;font-size:1.5em;"></td>
