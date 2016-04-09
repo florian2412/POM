@@ -25,35 +25,111 @@
 	</tbody>
 </table>
 
+  <input class="btn btn-md btn-success btn-block" type="submit" value="Créer un nouveau projet"> <br>
+
+<!--
+  var schemaProject = mongoose.Schema({
+  nom: String,
+  chef_projet: mongoose.Schema.ObjectId,
+  date_debut: { type: Date, default: Date.now },
+  date_fin_theorique: Date,
+  date_fin_reelle: Date,
+  statut : String, // En cours, Terminé, Annulé, Supprimé
+  collaborateurs: [ mongoose.Schema.ObjectId ],
+  infos_techniques: {
+  creation: { type: Date, default: Date.now },
+  modification:  { type: Date, default: Date.now }
+  },
+  ligne_budgetaire: mongoose.Schema.ObjectId
+
+  });
+  -->
+
+  <form class="form-horizontal">
+    <fieldset>
+      <legend>Nouveau projet</legend>
+
+      <div class="form-group">
+        <label for="inputNom" class="col-lg-2 control-label">Nom</label>
+        <div class="col-lg-10">
+          <input class="form-control" id="inputNom" placeholder="Nom" type="text">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="select" class="col-lg-2 control-label">Chef de projet</label>
+        <div class="col-lg-10">
+          <select class="form-control" id="select">
+            <option> {{ collaborator.name }} </option>
+          </select>
+        </div>
+      </div>
+
+
+
+      <div class="form-group">
+        <label for="select" class="col-lg-2 control-label">Statut</label>
+        <div class="col-lg-10">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox"> En cours
+            </label>
+            <br>
+            <label>
+              <input type="checkbox"> Annulé
+            </label>
+            <br>
+            <label>
+              <input type="checkbox"> Terminé
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="textArea" class="col-lg-2 control-label">Commentaires complémentaires</label>
+        <div class="col-lg-10">
+          <textarea class="form-control" rows="2" id="textArea"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+          <button type="reset" class="btn btn-default">Annuler</button>
+          <button type="submit" class="btn btn-primary" ng-click="createProject()">Créer</button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
 <div>
 <p>Détail du projet</p>
 	{{projectDetail._id}}
 	</br>
 	{{projectDetail.nom}}
 </div>
+-->
 
-
-  <table class="table table-striped table-hover">
-    <thead>
-    <tr>
-      <th>Id</th>
-      <th>Prénom</th>
-      <th>Nom</th>
-      <th>Pseudo</th>
-      <th>Status</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="collaborator in collaborators">
-      <td>{{ collaborator._id }}</a></td>
-      <td>{{ collaborator.prenom }}</td>
-      <td>{{ collaborator.nom }}</td>
-      <td>{{ collaborator.pseudo }}</td>
-      <td>{{ collaborator.status }}</td>
-    </tr>
-    </tbody>
-  </table>
 
 
 <!--<i class="fa fa-car fa-5x"></i>-->
 </section>
+
+
+
+
+
+
