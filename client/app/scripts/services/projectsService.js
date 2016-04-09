@@ -24,12 +24,12 @@ angular.module('pomApp').factory('projectsService', function ($http) {
         },
 
         createProject: function(data){
-          var dataJson = " { \"nom\": " + "\"NOUVEAU PROJET\"" + "} ";
-
+          //var dataJson = " { \"nom\": " + "\"NOUVEAU PROJET\"" + "} ";
+          console.log(data);
           return  $http({
             method: 'POST',
             url: 'http://localhost:3000/projects/',
-            data: dataJson,
+            data: data,
             headers: { 'Content-Type': 'application/json' }
           });
         }

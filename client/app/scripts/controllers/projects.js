@@ -32,7 +32,7 @@ angular.module('pomApp').controller('ProjectsCtrl', function ($scope, $location,
         console.error(err);
       });
   };
-
+/*
   $scope.showAllCollaborators = function(){
     collaboratorsService.getAllCollaborators()
       .success(function (data) {
@@ -44,7 +44,7 @@ angular.module('pomApp').controller('ProjectsCtrl', function ($scope, $location,
         console.error(err);
       });
   };
-
+*/
     $scope.getProjectById = function(id){
         projectsService.getProjectById(id)
             .success(function (data) {
@@ -60,7 +60,8 @@ angular.module('pomApp').controller('ProjectsCtrl', function ($scope, $location,
 
 
     $scope.createProject = function() {
-      projectsService.createProject()
+      var data = "{ \"nom\": " + "\"NOUVEAU PROJET\"" + "} ";
+      projectsService.createProject(data)
         .success(function (data) {
           console.log(data);
 
@@ -69,12 +70,11 @@ angular.module('pomApp').controller('ProjectsCtrl', function ($scope, $location,
           console.log(err);
         });
     };
-   
+
 
     // Permet de lancer au chargement de la page : récupère tous les projets
     $scope.$on('$viewContentLoaded', function() {
         $scope.showAllProjects();
-        $scope.showAllCollaborators();
     });
 
 
