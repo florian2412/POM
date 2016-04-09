@@ -12,9 +12,16 @@ angular.module('pomApp').controller('ProjectCtrl', function ($scope, $routeParam
 
     var id = $routeParams._id;
 
-    projectsService.getProjectById(id)
-        .success(function(data){
-            $scope.project = data;
-    })
+    $scope.getProjectById = function() {
+      projectsService.getProjectById(id)
+        .success(function (data) {
+          $scope.project = data;
+      })
+    };
+
+  // Permet de lancer au chargement de la page : récupère tous les projets
+  $scope.$on('$viewContentLoaded', function() {
+    $scope.getProjectById();
+  });
 
 });

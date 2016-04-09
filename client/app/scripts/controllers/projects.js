@@ -58,14 +58,6 @@ angular.module('pomApp').controller('ProjectsCtrl', function ($scope, $location,
             });
     };
 
-
-    /*$scope.infosProject = function() {
-      var id = $scope.projectId;
-      console.log("ID = " + id);
-      $location.path("/projects/" + id);
-
-    };*/
-
     // Permet de lancer au chargement de la page : récupère tous les projets
     $scope.$on('$viewContentLoaded', function() {
         $scope.showAllProjects();
