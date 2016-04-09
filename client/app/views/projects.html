@@ -24,12 +24,35 @@
 	</tbody>
 </table>
 
-<div> 
+<div>
 <p>Détail du projet</p>
 	{{projectDetail._id}}
 	</br>
 	{{projectDetail.nom}}
 </div>
 
-<i class="fa fa-car fa-5x"></i>
+
+  <table class="table table-striped table-hover">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Prénom</th>
+      <th>Nom</th>
+      <th>Pseudo</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="collaborator in collaborators">
+      <td>{{ collaborator._id }}</a></td>
+      <td>{{ collaborator.prenom }}</td>
+      <td>{{ collaborator.nom }}</td>
+      <td>{{ collaborator.pseudo }}</td>
+      <td>{{ collaborator.status }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+
+<!--<i class="fa fa-car fa-5x"></i>-->
 </section>
