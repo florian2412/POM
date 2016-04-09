@@ -30,6 +30,12 @@ pomApp.config(function ($routeProvider) {
         controller: 'ProjectsCtrl',
         controllerAs: 'projects'
       })
+      .when('/projects/:_id', {
+        title : 'Consultation d\'un projet',
+        templateUrl: 'views/project.html',
+        controller: 'ProjectCtrl',
+        controllerAs: 'project'
+      })
       .when('/login', {
         title : 'Se connecter',
         templateUrl: 'views/login.html',

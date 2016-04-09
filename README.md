@@ -20,7 +20,5 @@ Dans le répertoire serveur :
 ## Lancement du serveur et de POM
 
 Linux
-    Lancer le fichier install.sh, l'application se lance dans votre navigateur par défaut
+ Lancer le fichier install.sh, l'application se lance dans votre navigateur par défaut
 
-Windows
-    TODO

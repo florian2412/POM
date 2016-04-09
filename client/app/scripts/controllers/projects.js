@@ -7,7 +7,7 @@
  * # ProjectsCtrl
  * Controller of the pomApp
  */
-angular.module('pomApp').controller('ProjectsCtrl', function ($scope, $http, projectsService, collaboratorsService) {
+angular.module('pomApp').controller('ProjectsCtrl', function ($scope, $location, $http, projectsService, collaboratorsService) {
 
     $scope.showAllProjects = function(){
         projectsService.getAllProjects()
@@ -57,6 +57,14 @@ angular.module('pomApp').controller('ProjectsCtrl', function ($scope, $http, pro
                 console.error(err);
             });
     };
+
+
+    /*$scope.infosProject = function() {
+      var id = $scope.projectId;
+      console.log("ID = " + id);
+      $location.path("/projects/" + id);
+
+    };*/
 
     // Permet de lancer au chargement de la page : récupère tous les projets
     $scope.$on('$viewContentLoaded', function() {
