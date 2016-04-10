@@ -61,7 +61,7 @@ angular.module('pomApp').controller('ProjectsCtrl', function ($scope, $location,
 
     $scope.createProject = function() {
 
-      var data = "{ \"nom\": " + "\"NOUVEAU PROJET\"" + "} ";
+      var data = "{ \"nom\": " + "\"PROJET\", \"statut\":\"En cours\" " + "} ";
 
       /*
       var nom = $scope.nameNewProject;
@@ -71,6 +71,8 @@ angular.module('pomApp').controller('ProjectsCtrl', function ($scope, $location,
       projectsService.createProject(data)
         .success(function (data) {
           console.log(data);
+          $scope.showAllProjects();
+          $scope.hideFormCreateProject();
 
         })
         .error(function (err) {
@@ -79,9 +81,32 @@ angular.module('pomApp').controller('ProjectsCtrl', function ($scope, $location,
     };
 
 
+
+    $scope.showFormCreateProject = function () {
+        console.log($scope.showForm);
+        //if(!$scope.showForm)
+        $scope.showForm = true;
+        $scope.showListProjects = false;
+
+    };
+
+    $scope.hideFormCreateProject = function () {
+        console.log($scope.showForm);
+        //if($scope.showForm)
+        $scope.showForm = false;
+        $scope.showListProjects = true;
+
+
+    };
+
     // Permet de lancer au chargement de la page : récupère tous les projets
     $scope.$on('$viewContentLoaded', function() {
         $scope.showAllProjects();
+
+        // Default --> Hide the form create project & show the table
+        $scope.showForm = false;
+        $scope.showListProjects = true;
+
     });
 
 
