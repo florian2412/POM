@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
+var config =require('./config.json');
 
 // Variables de routes
 var projects = require('./routes/projects');
@@ -79,10 +80,15 @@ module.exports = app;
 // Connexion BDD Mongo avec module mongoose
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/dbPOM', function(err) {
+mongoose.connect(config.connectionString, function(err) {
     if(err) {
         console.log('Connection error !', err);
     } else {
         console.log('Connection successful  !');
     }
+});
+
+// start server
+var server = app.listen(3000, function () {
+    console.log('Server listening at http://' + server.address().address + ':' + server.address().port);
 });
