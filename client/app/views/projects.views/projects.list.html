@@ -45,9 +45,10 @@
         <div class="form-group">
           <label for="select" class="col-lg-2 control-label">Chef de projet</label>
           <div class="col-lg-10">
-            <select class="form-control" id="select">
-              <option> {{ collaborator.name }} </option>
-            </select>
+            <select class="form-control" id="select" ng-model="collaboratorId" > <!-- ng-model="collaborator.name" -->
+             <!-- <option value="">-- Sélectionner un chef de projet --</option>
+              <option ng:repeat="collaborator in collaborators" value="{{collaborator._id}}">{{collaborator.prenom}} {{collaborator.nom}}</option>
+              </select>
           </div>
         </div>
 

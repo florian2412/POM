@@ -49,8 +49,8 @@ angular.module('pomApp').controller('ProjectsCtrl', function ($scope, $location,
 
     $scope.createProject = function() {
 
-      //var data = "{ \"nom\": " + "\"PROJET\", \"statut\":\"En cours\" " + "} ";
-      var data = {"nom" : "PROJET","statut" : "En cours"};
+      var data = "{ \"nom\": " + "\"PROJET\", \"statut\":\"En cours\" " + ", \"chef_projet\": \"" + $scope.collaboratorId + "\" } ";
+
       /*
       var nom = $scope.nameNewProject;
       console.log(nom);
@@ -77,6 +77,13 @@ angular.module('pomApp').controller('ProjectsCtrl', function ($scope, $location,
     $scope.showFormCreateProject = function () {
         $scope.showForm = true;
         $scope.showListProjects = false;
+
+        collaboratorsService.getAllCollaborators()
+          .success(function (data) {
+            $scope.collaborators = data;
+          });
+
+
     };
 
     $scope.hideFormCreateProject = function () {
