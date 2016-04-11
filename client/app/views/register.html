@@ -1,0 +1,30 @@
+<div class="container" ng-controller="RegisterCtrl">
+    <div class="row">
+    	<div class="col-md-6 col-md-offset-3">
+    <h2>S'enregister</h2>
+    <form name="form" ng-submit="vm.register()" role="form">
+        <div class="form-group" ng-class="{ 'has-error': form.name.$dirty && form.name.$error.required }">
+            <input type="text" name="name" id="name" placeholder="Nom" class="form-control" ng-model="vm.user.name" required />
+            <span ng-show="form.name.$dirty && form.name.$error.required" class="help-block">Le nom est obligatoire</span>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.prenom.$dirty && form.prenom.$error.required }">
+            <input type="text" name="prenom" id="Text1" placeholder="Prénom" class="form-control" ng-model="vm.user.prenom" required />
+            <span ng-show="form.prenom.$dirty && form.prenom.$error.required" class="help-block">Le prénom est obligatoire</span>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.pseudo.$dirty && form.pseudo.$error.required }">
+            <input type="text" name="pseudo" id="pseudo" placeholder="Pseudo" class="form-control" ng-model="vm.user.pseudo" required />
+            <span ng-show="form.pseudo.$dirty && form.pseudo.$error.required" class="help-block">Le pseudo est obligatoire</span>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.motDePasse.$dirty && form.motDePasse.$error.required }">
+            <input type="password" name="motDePasse" id="motDePasse" placeholder="Mot de passe" class="form-control" ng-model="vm.user.motDePasse" required />
+            <span ng-show="form.motDePasse.$dirty && form.motDePasse.$error.required" class="help-block">Le mot de passe est obligatoire</span>
+        </div>
+        <div class="form-actions">
+            <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">S'enregister</button>
+        
+            <a href="#/login" class="btn btn-link">Annuler</a>
+        </div>
+    </form>
+</div>
+	</div>
+</div>
