@@ -9,7 +9,7 @@
  */
 angular
   .module('pomApp')
-  .controller('ProjectsCtrl', function ($scope, $location, $http, databaseService, projectsService, collaboratorsService) {
+  .controller('DatabaseCtrl', function ($scope, $location, $http, databaseService) {
 
     // Affiche ou rafraichit tous les projets dans le tableau des projets
     $scope.showAllProjects = function(){
