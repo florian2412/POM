@@ -1,0 +1,9 @@
+<!-- Client -->
+/client/node_modules
+/client/dist
+/client/.tmp
+/client/bower_components
+
+<!-- Server -->
+/server/node_modules
+
