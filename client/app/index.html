@@ -67,6 +67,7 @@
 
     <div class="container">
       <div ui-view></div>
+
     </div>
 
     <div class="footer">
@@ -96,18 +97,19 @@
     <!-- endbower -->
     <!-- endbuild -->
 
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
-        <script src="scripts/controllers/projects.controller/projects.js"></script>
-        <script src="scripts/controllers/projects.controller/projects.details.js"></script>
-        <script src="scripts/controllers/collaborators.controller/collaborators.js"></script>
-        <script src="scripts/controllers/collaborators.controller/collaborators.details.js"></script>
-        <script src="scripts/services/projects.service.js"></script>
-        <script src="scripts/services/collaborators.service.js"></script>
-        <script src="scripts/controllers/login.js"></script>
-        <!-- endbuild -->
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/about.js"></script>
+    <script src="scripts/controllers/projects.controller/projects.js"></script>
+    <script src="scripts/controllers/projects.controller/projects.details.js"></script>
+    <script src="scripts/controllers/collaborators.controller/collaborators.js"></script>
+    <script src="scripts/controllers/collaborators.controller/collaborators.details.js"></script>
+    <script src="scripts/services/projects.service.js"></script>
+    <script src="scripts/services/collaborators.service.js"></script>
+    <script src="scripts/controllers/login.js"></script>
+
+    <!-- endbuild -->
     <script>
     $('.nav > li > a[ui-sref="'+window.location.hash+'"]').parent().addClass('active');
     $(".nav li").on("click", function() {

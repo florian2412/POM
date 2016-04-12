@@ -1,6 +1,6 @@
 /**
  *
- * Modèle de données pour un Projet stocké dans Mongo
+ * Modèle de données pour un Projet stocké dans MongoDB
  *
  */
 
@@ -9,6 +9,7 @@ var mongoose = require('mongoose');
 var schemaProject = mongoose.Schema({
     nom: String,
     chef_projet: mongoose.Schema.ObjectId,
+    //chef_projet_all: {type: mongoose.Schema.ObjectId, ref: 'Collaborator'},
     date_debut: { type: Date, default: Date.now },
     date_fin_theorique: Date,
     date_fin_reelle: Date,

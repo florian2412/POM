@@ -49,12 +49,10 @@ angular.module('pomApp').controller('ProjectsCtrl', function ($scope, $location,
 
     $scope.createProject = function() {
 
-      var data = "{ \"nom\": " + "\"PROJET\", \"statut\":\"En cours\" " + ", \"chef_projet\": \"" + $scope.collaboratorId + "\" } ";
+      //var chef_projet_all = "{ \"nom\": \"Pussacq\",\"prenom\": \"Florian\",\"pseudo\": \"florian2412\",\"mot_de_passe\": \"azerty\",\"status\": \"Developpeur\",\"cout_horaire\": 250}"   ;
 
-      /*
-      var nom = $scope.nameNewProject;
-      console.log(nom);
-      */
+      // TODO Faire la validation du formulaire de création de projet
+      var data = "{ \"nom\": " + "\"" + $scope.nameNewProject + "\", \"statut\":\"En cours\" " + ", \"chef_projet\": \"" + $scope.collaboratorIdNewProject + "\" } ";
 
       projectsService.createProject(data)
         .success(function (data) {
@@ -73,23 +71,45 @@ angular.module('pomApp').controller('ProjectsCtrl', function ($scope, $location,
     };
 
 
+  $scope.deleteProject = function(id) {
+    projectsService.deleteProject(id)
+      .success(function (data) {
+        // Update liste projets
+        $scope.showAllProjects();
+      })
+      .error(function(err) {
+        console.log(err);
+      });
+  };
 
-    $scope.showFormCreateProject = function () {
-        $scope.showForm = true;
-        $scope.showListProjects = false;
+  $scope.showFormCreateProject = function () {
+      $scope.showForm = true;
+      $scope.showListProjects = false;
 
-        collaboratorsService.getAllCollaborators()
-          .success(function (data) {
-            $scope.collaborators = data;
-          });
+      collaboratorsService.getAllCollaborators()
+        .success(function (data) {
+          $scope.collaborators = data;
+        });
 
 
-    };
+  };
 
-    $scope.hideFormCreateProject = function () {
-        $scope.showForm = false;
-        $scope.showListProjects = true;
-    };
+  $scope.hideFormCreateProject = function () {
+      $scope.showForm = false;
+      $scope.showListProjects = true;
+  };
+
+
+
+
+  $scope.modalShown = false;
+
+  $scope.toggleModal = function() {
+    console.log("OUIII");
+    $scope.modalShown = !$scope.modalShown;
+  };
+
+
 
     // Permet de lancer au chargement de la page : récupère tous les projets
     $scope.$on('$viewContentLoaded', function() {
@@ -99,9 +119,6 @@ angular.module('pomApp').controller('ProjectsCtrl', function ($scope, $location,
         $scope.hideFormCreateProject();
 
     });
-
-
-
 
 });
 
