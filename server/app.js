@@ -7,11 +7,6 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var config =require('./config.json');
 
-// Variables de routes
-var projects = require('./routes/projects');
-var collaborators = require('./routes/collaborators');
-var tasks = require('./routes/tasks');
-
 var app = express();
 
 // view engine setup
@@ -25,13 +20,12 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 app.use(cors());
 
-app.use('/projects', projects);
-app.use('/collaborators', collaborators);
-app.use('/tasks', tasks);
-
+// API 
+app.use('/projects', require('./routes/projects'));
+app.use('/collaborators', require('./routes/collaborators'));
+app.use('/tasks', require('./routes/tasks'));
 
 app.all('*', function(req, res, next) {
     res.set('Access-Control-Allow-Origin', '*');
