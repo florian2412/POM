@@ -19,7 +19,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(cors());
 
 // API 
@@ -75,15 +74,15 @@ module.exports = app;
 // Connexion BDD Mongo avec module mongoose
 var mongoose = require('mongoose');
 
-mongoose.connect(config.connectionString, function(err) {
+mongoose.connect(config.connectionString + config.mongodbPort + "/" + config.nameBddMongo, function(err) {
     if(err) {
         console.log('Connection error !', err);
     } else {
-        console.log('Connection successful  !');
+        console.log('Connection successful at http://' + config.connectionString + config.mongodbPort + "/" + config.nameBddMongo);
     }
 });
 
 // start server
-var server = app.listen(config.serverPort, function () {
-    console.log('Server listening at http://' + server.address().address + ':' + server.address().port);
+app.listen(config.serverPort, function () {
+    console.log('Server listening at ' + config.apiUrl);
 });

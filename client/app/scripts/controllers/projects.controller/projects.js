@@ -119,7 +119,7 @@ angular
 
     $scope.showFormCreateProject = function () {
       $scope.showForm = true;
-      $scope.showListProjects = false;
+      //$scope.showListProjects = false;
 
       //initDatePicker();
 
@@ -135,7 +135,7 @@ angular
 
     $scope.hideFormCreateProject = function () {
         $scope.showForm = false;
-        $scope.showListProjects = true;
+        //$scope.showListProjects = true;
     };
 
 
