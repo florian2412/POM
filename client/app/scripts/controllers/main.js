@@ -10,6 +10,6 @@
 angular.module('pomApp')
   .controller('MainCtrl', function ($scope, $rootScope, $location) {
 
-  	$socpe.user = $rootScope.currentUser;
+  	$scope.user = $rootScope.currentUser;
 	
   });

@@ -23,6 +23,7 @@ function routerStateProvider($stateProvider, $urlRouterProvider) {
             templateUrl: 'views/main.html',
             controller: 'MainCtrl',
             controllerAs: 'main',
+            authorized: ["collaborator", "admin", "manager"]
     })
     .state('about', {
             url : '/about',
@@ -77,7 +78,7 @@ function routerStateProvider($stateProvider, $urlRouterProvider) {
 
 
 pomApp.run(function($rootScope, $location,$state, authenticateService) {
-    $rootScope.$on('$stateChangeStart', 
+    $rootScope.$on('$locationChangeSuccess', 
       function(event, toState, toParams, fromState, fromParams){ 
         $rootScope.title = toState.title;
         console.log(authenticateService.getCurrentUser());
