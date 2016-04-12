@@ -28,46 +28,24 @@ angular.module('pomApp')
 
 
     $scope.createCollaborator = function() {
-
-      //var chef_projet_all = "{ \"nom\": \"Pussacq\",\"prenom\": \"Florian\",\"pseudo\": \"florian2412\",\"mot_de_passe\": \"azerty\",\"status\": \"Developpeur\",\"cout_horaire\": 250}"   ;
-
-      /*
-       nom: String,
-       chef_projet: mongoose.Schema.ObjectId,
-       //chef_projet_all: {type: mongoose.Schema.ObjectId, ref: 'Collaborator'},
-       date_debut: { type: Date, default: Date.now },
-       date_fin_theorique: Date,
-       date_fin_reelle: Date,
-       statut : String, // En cours, Terminé, Annulé, Supprimé
-       collaborateurs: [ mongoose.Schema.ObjectId ],
-       infos_techniques: {
-       creation: { type: Date, default: Date.now },
-       modification:  { type: Date, default: Date.now }
-       },
-       ligne_budgetaire: mongoose.Schema.ObjectId
-
-       */
+      // NC --> NewCollaborator
+      var lastName = $scope.lastNameNC;
+      var firstName = $scope.firstNameNC;
+      var manager = $scope.managerNC
+      var status = $scope.statusNC;
+      var login = $scope.loginNC;
+      var password = $scope.loginNC;
+      var cost = $scope.costNC;
 
 
-      var nom = $scope.nameNewCollaborator;
-      var chef_projet = $scope.collaboratorIdNewCollaborator;
-      var statut = "Initialisation";
-      var date = new Date();
-      var date_debut = date;
-      var date_fin_theorique = date;
-      var collaborateurs = ["sds", "sdsdsdsd"];
-      var ligne_budgetaire = "1111111";
-
-
-
-
-      // TODO Faire la validation du formulaire de création de projet
-      var data = "{ \"nom\": " + "\"" + nom + "\" "
-        + ", \"statut\": " + "\"" + statut + "\" "
-        + ", \"chef_projet\": \"" + chef_projet + "\" }";
-      + ", \"date_debut\": \"" + date_debut + "\" "
-      + ", \"date_fin_theorique\": \"" + date_fin_theorique + "\" "
-      + ", \"collaborateurs\": \"" + collaborateurs + "\" } ";
+      // TODO Faire la validation du formulaire de création du collaborateur
+      var data = "{ \"nom\": " + "\"" + lastName + "\" "
+        + ", \"prenom\": " + "\"" + firstName + "\" "
+        + ", \manager\": \"" + manager + "\" ";
+        + ", \status\": \"" + status + "\" "
+        + ", \login\": \"" + login+ "\" "
+        + ", \password\": \"" +  + "\" ";
+        + ", \cout_horaire\": \"" + cost + "\" } ";
 
       collaboratorsService.createCollaborator(data)
         .success(function (data) {
