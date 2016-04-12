@@ -83,9 +83,9 @@ angular
       var data = "{ \"nom\": " + "\"" + nom + "\" "
         + ", \"statut\": " + "\"" + statut + "\" "
         + ", \"chef_projet\": \"" + chef_projet + "\" }";
-      //  + ", \"date_debut\": \"" + date_debut + "\" "
-      //  + ", \"date_fin_theorique\": \"" + date_fin_theorique + "\" "
-      //  + ", \"collaborateurs\": \"" + collaborateurs + "\" } ";
+        + ", \"date_debut\": \"" + date_debut + "\" "
+        + ", \"date_fin_theorique\": \"" + date_fin_theorique + "\" "
+        + ", \"collaborateurs\": \"" + collaborateurs + "\" } ";
 
       projectsService.createProject(data)
         .success(function (data) {

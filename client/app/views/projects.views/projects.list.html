@@ -1,5 +1,5 @@
 <section ng-controller="ProjectsCtrl">
-<!-- <div ng-hide="showForm" > -->
+<div ng-hide="showForm" >
   <table class="table table-striped table-hover">
     <thead>
         <tr>
@@ -17,29 +17,19 @@
 
       <!--<td><a ng-click="getProjectById(project._id)">{{ project.nom }}</a></td>-->
         <td><a ui-sref=".details({id:project._id})"> {{ project.nom }} </a></td>
-        <td> {{ project.chef_projet }} </td>
+        <td><a ui-sref="collaborators.details({id:project.chef_projet})"> {{ project.chef_projet }} </a></td>
         <td>{{ project.date_debut | date:'dd/MM/yyyy' }}</td>
-        <td ng-switch-when="En cours"><span class="glyphicon glyphicon-exclamation-sign" style="color: orange;font-size:1.5em;"></span></td>
+
+        <td ng-switch-when="Initialisation"><span class="glyphicon glyphicon-exclamation-sign" style="color:blue;font-size:1.5em;"></span></td>
+        <td ng-switch-when="En cours"><span class="glyphicon glyphicon-exclamation-sign" style="color:orange;font-size:1.5em;"></span></td>
         <td ng-switch-when="Terminé"><span class="glyphicon glyphicon-ok-circle" style="color:green;font-size:1.5em;"></span></td>
         <td ng-switch-when="Annulé"><span class="glyphicon glyphicon-remove-circle" style="color:red;font-size:1.5em;"></span></td>
+
         <td>{{ project.collaborateurs }}</td>
         <td>{{ project.infos_techniques.modification | date:'dd/MM/yyyy' }}</td>
         <td><a ng-click="deleteProject(project._id)"><span class="glyphicon glyphicon-remove-circle" style="color: orange;font-size:1.5em;"></span> </a></td>
 
-        <!--<td><a ng-click="getProjectById(project._id)">{{ project.nom }}</a></td>-->
-        <!--
-        <td><a ng-href="#/projects/{{project._id}}"> {{ project.nom }} </a></td>
-        <td><a ng-href="#/collaborators/{{project.chef_projet}}"> {{ project.chef_projet }} </a></td>
-        <td>{{ project.date_debut | date:'dd/MM/yyyy' }}</td>
-        <td ng-switch-when="Initialisation"><span class="fa fa-exclamation-circle" style="color:green;font-size:1.5em;"></span></td>
-        <td ng-switch-when="En cours"><i class="fa fa-exclamation-circle" style="color: orange;font-size:1.5em;"></i></td>
-        <td ng-switch-when="Terminé"><i class="fa fa-exclamation-circle" style="color:blue;font-size:1.5em;"></i></td>
-        <td ng-switch-when="Annulé"><i class="fa fa-exclamation-circle" style="color:red;font-size:1.5em;"></i></td>
-        <td>{{ project.collaborateurs }}</td>
-        <td>{{ project.infos_techniques.modification | date:'dd/MM/yyyy' }}</td>
--->
-
-        </tr>
+      </tr>
     </tbody>
   </table>
   <input class="btn btn-md btn-success btn-block" type="submit" value="Créer un nouveau projet" ng-click="showFormCreateProject()"> <br>
