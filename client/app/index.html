@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="pomApp">
+<html ng-app="pomApp" >
   <head>
     <meta charset="utf-8">
     <title ng-bind="'POM - ' + title">POM</title>
@@ -43,23 +43,17 @@
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
             <ul class="nav navbar-nav" id="my_navbar">
-              <!-- <li><a href="#/">Accueil</a></li>
-              <li><a ng-href="#/projects">Projets</a></li>
-              <li><a ng-href="#/collaborators">Collaborateurs</a></li>
-              <li><a ng-href="#/">Statistiques</a></li>
-              <li><a ng-href="#/">Préférences</a></li>
-              <li><a ng-href="#/about">A propos</a></li>
-              <li><a ng-href="#/">Aide</a></li> -->
-              <li><a ui-sref="main">Accueil</a></li>
+              <li><a ui-sref="/">Accueil</a></li>
               <li><a ui-sref="projects">Projets</a></li>
               <li><a ui-sref="collaborators">Collaborateurs</a></li>
-              <li><a ui-sref="main">Statistiques</a></li>
-              <li><a ui-sref="main">Préférences</a></li>
+              <li><a ui-sref="/">Statistiques</a></li>
+              <li><a ui-sref="/">Préférences</a></li>
               <li><a ui-sref="about">A propos</a></li>
-              <li><a ui-sref="main">Aide</a></li>
+              <li><a ui-sref="/">Aide</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a ui-sref="login">Se connecter</a></li>
+              <li><a ui-sref="login" ng-show="!currentUser">Se connecter</a></li>
+              <li><a ui-sref="login" ng-show="currentUser">Se déconnecter</a></li>
             </ul>
           </div>
         </div>
@@ -74,6 +68,7 @@
     <div class="footer">
       <div class="container">
         <p>M2 MIAGE Bordeaux - Projet Techniques de Développement Avancées - 2016</p>
+         <h1>{{isUserLoggedIn}}</h1>
       </div>
     </div>
 
@@ -115,12 +110,9 @@
     <script src="scripts/services/projects.service.js"></script>
     <script src="scripts/services/collaborators.service.js"></script>
     <script src="scripts/services/database.service.js"></script>
-
-
-
+    <script src="scripts/services/authenticate.service.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
-
     <script>
     $('.nav > li > a[ui-sref="'+window.location.hash+'"]').parent().addClass('active');
     $(".nav li").on("click", function() {

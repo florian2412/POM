@@ -14,28 +14,29 @@ var pomApp = angular.module('pomApp', ['ui.router', 'ngMaterial', 'ngMessages'])
 pomApp.config(routerStateProvider);
 
 function routerStateProvider($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('main');
-    $stateProvider
-    .state('main', {
-            url: '/main',
+
+    $urlRouterProvider.otherwise('/');
+    $stateProvider    
+    .state('/', {
+            url: '/',
             title : 'Home',
             templateUrl: 'views/main.html',
             controller: 'MainCtrl',
-            controllerAs: 'main'
+            controllerAs: 'main',
     })
     .state('about', {
             url : '/about',
             title : 'A propos',
             templateUrl: 'views/about.html',
             controller: 'AboutCtrl',
-            controllerAs: 'about'
+            controllerAs: 'about',
     })
     .state('projects', {
             url : '/projects',
             title : 'Projets',
             templateUrl: 'views/projects.views/projects.list.html',
             controller: 'ProjectsCtrl',
-            controllerAs: 'projects'
+            controllerAs: 'projects',
     })
     .state('projects.details', {
             url : '/:id',
@@ -74,10 +75,15 @@ function routerStateProvider($stateProvider, $urlRouterProvider) {
     });
 };
 
-pomApp.run(['$rootScope', function($rootScope) {
-    $rootScope.$on('$stateChangeStart',
-      function(event, toState, toParams, fromState, fromParams) {
+
+pomApp.run(function($rootScope, $location,$state, authenticateService) {
+    $rootScope.$on('$stateChangeStart', 
+      function(event, toState, toParams, fromState, fromParams){ 
         $rootScope.title = toState.title;
-      });
-  }]
-);
+        console.log(authenticateService.getCurrentUser());
+        if (authenticateService.getCurrentUser() === null) {
+            console.log("pas loggé");
+            $location.path("/login");
+        }
+    });
+});

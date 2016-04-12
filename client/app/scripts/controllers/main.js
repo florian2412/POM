@@ -8,6 +8,8 @@
  * Controller of the pomApp
  */
 angular.module('pomApp')
-  .controller('MainCtrl', function () {
-   
+  .controller('MainCtrl', function ($scope, $rootScope, $location) {
+
+  	$socpe.user = $rootScope.currentUser;
+	
   });

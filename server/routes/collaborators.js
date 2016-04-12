@@ -41,7 +41,7 @@ function createCollaborator(req, res, next) {
             if (err)
                 return next(err);
             // On retourne le body de la réponse
-            res.json({"message" : "Création réussie"});
+            res.json(req.body);
         });
     }
     
@@ -80,10 +80,10 @@ function deleteCollaborator(req, res, next) {
 function authenticate(req, res, next) {
     Collaborator.findOne({"pseudo" : req.body.pseudo}, function (err, coll) {
       if (err) return next(err);
-      if (!coll) return next(new Error("Ce pseudo n'existe pas : "+ req.body.pseudo));
+      if (!coll) return res.json({"success": false, "message":"Pseudo incorrect"});  
       if (coll && bcrypt.compareSync(req.body.mot_de_passe, coll.mot_de_passe))
-        res.json({"message" : "OK"});  
-      else return next(new Error("Le mot de passe est incorrect"));      
+        res.json({"success": true,"message": "Connexion réussie", "collaborator" : coll});  
+      else return res.json({"success": false,"message":"Mot de passe incorrect"});  
     });
 };
 
