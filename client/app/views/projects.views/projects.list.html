@@ -1,47 +1,48 @@
 <section ng-controller="ProjectsCtrl">
 <!-- <div ng-hide="showForm" > -->
   <table class="table table-striped table-hover">
-	<thead>
-      <tr>
-        <th>Nom</th>
-        <th>Chef de projet</th>
-        <th>Date début</th>
-        <th>Statut</th>
-        <th>Collaborateurs</th>
-        <th>Date modification</th>
-        <th>Supprimer ?</th>
-      </tr>
+    <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Chef de projet</th>
+          <th>Date début</th>
+          <th>Statut</th>
+          <th>Collaborateurs</th>
+          <th>Date modification</th>
+          <th>Supprimer ?</th>
+        </tr>
     </thead>
     <tbody>
-	    <tr ng-repeat="project in projects" ng-switch on="project.statut">
+      <tr ng-repeat="project in projects" ng-switch on="project.statut">
 
-			<!--<td><a ng-click="getProjectById(project._id)">{{ project.nom }}</a></td>-->
-      <td><a ui-sref=".details({id:project._id})"> {{ project.nom }} </a></td>
-			<td> {{ project.chef_projet }} </td>
-			<td>{{ project.date_debut | date:'dd/MM/yyyy' }}</td>
-			<td ng-switch-when="En cours"><span class="glyphicon glyphicon-exclamation-sign" style="color: orange;font-size:1.5em;"></span></td>
-			<td ng-switch-when="Terminé"><span class="glyphicon glyphicon-ok-circle" style="color:green;font-size:1.5em;"></span></td>
-			<td ng-switch-when="Annulé"><span class="glyphicon glyphicon-remove-circle" style="color:red;font-size:1.5em;"></span></td>
-			<td>{{ project.collaborateurs }}</td>
-			<td>{{ project.infos_techniques.modification | date:'dd/MM/yyyy' }}</td>
-
-        <!--<td><a ng-click="getProjectById(project._id)">{{ project.nom }}</a></td>-->
-        <!--
-        <td><a ng-href="#/projects/{{project._id}}"> {{ project.nom }} </a></td>
-        <td><a ng-href="#/collaborators/{{project.chef_projet}}"> {{ project.chef_projet }} </a></td>
+      <!--<td><a ng-click="getProjectById(project._id)">{{ project.nom }}</a></td>-->
+        <td><a ui-sref=".details({id:project._id})"> {{ project.nom }} </a></td>
+        <td> {{ project.chef_projet }} </td>
         <td>{{ project.date_debut | date:'dd/MM/yyyy' }}</td>
         <td ng-switch-when="En cours"><span class="glyphicon glyphicon-exclamation-sign" style="color: orange;font-size:1.5em;"></span></td>
         <td ng-switch-when="Terminé"><span class="glyphicon glyphicon-ok-circle" style="color:green;font-size:1.5em;"></span></td>
         <td ng-switch-when="Annulé"><span class="glyphicon glyphicon-remove-circle" style="color:red;font-size:1.5em;"></span></td>
         <td>{{ project.collaborateurs }}</td>
         <td>{{ project.infos_techniques.modification | date:'dd/MM/yyyy' }}</td>
-        <td><a ng-click="showModalDeleteProject(project._id)"><span class="glyphicon glyphicon-remove-circle" style="color: orange;font-size:1.5em;"></span> </a></td>
-        -->
+        <td><a ng-click="deleteProject(project._id)"><span class="glyphicon glyphicon-remove-circle" style="color: orange;font-size:1.5em;"></span> </a></td>
 
-      </tr>
-	</tbody>
-</table>
- <!--  <input class="btn btn-md btn-success btn-block" type="submit" value="Créer un nouveau projet" ng-click="showFormCreateProject()"> <br>
+        <!--<td><a ng-click="getProjectById(project._id)">{{ project.nom }}</a></td>-->
+        <!--
+        <td><a ng-href="#/projects/{{project._id}}"> {{ project.nom }} </a></td>
+        <td><a ng-href="#/collaborators/{{project.chef_projet}}"> {{ project.chef_projet }} </a></td>
+        <td>{{ project.date_debut | date:'dd/MM/yyyy' }}</td>
+        <td ng-switch-when="Initialisation"><span class="fa fa-exclamation-circle" style="color:green;font-size:1.5em;"></span></td>
+        <td ng-switch-when="En cours"><i class="fa fa-exclamation-circle" style="color: orange;font-size:1.5em;"></i></td>
+        <td ng-switch-when="Terminé"><i class="fa fa-exclamation-circle" style="color:blue;font-size:1.5em;"></i></td>
+        <td ng-switch-when="Annulé"><i class="fa fa-exclamation-circle" style="color:red;font-size:1.5em;"></i></td>
+        <td>{{ project.collaborateurs }}</td>
+        <td>{{ project.infos_techniques.modification | date:'dd/MM/yyyy' }}</td>
+-->
+
+        </tr>
+    </tbody>
+  </table>
+  <input class="btn btn-md btn-success btn-block" type="submit" value="Créer un nouveau projet" ng-click="showFormCreateProject()"> <br>
 
 </div>
 
@@ -91,6 +92,17 @@
           </div>
         </div>
 
+        <div class="form-group" ng-cloak="">
+          <br>
+          <label class="col-lg-2 control-label">Date de lancement du projet</label>
+          <md-content>
+            <div class="col-lg-10">
+              <md-datepicker ng-model="dateLaunchProjectNewProject" md-placeholder="Enter date"></md-datepicker>
+            </div>
+            <br>
+          </md-content>
+        </div>
+
         <div class="form-group">
           <label for="textArea" class="col-lg-2 control-label">Commentaires complémentaires</label>
           <div class="col-lg-10">
@@ -110,28 +122,6 @@
   </div>
 
 </section>
-
-
-<!--
-<div class="form-group">
-  <label for="select" class="col-lg-2 control-label">Statut</label>
-  <div class="col-lg-10">
-    <div class="checkbox">
-      <label>
-        <input type="checkbox"> En cours
-      </label>
-      <br>
-      <label>
-        <input type="checkbox"> Annulé
-      </label>
-      <br>
-      <label>
-        <input type="checkbox"> Terminé
-      </label>
-    </div>
-  </div>
-</div>
--->
 
 
 

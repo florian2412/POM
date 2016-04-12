@@ -32,7 +32,8 @@ app.all('*', function(req, res, next) {
     res.set('Access-Control-Allow-Credentials', true);
     res.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT');
     res.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');
-    if ('OPTIONS' == req.method) return res.send(200);
+    if ('OPTIONS' == req.method)
+        return res.send(200);
     next();
 });
 
@@ -83,6 +84,6 @@ mongoose.connect(config.connectionString, function(err) {
 });
 
 // start server
-var server = app.listen(3000, function () {
+var server = app.listen(config.serverPort, function () {
     console.log('Server listening at http://' + server.address().address + ':' + server.address().port);
 });

@@ -1,5 +1,6 @@
 {
     "connectionString": "localhost:27017/dbPOM",
     "apiUrl":  "http://localhost:3000/",
-    "secret": "POM"
+    "secret": "POM",
+    "serverPort": 3000
 }

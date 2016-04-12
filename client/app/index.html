@@ -9,6 +9,7 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
     <link rel="stylesheet" href="bower_components/bower-bootswatch-paper/css/bootstrap.css" />
     <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
     <!-- endbower -->
@@ -94,6 +95,12 @@
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -109,7 +116,11 @@
     <script src="scripts/services/collaborators.service.js"></script>
     <script src="scripts/controllers/login.js"></script>
 
+
+
+    <!-- endbower -->
     <!-- endbuild -->
+
     <script>
     $('.nav > li > a[ui-sref="'+window.location.hash+'"]').parent().addClass('active');
     $(".nav li").on("click", function() {
