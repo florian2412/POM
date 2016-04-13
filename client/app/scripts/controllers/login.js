@@ -13,10 +13,12 @@ angular.module('pomApp').controller('LoginCtrl', function ($scope, $location, $h
 	    authenticateService.authenticate(JSON.stringify({"pseudo":$scope.pseudo, "mot_de_passe":$scope.mot_de_passe}),
 	    	function(response){
 	    		if(response.success){
+	    			$rootScope.$broadcast("LoginSuccess", "isConnected");
 	    			$location.path('main');
 	    		}
 	    		else
 	    		{
+	    			$rootScope.$broadcast("LoginFailed", "isNotConnected");
 	    			//flash service message
 	    			console.log("Erreur connexion");
 	    		}
@@ -26,8 +28,8 @@ angular.module('pomApp').controller('LoginCtrl', function ($scope, $location, $h
 	$scope.$on('$viewContentLoaded', function() {
 		if (authenticateService.getCurrentUser() !== null) {
 			console.log("Logout successful");
-			
 			authenticateService.clearCredentials();
+			$rootScope.$broadcast("LogoutSuccess", "isDisconnected");
 		}
     });
   });
