@@ -1,0 +1,101 @@
+<section>
+  <form class="form-horizontal" >
+
+    <legend>Nouveau collaborateur</legend>
+
+    <!-- Prénom -->
+    <div>
+      <md-input-container class="md-block" flex-gt-sm="">
+        <label>Prénom</label>
+        <input ng-model="collaborator.firstName">
+      </md-input-container>
+    </div>
+
+    <!-- Nom -->
+    <div>
+      <md-input-container class="md-block"  flex-gt-sm="">
+        <label>Nom</label>
+        <input ng-model="collaborator.lastName">
+      </md-input-container>
+    </div>
+
+    <!-- Login -->
+    <div>
+      <md-input-container class="md-block" flex-gt-sm="">
+        <label>Login</label>
+        <input ng-model="collaborator.login">
+      </md-input-container>
+    </div>
+
+    <!-- Rôle -->
+    <div>
+      <md-input-container class="md-block" flex-gt-sm="">
+        <label>Rôle</label>
+        <md-select ng-model="collaborator.role" >
+          <md-option ng-repeat="role in roles" value="{{role}}">
+            {{role}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+    </div>
+
+    <br>
+
+    <!-- Manager -->
+    <div>
+      <md-input-container class="md-block" flex-gt-sm="">
+        <label>Manager</label>
+        <md-select ng-model="collaborator.manager">
+          <md-option ng-repeat="collaborator in collaborators" value="{{ collaborator._id }}">
+            {{ collaborator.prenom }} {{ collaborator.nom }}
+          </md-option>
+        </md-select>
+      </md-input-container>
+    </div>
+
+    <br>
+
+    <!-- Coût horaire -->
+    <div>
+      <md-input-container class="md-block" flex-gt-sm="">
+        <label>Coût horaire</label>
+        <input ng-model="collaborator.cost">
+      </md-input-container>
+    </div>
+
+    <!-- Addresse mail -->
+    <div>
+      <md-input-container class="md-block" flex-gt-sm="">
+        <label>Adresse mail</label>
+        <input ng-model="collaborator.email" type="email">
+      </md-input-container>
+    </div>
+
+    <!-- Mot de passe -->
+    <div>
+      <md-input-container class="md-block" flex-gt-sm="">
+        <label>Mot de passe</label>
+        <input ng-model="collaborator.password" type="password">
+      </md-input-container>
+    </div>
+
+    <!-- Confirmation mot de passe -->
+    <div>
+      <md-input-container class="md-block" flex-gt-sm="">
+        <label>Confirmation mot de passe</label>
+        <input ng-model="collaborator.confirmPassword" type="password">
+      </md-input-container>
+    </div>
+
+    <!-- Boutons de validation -->
+    <div>
+      <md-button class="md-raised" ui-sref="collaborators">Annuler</md-button>
+      <md-button class="md-raised md-primary" ng-click="createCollaborator()">Créer</md-button>
+    </div>
+
+    <br>
+    <br>
+
+  </form>
+
+</section>

@@ -16,7 +16,7 @@ pomApp.config(routerStateProvider);
 function routerStateProvider($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise('/');
-    $stateProvider    
+    $stateProvider
     .state('/', {
             url: '/',
             title : 'Home',
@@ -44,8 +44,8 @@ function routerStateProvider($stateProvider, $urlRouterProvider) {
     .state('projects.details', {
             url : '/:id',
             title : 'Détails du projet',
-            authorized: ["collaborateur", "manager"],
-            views: { 
+            authorized: ["collaborateur", "admin", "manager"],
+            views: {
                 '@': {
                   templateUrl: 'views/projects.views/projects.details.html',
                   controller: 'ProjectsDetailsCtrl'
@@ -64,12 +64,22 @@ function routerStateProvider($stateProvider, $urlRouterProvider) {
             url : '/:id',
             title : 'Détails du collaborateur',
             authorized: ["admin", "manager"],
-            views: { 
+            views: {
                 '@': {
                   templateUrl: 'views/collaborators.views/collaborators.details.html',
                   controller: 'CollaboratorsDetailsCtrl'
                  }
             }
+    })
+    .state('collaborators.create', {
+      title : 'Création d\'un nouveau collaborateur',
+      authorized: ["admin", "manager"],
+      views: {
+        '@': {
+          templateUrl: 'views/collaborators.views/collaborators.create.html',
+          controller: 'CollaboratorsCreateCtrl'
+        }
+      }
     })
     .state('login', {
             url : '/login',
@@ -78,7 +88,6 @@ function routerStateProvider($stateProvider, $urlRouterProvider) {
             controller: 'LoginCtrl',
             controllerAs: 'login',
             authorized: ["collaborateur", "admin", "manager", "public"]
-          
     })
     .state('statistics', {
             url : '/statistics',
@@ -88,7 +97,7 @@ function routerStateProvider($stateProvider, $urlRouterProvider) {
             controllerAs: 'login',*/
             template: '<h4>stats des projets</h4>',
             authorized: ["collaborateur", "admin", "manager"]
-          
+
     })
     .state('settings', {
             url : '/settings',
@@ -98,7 +107,7 @@ function routerStateProvider($stateProvider, $urlRouterProvider) {
             controllerAs: 'login',*/
             template: '<h4>Préférences ici</h4>',
             authorized: ["collaborateur", "admin", "manager"]
-          
+
     })
     .state('help', {
             url : '/help',
@@ -107,8 +116,7 @@ function routerStateProvider($stateProvider, $urlRouterProvider) {
             controller: 'LoginCtrl',
             controllerAs: 'login',*/
             template: '<h4>Aide ici</h4>',
-            authorized: [ "collaborateur", "admin", "manager"]
-          
+            authorized: ["public", "collaborateur", "admin", "manager"]
     })
     .state('restricted', {
             url : '/restricted',
@@ -119,30 +127,34 @@ function routerStateProvider($stateProvider, $urlRouterProvider) {
 };
 
 
+
 pomApp.run(function($rootScope, $location, $state, authenticateService,AuthService) {
-    $rootScope.$on('$locationChangeSuccess', 
-        function(event, toState, toParams, fromState, fromParams){ 
-            
+    $rootScope.$on('$locationChangeSuccess',
+        function(event, toState, toParams, fromState, fromParams){
+
             //console.log("role state change : " + AuthService.getRole());
+
             if (authenticateService.getCurrentUser() === null) {
                 $location.path("/login");
             }
     });
+
     AuthService.getRole = function(){
         if (authenticateService.getCurrentUser() === null)
             return "public";
     };
-    $rootScope.$on('LoginSuccess', function(){ 
+    $rootScope.$on('LoginSuccess', function(){
         AuthService.getRole = function(){
             return authenticateService.getCurrentUser().roles ;
         };
     });
-    $rootScope.$on('LogoutSuccess', function(){ 
+    $rootScope.$on('LogoutSuccess', function(){
         AuthService.getRole = function(){
             return "public";
         };
     });
-    $rootScope.$on('$stateChangeStart', 
+    $rootScope.$on('$stateChangeStart',
+
         function(event, toState, toParams, fromState, fromParams) {
             $rootScope.title = toState.title;
             /*if (authenticateService.getCurrentUser() !== null){
@@ -152,5 +164,6 @@ pomApp.run(function($rootScope, $location, $state, authenticateService,AuthServi
                     $state.go('restricted');
                 }
             }*/
-    }); 
+
+    });
 });
