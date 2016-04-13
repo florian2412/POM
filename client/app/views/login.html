@@ -1,23 +1,48 @@
 <div class="container" ng-controller="LoginCtrl" >
-    <div class="row">
-    	<div class="col-md-8 col-md-offset-2">
-    		<div class="panel panel-default">
-			  	<div class="panel-body">
-			    	<form ng-submit="authenticate()" >
-	                    <fieldset>
-				    	  	<div class="form-group">
-				    		    <input class="form-control" placeholder="Pseudo" name="pseudo" type="text" ng-model="pseudo">
-				    		</div>
-				    		<div class="form-group">
-				    			<input class="form-control" placeholder="Mot de passe" name="mot_de_passe" ng-model="mot_de_passe" type="password" value="">
-				    		</div>
-				    		<input class="btn btn-md btn-success btn-block" type="submit" value="Se connecter">
-				    		</br>
-				    	</fieldset>
-			      	</form>
-			    </div>
+	<!-- <div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<form ng-submit="authenticate()" >
+						<fieldset>
+							<div class="form-group">
+								<input class="form-control" placeholder="Pseudo" name="pseudo" type="text" ng-model="pseudo">
+							</div>
+							<div class="form-group">
+								<input class="form-control" placeholder="Mot de passe" name="mot_de_passe" ng-model="mot_de_passe" type="password" value="">
+							</div>
+							<input class="btn btn-md btn-success btn-block" type="submit" value="Se connecter">
+						</br>
+					</fieldset>
+				</form>
 			</div>
-			<p>{{message}}</p>
 		</div>
 	</div>
+	</div> -->
+	<form ng-submit="authenticate()" >
+	<div layout="column" flex id="content" role="main">
+		<md-content layout="vertical" flex id="content">
+			<div layout="row" layout-align="center center" layout-fill>
+				<!-- <md-whiteframe class="md-whiteframe-z1" layout="column" flex="50" layout-padding> -->
+					<md-content>
+						<md-input-container class="md-icon-float md-block">
+							<label>Pseudo</label>
+							<md-icon><span class="fa fa-user"></span></md-icon>
+							<input type="text" ng-model="pseudo">
+						</md-input-container>
+						<md-input-container class="md-icon-float md-block">
+							<label>Mot de passe</label>
+							<md-icon><span class="fa fa-lock"></span></md-icon>
+							<input name="mot_de_passe" ng-model="mot_de_passe" type="password" >
+						</md-input-container>
+						<md-input-container layout="row" layout-align="center center">
+							<md-button class="md-raised md-primary" type="submit">Se connecter</md-button>
+							<!-- <md-button class="md-raised" type="submit">Se connecter</md-button> -->
+						</md-input-container>
+					</md-content>
+				<!-- </md-whiteframe> -->
+			</div>
+		</md-content>
+	</div>
+</form>
 </div>
