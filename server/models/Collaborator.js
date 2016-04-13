@@ -14,7 +14,7 @@ var schemaCollaborator = mongoose.Schema({
     manager: mongoose.Schema.ObjectId,
     status: String,
     cout_horaire: Number,
-    roles: [String] // Admin, Collaborateur, Manager
+    roles: String // Admin, Collaborateur, Manager
 });
 
 module.exports = mongoose.model('Collaborateur', schemaCollaborator);

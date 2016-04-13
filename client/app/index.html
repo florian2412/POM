@@ -46,10 +46,10 @@
               <li><a ui-sref="/">Accueil</a></li>
               <li><a ui-sref="projects">Projets</a></li>
               <li><a ui-sref="collaborators">Collaborateurs</a></li>
-              <li><a ui-sref="/">Statistiques</a></li>
-              <li><a ui-sref="/">Préférences</a></li>
+              <li><a ui-sref="statistics">Statistiques</a></li>
+              <li><a ui-sref="settings">Préférences</a></li>
               <li><a ui-sref="about">A propos</a></li>
-              <li><a ui-sref="/">Aide</a></li>
+              <li><a ui-sref="help">Aide</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a ui-sref="login" ng-show="!currentUser">Se connecter</a></li>
@@ -68,7 +68,6 @@
     <div class="footer">
       <div class="container">
         <p>M2 MIAGE Bordeaux - Projet Techniques de Développement Avancées - 2016</p>
-         <h1>{{isUserLoggedIn}}</h1>
       </div>
     </div>
 

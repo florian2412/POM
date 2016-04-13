@@ -23,7 +23,7 @@ function routerStateProvider($stateProvider, $urlRouterProvider) {
             templateUrl: 'views/main.html',
             controller: 'MainCtrl',
             controllerAs: 'main',
-            authorized: ["collaborator", "admin", "manager"]
+            authorized: ["public", "collaborateur", "admin", "manager"]
     })
     .state('about', {
             url : '/about',
@@ -31,6 +31,7 @@ function routerStateProvider($stateProvider, $urlRouterProvider) {
             templateUrl: 'views/about.html',
             controller: 'AboutCtrl',
             controllerAs: 'about',
+            authorized: ["public", "collaborateur", "admin", "manager"]
     })
     .state('projects', {
             url : '/projects',
@@ -38,11 +39,13 @@ function routerStateProvider($stateProvider, $urlRouterProvider) {
             templateUrl: 'views/projects.views/projects.list.html',
             controller: 'ProjectsCtrl',
             controllerAs: 'projects',
+            authorized: ["admin", "manager"]
     })
     .state('projects.details', {
             url : '/:id',
             title : 'Détails du projet',
-            views: {
+            authorized: ["collaborateur", "admin", "manager"],
+            views: { 
                 '@': {
                   templateUrl: 'views/projects.views/projects.details.html',
                   controller: 'ProjectsDetailsCtrl'
@@ -54,12 +57,14 @@ function routerStateProvider($stateProvider, $urlRouterProvider) {
             title : 'Collaborateurs',
             templateUrl: 'views/collaborators.views/collaborators.list.html',
             controller: 'CollaboratorsCtrl',
-            controllerAs: 'collaborators'
+            controllerAs: 'collaborators',
+            authorized: ["collaborateur", "admin", "manager"]
     })
     .state('collaborators.details', {
             url : '/:id',
             title : 'Détails du collaborateur',
-            views: {
+            authorized: ["admin", "manager"],
+            views: { 
                 '@': {
                   templateUrl: 'views/collaborators.views/collaborators.details.html',
                   controller: 'CollaboratorsDetailsCtrl'
@@ -71,20 +76,65 @@ function routerStateProvider($stateProvider, $urlRouterProvider) {
             title : 'Se connecter',
             templateUrl: 'views/login.html',
             controller: 'LoginCtrl',
-            controllerAs: 'login'
-
+            controllerAs: 'login',
+            authorized: ["collaborateur", "admin", "manager"]
+          
+    })
+    .state('statistics', {
+            url : '/statistics',
+            title : 'Statistiques',
+           /* templateUrl: 'views/login.html',
+            controller: 'LoginCtrl',
+            controllerAs: 'login',*/
+            template: '<h4>stats des projets</h4>',
+            authorized: ["collaborateur", "admin", "manager"]
+          
+    })
+    .state('settings', {
+            url : '/settings',
+            title : 'Préférences',
+           /* templateUrl: 'views/login.html',
+            controller: 'LoginCtrl',
+            controllerAs: 'login',*/
+            template: '<h4>Préférences ici</h4>',
+            authorized: ["collaborateur", "admin", "manager"]
+          
+    })
+    .state('help', {
+            url : '/help',
+            title : 'Aide',
+           /* templateUrl: 'views/login.html',
+            controller: 'LoginCtrl',
+            controllerAs: 'login',*/
+            template: '<h4>Aide ici</h4>',
+            authorized: ["public", "collaborateur", "admin", "manager"]
+          
+    })
+    .state('restricted', {
+            url : '/restricted',
+            title : 'Accès refusé',
+            template: '<h4>Vous n\'avez pas les droits d\'accès. Contactez votre manager.</h4>',
+            authorized: ["public", "collaborateur", "admin", "manager"]
     });
 };
 
 
 pomApp.run(function($rootScope, $location,$state, authenticateService) {
     $rootScope.$on('$locationChangeSuccess', 
-      function(event, toState, toParams, fromState, fromParams){ 
-        $rootScope.title = toState.title;
-        console.log(authenticateService.getCurrentUser());
-        if (authenticateService.getCurrentUser() === null) {
-            console.log("pas loggé");
-            $location.path("/login");
-        }
+        function(event, toState, toParams, fromState, fromParams){ 
+            $rootScope.title = toState.title;
+            if (authenticateService.getCurrentUser() === null) {
+                $location.path("/login");
+            }
     });
+    $rootScope.$on('$stateChangeStart', 
+        function(event, toState, toParams, fromState, fromParams) {
+            if (authenticateService.getCurrentUser() !== null){
+                if(toState.authorized.indexOf($rootScope.currentUser.roles) < 0)
+                {
+                    event.preventDefault();
+                    $state.go('restricted');
+                }
+            }
+    }); 
 });

@@ -17,14 +17,16 @@ angular.module('pomApp').controller('LoginCtrl', function ($scope, $location, $h
 	    		}
 	    		else
 	    		{
-	    			console.log("erreur connexion");
+	    			//flash service message
+	    			console.log("Erreur connexion");
 	    		}
 	    	});
 	};
 
 	$scope.$on('$viewContentLoaded', function() {
 		if (authenticateService.getCurrentUser() !== null) {
-			console.log("déconnecter l'user");
+			console.log("Logout successful");
+			
 			authenticateService.clearCredentials();
 		}
     });
