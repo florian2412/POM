@@ -24,9 +24,9 @@ curl -H "Content-Type: application/json" -X POST -d '{ "nom": "Projet 1", "date_
 
 
 { "nom": "Pussacq","prenom": "Florian","pseudo": "florian2412","mot_de_passe": "azerty","status": "Developpeur","cout_horaire": 250}
+{ "nom": "Pussacq","prenom": "Florian", "pseudo": "flo", "mot_de_passe": "flo", "status": "admin","roles": "admin", "cout_horaire": 250 }
 
-
-curl -H "Content-Type: application/json" -X POST -d '{ "nom": "Pussacq","prenom": "Florian","pseudo": "florian2412","mot_de_passe": "azerty","status": "Developpeur","cout_horaire": 250}' http://localhost:3000/collaborators
+curl -H "Content-Type: application/json" -X POST -d '{ "nom": "Pussacq","prenom": "Florian", "pseudo": "flo", "mot_de_passe": "flo", "status": "admin","roles": "admin", "cout_horaire": 250 }' http://localhost:3000/collaborators
 
 
 
