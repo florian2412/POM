@@ -9,7 +9,7 @@
  */
 angular
   .module('pomApp')
-  .controller('ProjectsCtrl', function ($scope, $location, $http, databaseService, projectsService, collaboratorsService) {
+  .controller('ProjectsCtrl', function ($scope, $location, $http, databaseService) {
 
     // Affiche ou rafraichit tous les projets dans le tableau des projets
     $scope.showAllProjects = function(){
@@ -22,7 +22,20 @@ angular
           });
     };
 
+    var getObjectById = function(collection, id) {
+      databaseService.getObjectById(collection, id)
+        .success(function (data) {
+          return data;
+        })
+        .error(function (err) {
+          return err;
+        });
+    };
+
     $scope.getCollaboratorById = function(id) {
+      $scope.project.chef_projet = getObjectById('collaborators', id);
+
+      /*
       databaseService.getObjectById('collaborators', id)
         .success(function (data) {
           console.log(data);
@@ -31,9 +44,13 @@ angular
         .error(function (err) {
           console.error(err);
         });
+        */
     };
 
     $scope.getProjectById = function(id){
+      $scope.project.projectDetail = getObjectById('projects', id);
+
+      /*
       databaseService.getObjectById('projects', id)
             .success(function (data) {
                 console.log(data);
@@ -42,13 +59,11 @@ angular
             .error(function (err) {
                 console.error(err);
             });
+            */
     };
 
 
     $scope.createProject = function() {
-
-      //var chef_projet_all = "{ \"nom\": \"Pussacq\",\"prenom\": \"Florian\",\"pseudo\": \"florian2412\",\"mot_de_passe\": \"azerty\",\"status\": \"Developpeur\",\"cout_horaire\": 250}"   ;
-
 /*
       nom: String,
         chef_projet: mongoose.Schema.ObjectId,

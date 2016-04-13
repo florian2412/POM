@@ -5,21 +5,12 @@
  * @name pomApp.controller:CollaboratorsCreateCtrl
  * @description
  * # CollaboratorsCreateCtrl
- * Controller of the pomApp
+ * Controller of the collaborators.create
  */
+
 angular.module('pomApp')
   .controller('CollaboratorsCreateCtrl', function ($scope, databaseService) {
-
-    $scope.roles = ["Admin", "Manager", "Collaborateur"];
-
-    databaseService.getAllObjects('collaborators')
-      .success(function (data) {
-        $scope.collaborators = data;
-      })
-      .error(function (err) {
-        console.error(err);
-      });
-
+    
     $scope.createCollaborator = function() {
 
       var lastName = $scope.collaborator.lastName;
@@ -52,8 +43,25 @@ angular.module('pomApp')
         .error(function (err) {
           console.log(err);
         });
+
+
+      route
     };
 
+    // Lancement au chargement de la page
+    $scope.$on('$viewContentLoaded', function() {
 
+      // Rôle proposé dans le combo du formulaire de création
+      $scope.roles = ["Admin", "Manager", "Collaborateur"];
+
+
+      databaseService.getAllObjects('collaborators')
+        .success(function (data) {
+          $scope.collaborators = data;
+        })
+        .error(function (err) {
+          console.error(err);
+        });
+    });
 
   });
