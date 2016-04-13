@@ -12,9 +12,10 @@ var schemaCollaborator = mongoose.Schema({
     pseudo: String,
     mot_de_passe: String,
     manager: mongoose.Schema.ObjectId,
-    status: String,
+    statut: String,
     cout_horaire: Number,
-    roles: String // Admin, Collaborateur, Manager
+    role: String, // Admin, Collaborateur, Manager
+    email: String
 });
 
 module.exports = mongoose.model('Collaborateur', schemaCollaborator);

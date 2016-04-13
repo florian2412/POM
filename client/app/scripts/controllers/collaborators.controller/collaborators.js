@@ -8,17 +8,16 @@
  * Controller of the pomApp
  */
 angular.module('pomApp')
-  .controller('CollaboratorsCtrl', function ($scope, collaboratorsService) {
+  .controller('CollaboratorsCtrl', function ($scope, collaboratorsService, databaseService) {
 
 
-    $scope.showAllCollaborators = function(){
-      collaboratorsService.getAllCollaborators()
+    $scope.showAllCollaborators = function() {
+      databaseService.getAllObjects('collaborators')
         .success(function (data) {
           $scope.collaborators = data;
-
+          $scope.collaboratorsManager = data;
         })
         .error(function (err) {
-          console.error("Error !");
           console.error(err);
         });
     };
@@ -28,26 +27,31 @@ angular.module('pomApp')
 
 
     $scope.createCollaborator = function() {
-      // NC --> NewCollaborator
-      var lastName = $scope.lastNameNC;
-      var firstName = $scope.firstNameNC;
-      var manager = $scope.managerNC
-      var status = $scope.statusNC;
-      var login = $scope.loginNC;
-      var password = $scope.loginNC;
-      var cost = $scope.costNC;
+
+      var lastName = $scope.collaborator.lastName;
+      var firstName = $scope.collaborator.firstName;
+      var manager = $scope.collaborator.manager;
+      var role = $scope.collaborator.role;
+      var login = $scope.collaborator.login;
+      var password = $scope.collaborator.password;
+      var confirmPassword = $scope.collaborator.confirmPassword;
+      var cost = $scope.collaborator.cost;
+      var email = $scope.collaborator.email;
 
 
       // TODO Faire la validation du formulaire de création du collaborateur
       var data = "{ \"nom\": " + "\"" + lastName + "\" "
         + ", \"prenom\": " + "\"" + firstName + "\" "
-        + ", \manager\": \"" + manager + "\" ";
-        + ", \status\": \"" + status + "\" "
-        + ", \login\": \"" + login+ "\" "
-        + ", \password\": \"" +  + "\" ";
-        + ", \cout_horaire\": \"" + cost + "\" } ";
+        + ", \"manager\": \"" + manager + "\" "
+        + ", \"role\": \"" + role + "\" "
+        + ", \"pseudo\": \"" + login + "\" "
+        + ", \"mot_de_passe\": \"" + password + "\" "
+        + ", \"cout_horaire\": \"" + cost + "\" "
+        + ", \"email\": \"" + email + "\" } ";
 
-      collaboratorsService.createCollaborator(data)
+      console.log(data);
+
+      databaseService.createObject('collaborators', data)
         .success(function (data) {
           console.log(data);
 
@@ -65,7 +69,7 @@ angular.module('pomApp')
 
 
     $scope.deleteCollaborator = function(id) {
-      collaboratorsService.deleteCollaborator(id)
+      databaseService.deleteObject('collaborators', id)
         .success(function (data) {
           // Update liste projets
           $scope.showAllCollaborators();
@@ -82,12 +86,14 @@ angular.module('pomApp')
 
       $scope.dateLaunchCollaboratorNewCollaborator = new Date();
 
-      collaboratorsService.getAllCollaborators()
+      $scope.showAllCollaborators();
+
+      /*
+      databaseService.getAllObjects('collaborators')
         .success(function (data) {
           $scope.collaborators = data;
         });
-
-
+      */
     };
 
     $scope.hideFormCreateCollaborator = function () {
