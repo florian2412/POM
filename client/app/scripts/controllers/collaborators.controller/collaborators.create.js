@@ -10,7 +10,7 @@
 
 angular.module('pomApp')
   .controller('CollaboratorsCreateCtrl', function ($scope, databaseService) {
-    
+
     $scope.createCollaborator = function() {
 
       var lastName = $scope.collaborator.lastName;
@@ -45,7 +45,7 @@ angular.module('pomApp')
         });
 
 
-      route
+      
     };
 
     // Lancement au chargement de la page
