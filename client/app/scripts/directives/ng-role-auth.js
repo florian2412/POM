@@ -20,7 +20,7 @@
 })();
 (function(){
 	
-	var dtCheck = 5000;
+	var dtCheck = 1000;
 	
 	function Directive($interval, authService){
 		

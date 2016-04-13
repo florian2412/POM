@@ -43,13 +43,13 @@
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
             <ul class="nav navbar-nav" id="my_navbar">
-              <li><a ui-sref="/" nra-auth="['admin', 'collaborateur', 'manager']" ng-show="currentUser">Accueil</a></li>
-              <li><a ui-sref="projects" nra-auth="['admin', 'collaborateur', 'manager']" ng-show="currentUser">Projets</a></li>
-              <li><a ui-sref="collaborators" nra-auth="['admin', 'collaborateur', 'manager']" ng-show="currentUser">Collaborateurs</a></li>
-              <li><a ui-sref="statistics" nra-auth="['admin', 'collaborateur', 'manager']" ng-show="currentUser">Statistiques</a></li>
-              <li><a ui-sref="settings" nra-auth="['admin', 'collaborateur', 'manager']" ng-show="currentUser">Préférences</a></li>
-              <li><a ui-sref="about" nra-auth="['admin', 'collaborateur', 'manager']" ng-show="currentUser">A propos</a></li>
-              <li><a ui-sref="help" nra-auth="['admin', 'collaborateur', 'manager']" ng-show="currentUser">Aide</a></li>
+              <li><a ui-sref="/" nra-auth="['admin', 'collaborateur', 'manager']" >Accueil</a></li>
+              <li><a ui-sref="projects" nra-auth="['admin', 'collaborateur', 'manager']" >Projets</a></li>
+              <li><a ui-sref="collaborators" nra-auth="['admin', 'collaborateur', 'manager']" >Collaborateurs</a></li>
+              <li><a ui-sref="statistics" nra-auth="['admin', 'collaborateur', 'manager']" >Statistiques</a></li>
+              <li><a ui-sref="settings" nra-auth="['admin', 'collaborateur', 'manager']" >Préférences</a></li>
+              <li><a ui-sref="about" nra-auth="['admin', 'collaborateur', 'manager']" >A propos</a></li>
+              <li><a ui-sref="help" nra-auth="['admin', 'collaborateur', 'manager']" >Aide</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a ui-sref="login" ng-show="!currentUser">Se connecter <span class="fa fa-sign-in"></span></a></li>
@@ -58,6 +58,9 @@
           </div>
         </div>
       </div>
+      <div class="flash-message" ng-if="flash">
+            <div class="{{'alert alert-' + flash.type}}" ng-bind="flash.message"></div>
+        </div>
     </div>
 
     <div class="container">
@@ -111,6 +114,7 @@
     <script src="scripts/services/collaborators.service.js"></script>
     <script src="scripts/services/database.service.js"></script>
     <script src="scripts/services/authenticate.service.js"></script>
+    <script src="scripts/services/flash.service.js"></script>
     <script src="scripts/directives/ng-role-auth.js"></script>
     <!-- endbower -->
     <!-- endbuild -->

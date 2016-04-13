@@ -7,9 +7,10 @@
  * # LoginCtrl
  * Controller of the pomApp
  */
-angular.module('pomApp').controller('LoginCtrl', function ($scope, $location, $http, $rootScope, authenticateService){
+angular.module('pomApp').controller('LoginCtrl', function ($scope, $location, $http, $rootScope, authenticateService, FlashService){
   	
   	$scope.authenticate = function() {
+  		if($scope.pseudo && $scope.mot_de_passe){
 	    authenticateService.authenticate(JSON.stringify({"pseudo":$scope.pseudo, "mot_de_passe":$scope.mot_de_passe}),
 	    	function(response){
 	    		if(response.success){
@@ -19,10 +20,13 @@ angular.module('pomApp').controller('LoginCtrl', function ($scope, $location, $h
 	    		else
 	    		{
 	    			$rootScope.$broadcast("LoginFailed", "isNotConnected");
-	    			//flash service message
 	    			console.log("Erreur connexion");
 	    		}
 	    	});
+		}else
+		{
+			FlashService.Error('Pseudo ou mot de pase incorrect');
+		}
 	};
 
 	$scope.$on('$viewContentLoaded', function() {
