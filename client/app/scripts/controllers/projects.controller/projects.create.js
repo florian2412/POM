@@ -9,7 +9,7 @@
  */
 
 angular.module('pomApp')
-  .controller('ProjectsCreateCtrl', function ($scope, $rootScope, databaseService) {
+  .controller('ProjectsCreateCtrl', function ($scope, $state, $rootScope, databaseService) {
 
     $scope.createProject = function() {
 
@@ -37,6 +37,7 @@ angular.module('pomApp')
       databaseService.createObject('projects', data)
         .success(function (data) {
           console.log(data);
+          $state.go("collaborators");
         })
         .error(function (err) {
           console.log(err);
@@ -47,7 +48,9 @@ angular.module('pomApp')
     // Lancement au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
 
+      // Infos en dur pour le moment
       $scope.budgets = ["Ligne budget 1 : 30000€", "Ligne budget 2 : 50000€", "Ligne budget 3 : 100000€"];
+
       $scope.statuts = ["Initial", "En cours", "Annulé", "Terminé"]
 
 

@@ -21,6 +21,7 @@ angular.module('pomApp')
     };
 
     $scope.deleteCollaborator = function(id) {
+      console.log(id);
       databaseService.deleteObject('collaborators', id)
         .success(function (data) {
           // Update liste projets

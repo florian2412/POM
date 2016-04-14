@@ -3,12 +3,12 @@
   <md-card>
 
     <div layout="column" role="main">
-      
-      <md-card-content>
 
-        <div layout="" layout-align="center">
+      <form class="form-horizontal" name="loginForm" >
 
-          <form class="form-horizontal" name="loginForm" >
+        <div class="col-md-6 col-md-offset-3">
+
+          <md-card-content>
 
             <md-input-container class="md-icon-float md-block">
               <label>Pseudo</label>
@@ -28,17 +28,17 @@
               </div>
             </md-input-container>
 
-          </form>
+          </md-card-content>
+
+          <md-card-actions layout="row" layout-align="center">
+
+            <md-button class="md-raised md-primary" type="submit" ng-click="authenticate()">Se connecter</md-button>
+
+          </md-card-actions>
 
         </div>
 
-      </md-card-content>
-
-      <md-card-actions layout="row" layout-align="center">
-
-        <md-button class="md-raised md-primary" type="submit" ng-click="authenticate()">Se connecter</md-button>
-
-      </md-card-actions>
+      </form>
 
     </div>
 

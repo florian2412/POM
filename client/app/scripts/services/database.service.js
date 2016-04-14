@@ -37,6 +37,8 @@ angular.module('pomApp').factory('databaseService', function ($http) {
     },
 
     deleteObject: function(collection, id){
+      console.log(collection);
+      console.log(id);
       return  $http({
         method: 'DELETE',
         url: 'http://localhost:3000/' + collection + '/' + id,

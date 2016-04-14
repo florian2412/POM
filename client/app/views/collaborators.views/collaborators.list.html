@@ -7,8 +7,10 @@
         <th>Prénom</th>
         <th>Nom</th>
         <th>Pseudo</th>
-        <th>Status</th>
+        <th>Manager</th>
         <th>Rôle</th>
+        <th>Supprimer ?</th>
+
       </tr>
       </thead>
       <tbody>
@@ -17,8 +19,9 @@
         <td>{{ collaborator.prenom }}</td>
         <td>{{ collaborator.nom }}</td>
         <td>{{ collaborator.pseudo }}</td>
-        <td>{{ collaborator.status }}</td>
+        <td>{{ collaborator.manager }}</td>
         <td>{{ collaborator.role }}</td>
+        <td><a ng-click="deleteCollaborator(collaborator._id)"><span class="glyphicon glyphicon-remove-circle" style="color: orange;font-size:1.5em;"></span> </a></td>
       </tr>
       </tbody>
     </table>

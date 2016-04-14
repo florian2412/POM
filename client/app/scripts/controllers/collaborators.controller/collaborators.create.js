@@ -9,7 +9,7 @@
  */
 
 angular.module('pomApp')
-  .controller('CollaboratorsCreateCtrl', function ($scope, databaseService) {
+  .controller('CollaboratorsCreateCtrl', function ($scope, $state, databaseService) {
 
     $scope.createCollaborator = function() {
 
@@ -39,6 +39,7 @@ angular.module('pomApp')
       databaseService.createObject('collaborators', data)
         .success(function (data) {
           console.log(data);
+          $state.go("collaborators");
         })
         .error(function (err) {
           console.log(err);
@@ -48,7 +49,7 @@ angular.module('pomApp')
 
     };
 
-    
+
     // Lancement au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
 
