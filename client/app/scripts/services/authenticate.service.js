@@ -7,7 +7,7 @@
  * # collaboratorsService
  * Service in the pomApp.
  */
-angular.module('pomApp').factory('authenticateService', function ($http, $rootScope, collaboratorsService) {
+angular.module('pomApp').factory('authenticateService', function ($http, $rootScope) {
     var service = {};
 
     service.authenticate = Authenticate;
@@ -24,13 +24,13 @@ angular.module('pomApp').factory('authenticateService', function ($http, $rootSc
 						            data: data,
             			      headers: { 'Content-Type': 'application/json' },
     					          url: 'http://localhost:3000/collaborators/authenticate'});
-      
+
       res.success(function (r) {
         if(r.success){
           SetCredentials(r.collaborator);
-          response = { "success" : r.success, "message" : r.message }; 
+          response = { "success" : r.success, "message" : r.message };
         }
-        response = { "success" : r.success, "message" : "Pseudo ou mot de passe incorrect" }; 
+        response = { "success" : r.success, "message" : "Pseudo ou mot de passe incorrect" };
         callback(response);
       })
       .error(function (err) {
@@ -44,7 +44,7 @@ angular.module('pomApp').factory('authenticateService', function ($http, $rootSc
       return $rootScope.currentUser;
     }
 
-    function SetCredentials(collaborator) { $rootScope.currentUser = { "pseudo" : collaborator.pseudo, "roles" : collaborator.roles };}
+    function SetCredentials(collaborator) { $rootScope.currentUser = collaborator;}
 
     function ClearCredentials() { $rootScope.currentUser = null; }
 

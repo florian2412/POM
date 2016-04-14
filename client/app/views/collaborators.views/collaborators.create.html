@@ -11,19 +11,19 @@
 
     <form class="form-horizontal" >
 
-      <!-- Prénom -->
-      <div>
-        <md-input-container class="md-block">
-          <label>Prénom</label>
-          <input ng-model="collaborator.firstName">
-        </md-input-container>
-      </div>
-
       <!-- Nom -->
       <div>
         <md-input-container class="md-block">
           <label>Nom</label>
           <input ng-model="collaborator.lastName">
+        </md-input-container>
+      </div>
+
+      <!-- Prénom -->
+      <div>
+        <md-input-container class="md-block">
+          <label>Prénom</label>
+          <input ng-model="collaborator.firstName">
         </md-input-container>
       </div>
 
@@ -102,7 +102,7 @@
   <md-card-actions layout="row" layout-align="end center">
 
     <md-button class="md-raised" ui-sref="collaborators">Annuler</md-button>
-    <md-button class="md-raised md-primary" ng-click="createCollaborator()">Créer</md-button>
+    <md-button class="md-raised md-primary" type="submit" ng-click="createCollaborator()">Créer</md-button>
 
   </md-card-actions>
 

@@ -142,8 +142,8 @@ function routerStateProvider($stateProvider, $urlRouterProvider, $mdDateLocalePr
 
 pomApp.run(function($rootScope, $location, $state, authenticateService,AuthService) {
 
-    $rootScope.$on('$locationChangeSuccess', 
-        function(event, toState, toParams, fromState, fromParams){ 
+    $rootScope.$on('$locationChangeSuccess',
+        function(event, toState, toParams, fromState, fromParams){
             if (authenticateService.getCurrentUser() === null) {
                 $location.path("/login");
             }
@@ -155,7 +155,7 @@ pomApp.run(function($rootScope, $location, $state, authenticateService,AuthServi
     };
     $rootScope.$on('LoginSuccess', function(){
         AuthService.getRole = function(){
-            return authenticateService.getCurrentUser().roles ;
+            return authenticateService.getCurrentUser().role ;
         };
     });
     $rootScope.$on('LogoutSuccess', function(){
