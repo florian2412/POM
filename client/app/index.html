@@ -52,8 +52,8 @@
               <li><a ui-sref="help" nra-auth="['admin', 'collaborateur', 'manager']" >Aide</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a ui-sref="login" ng-show="!currentUser">Se connecter <span class="fa fa-sign-in"></span></a></li>
-              <li><a ui-sref="login" ng-show="currentUser">Se déconnecter <span class="fa fa-power-off"></a></li>
+              <li><a ui-sref="login" ng-show="!isAuthenticated">Se connecter <span class="fa fa-sign-in"></span></a></li>
+              <li><a ui-sref="login" ng-show="isAuthenticated">Se déconnecter <span style="color:red;" class="fa fa-power-off"></span></a></li>
             </ul>
           </div>
         </div>
@@ -98,6 +98,7 @@
     <script src="bower_components/angular-messages/angular-messages.js"></script>
     <script src="bower_components/angular-material/angular-material.js"></script>
     <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

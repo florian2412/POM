@@ -8,8 +8,8 @@
  * Controller of the pomApp
  */
 angular.module('pomApp')
-  .controller('MainCtrl', function ($scope, $rootScope, $location) {
+  .controller('MainCtrl', function ($scope, $rootScope, $location, localStorageService) {
 
-  	$scope.user = $rootScope.currentUser;
+  	$scope.user = localStorageService.get('currentUser').pseudo;
 	
   });

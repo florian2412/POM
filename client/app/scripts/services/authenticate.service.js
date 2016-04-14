@@ -7,7 +7,7 @@
  * # collaboratorsService
  * Service in the pomApp.
  */
-angular.module('pomApp').factory('authenticateService', function ($http, $rootScope) {
+angular.module('pomApp').factory('authenticateService', function ($http, $rootScope, localStorageService) {
     var service = {};
 
     service.authenticate = Authenticate;
@@ -28,9 +28,9 @@ angular.module('pomApp').factory('authenticateService', function ($http, $rootSc
       res.success(function (r) {
         if(r.success){
           SetCredentials(r.collaborator);
-          response = { "success" : r.success, "message" : r.message };
-        }
-        response = { "success" : r.success, "message" : "Pseudo ou mot de passe incorrect" };
+          response = { "success" : r.success, "message" : r.message }; 
+        } else { response = { "success" : r.success, "message" : "Pseudo ou mot de passe incorrect" }; }
+
         callback(response);
       })
       .error(function (err) {
@@ -38,15 +38,11 @@ angular.module('pomApp').factory('authenticateService', function ($http, $rootSc
       });
     }
 
-    function GetCurrentUser(){
-      if ($rootScope.currentUser == null || $rootScope.currentUser == {} )
-        return null;
-      return $rootScope.currentUser;
-    }
+    function GetCurrentUser(){ return localStorageService.get('currentUser');}
 
-    function SetCredentials(collaborator) { $rootScope.currentUser = collaborator;}
+    function SetCredentials(collaborator) { localStorageService.set('currentUser',collaborator);}
 
-    function ClearCredentials() { $rootScope.currentUser = null; }
+    function ClearCredentials() { localStorageService.remove('currentUser'); }
 
     function Logout() { ClearCredentials(); }
 });
