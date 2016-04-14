@@ -32,7 +32,7 @@
       </tr>
     </tbody>
   </table>
-  <input nra-auth="['manager','admin']" class="btn btn-md btn-success btn-block" type="submit" value="Créer un nouveau projet" ng-click="showFormCreateProject()"> <br>
+  <input nra-auth="['manager','admin']" class="btn btn-md btn-success btn-block" type="submit" value="Créer un nouveau projet" ui-sref=".create"> <br>
 
 </div>
 
@@ -55,7 +55,7 @@
   });
   -->
 
-
+<!--
 
   <div ng-show="showForm" >
 
@@ -73,7 +73,7 @@
         <div class="form-group">
           <label for="select" class="col-lg-2 control-label">Chef de projet</label>
           <div class="col-lg-10">
-            <select class="form-control" id="select" ng-model="collaboratorIdNewProject" > <!-- ng-model="collaborator.name" -->
+            <select class="form-control" id="select" ng-model="collaboratorIdNewProject" >
               <option value="">-- Sélectionner un chef de projet --</option>
               <option ng:repeat="collaborator in collaborators" value="{{collaborator._id}}">
                 {{collaborator.prenom}} {{collaborator.nom}}
@@ -110,6 +110,7 @@
     </form>
 
   </div>
+  -->
 
 </section>
 

@@ -54,6 +54,16 @@ function routerStateProvider($stateProvider, $urlRouterProvider, $mdDateLocalePr
                 }
             }
     })
+    .state('projects.create', {
+      title : 'Création d\'un nouveau projet',
+      authorized: ["admin", "manager"],
+      views: {
+        '@': {
+          templateUrl: 'views/projects.views/projects.create.html',
+          controller: 'ProjectsCreateCtrl'
+        }
+      }
+    })
     .state('collaborators', {
             url : '/collaborators',
             title : 'Collaborateurs',

@@ -1,0 +1,82 @@
+<md-card>
+  <md-card-title>
+
+    <md-card-title-text>
+      <span class="md-headline">Création d'un nouveau projet</span>
+    </md-card-title-text>
+
+  </md-card-title>
+
+  <md-card-content>
+
+    <form class="form-horizontal" >
+
+
+
+      <div>
+        <md-input-container class="md-block">
+          <label>Nom du projet</label>
+          <input ng-model="project.name">
+        </md-input-container>
+      </div>
+
+
+      <div class="form-group" ng-cloak="">
+        <md-input-container class="md-block">
+          <label>Date de début de projet</label>
+          <md-content>
+            <div class="col-lg-10">
+              <md-datepicker ng-model="project.startDate" md-placeholder="Entrer date"></md-datepicker>
+            </div>
+          </md-content>
+        </md-input-container>
+      </div>
+
+
+      <div class="form-group" ng-cloak="">
+        <label>Date de fin théorique de projet</label>
+        <md-content>
+          <div class="col-lg-10">
+            <md-datepicker ng-model="project.endDate" md-placeholder="Entrer date"></md-datepicker>
+          </div>
+        </md-content>
+      </div>
+
+      <!-- Statut -->
+      <div>
+        <md-input-container class="md-block">
+          <label>Rôle</label>
+          <md-select ng-model="collaborator.role" >
+            <md-option ng-repeat="statut in statuts" value="{{statut}}">
+              {{statut}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+      </div>
+
+      <!-- Ligne budgétaire -->
+      <div>
+        <md-input-container class="md-block">
+          <label>Rôle</label>
+          <md-select ng-model="collaborator.role" >
+            <md-option ng-repeat="budget in budgets" value="{{budget._id}}">
+              {{ budget.libelle }} {{ budget.montant_depart }}
+            </md-option>
+          </md-select>
+        </md-input-container>
+      </div>
+
+    </form>
+
+  </md-card-content>
+
+  <md-card-actions layout="row" layout-align="end center">
+
+    <md-button class="md-raised" ui-sref="projects">Annuler</md-button>
+    <md-button class="md-raised md-primary" ng-click="createProject()">Créer</md-button>
+
+  </md-card-actions>
+
+</md-card>
+
+<br>
