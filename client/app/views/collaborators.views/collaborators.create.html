@@ -1,110 +1,90 @@
 <md-card>
-  <md-card-title>
 
-    <md-card-title-text>
-      <span class="md-headline">Création d'un nouveau collaborateur</span>
-    </md-card-title-text>
-
-  </md-card-title>
+  <md-toolbar layout=""row">
+  <div class="md-toolbar-tools">
+    <h2 class="md-flex" style="color:white">Création d'un nouveau collaborateur</h2>
+  </div>
+  </md-toolbar>
 
   <md-card-content>
 
     <form class="form-horizontal" >
-
       <!-- Nom -->
-      <div>
-        <md-input-container class="md-block">
-          <label>Nom</label>
-          <input ng-model="collaborator.lastName">
-        </md-input-container>
-      </div>
+      <md-input-container class="md-block">
+        <label>Nom</label>
+        <input ng-model="collaborator.lastName" required>
+      </md-input-container>
 
       <!-- Prénom -->
-      <div>
-        <md-input-container class="md-block">
-          <label>Prénom</label>
-          <input ng-model="collaborator.firstName">
-        </md-input-container>
-      </div>
+      <md-input-container class="md-block">
+        <label>Prénom</label>
+        <input ng-model="collaborator.firstName" required>
+      </md-input-container>
 
       <!-- Login -->
-      <div>
-        <md-input-container class="md-block">
-          <label>Login</label>
-          <input ng-model="collaborator.login">
-        </md-input-container>
-      </div>
+      <md-input-container class="md-block">
+        <label>Login</label>
+        <input ng-model="collaborator.login" required>
+      </md-input-container>
 
       <!-- Rôle -->
-      <div>
-        <md-input-container class="md-block">
-          <label>Rôle</label>
-          <md-select ng-model="collaborator.role" >
-            <md-option ng-repeat="role in roles" value="{{role}}">
-              {{role}}
-            </md-option>
-          </md-select>
-        </md-input-container>
-      </div>
+      <md-input-container class="md-block">
+        <label>Rôle</label>
+        <md-select ng-model="collaborator.role" >
+          <md-option ng-repeat="role in roles" value="{{role}}" required>
+            {{role}}
+          </md-option>
+        </md-select>
+      </md-input-container>
 
       <br>
 
       <!-- Manager -->
-      <div>
-        <md-input-container class="md-block">
-          <label>Manager</label>
-          <md-select ng-model="collaborator.manager">
-            <md-option ng-repeat="collaborator in collaborators" value="{{ collaborator._id }}">
-              {{ collaborator.prenom }} {{ collaborator.nom }}
-            </md-option>
-          </md-select>
-        </md-input-container>
-      </div>
+      <md-input-container class="md-block">
+        <label>Manager</label>
+        <md-select ng-model="collaborator.manager" required>
+          <md-option ng-repeat="collaborator in collaborators" value="{{ collaborator._id }}">
+            {{ collaborator.prenom }} {{ collaborator.nom }}
+          </md-option>
+        </md-select>
+      </md-input-container>
 
       <br>
 
       <!-- Coût horaire -->
-      <div>
-        <md-input-container class="md-block">
-          <label>Coût horaire</label>
-          <input ng-model="collaborator.cost">
-        </md-input-container>
-      </div>
+      <md-input-container class="md-block">
+        <label>Coût horaire</label>
+        <input ng-model="collaborator.cost" required>
+      </md-input-container>
 
       <!-- Addresse mail -->
-      <div>
-        <md-input-container class="md-block">
-          <label>Adresse mail</label>
-          <input ng-model="collaborator.email" type="email">
-        </md-input-container>
-      </div>
+      <md-input-container class="md-block">
+        <label>Adresse mail</label>
+        <input ng-model="collaborator.email" type="email" required>
+      </md-input-container>
 
       <!-- Mot de passe -->
-      <div>
-        <md-input-container class="md-block">
-          <label>Mot de passe</label>
-          <input ng-model="collaborator.password" type="password">
-        </md-input-container>
-      </div>
+      <md-input-container class="md-block">
+        <label>Mot de passe</label>
+        <input ng-model="collaborator.password" type="password" required>
+      </md-input-container>
 
       <!-- Confirmation mot de passe -->
-      <div>
-        <md-input-container class="md-block">
-          <label>Confirmation mot de passe</label>
-          <input ng-model="collaborator.confirmPassword" type="password">
-        </md-input-container>
-      </div>
+      <md-input-container class="md-block">
+        <label>Confirmation mot de passe</label>
+        <input ng-model="collaborator.confirmPassword" type="password" required>
+      </md-input-container>
+
+      <md-input-container class="md-block">
+        <div layout="row">
+          <md-button class="md-raised" ui-sref="collaborators">Annuler</md-button>
+          <md-button class="md-raised md-primary" type="submit" ng-click="createCollaborator()">Créer</md-button>
+        </div>
+      </md-input-container>
 
     </form>
 
   </md-card-content>
-
-  <md-card-actions layout="row" layout-align="end center">
-
-    <md-button class="md-raised" ui-sref="collaborators">Annuler</md-button>
-    <md-button class="md-raised md-primary" type="submit" ng-click="createCollaborator()">Créer</md-button>
-
-  </md-card-actions>
 
 </md-card>
 

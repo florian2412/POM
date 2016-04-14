@@ -13,6 +13,12 @@ angular.module('pomApp')
 
     $scope.createProject = function() {
 
+      if(!$scope.project.startDate)
+        $scope.project.startDate = new Date();
+
+      if(!$scope.project.endDate)
+        $scope.project.endDate = new Date();
+
       var nom = $scope.project.name;
       //var chef_projet = $rootScope.currentUser.pseudo;
       var statut = $scope.project.statut;
@@ -37,7 +43,7 @@ angular.module('pomApp')
       databaseService.createObject('projects', data)
         .success(function (data) {
           console.log(data);
-          $state.go("collaborators");
+          $state.go("projects");
         })
         .error(function (err) {
           console.log(err);
@@ -53,6 +59,7 @@ angular.module('pomApp')
 
       $scope.statuts = ["Initial", "En cours", "Annulé", "Terminé"]
 
+      
 
     });
 
