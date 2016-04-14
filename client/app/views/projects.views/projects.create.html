@@ -53,7 +53,8 @@
 
       <md-input-container class="md-block">
         <div layout="row">
-          <md-button class="md-raised" ui-sref="projects">Annuler</md-button>
+          <!--<md-button class="md-raised" ui-sref="projects">Annuler</md-button>-->
+          <md-button class="md-raised" ng-click="showCancelDialog($event)">Annuler</md-button>
           <md-button class="md-raised md-primary" type="submit" ng-click="createProject()">Créer</md-button>
         </div>
       </md-input-container>
