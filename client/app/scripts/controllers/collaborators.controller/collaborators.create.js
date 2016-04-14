@@ -45,9 +45,10 @@ angular.module('pomApp')
         });
 
 
-      
+
     };
 
+    
     // Lancement au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
 
