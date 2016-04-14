@@ -20,7 +20,7 @@ angular.module('pomApp').controller('LoginCtrl', function ($scope, $location, $h
 	    		else
 	    		{
 	    			$rootScope.$broadcast("LoginFailed", "isNotConnected");
-	    			console.log("Erreur connexion");
+	    			FlashService.Error('Pseudo ou mot de pase incorrect');
 	    		}
 	    	});
 		}else

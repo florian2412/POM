@@ -20,7 +20,7 @@
 })();
 (function(){
 	
-	var dtCheck = 1000;
+	var dtCheck = 500;
 	
 	function Directive($interval, authService){
 		
@@ -92,7 +92,6 @@
 					}
 				}
 			}
-			
 			return isAllowed;
 		};
 		

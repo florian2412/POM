@@ -19,28 +19,31 @@
 		</div>
 	</div>
 	</div> -->
-	<form ng-submit="authenticate()" >
+	<form ng-submit="authenticate()" name="loginForm" >
 	<div layout="column" flex id="content" role="main">
 		<md-content layout="vertical" flex id="content">
 			<div layout="row" layout-align="center center" layout-fill>
-				<!-- <md-whiteframe class="md-whiteframe-z1" layout="column" flex="50" layout-padding> -->
 					<md-content>
 						<md-input-container class="md-icon-float md-block">
 							<label>Pseudo</label>
-							<md-icon><span class="fa fa-user"></span></md-icon>
-							<input type="text" ng-model="pseudo">
+							<md-icon><span class="fa fa-user fa-2x"></span></md-icon>
+							<input type="text" ng-model="pseudo" name="pseudo" required>
+							<div ng-messages="loginForm.pseudo.$error">
+          						<div ng-message="required">Pseudo obligatoire</div>
+        					</div>
 						</md-input-container>
 						<md-input-container class="md-icon-float md-block">
 							<label>Mot de passe</label>
-							<md-icon><span class="fa fa-lock"></span></md-icon>
-							<input name="mot_de_passe" ng-model="mot_de_passe" type="password" >
+							<md-icon><span class="fa fa-lock fa-2x"></span></md-icon>
+							<input ng-model="mot_de_passe" name="mot_de_passe" type="password" required>
+							<div ng-messages="loginForm.mot_de_passe.$error">
+          						<div ng-message="required">Mot de passe obligatoire</div>
+        					</div>
 						</md-input-container>
 						<md-input-container layout="row" layout-align="center center">
 							<md-button class="md-raised md-primary" type="submit">Se connecter</md-button>
-							<!-- <md-button class="md-raised" type="submit">Se connecter</md-button> -->
 						</md-input-container>
 					</md-content>
-				<!-- </md-whiteframe> -->
 			</div>
 		</md-content>
 	</div>

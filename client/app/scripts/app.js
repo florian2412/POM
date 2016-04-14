@@ -13,8 +13,10 @@ var pomApp = angular.module('pomApp', ['ui.router', 'ngMaterial', 'ngMessages', 
 
 pomApp.config(routerStateProvider);
 
-function routerStateProvider($stateProvider, $urlRouterProvider) {
-
+function routerStateProvider($stateProvider, $urlRouterProvider, $mdDateLocaleProvider) {
+    $mdDateLocaleProvider.formatDate = function(date) {
+       return moment(date).format('DD/MM/YYYY');
+    };
     $urlRouterProvider.otherwise('/');
     $stateProvider
     .state('/', {
@@ -122,18 +124,16 @@ function routerStateProvider($stateProvider, $urlRouterProvider) {
             url : '/restricted',
             title : 'Accès refusé',
             template: '<h4>Vous n\'avez pas les droits d\'accès. Contactez votre manager.</h4>',
-            authorized: [ "collaborateur", "admin", "manager"]
+            authorized: [ "public", "collaborateur", "admin", "manager"]
     });
 };
 
 
 
 pomApp.run(function($rootScope, $location, $state, authenticateService,AuthService) {
-    $rootScope.$on('$locationChangeSuccess',
-        function(event, toState, toParams, fromState, fromParams){
 
-            //console.log("role state change : " + AuthService.getRole());
-
+    $rootScope.$on('$locationChangeSuccess', 
+        function(event, toState, toParams, fromState, fromParams){ 
             if (authenticateService.getCurrentUser() === null) {
                 $location.path("/login");
             }
