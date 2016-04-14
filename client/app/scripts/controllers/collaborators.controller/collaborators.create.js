@@ -9,7 +9,7 @@
  */
 
 angular.module('pomApp')
-  .controller('CollaboratorsCreateCtrl', function ($scope, $state, databaseService) {
+  .controller('CollaboratorsCreateCtrl', function ($scope, $state, $mdDialog, databaseService) {
 
     $scope.createCollaborator = function() {
 
@@ -39,14 +39,12 @@ angular.module('pomApp')
       databaseService.createObject('collaborators', data)
         .success(function (data) {
           console.log(data);
+          showSuccessDialog();
           $state.go("collaborators");
         })
         .error(function (err) {
           console.log(err);
         });
-
-
-
     };
 
 
@@ -65,5 +63,34 @@ angular.module('pomApp')
           console.error(err);
         });
     });
+
+
+    function showSuccessDialog() {
+      $mdDialog.show(
+        $mdDialog.alert()
+          .parent(angular.element(document.querySelector('#popupContainer')))
+          .clickOutsideToClose(true)
+          .title('Confirmation de création')
+          .textContent('Le collaborateur ' + $scope.collaborator.lastName + ' ' + $scope.collaborator.firstName + ' a bien été créé !')
+          .ariaLabel('Création du collaborateur réussie')
+          .ok('Ok'));
+    };
+
+    $scope.showCancelDialog = function(event) {
+
+      var confirm = $mdDialog.confirm()
+        .title('Alerte')
+        .textContent('Etes-vous sûr d\'annuler la création du collaborateur ?')
+        .ariaLabel('Annulation')
+        .targetEvent(event)
+        .ok('Oui')
+        .cancel('Non');
+
+      $mdDialog.show(confirm).then(function() {
+        $state.go("collaborators");
+      }, function() {
+
+      });
+    };
 
   });

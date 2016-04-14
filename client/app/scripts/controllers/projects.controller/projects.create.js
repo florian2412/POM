@@ -61,7 +61,6 @@ angular.module('pomApp')
     });
 
     function showSuccessDialog() {
-
       $mdDialog.show(
         $mdDialog.alert()
           .parent(angular.element(document.querySelector('#popupContainer')))
@@ -71,22 +70,6 @@ angular.module('pomApp')
           .ariaLabel('Création du projet réussie')
           .ok('Ok'));
     };
-
-    /*
-     var success = $mdDialog.confirm()
-     .title('Confirmation de création')
-     .textContent('Le projet ' + " nom projet" + ' a bien été créé !')
-     .ariaLabel('Création d\'un projet')
-     //.targetEvent(event)
-     .ok('Oui');
-
-     $mdDialog.show(success).then(function() {
-     $state.go("projects");
-     });
-     */
-
-
-
 
     $scope.showCancelDialog = function(event) {
 
@@ -104,6 +87,5 @@ angular.module('pomApp')
 
       });
     };
-
 
   });
