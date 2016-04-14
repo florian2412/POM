@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "dependencies": {
     "angular": "^1.4.0",
-    "bootstrap": "^3.2.0",
     "angular-ui-router": "",
     "angular-route": "^1.4.0",
-    "angular-material": "^1.0.7",
+    "bootstrap": "^3.3.6",
     "bower-bootswatch-paper": "",
+    "angular-material": "^1.0.7",
     "components-font-awesome": "",
     "moment": "^2.12.0",
     "angular-local-storage": "^0.2.7"
