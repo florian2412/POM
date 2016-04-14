@@ -9,53 +9,34 @@
  */
 
 angular.module('pomApp')
-  .controller('ProjectsCreateCtrl', function ($scope, databaseService) {
+  .controller('ProjectsCreateCtrl', function ($scope, $rootScope, databaseService) {
 
     $scope.createProject = function() {
-      /*
-       nom: String,
-       chef_projet: mongoose.Schema.ObjectId,
-       //chef_projet_all: {type: mongoose.Schema.ObjectId, ref: 'Collaborator'},
-       date_debut: { type: Date, default: Date.now },
-       date_fin_theorique: Date,
-       date_fin_reelle: Date,
-       statut : String, // En cours, Terminé, Annulé, Supprimé
-       collaborateurs: [ mongoose.Schema.ObjectId ],
-       infos_techniques: {
-       creation: { type: Date, default: Date.now },
-       modification:  { type: Date, default: Date.now }
-       },
-       ligne_budgetaire: mongoose.Schema.ObjectId
 
-       */
-
-
-      var nom = $scope.nameNewProject;
-      var chef_projet = $scope.collaboratorIdNewProject;
-      var statut = "Initialisation";
-      var date = new Date();
-      var date_debut = date;
-      var date_fin_theorique = date;
-      var collaborateurs = ["sds", "sdsdsdsd"];
-      var ligne_budgetaire = "1111111";
-
-
+      var nom = $scope.project.name;
+      //var chef_projet = $rootScope.currentUser.pseudo;
+      var statut = $scope.project.statut;
+      var date_debut = $scope.project.startDate;
+      var date_fin_theorique = $scope.project.endDate;
+      /*var date_debut = new Date();
+      var date_fin_theorique = new Date();*/
+      //var ligne_budgetaire = $scope.budget._id;
 
 
       // TODO Faire la validation du formulaire de création de projet
       var data = "{ \"nom\": " + "\"" + nom + "\" "
         + ", \"statut\": " + "\"" + statut + "\" "
-        + ", \"chef_projet\": \"" + chef_projet + "\" }";
-      + ", \"date_debut\": \"" + date_debut + "\" "
-      + ", \"date_fin_theorique\": \"" + date_fin_theorique + "\" "
-      + ", \"collaborateurs\": \"" + collaborateurs + "\" } ";
+        //+ ", \"chef_projet\": \"" + chef_projet + "\" "
+        + ", \"date_debut\": \"" + date_debut + "\" "
+        + ", \"date_fin_theorique\": \"" + date_fin_theorique + "\" }";
+      /*+ ", \"collaborateurs\": \"" + collaborateurs + "\" "
+       + ", \"collaborateurs\": \"" + collaborateurs + "\" } ";*/
+
+      console.log(data);
 
       databaseService.createObject('projects', data)
         .success(function (data) {
           console.log(data);
-
-
-
         })
         .error(function (err) {
           console.log(err);
@@ -66,7 +47,10 @@ angular.module('pomApp')
     // Lancement au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
 
-    
+      $scope.budgets = ["Ligne budget 1 : 30000€", "Ligne budget 2 : 50000€", "Ligne budget 3 : 100000€"];
+      $scope.statuts = ["Initial", "En cours", "Annulé", "Terminé"]
+
+
     });
 
   });

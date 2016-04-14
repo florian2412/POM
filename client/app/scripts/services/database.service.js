@@ -26,6 +26,8 @@ angular.module('pomApp').factory('databaseService', function ($http) {
     },
 
     createObject: function(collection, data){
+      console.log(collection);
+      console.log(data);
       return  $http({
         method: 'POST',
         url: 'http://localhost:3000/' + collection + '/',

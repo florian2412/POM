@@ -46,10 +46,11 @@
       <!-- Ligne budgétaire -->
       <div>
         <md-input-container class="md-block">
-          <label>Rôle</label>
+          <label>Ligne budgétaire</label>
           <md-select ng-model="project.budget" >
-            <md-option ng-repeat="budget in budgets" value="{{budget._id}}">
-              {{ budget.libelle }} {{ budget.montant_depart }}
+            <md-option ng-repeat="budget in budgets" value="{{budget}}">
+              <!--{{ budget.libelle }} {{ budget.montant_depart }}-->
+              {{ budget }}
             </md-option>
           </md-select>
         </md-input-container>
