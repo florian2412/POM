@@ -2,7 +2,7 @@
 
   <md-toolbar layout=""row">
   <div class="md-toolbar-tools">
-    <h2 class="md-flex" style="color:white">Création d'un nouveau projet</h2>
+    <h2 class="md-flex">Création d'un nouveau projet</h2>
   </div>
   </md-toolbar>
 
@@ -18,12 +18,12 @@
       <!--<form class="form-horizontal">-->
         <div class="form-group">
           <label class="col-xs-4">Date de début de projet</label>
-          <md-datepicker ng-model="project.startDate" md-placeholder="Entrer date"></md-datepicker>
+          <md-datepicker ng-model="project.startDate" md-placeholder="Entrer date" md-min-date="minDate"></md-datepicker>
         </div>
         <br>
         <div class="form-group">
           <label class="col-xs-4">Date de fin théorique de projet</label>
-          <md-datepicker ng-model="project.endDate" md-placeholder="Entrer date"></md-datepicker>
+          <md-datepicker ng-model="project.endDate" md-placeholder="Entrer date" md-min-date="minDate"></md-datepicker>
         </div>
         <br>
       <!--</form>-->

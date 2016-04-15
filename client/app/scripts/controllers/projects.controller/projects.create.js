@@ -70,7 +70,9 @@ angular.module('pomApp')
           .ariaLabel('Création du projet réussie')
           .ok('Ok'));
     };
-
+    
+    $scope.minDate = new Date();
+    
     $scope.showCancelDialog = function(event) {
 
       var confirm = $mdDialog.confirm()
