@@ -26,8 +26,8 @@
         <td ng-switch-when="Annulé"><span class="glyphicon glyphicon-remove-circle" style="color:red;font-size:1.5em;"></span></td>
 
         <td>{{ project.collaborateurs }}</td>
-        <td>{{ project.infos_techniques.modification | date:'dd/MM/yyyy' }}</td>
-        <td><a ng-click="deleteProject(project._id)"><span class="glyphicon glyphicon-remove-circle" style="color: orange;font-size:1.5em;"></span> </a></td>
+        <td>{{ project.infos_techniques.date_creation | date:'dd/MM/yyyy' }}</td>
+        <td><a ng-click="deleteProject(project._id)"><span class="fa fa-trash-o" style="color: red;font-size:1.5em;"></span> </a></td>
 
       </tr>
       </tbody>
