@@ -1,25 +1,77 @@
-<section>
-  <table class="table table-striped table-hover">
-    <thead>
-    <tr>
-      <th>Nom</th>
-      <th>Chef de projet</th>
-      <th>Status</th>
-      <th>Collaborateurs</th>
-      <th>Dernière modification</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-switch on="project.statut">
-      <td> {{ project.nom }} </a></td>
-      <td> {{ project.chef_projet }} </a></td>
-      <td> {{ project.date_debut | date:'dd/MM/yyyy' }} </td>
-      <td ng-switch-when="En cours"><span class="glyphicon glyphicon-exclamation-sign" style="color: orange;font-size:1.5em;"></span> </td>
-      <td ng-switch-when="Terminé"><span class="glyphicon glyphicon-ok-circle" style="color:green;font-size:1.5em;"></span> </td>
-      <td ng-switch-when="Annulé"><span class="glyphicon glyphicon-remove-circle" style="color:red;font-size:1.5em;"></span> </td>
-      <td> {{ project.collaborateurs }} </td>
-      <td> {{ project.infos_techniques.modification | date:'dd/MM/yyyy' }} </td>
-    </tr>
-    </tbody>
-  </table>
-</section>
+<md-card>
+
+  <md-toolbar layout="row">
+    <div class="md-toolbar-tools">
+      <h2 class="md-flex" style="color:white">Détails / Modification du projet {{ project.nom }}</h2>
+    </div>
+  </md-toolbar>
+
+  <md-card-content>
+
+    <form class="form-horizontal" >
+
+      <md-input-container class="md-block">
+        <label>Nom du projet</label>
+        <input ng-model="project.nom">
+      </md-input-container>
+
+      <md-input-container class="md-block">
+        <label>Chef de projet</label>
+        <input ng-model="chef_projet" disabled>
+      </md-input-container>
+
+      <div class="form-group">
+        <label class="col-xs-4">Date de début de projet</label>
+        <md-datepicker ng-model="project.date_debut" md-placeholder="Entrer date"></md-datepicker>
+      </div>
+      <br>
+      <div class="form-group">
+        <label class="col-xs-4">Date de fin théorique de projet</label>
+        <md-datepicker ng-model="project.date_fin_theorique" md-placeholder="Entrer date"></md-datepicker>
+      </div>
+      <br>
+
+      <!-- Statut -->
+      <md-input-container class="md-block">
+        <label>Statut</label>
+        <md-select ng-model="project.statut" >
+          <md-option ng-repeat="statut in statuts" value="{{statut}}">
+            {{statut}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+
+      <br>
+
+      <div class="form-group">
+        <label class="col-xs-4">Date de fin <b>réelle</b> de projet</label>
+        <md-datepicker ng-model="project.date_fin_reelle" md-placeholder="Entrer date"></md-datepicker>
+      </div>
+
+      <br>
+
+      <!-- Ligne budgétaire -->
+      <md-input-container class="md-block">
+        <label>Ligne budgétaire</label>
+        <md-select ng-model="project.ligne_budgetaire" >
+          <md-option ng-repeat="budget in budgets" value="{{budget}}">
+            <!--{{ budget.libelle }} {{ budget.montant_depart }}-->
+            {{ budget }}
+          </md-option>
+        </md-select>
+      </md-input-container>
+
+      <md-input-container class="md-block">
+        <div layout="row">
+          <md-button class="md-raised" ng-click="showCancelDialog()">Annuler</md-button>
+          <md-button class="md-raised md-primary" type="submit" ng-click="updateProject()">Valider</md-button>
+        </div>
+      </md-input-container>
+
+    </form>
+
+  </md-card-content>
+
+</md-card>
+
+<br>

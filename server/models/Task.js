@@ -5,7 +5,7 @@
  */
 
 var mongoose = require('mongoose');
-var Collaborator = require('../models/Collaborator.js');
+//var Collaborator = require('../models/Collaborator.js');
 
 var schemaTask = mongoose.Schema({
     libelle: String,
@@ -14,7 +14,7 @@ var schemaTask = mongoose.Schema({
     statut : String,
     projet: mongoose.Schema.ObjectId,
     collaborateurs: [ mongoose.Schema.ObjectId ],
-  	collaborateurs1 : [ Collaborator.schema ]
+  	//collaborateurs1 : [ Collaborator.schema ]
 });
 
 module.exports = mongoose.model('Task', schemaTask);

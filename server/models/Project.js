@@ -5,6 +5,7 @@
  */
 
 var mongoose = require('mongoose');
+var Task = require('../models/Task.js');
 
 var schemaProject = mongoose.Schema({
 
@@ -12,11 +13,11 @@ var schemaProject = mongoose.Schema({
 
     chef_projet: mongoose.Schema.ObjectId,
 
-    date_debut: Date,
+    date_debut: { type: Date },
 
-    date_fin_theorique: Date,
+    date_fin_theorique: { type: Date },
 
-    date_fin_reelle: Date,
+    date_fin_reelle: { type: Date },
 
     statut : String, // En cours, Terminé, Annulé, Supprimé, Initial
 
@@ -31,7 +32,9 @@ var schemaProject = mongoose.Schema({
 
     description: String,
 
-    date_creation: { type: Date, default: Date.now }
+    date_creation: { type: Date, default: Date.now },
+
+    taches: [ Task.schema ]
 
 });
 

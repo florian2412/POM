@@ -44,6 +44,18 @@ angular.module('pomApp').factory('databaseService', function ($http) {
         url: 'http://localhost:3000/' + collection + '/' + id,
         headers: { 'Content-Type': 'application/json' }
       });
+    },
+
+    updateObject: function(collection, id, data){
+      console.log(collection);
+      console.log(id);
+      console.log(data);
+      return  $http({
+        method: 'PUT',
+        url: 'http://localhost:3000/' + collection + '/' + id,
+        data: data,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
 
   }

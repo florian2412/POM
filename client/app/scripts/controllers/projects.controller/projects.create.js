@@ -9,7 +9,7 @@
  */
 
 angular.module('pomApp')
-  .controller('ProjectsCreateCtrl', function ($scope, $state, $rootScope, $mdDialog, databaseService) {
+  .controller('ProjectsCreateCtrl', function ($scope, $state, $mdDialog, databaseService, authenticateService) {
 
     $scope.createProject = function() {
 
@@ -20,7 +20,7 @@ angular.module('pomApp')
         $scope.project.endDate = new Date();
 
       var nom = $scope.project.name;
-      //var chef_projet = $rootScope.currentUser.pseudo;
+      var chef_projet = authenticateService.getCurrentUser()._id;
       var statut = $scope.project.statut;
       var date_debut = $scope.project.startDate;
       var date_fin_theorique = $scope.project.endDate;
@@ -31,7 +31,7 @@ angular.module('pomApp')
       // TODO Faire la validation du formulaire de création de projet
       var data = "{ \"nom\": " + "\"" + nom + "\" "
         + ", \"statut\": " + "\"" + statut + "\" "
-        //+ ", \"chef_projet\": \"" + chef_projet + "\" "
+        + ", \"chef_projet\": \"" + chef_projet + "\" "
         + ", \"date_debut\": \"" + date_debut + "\" "
         + ", \"date_fin_theorique\": \"" + date_fin_theorique + "\" }";
       /*+ ", \"collaborateurs\": \"" + collaborateurs + "\" "
