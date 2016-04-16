@@ -118,7 +118,7 @@
         <!-- Mot de passe -->
         <md-input-container class="md-block" flex-gt-sm="">
           <label>Mot de passe</label>
-          <input ng-model="collaborator.password" type="password" name="password" minlength="6" maxlength="12" required>
+          <input ng-model="collaborator.password" type="password" minlength="6" maxlength="12" name="password" required>
           <div ng-messages="createCollaboratorForm.password.$error">
             <div ng-message="required">Ce champ est obligatoire.</div>
             <div ng-message="minlength">Le mot de passe doit avoir au moins 6 caractères.</div>
@@ -133,7 +133,7 @@
         <!-- Confirmation mot de passe -->
         <md-input-container class="md-block" flex-gt-sm="">
           <label>Confirmation mot de passe</label>
-          <input ng-model="collaborator.confirmPassword" type="password" minlength="6" maxlength="12" name="confirmPassword" required>
+          <input ng-model="collaborator.confirmPassword" type="password" minlength="6" maxlength="12" name="confirmPassword" match-password="password" required>
           <div ng-messages="createCollaboratorForm.confirmPassword.$error">
             <div ng-message="required">Ce champ est obligatoire.</div>
             <div ng-message="minlength">Le mot de passe doit avoir au moins 6 caractères.</div>

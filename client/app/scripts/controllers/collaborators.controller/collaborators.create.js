@@ -48,6 +48,10 @@ angular.module('pomApp')
       }
     };
 
+    $scope.clearValue = function() {
+      $scope.createCollaboratorForm = undefined;
+    };
+
 
 // Lancement au chargement de la page
     $scope.$on('$viewContentLoaded', function() {

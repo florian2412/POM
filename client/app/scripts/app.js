@@ -9,49 +9,49 @@
  * Main module of the application.
  */
 
-var pomApp = angular.module('pomApp', ['ui.router', 'ngMaterial', 'ngMessages', 'ngRoleAuth', 'LocalStorageModule']);
+var pomApp = angular.module('pomApp', ['ui.router', 'ngMaterial', 'ngMessages', 'ngRoleAuth', 'LocalStorageModule', 'ngPassword']);
 
 function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $mdThemingProvider) {
-  	$mdThemingProvider.theme('default').primaryPalette('green').accentPalette('orange');
-	$mdDateLocaleProvider.formatDate = function(date) { return moment(date).format('DD/MM/YYYY');};
-	$urlRouterProvider.otherwise('/');
-	$stateProvider
-	.state('/', {
-			url: '/',
-			title : 'Home',
-			templateUrl: 'views/main.html',
-			controller: 'MainCtrl',
-			controllerAs: 'main',
-			authorized: [ "collaborateur", "admin", "manager"]
-	})
-	.state('about', {
-			url : '/about',
-			title : 'A propos',
-			templateUrl: 'views/about.html',
-			controller: 'AboutCtrl',
-			controllerAs: 'about',
-			authorized: [ "collaborateur", "admin", "manager"]
-	})
-	.state('projects', {
-			url : '/projects',
-			title : 'Projets',
-			templateUrl: 'views/projects.views/projects.list.html',
-			controller: 'ProjectsCtrl',
-			controllerAs: 'projects',
-			authorized: ["admin", "manager"]
-	})
-	.state('projects.details', {
-			url : '/:id',
-			title : 'Détails du projet',
-			authorized: ["collaborateur", "admin", "manager"],
-			views: {
-				'@': {
-				  templateUrl: 'views/projects.views/projects.details.html',
-				  controller: 'ProjectsDetailsCtrl'
-				}
-			}
-	})
-	.state('projects.create', {
+  $mdThemingProvider.theme('default').primaryPalette('green').accentPalette('orange');
+  $mdDateLocaleProvider.formatDate = function(date) { return moment(date).format('DD/MM/YYYY');};
+  $urlRouterProvider.otherwise('/');
+  $stateProvider
+    .state('/', {
+      url: '/',
+      title : 'Home',
+      templateUrl: 'views/main.html',
+      controller: 'MainCtrl',
+      controllerAs: 'main',
+      authorized: [ "collaborateur", "admin", "manager"]
+    })
+    .state('about', {
+      url : '/about',
+      title : 'A propos',
+      templateUrl: 'views/about.html',
+      controller: 'AboutCtrl',
+      controllerAs: 'about',
+      authorized: [ "collaborateur", "admin", "manager"]
+    })
+    .state('projects', {
+      url : '/projects',
+      title : 'Projets',
+      templateUrl: 'views/projects.views/projects.list.html',
+      controller: 'ProjectsCtrl',
+      controllerAs: 'projects',
+      authorized: ["admin", "manager"]
+    })
+    .state('projects.details', {
+      url : '/:id',
+      title : 'Détails du projet',
+      authorized: ["collaborateur", "admin", "manager"],
+      views: {
+        '@': {
+          templateUrl: 'views/projects.views/projects.details.html',
+          controller: 'ProjectsDetailsCtrl'
+        }
+      }
+    })
+    .state('projects.create', {
       title : 'Création d\'un nouveau projet',
       authorized: ["admin", "manager"],
       views: {
@@ -61,105 +61,105 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
         }
       }
     })
-	.state('collaborators', {
-			url : '/collaborators',
-			title : 'Collaborateurs',
-			templateUrl: 'views/collaborators.views/collaborators.list.html',
-			controller: 'CollaboratorsCtrl',
-			controllerAs: 'collaborators',
-			authorized: ["collaborateur", "admin", "manager"]
-	})
-	.state('collaborators.details', {
-			url : '/:id',
-			title : 'Détails du collaborateur',
-			authorized: ["admin", "manager"],
-			views: {
-				'@': {
-				  templateUrl: 'views/collaborators.views/collaborators.details.html',
-				  controller: 'CollaboratorsDetailsCtrl'
-				 }
-			}
-	})
-	.state('collaborators.create', {
-	  title : 'Création d\'un nouveau collaborateur',
-	  authorized: ["admin", "manager"],
-	  views: {
-		'@': {
-		  templateUrl: 'views/collaborators.views/collaborators.create.html',
-		  controller: 'CollaboratorsCreateCtrl'
-		}
-	  }
-	})
-	.state('login', {
-			url : '/login',
-			title : 'Se connecter',
-			templateUrl: 'views/login.html',
-			controller: 'LoginCtrl',
-			controllerAs: 'login',
-			authorized: ["collaborateur", "admin", "manager", "public"]
-	})
-	.state('statistics', {
-			url : '/statistics',
-			title : 'Statistiques',
-		   /* templateUrl: 'views/login.html',
-			controller: 'LoginCtrl',
-			controllerAs: 'login',*/
-			template: '<h4>stats des projets</h4>',
-			authorized: ["collaborateur", "admin", "manager"]
-	})
-	.state('settings', {
-			url : '/settings',
-			title : 'Préférences',
-		   /* templateUrl: 'views/login.html',
-			controller: 'LoginCtrl',
-			controllerAs: 'login',*/
-			template: '<h4>Préférences ici</h4>',
-			authorized: ["collaborateur", "admin", "manager"]
-	})
-	.state('help', {
-			url : '/help',
-			title : 'Aide',
-		   /* templateUrl: 'views/login.html',
-			controller: 'LoginCtrl',
-			controllerAs: 'login',*/
-			template: '<h4>Aide ici</h4>',
-			authorized: ["public", "collaborateur", "admin", "manager"]
-	})
-	.state('restricted', {
-			url : '/restricted',
-			title : 'Accès refusé',
-			template: '<h4>Vous n\'avez pas les droits d\'accès. Contactez votre manager.</h4>',
-			authorized: [ "public", "collaborateur", "admin", "manager"]
-	});
+    .state('collaborators', {
+      url : '/collaborators',
+      title : 'Collaborateurs',
+      templateUrl: 'views/collaborators.views/collaborators.list.html',
+      controller: 'CollaboratorsCtrl',
+      controllerAs: 'collaborators',
+      authorized: ["collaborateur", "admin", "manager"]
+    })
+    .state('collaborators.details', {
+      url : '/:id',
+      title : 'Détails du collaborateur',
+      authorized: ["admin", "manager"],
+      views: {
+        '@': {
+          templateUrl: 'views/collaborators.views/collaborators.details.html',
+          controller: 'CollaboratorsDetailsCtrl'
+        }
+      }
+    })
+    .state('collaborators.create', {
+      title : 'Création d\'un nouveau collaborateur',
+      authorized: ["admin", "manager"],
+      views: {
+        '@': {
+          templateUrl: 'views/collaborators.views/collaborators.create.html',
+          controller: 'CollaboratorsCreateCtrl'
+        }
+      }
+    })
+    .state('login', {
+      url : '/login',
+      title : 'Se connecter',
+      templateUrl: 'views/login.html',
+      controller: 'LoginCtrl',
+      controllerAs: 'login',
+      authorized: ["collaborateur", "admin", "manager", "public"]
+    })
+    .state('statistics', {
+      url : '/statistics',
+      title : 'Statistiques',
+      /* templateUrl: 'views/login.html',
+       controller: 'LoginCtrl',
+       controllerAs: 'login',*/
+      template: '<h4>stats des projets</h4>',
+      authorized: ["collaborateur", "admin", "manager"]
+    })
+    .state('settings', {
+      url : '/settings',
+      title : 'Préférences',
+      /* templateUrl: 'views/login.html',
+       controller: 'LoginCtrl',
+       controllerAs: 'login',*/
+      template: '<h4>Préférences ici</h4>',
+      authorized: ["collaborateur", "admin", "manager"]
+    })
+    .state('help', {
+      url : '/help',
+      title : 'Aide',
+      /* templateUrl: 'views/login.html',
+       controller: 'LoginCtrl',
+       controllerAs: 'login',*/
+      template: '<h4>Aide ici</h4>',
+      authorized: ["public", "collaborateur", "admin", "manager"]
+    })
+    .state('restricted', {
+      url : '/restricted',
+      title : 'Accès refusé',
+      template: '<h4>Vous n\'avez pas les droits d\'accès. Contactez votre manager.</h4>',
+      authorized: [ "public", "collaborateur", "admin", "manager"]
+    });
 }
 
 function appRun($rootScope, $location, $state, authenticateService, AuthService, localStorageService) {
-	$rootScope.isAuthenticated = localStorageService.get('currentUser');
-	$rootScope.$on('$locationChangeSuccess', function(){ 
-		if (authenticateService.getCurrentUser() === null){
-			$location.path("/login");
-		}
-	});
-	$rootScope.$on('$stateChangeStart', function(event, toState) {
-		$rootScope.title = toState.title;
-	});
-	AuthService.getRole = function(){
-		var cur = localStorageService.get('currentUser');
-		return ((cur === null) ? "public" : cur.role);
-	};
+  $rootScope.isAuthenticated = localStorageService.get('currentUser');
+  $rootScope.$on('$locationChangeSuccess', function(){
+    if (authenticateService.getCurrentUser() === null){
+      $location.path("/login");
+    }
+  });
+  $rootScope.$on('$stateChangeStart', function(event, toState) {
+    $rootScope.title = toState.title;
+  });
+  AuthService.getRole = function(){
+    var cur = localStorageService.get('currentUser');
+    return ((cur === null) ? "public" : cur.role);
+  };
 
-	$rootScope.$on('LoginSuccess', function(){
-		$rootScope.isAuthenticated = localStorageService.get('currentUser');
-		AuthService.getRole = function(){
-			return authenticateService.getCurrentUser().role ;
-		};
-	});
-	$rootScope.$on('LogoutSuccess', function(){
-		$rootScope.isAuthenticated = localStorageService.get('currentUser');
-		AuthService.getRole = function(){
-			return "public";
-		};
-	});
+  $rootScope.$on('LoginSuccess', function(){
+    $rootScope.isAuthenticated = localStorageService.get('currentUser');
+    AuthService.getRole = function(){
+      return authenticateService.getCurrentUser().role ;
+    };
+  });
+  $rootScope.$on('LogoutSuccess', function(){
+    $rootScope.isAuthenticated = localStorageService.get('currentUser');
+    AuthService.getRole = function(){
+      return "public";
+    };
+  });
 }
 pomApp.config(appConfig);
 pomApp.run(appRun);
