@@ -73,8 +73,8 @@
         <md-input-container class="md-block" flex-gt-sm="">
           <label>Rôle</label>
           <md-select ng-model="collaborator.role" name="role" required>
-            <md-option ng-repeat="role in roles" value="{{role}}" >
-              {{role}}
+            <md-option ng-repeat="role in roles" value="{{role.libelle_court}}" >
+              {{role.libelle_long}}
             </md-option>
           </md-select>
           <div ng-messages="createCollaboratorForm.role.$error">

@@ -55,7 +55,7 @@ angular.module('pomApp')
       // Rôle proposé dans le combo du formulaire de création
       databaseService.getAllObjects('rolesCollaborator')
         .success(function (data) {
-          $scope.status = data;
+          $scope.roles = data;
         })
         .error(function (err) {
           console.error(err);
