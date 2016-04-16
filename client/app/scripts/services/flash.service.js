@@ -3,11 +3,12 @@
 
     angular.module('pomApp').factory('FlashService', Service);
 
-    function Service($rootScope) {
+    function Service($rootScope, $alert) {
         var service = {};
 
         service.Success = Success;
         service.Error = Error;
+        service.Info = Info;
 
         initService();
 
@@ -24,27 +25,49 @@
                     if (!flash.keepAfterLocationChange) {
                         delete $rootScope.flash;
                     } else {
-                        // only keep for a single location change
                         flash.keepAfterLocationChange = false;
                     }
                 }
             }
         }
 
-        function Success(message, keepAfterLocationChange) {
-            $rootScope.flash = {
-                message: message,
+        function Success(title, message, placement, dismissable, duration)  {
+            $alert({
+                title: title,
+                content: message,
+                placement: placement, 
                 type: 'success', 
-                keepAfterLocationChange: keepAfterLocationChange
-            };
+                keyboard: true, 
+                container:'body',
+                duration : duration,
+                dismissable : dismissable
+            });
         }
 
-        function Error(message, keepAfterLocationChange) {
-            $rootScope.flash = {
-                message: message,
-                type: 'danger',
-                keepAfterLocationChange: keepAfterLocationChange
-            };
+        function Error(title,message,placement, dismissable,duration)  {
+            $alert({
+                title: title,
+                content: message,
+                placement: placement, 
+                type: 'danger', 
+                keyboard: true, 
+                container:'body',
+                duration : duration,
+                dismissable : dismissable
+            });
+        }
+
+        function Info(title,message,placement, dismissable,duration) {
+            $alert({
+                title: title,
+                content: message,
+                placement: placement, 
+                type: 'info', 
+                keyboard: true, 
+                container:'body',
+                duration : duration,
+                dismissable : dismissable
+            });
         }
     }
 

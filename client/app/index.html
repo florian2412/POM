@@ -93,9 +93,12 @@
           </div>
         </div>
       </div>
-      <div class="flash-message" ng-show="flash" >
+      <div class="flash-message" ng-show="flash" data-placement="top-right" data-container="body" data-duration="60" bs-alert="flash" >
             <div class="{{'alert alert-' + flash.type}}" ng-bind="flash.message"></div>
       </div>
+      <div id="alerts-container"></div>
+      <!-- <button class="btn btn-lg btn-primary" data-placement="top-right" data-container="body" data-duration="60" bs-alert="alert">Click to toggle alert
+      </button> -->
     </div>
 
     <div class="container">
