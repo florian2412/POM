@@ -23,32 +23,33 @@ angular.module('pomApp')
       var cost = $scope.collaborator.cost;
       var email = $scope.collaborator.email;
 
+      if (password == confirmPassword) {
 
-      // TODO Faire la validation du formulaire de création du collaborateur
-      var data = "{ \"nom\": " + "\"" + lastName + "\" "
-        + ", \"prenom\": " + "\"" + firstName + "\" "
-        + ", \"manager\": \"" + manager + "\" "
-        + ", \"role\": \"" + role + "\" "
-        + ", \"pseudo\": \"" + login + "\" "
-        + ", \"mot_de_passe\": \"" + password + "\" "
-        + ", \"cout_horaire\": \"" + cost + "\" "
-        + ", \"email\": \"" + email + "\" } ";
+        var data = "{ \"nom\": " + "\"" + lastName + "\" "
+          + ", \"prenom\": " + "\"" + firstName + "\" "
+          + ", \"manager\": \"" + manager + "\" "
+          + ", \"role\": \"" + role + "\" "
+          + ", \"pseudo\": \"" + login + "\" "
+          + ", \"mot_de_passe\": \"" + password + "\" "
+          + ", \"cout_horaire\": \"" + cost + "\" "
+          + ", \"email\": \"" + email + "\" } ";
 
-      console.log(data);
+        console.log(data);
 
-      databaseService.createObject('collaborators', data)
-        .success(function (data) {
-          console.log(data);
-          showSuccessDialog();
-          $state.go("collaborators");
-        })
-        .error(function (err) {
-          console.log(err);
-        });
+        databaseService.createObject('collaborators', data)
+          .success(function (data) {
+            console.log(data);
+            showSuccessDialog();
+            $state.go("collaborators");
+          })
+          .error(function (err) {
+            console.log(err);
+          });
+      }
     };
 
 
-    // Lancement au chargement de la page
+// Lancement au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
 
       // Rôle proposé dans le combo du formulaire de création
@@ -71,7 +72,7 @@ angular.module('pomApp')
           .parent(angular.element(document.querySelector('#popupContainer')))
           .clickOutsideToClose(true)
           .title('Confirmation de création')
-          .textContent('Le collaborateur ' + $scope.collaborator.lastName + ' ' + $scope.collaborator.firstName + ' a bien été créé !')
+          .textContent('Le collaborateur ' + $scope.collaborator.firstName + ' ' + $scope.collaborator.lastName + ' a bien été créé !')
           .ariaLabel('Création du collaborateur réussie')
           .ok('Ok'));
     };

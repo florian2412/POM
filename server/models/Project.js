@@ -24,10 +24,8 @@ var schemaProject = mongoose.Schema({
     collaborateurs: [ mongoose.Schema.ObjectId ],
 
     ligne_budgetaire: {
-        libelle: String,
-        montant_depart: Number,
-        montant_restant: Number,
-        description: String
+        id: mongoose.Schema.ObjectId,
+        montant_restant: Number
     },
 
     description: String,
