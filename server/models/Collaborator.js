@@ -14,7 +14,7 @@ var schemaCollaborator = mongoose.Schema({
     manager: mongoose.Schema.ObjectId,
     statut: String,
     cout_horaire: Number,
-    role: String, // Admin, Collaborateur, Manager
+    role: String, // admin, collaborateur, manager
     email: String
 });
 

@@ -12,6 +12,7 @@ angular.module('pomApp').factory('databaseService', function ($http) {
   return {
 
     getAllObjects: function(collection){
+      console.log(collection);
       return  $http({
         method: 'GET',
         url: 'http://localhost:3000/' + collection
@@ -19,6 +20,8 @@ angular.module('pomApp').factory('databaseService', function ($http) {
     },
 
     getObjectById: function(collection, id){
+      console.log(collection);
+      console.log(id);
       return  $http({
         method: 'GET',
         url: 'http://localhost:3000/' + collection + '/' + id
@@ -55,6 +58,16 @@ angular.module('pomApp').factory('databaseService', function ($http) {
         url: 'http://localhost:3000/' + collection + '/' + id,
         data: data,
         headers: { 'Content-Type': 'application/json' }
+      });
+    },
+
+
+    // Resources Collaborators
+    getManagerCollaborators: function(role){
+      console.log(role);
+      return  $http({
+        method: 'GET',
+        url: 'http://localhost:3000/collaborators/role/' + role
       });
     }
 

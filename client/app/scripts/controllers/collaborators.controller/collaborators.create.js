@@ -23,29 +23,27 @@ angular.module('pomApp')
       var cost = $scope.collaborator.cost;
       var email = $scope.collaborator.email;
 
-      if (password == confirmPassword) {
 
-        var data = "{ \"nom\": " + "\"" + lastName + "\" "
-          + ", \"prenom\": " + "\"" + firstName + "\" "
-          + ", \"manager\": \"" + manager + "\" "
-          + ", \"role\": \"" + role + "\" "
-          + ", \"pseudo\": \"" + login + "\" "
-          + ", \"mot_de_passe\": \"" + password + "\" "
-          + ", \"cout_horaire\": \"" + cost + "\" "
-          + ", \"email\": \"" + email + "\" } ";
+      var data = "{ \"nom\": " + "\"" + lastName + "\" "
+        + ", \"prenom\": " + "\"" + firstName + "\" "
+        + ", \"manager\": \"" + manager + "\" "
+        + ", \"role\": \"" + role + "\" "
+        + ", \"pseudo\": \"" + login + "\" "
+        + ", \"mot_de_passe\": \"" + password + "\" "
+        + ", \"cout_horaire\": \"" + cost + "\" "
+        + ", \"email\": \"" + email + "\" } ";
 
-        console.log(data);
+      console.log(data);
 
-        databaseService.createObject('collaborators', data)
-          .success(function (data) {
-            console.log(data);
-            showSuccessDialog();
-            $state.go("collaborators");
-          })
-          .error(function (err) {
-            console.log(err);
-          });
-      }
+      databaseService.createObject('collaborators', data)
+        .success(function (data) {
+          console.log(data);
+          showSuccessDialog();
+          $state.go("collaborators");
+        })
+        .error(function (err) {
+          console.log(err);
+        });
     };
 
     $scope.getAllRoles = function(id) {
@@ -55,19 +53,22 @@ angular.module('pomApp')
         });
     };
 
+    $scope.getManagerCollaborators = function() {
+      var data = 'manager';
+      databaseService.getManagerCollaborators(data)
+        .success(function (data) {
+          console.log("SUCCESS : " + data);
+          $scope.collaborators = data;
+        });
+    };
+
     // Lancement au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
 
       // Rôle proposé dans le combo du formulaire de création
       $scope.getAllRoles();
 
-      databaseService.getAllObjects('collaborators')
-        .success(function (data) {
-          $scope.collaborators = data;
-        })
-        .error(function (err) {
-          console.error(err);
-        });
+      $scope.getManagerCollaborators();
     });
 
     function showSuccessDialog() {

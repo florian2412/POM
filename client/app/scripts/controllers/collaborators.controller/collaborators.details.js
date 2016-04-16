@@ -31,6 +31,15 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
       });
   };
 
+  $scope.getManagerCollaborators = function() {
+    var data = 'manager';
+    databaseService.getManagerCollaborators(data)
+      .success(function (data) {
+        console.log("SUCCESS : " + data);
+        $scope.collaborators = data;
+      });
+  };
+
   function showSuccessDialog() {
     $mdDialog.show(
       $mdDialog.alert()
@@ -62,12 +71,12 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
   // Permet de lancer au chargement de la page : récupère tous les projets
   $scope.$on('$viewContentLoaded', function() {
 
-    // Rôle proposé dans le combo du formulaire de création
-    $scope.getAllRoles();
-
     $scope.getCollaboratorById($stateParams.id);
 
-    $scope.getAllCollaborators();
+    $scope.getManagerCollaborators();
+
+    // Rôle proposé dans le combo du formulaire de création
+    $scope.getAllRoles();
   });
 
 });

@@ -11,6 +11,7 @@ router.get('/:id', getCollaborator);
 router.put('/:id', updateCollaborator);
 router.delete('/:id', deleteCollaborator);
 router.post('/authenticate',authenticate);
+router.get('/role/:role', getRoleCollaborators);
 
 
 /* GET collaborators listing. */
@@ -22,16 +23,25 @@ function getAllCollaborators(req, res, next) {
     });
 };
 
+/* GET with query collaborators listing. */
+function getRoleCollaborators(req, res, next) {
+    Collaborator.find({"role" : req.params.role}, function (err, collaborators) {
+        if (err)
+            return next(err);
+        res.json(collaborators);
+    });
+};
+
 /* POST /collaborators */
 function createCollaborator(req, res, next) {
     Collaborator.findOne({"pseudo" : req.body.pseudo}, function(err, coll){
         if (err) return next(err);
         if (coll) {
-                // username already exists
-                next(new Error("Ce pseudo est déjà utilisé : " + req.body.pseudo));
-            } else {
-                createColl();
-            }
+            // username already exists
+            next(new Error("Ce pseudo est déjà utilisé : " + req.body.pseudo));
+        } else {
+            createColl();
+        }
     });
     function createColl(){
         var collaborator = _.omit(req.body, 'mot_de_passe');
@@ -44,7 +54,7 @@ function createCollaborator(req, res, next) {
             res.json(req.body);
         });
     }
-    
+
 };
 
 /* GET /collaborators/id */
@@ -79,13 +89,13 @@ function deleteCollaborator(req, res, next) {
 /* POST authenticate */
 function authenticate(req, res, next) {
     Collaborator.findOne({"pseudo" : req.body.pseudo}, function (err, coll) {
-      if (err) return next(err);
-      if (!coll) return res.json({"success": false, "message":"Pseudo incorrect"});  
-      if (coll && bcrypt.compareSync(req.body.mot_de_passe, coll.mot_de_passe)){
-        var filtered_coll = _.omit(coll.toJSON(),'mot_de_passe');
-        res.json({"success": true,"message": "Connexion réussie", "collaborator" : filtered_coll});  
-      }
-      else return res.json({"success": false,"message":"Mot de passe incorrect"});  
+        if (err) return next(err);
+        if (!coll) return res.json({"success": false, "message":"Pseudo incorrect"});
+        if (coll && bcrypt.compareSync(req.body.mot_de_passe, coll.mot_de_passe)){
+            var filtered_coll = _.omit(coll.toJSON(),'mot_de_passe');
+            res.json({"success": true,"message": "Connexion réussie", "collaborator" : filtered_coll});
+        }
+        else return res.json({"success": false,"message":"Mot de passe incorrect"});
     });
 };
 
