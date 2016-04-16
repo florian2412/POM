@@ -23,7 +23,7 @@
         <td ng-switch-when="Terminé"><span class="glyphicon glyphicon-ok-circle" style="color:green;font-size:1.5em;"></span></td>
         <td ng-switch-when="Annulé"><span class="glyphicon glyphicon-remove-circle" style="color:red;font-size:1.5em;"></span></td>
         <td>{{ project.infos_techniques.date_creation | date:'dd/MM/yyyy' }}</td>
-        <td><a ng-click="deleteProject(project._id)"><span class="fa fa-trash-o" style="color: red;font-size:1.5em;"></span> </a></td>
+        <td><a ng-click="deleteProject(project._id)"><span class="fa fa-trash-o fa-lg" style="color: red;"></span> </a></td>
 
       </tr>
       </tbody>
