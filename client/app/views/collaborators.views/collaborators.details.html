@@ -89,7 +89,7 @@
         <!-- Manager -->
         <md-input-container class="md-block" flex-gt-sm="">
           <label>Manager</label>
-          <md-select ng-model="collaborator.manager" name="manager" required disabled>
+          <md-select ng-model="collaborator.manager" name="manager" required>
             <md-option ng-repeat="collaborator in collaborators" value="{{ collaborator._id }}">
               {{ collaborator.prenom }} {{ collaborator.nom }}
             </md-option>

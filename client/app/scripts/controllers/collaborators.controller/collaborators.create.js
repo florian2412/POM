@@ -48,18 +48,18 @@ angular.module('pomApp')
       }
     };
 
-
-// Lancement au chargement de la page
-    $scope.$on('$viewContentLoaded', function() {
-
-      // Rôle proposé dans le combo du formulaire de création
+    $scope.getAllRoles = function(id) {
       databaseService.getAllObjects('rolesCollaborator')
         .success(function (data) {
           $scope.roles = data;
-        })
-        .error(function (err) {
-          console.error(err);
         });
+    };
+
+    // Lancement au chargement de la page
+    $scope.$on('$viewContentLoaded', function() {
+
+      // Rôle proposé dans le combo du formulaire de création
+      $scope.getAllRoles();
 
       databaseService.getAllObjects('collaborators')
         .success(function (data) {
@@ -69,7 +69,6 @@ angular.module('pomApp')
           console.error(err);
         });
     });
-
 
     function showSuccessDialog() {
       $mdDialog.show(

@@ -17,10 +17,17 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
       });
   };
 
-  $scope.getAllRoles = function(id) {
+  $scope.getAllRoles = function() {
     databaseService.getAllObjects('rolesCollaborator')
       .success(function (data) {
         $scope.roles = data;
+      });
+  };
+
+  $scope.getAllCollaborators = function() {
+    databaseService.getAllObjects('collaborators')
+      .success(function (data) {
+        $scope.collaborators = data;
       });
   };
 
@@ -59,6 +66,8 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
     $scope.getAllRoles();
 
     $scope.getCollaboratorById($stateParams.id);
+
+    $scope.getAllCollaborators();
   });
 
 });
