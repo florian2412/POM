@@ -134,7 +134,13 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
 }
 
 function appRun($rootScope, $location, $state, authenticateService, AuthService, localStorageService) {
-  $rootScope.isAuthenticated = localStorageService.get('currentUser');
+  var cur_user = localStorageService.get('currentUser');
+  $rootScope.isAuthenticated = cur_user;
+  if(cur_user){
+  	$rootScope.userFirstname = cur_user.prenom;
+  	$rootScope.userLastname = cur_user.nom;
+  }
+ 
   $rootScope.$on('$locationChangeSuccess', function(){
     if (authenticateService.getCurrentUser() === null){
       $location.path("/login");
@@ -149,7 +155,12 @@ function appRun($rootScope, $location, $state, authenticateService, AuthService,
   };
 
   $rootScope.$on('LoginSuccess', function(){
-    $rootScope.isAuthenticated = localStorageService.get('currentUser');
+    var cur_user = localStorageService.get('currentUser');
+  	$rootScope.isAuthenticated = cur_user;
+  	if(cur_user){
+  		$rootScope.userFirstname = cur_user.prenom;
+  		$rootScope.userLastname = cur_user.nom;
+  	}
     AuthService.getRole = function(){
       return authenticateService.getCurrentUser().role ;
     };

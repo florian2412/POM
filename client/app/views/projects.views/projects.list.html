@@ -1,45 +1,47 @@
-<section ng-controller="ProjectsCtrl">
-  <div ng-hide="showForm" >
-    <table class="table table-striped table-hover">
-      <thead>
-      <tr>
-        <th>Nom</th>
-        <th>Date début</th>
-        <th>Statut</th>
-        <th>Dernière modification</th>
-        <th>Supprimer ?</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr ng-repeat="project in projects" ng-switch on="project.statut">
+<md-card>
+  <div layout="column" role="main" ng-controller="ProjectsCtrl">
+    <md-toolbar layout="row" layout-align="center center">
+      <div class="md-toolbar-tools">
+        <h2 class="md-flex">Liste des projets</h2>
+      </div>
+    </md-toolbar>
+    <md-card-content>
+      <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Date début</th>
+          <th>Statut</th>
+          <th>Dernière modification</th>
+          <th>Supprimer</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="project in projects" ng-switch on="project.statut">
 
-        <!--<td><a ng-click="getProjectById(project._id)">{{ project.nom }}</a></td>-->
-        <td><a ui-sref=".details({id:project._id})"> {{ project.nom }} </a></td>
-        <!--<td><a ui-sref="collaborators.details({id:project.chef_projet})"> {{ project.chef_projet }} </a></td>-->
-        <td>{{ project.date_debut | date:'dd/MM/yyyy' }}</td>
+          <!--<td><a ng-click="getProjectById(project._id)">{{ project.nom }}</a></td>-->
+          <td><a ui-sref=".details({id:project._id})"> {{ project.nom }} </a></td>
+          <!--<td><a ui-sref="collaborators.details({id:project.chef_projet})"> {{ project.chef_projet }} </a></td>-->
+          <td>{{ project.date_debut | date:'dd/MM/yyyy' }}</td>
+          
+          <td ng-switch-when="Initial"><span class="fa fa-exclamation-circle" style="color:blue;font-size:1.5em;"></span></td>
+          <td ng-switch-when="En cours"><span class="fa fa-exclamation-circle" style="color:orange;font-size:1.5em;"></span></td>
+          <td ng-switch-when="Terminé"><span class="fa fa-check-circle" style="color:green;font-size:1.5em;"></span></td>
+          <td ng-switch-when="Annulé"><span class="fa fa-times-circle" style="color:red;font-size:1.5em;"></span></td>
+          
+          <td>{{ project.infos_techniques.date_creation | date:'dd/MM/yyyy' }}</td>
+          <td><a ng-click="deleteProject(project._id)"><span class="fa fa-trash-o fa-lg" style="color: red;"></span> </a></td>
 
-        <td ng-switch-when="Initialisation"><span class="glyphicon glyphicon-exclamation-sign" style="color:blue;font-size:1.5em;"></span></td>
-        <td ng-switch-when="En cours"><span class="glyphicon glyphicon-exclamation-sign" style="color:orange;font-size:1.5em;"></span></td>
-        <td ng-switch-when="Terminé"><span class="glyphicon glyphicon-ok-circle" style="color:green;font-size:1.5em;"></span></td>
-        <td ng-switch-when="Annulé"><span class="glyphicon glyphicon-remove-circle" style="color:red;font-size:1.5em;"></span></td>
-        <td>{{ project.infos_techniques.date_creation | date:'dd/MM/yyyy' }}</td>
-        <td><a ng-click="deleteProject(project._id)"><span class="fa fa-trash-o fa-lg" style="color: red;"></span> </a></td>
-
-      </tr>
-      </tbody>
-    </table>
+        </tr>
+        </tbody>
+      </table>
 
     <div layout="row" layout-align="center">
       <md-button nra-auth="['manager','admin']" class="md-raised md-primary" type="submit" ui-sref=".create">Créer un nouveau projet</md-button>
     </div>
 
     <br>
-
+    </md-card-content>
   </div>
-
-</section>
-
-
-
-
+</md-card>
 

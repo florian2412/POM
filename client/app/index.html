@@ -88,18 +88,13 @@
               <li data-match-route="/help"><a ui-sref="help" nra-auth="['admin', 'collaborateur', 'manager']" >Aide</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+              <li><a ng-show="isAuthenticated"><strong>{{userFirstname}} {{userLastname}}</strong></a></li>
               <li data-match-route="/login"><a ui-sref="login" ng-show="!isAuthenticated">Se connecter <span class="fa fa-sign-in"></span></a></li>
               <li data-match-route="/login"><a ui-sref="login" ng-show="isAuthenticated">Se déconnecter <span style="color:red;" class="fa fa-power-off"></span></a></li>
             </ul>
           </div>
         </div>
       </div>
-      <div class="flash-message" ng-show="flash" data-placement="top-right" data-container="body" data-duration="60" bs-alert="flash" >
-            <div class="{{'alert alert-' + flash.type}}" ng-bind="flash.message"></div>
-      </div>
-      <div id="alerts-container"></div>
-      <!-- <button class="btn btn-lg btn-primary" data-placement="top-right" data-container="body" data-duration="60" bs-alert="alert">Click to toggle alert
-      </button> -->
     </div>
 
     <div class="container">

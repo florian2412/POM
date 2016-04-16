@@ -17,20 +17,29 @@ body {
   background-size: cover;
 
 }
-
+table > thead > tr > th,
+table > tbody > tr > td
+{
+  text-align : center;
+}
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .footer {
   padding-left: 15px;
   padding-right: 15px;
 }
+
 a:hover{
   cursor: pointer;
 }
-.md-button.md-raised.md-primary > span 
+
+/* Font color white */
+.md-button.md-raised.md-primary > span,
+.md-button.md-raised.md-primary 
 {
   color : white;
 }
+
 /* Custom page header */
 .header {
   border-bottom: 1px #e5e5e5;
