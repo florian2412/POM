@@ -60,10 +60,9 @@ angular.module('pomApp').factory('databaseService', function ($http) {
         headers: { 'Content-Type': 'application/json' }
       });
     },
-
-
+    
     // Resources Collaborators
-    getManagerCollaborators: function(role){
+    getCollaboratorsByRole: function(role){
       console.log(role);
       return  $http({
         method: 'GET',

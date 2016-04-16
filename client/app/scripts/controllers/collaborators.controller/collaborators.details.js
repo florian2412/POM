@@ -8,7 +8,7 @@
  * Controller of the pomApp
  */
 
-angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope, $stateParams, $state, $mdDialog, databaseService) {
+angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope, $stateParams, $state, $mdDialog, authenticateService, databaseService) {
 
   $scope.getCollaboratorById = function(id) {
     databaseService.getObjectById('collaborators', id)
@@ -31,14 +31,29 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
       });
   };
 
-  $scope.getManagerCollaborators = function() {
-    var data = 'manager';
-    databaseService.getManagerCollaborators(data)
+  $scope.getCollaboratorsByRole = function(role) {
+    databaseService.getCollaboratorsByRole(role)
       .success(function (data) {
-        console.log("SUCCESS : " + data);
         $scope.collaborators = data;
       });
   };
+
+  // Permet de lancer au chargement de la page : récupère tous les projets
+  $scope.$on('$viewContentLoaded', function() {
+    $scope.getCollaboratorById($stateParams.id);
+
+    /*
+    if(authenticateService.getCurrentUser().role == 'manager')
+      $scope.getCollaboratorsByRole('admin');
+    else if(authenticateService.getCurrentUser().role == 'collaborator')
+      $scope.getCollaboratorsByRole('manager');
+    */
+
+    $scope.getCollaboratorsByRole('manager');
+
+    // Rôle proposé dans le combo du formulaire de création
+    $scope.getAllRoles();
+  });
 
   function showSuccessDialog() {
     $mdDialog.show(
@@ -52,7 +67,6 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
   };
 
   $scope.showCancelDialog = function(event) {
-
     var confirm = $mdDialog.confirm()
       .title('Alerte')
       .textContent('Etes-vous sûr d\'annuler la modification du collaborateur ?')
@@ -60,23 +74,10 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
       .targetEvent(event)
       .ok('Oui')
       .cancel('Non');
-
     $mdDialog.show(confirm).then(function() {
       $state.go("collaborators");
     }, function() {
-
     });
   };
-
-  // Permet de lancer au chargement de la page : récupère tous les projets
-  $scope.$on('$viewContentLoaded', function() {
-
-    $scope.getCollaboratorById($stateParams.id);
-
-    $scope.getManagerCollaborators();
-
-    // Rôle proposé dans le combo du formulaire de création
-    $scope.getAllRoles();
-  });
 
 });

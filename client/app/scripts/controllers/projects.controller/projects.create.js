@@ -53,11 +53,9 @@ angular.module('pomApp')
 
     // Lancement au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
-
       // Infos en dur pour le moment
       $scope.budgets = ["Ligne budget 1 : 30000€", "Ligne budget 2 : 50000€", "Ligne budget 3 : 100000€"];
       $scope.statuts = ["Initial", "En cours", "Annulé", "Terminé"]
-
     });
 
     function showSuccessDialog() {

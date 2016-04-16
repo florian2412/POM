@@ -53,22 +53,18 @@ angular.module('pomApp')
         });
     };
 
-    $scope.getManagerCollaborators = function() {
-      var data = 'manager';
-      databaseService.getManagerCollaborators(data)
+    $scope.getCollaboratorsByRole = function(role) {
+      databaseService.getCollaboratorsByRole(role)
         .success(function (data) {
-          console.log("SUCCESS : " + data);
           $scope.collaborators = data;
         });
     };
 
     // Lancement au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
-
       // Rôle proposé dans le combo du formulaire de création
       $scope.getAllRoles();
-
-      $scope.getManagerCollaborators();
+      $scope.getCollaboratorsByRole('manager');
     });
 
     function showSuccessDialog() {
