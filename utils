@@ -40,3 +40,6 @@ var schemaTask = mongoose.Schema({
 });
 
 curl -H "Content-Type: application/json" -X POST -d '{"username":"xyz","password":"xyz"}' http://localhost:3000/tasks
+
+
+curl -H "Content-Type: application/json" -X POST -d '{ "nom": "Administrateur","prenom": "Principal", "pseudo": "admin", "mot_de_passe": "admin", "status": "admin","role": "admin" }' http://localhost:3000/collaborators
