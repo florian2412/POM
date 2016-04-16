@@ -24,7 +24,7 @@ app.use(cors());
 // API 
 app.use('/projects', require('./routes/projects'));
 app.use('/collaborators', require('./routes/collaborators'));
-//app.use('/tasks', require('./routes/tasks'));
+app.use('/rolesCollaborator', require('./routes/rolesCollaborator'));
 
 app.all('*', function(req, res, next) {
     res.set('Access-Control-Allow-Origin', '*');

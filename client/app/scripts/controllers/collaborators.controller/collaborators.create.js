@@ -48,16 +48,20 @@ angular.module('pomApp')
       }
     };
 
-    $scope.clearValue = function() {
-      $scope.createCollaboratorForm = undefined;
-    };
-
 
 // Lancement au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
 
       // Rôle proposé dans le combo du formulaire de création
-      $scope.roles = ["Admin", "Manager", "Collaborateur"];
+      databaseService.getAllObjects('rolesCollaborator')
+        .success(function (data) {
+          $scope.status = data;
+        })
+        .error(function (err) {
+          console.error(err);
+        });
+
+      //$scope.roles = ["Admin", "Manager", "Collaborateur"];
 
 
       databaseService.getAllObjects('collaborators')

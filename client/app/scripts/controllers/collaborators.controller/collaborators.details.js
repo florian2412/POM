@@ -8,10 +8,10 @@
  * Controller of the pomApp
  */
 
-angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope, $stateParams, collaboratorsService) {
+angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope, $stateParams, databaseService) {
 
   $scope.getCollaboratorById = function(id) {
-    collaboratorsService.getCollaboratorById(id)
+    databaseService.getObjectById('collaborators', id)
       .success(function (data) {
         $scope.collaborator = data;
       });
@@ -19,6 +19,9 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
 
   // Permet de lancer au chargement de la page : récupère tous les projets
   $scope.$on('$viewContentLoaded', function() {
+    // Rôle proposé dans le combo du formulaire de création
+    $scope.roles = ["Admin", "Manager", "Collaborateur"];
+
     $scope.getCollaboratorById($stateParams.id);
   });
 

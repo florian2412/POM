@@ -4,11 +4,9 @@
       <thead>
       <tr>
         <th>Nom</th>
-        <th>Chef de projet</th>
         <th>Date début</th>
         <th>Statut</th>
-        <th>Collaborateurs</th>
-        <th>Date modification</th>
+        <th>Dernière modification</th>
         <th>Supprimer ?</th>
       </tr>
       </thead>
@@ -17,15 +15,13 @@
 
         <!--<td><a ng-click="getProjectById(project._id)">{{ project.nom }}</a></td>-->
         <td><a ui-sref=".details({id:project._id})"> {{ project.nom }} </a></td>
-        <td><a ui-sref="collaborators.details({id:project.chef_projet})"> {{ project.chef_projet }} </a></td>
+        <!--<td><a ui-sref="collaborators.details({id:project.chef_projet})"> {{ project.chef_projet }} </a></td>-->
         <td>{{ project.date_debut | date:'dd/MM/yyyy' }}</td>
 
         <td ng-switch-when="Initialisation"><span class="glyphicon glyphicon-exclamation-sign" style="color:blue;font-size:1.5em;"></span></td>
         <td ng-switch-when="En cours"><span class="glyphicon glyphicon-exclamation-sign" style="color:orange;font-size:1.5em;"></span></td>
         <td ng-switch-when="Terminé"><span class="glyphicon glyphicon-ok-circle" style="color:green;font-size:1.5em;"></span></td>
         <td ng-switch-when="Annulé"><span class="glyphicon glyphicon-remove-circle" style="color:red;font-size:1.5em;"></span></td>
-
-        <td>{{ project.collaborateurs }}</td>
         <td>{{ project.infos_techniques.date_creation | date:'dd/MM/yyyy' }}</td>
         <td><a ng-click="deleteProject(project._id)"><span class="fa fa-trash-o" style="color: red;font-size:1.5em;"></span> </a></td>
 

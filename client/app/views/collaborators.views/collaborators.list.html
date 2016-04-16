@@ -3,23 +3,20 @@
     <table class="table table-striped table-hover">
       <thead>
       <tr>
-        <th>Id</th>
-        <th>Prénom</th>
-        <th>Nom</th>
+        <th>Prénom / Nom</th>
         <th>Pseudo</th>
         <th>Manager</th>
         <th>Rôle</th>
         <th>Supprimer ?</th>
-
       </tr>
       </thead>
+
       <tbody>
       <tr ng-repeat="collaborator in collaborators">
-        <td><a ui-sref=".details({id:collaborator._id})"> {{ collaborator._id }}</a></td>
-        <td>{{ collaborator.prenom }}</td>
-        <td>{{ collaborator.nom }}</td>
+        <td><a ui-sref=".details({id:collaborator._id})"> {{ collaborator.prenom }} {{ collaborator.nom }} </a></td>
+
         <td>{{ collaborator.pseudo }}</td>
-        <td>{{ collaborator.manager }}</td>
+        <td><a ui-sref=".details({id:collaborator.manager})"> {{ collaborator.manager }} </a></td>
         <td>{{ collaborator.role }}</td>
         <td><a ng-click="deleteCollaborator(collaborator._id)"><span class="glyphicon glyphicon-remove-circle" style="color: orange;font-size:1.5em;"></span> </a></td>
       </tr>
