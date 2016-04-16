@@ -27,7 +27,7 @@ body {
 a:hover{
   cursor: pointer;
 }
-.md-button > span 
+.md-button.md-raised.md-primary > span 
 {
   color : white;
 }
