@@ -69,7 +69,6 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($scope, $st
   };
 
   $scope.showCancelDialog = function() {
-
     var confirm = $mdDialog.confirm()
       .title('Alerte')
       .textContent('Etes-vous sûr d\'annuler la modification du projet ?')
