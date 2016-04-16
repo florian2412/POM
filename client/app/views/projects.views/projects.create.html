@@ -1,62 +1,82 @@
 <md-card>
 
   <md-toolbar layout="row">
-  <div class="md-toolbar-tools">
-    <h2 class="md-flex">Création d'un nouveau projet</h2>
-  </div>
+    <div class="md-toolbar-tools">
+      <h2 class="md-flex">Création d'un nouveau projet</h2>
+    </div>
   </md-toolbar>
 
   <md-card-content>
 
-    <form class="form-horizontal" >
+    <form class="form-horizontal" name="createProjectForm">
 
       <md-input-container class="md-block">
         <label>Nom du projet</label>
-        <input ng-model="project.name" required>
+        <input ng-model="project.name" maxlength="20" name="nom" required>
+        <div ng-messages="createProjectForm.nom.$error">
+          <div ng-message="required">Ce champ est obligatoire.</div>
+          <div ng-message="maxlength">Le nom du projet ne doit pas dépasser 20 caractères.</div>
+        </div>
       </md-input-container>
 
-      <!--<form class="form-horizontal">-->
-        <div class="form-group">
-          <label class="col-xs-4">Date de début de projet</label>
-          <md-datepicker ng-model="project.startDate" md-placeholder="Entrer date" md-min-date="minDate"></md-datepicker>
-        </div>
-        <br>
-        <div class="form-group">
-          <label class="col-xs-4">Date de fin théorique de projet</label>
-          <md-datepicker ng-model="project.endDate" md-placeholder="Entrer date" md-min-date="minDate"></md-datepicker>
-        </div>
-        <br>
-      <!--</form>-->
 
-      <!-- Statut -->
-      <md-input-container class="md-block">
-        <label>Statut</label>
-        <md-select ng-model="project.statut" >
-          <md-option ng-repeat="statut in statuts" value="{{statut}}">
-            {{statut}}
-          </md-option>
-        </md-select>
-      </md-input-container>
+      <div class="form-group">
+        <label class="col-xs-4">Date de début de projet</label>
+        <md-datepicker ng-model="project.startDate" md-placeholder="Entrer date" md-min-date="minDate" name="dateDebut" required></md-datepicker>
+      </div>
 
       <br>
 
-      <!-- Ligne budgétaire -->
-      <md-input-container class="md-block">
-        <label>Ligne budgétaire</label>
-        <md-select ng-model="project.budget" >
-          <md-option ng-repeat="budget in budgets" value="{{budget}}">
-            <!--{{ budget.libelle }} {{ budget.montant_depart }}-->
-            {{ budget }}
-          </md-option>
-        </md-select>
-      </md-input-container>
+      <div class="form-group">
+        <label class="col-xs-4">Date de fin <b>théorique</b> de projet</label>
+        <md-datepicker ng-model="project.endDate" md-placeholder="Entrer date" md-min-date="minDate" name="dateFinTheorique" required></md-datepicker>
+      </div>
+
+      <br>
+
+      <div layout-gt-sm="row">
+
+        <!-- Statut -->
+        <md-input-container class="md-block" flex-gt-sm="">
+          <label>Statut</label>
+          <md-select ng-model="project.statut" name="statut" required>
+            <md-option ng-repeat="statut in statuts" value="{{statut}}">
+              {{statut}}
+            </md-option>
+          </md-select>
+          <div ng-messages="createProjectForm.statut.$error">
+            <div ng-message="required">Ce champ est obligatoire.</div>
+          </div>
+        </md-input-container>
+
+        <div flex="5" hide-xs="" hide-sm="">
+          <!-- Spacer //-->
+        </div>
+
+        <!-- Ligne budgétaire -->
+        <md-input-container class="md-block" flex-gt-sm="">
+          <label>Ligne budgétaire</label>
+          <md-select ng-model="project.budget" name="budget" required>
+            <md-option ng-repeat="budget in budgets" value="{{budget}}">
+              <!--{{ budget.libelle }} {{ budget.montant_depart }}-->
+              {{ budget }}
+            </md-option>
+          </md-select>
+          <div ng-messages="createProjectForm.budget.$error">
+            <div ng-message="required">Ce champ est obligatoire.</div>
+          </div>
+        </md-input-container>
+
+      </div>
 
       <md-input-container class="md-block">
         <div layout="row">
           <md-button class="md-raised" ng-click="showCancelDialog($event)">Annuler</md-button>
-          <md-button class="md-raised md-primary" type="submit" ng-click="createProject()">Créer</md-button>
+          <md-button class="md-raised md-primary" type="submit" ng-click="createProject()" ng-disabled="createProjectForm.$invalid">Créer</md-button>
         </div>
       </md-input-container>
+
+      </div>
 
     </form>
 
