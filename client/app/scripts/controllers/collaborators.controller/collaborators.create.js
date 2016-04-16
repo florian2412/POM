@@ -61,9 +61,6 @@ angular.module('pomApp')
           console.error(err);
         });
 
-      //$scope.roles = ["Admin", "Manager", "Collaborateur"];
-
-
       databaseService.getAllObjects('collaborators')
         .success(function (data) {
           $scope.collaborators = data;
