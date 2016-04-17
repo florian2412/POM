@@ -131,8 +131,13 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
     });
 }
 
-function appRun($rootScope, $location, $state, authenticateService, AuthService, localStorageService) {
+function appRun($rootScope, $location, $state, $http, authenticateService, AuthService, localStorageService) {
   var cur_user = localStorageService.get('currentUser');
+  var version = $http.get('http://localhost:3000/version')
+  					 	.then(function(res){ 
+  							$rootScope.apiVersion = res.data.api;
+  							$rootScope.appClientVersion = res.data.appClient;
+  						},function(err){ console.log("erreur get version");});
   $rootScope.isAuthenticated = cur_user;
   if(cur_user){
   	$rootScope.userFirstname = cur_user.prenom;

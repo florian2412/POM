@@ -25,6 +25,7 @@ app.use(cors());
 app.use('/projects', require('./routes/projects'));
 app.use('/collaborators', require('./routes/collaborators'));
 app.use('/rolesCollaborator', require('./routes/rolesCollaborator'));
+app.use('/version', require('./routes/version'));
 
 app.all('*', function(req, res, next) {
     res.set('Access-Control-Allow-Origin', '*');
@@ -74,11 +75,11 @@ module.exports = app;
 // Connexion BDD Mongo avec module mongoose
 var mongoose = require('mongoose');
 
-mongoose.connect(config.connectionString + config.mongodbPort + "/" + config.nameBddMongo, function(err) {
+mongoose.connect(config.connectionString + config.mongodbPort + "/" + config.mongoDBName, function(err) {
     if(err) {
         console.log('Connection error !', err);
     } else {
-        console.log('Connection successful at http://' + config.connectionString + config.mongodbPort + "/" + config.nameBddMongo);
+        console.log('Connection successful at http://' + config.connectionString + config.mongodbPort + "/" + config.mongoDBName);
     }
 });
 

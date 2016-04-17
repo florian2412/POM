@@ -7,42 +7,44 @@
  * # collaboratorsService
  * Service in the pomApp.
  */
-angular.module('pomApp').factory('authenticateService', function ($http, $rootScope, localStorageService) {
-    var service = {};
+angular.module('pomApp').factory('authenticateService', Service);
+    
+function Service($http, $rootScope, localStorageService){
+  var service = {};
 
-    service.authenticate = Authenticate;
-    service.setCredentials = SetCredentials;
-    service.clearCredentials = ClearCredentials;
-    service.getCurrentUser = GetCurrentUser;
-    service.logout = Logout;
+  service.authenticate = Authenticate;
+  service.setCredentials = SetCredentials;
+  service.clearCredentials = ClearCredentials;
+  service.getCurrentUser = GetCurrentUser;
+  service.logout = Logout;
 
-    return service;
+  return service;
 
-    function Authenticate(data,callback){
-      var response;
-    	var res = $http({ method: 'POST',
-						            data: data,
-            			      headers: { 'Content-Type': 'application/json' },
-    					          url: 'http://localhost:3000/collaborators/authenticate'});
+  function Authenticate(data,callback){
+    var response;
+  	var res = $http({ method: 'POST',
+					            data: data,
+          			      headers: { 'Content-Type': 'application/json' },
+  					          url: 'http://localhost:3000/collaborators/authenticate'});
 
-      res.success(function (r) {
-        if(r.success){
-          SetCredentials(r.collaborator);
-          response = { "success" : r.success, "message" : r.message }; 
-        } else { response = { "success" : r.success, "message" : "Pseudo ou mot de passe incorrect" }; }
+    res.success(function (r) {
+      if(r.success){
+        SetCredentials(r.collaborator);
+        response = { "success" : r.success, "message" : r.message }; 
+      } else { response = { "success" : r.success, "message" : "Pseudo ou mot de passe incorrect" }; }
 
-        callback(response);
-      })
-      .error(function (err) {
-        console.error("Login error !" + err);
-      });
-    }
+      callback(response);
+    })
+    .error(function (err) {
+      console.error("Login error !" + err);
+    });
+  }
 
-    function GetCurrentUser(){ return localStorageService.get('currentUser');}
+  function GetCurrentUser(){ return localStorageService.get('currentUser');}
 
-    function SetCredentials(collaborator) { localStorageService.set('currentUser',collaborator);}
+  function SetCredentials(collaborator) { localStorageService.set('currentUser',collaborator);}
 
-    function ClearCredentials() { localStorageService.remove('currentUser'); }
+  function ClearCredentials() { localStorageService.remove('currentUser'); }
 
-    function Logout() { ClearCredentials(); }
-});
+  function Logout() { ClearCredentials(); }
+};

@@ -4,5 +4,6 @@
     "secret": "POM",
     "serverPort": 3000,
     "mongodbPort": 27017,
-    "nameBddMongo": "dbPOM"
+    "mongoDBName": "dbPOM",
+    "version": {"api": "1.0.0", "appClient" : "1.2.0"}
 }
