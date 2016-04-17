@@ -36,12 +36,20 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($scope, $st
     //var ligne_budgetaire = $scope.budget._id;
 
     // TODO Faire la validation du formulaire de création de projet
-    var data = "{ \"nom\": " + "\"" + nom + "\" "
+   /* var data = "{ \"nom\": " + "\"" + nom + "\" "
       + ", \"statut\": " + "\"" + statut + "\" "
       + ", \"date_debut\": \"" + date_debut + "\" "
       + ", \"date_fin_theorique\": \"" + date_fin_theorique + "\" }";
     /*+ ", \"collaborateurs\": \"" + collaborateurs + "\" "
      + ", \"collaborateurs\": \"" + collaborateurs + "\" } ";*/
+
+    var data = {
+      "nom" : nom,
+      "statut" : statut,
+      "chef_projet" : chef_projet,
+      "date_debut" : date_debut,
+      "date_fin_theorique" : date_fin_theorique
+    };
 
     console.log(data);
 
@@ -77,10 +85,9 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($scope, $st
       .cancel('Non');
 
     $mdDialog.show(confirm).then(function() {
-      $state.go("projects");
-    }, function() {
-
-    });
+        $state.go("projects");
+        }, function() {}
+    );
   };
 
   var regexIso8601 = /^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/;
@@ -116,4 +123,4 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($scope, $st
 
     $scope.getProjectById($stateParams.id);
   });
-};
+});
