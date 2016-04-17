@@ -100,7 +100,7 @@
       var auth = next && next.authorized ? next.authorized : [];
 
       if(!self.isAuthorized(auth)){
-        $rootScope.$broadcast(NRA_MSG.accessDenied, (next ? next.url : ""));
+        $rootScope.$broadcast(NRA_MSG.accessDenied,(next ? next.url : ""));
         console.error("Access denied on unauthorized root:", (next ? next.url : ""));
         event.preventDefault();
         $state.go('restricted');

@@ -14,7 +14,7 @@
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/bootstrap.paper.min.css">
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
     <link rel="stylesheet" href="styles/angular.strap.css">
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
@@ -62,7 +62,7 @@
 
     <!-- Add your site or application content here -->
     <div class="header">
-      <div class="navbar navbar-default" role="navigation" bs-navbar>
+      <div class="navbar navbar-default navbar-fixed-top" role="navigation" bs-navbar>
         <div class="container-fluid">
           <div class="navbar-header">
 
@@ -101,9 +101,16 @@
       <div ui-view></div>
     </div>
 
-    <div class="footer">
+    <div class="footer navbar-fixed-bottom">
       <div class="container">
-        <p><b>M2 MIAGE Bordeaux - Projet Techniques de Développement Avancées - 2016</b></p>
+        <div class="row">
+          <div class="col-md-6">
+            <b>M2 MIAGE Bordeaux - Projet Techniques de Développement Avancées - 2016</b>
+          </div>
+          <div class="col-md-6">
+            <b>Version : 1.0.0</b>
+          </div>
+        </div>
       </div>
     </div>
 </body>

@@ -7,8 +7,7 @@
  * # ProjectsCtrl
  * Controller of the pomApp
  */
-angular
-  .module('pomApp')
+angular.module('pomApp')
   .controller('ProjectsCtrl', function ($scope, $location, $http, databaseService) {
 
     // Affiche ou rafraichit tous les projets dans le tableau des projets

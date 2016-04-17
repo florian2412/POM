@@ -19,17 +19,17 @@ angular.module('pomApp').controller('LoginCtrl', function ($scope, $alert, $loca
 	    		else
 	    		{
 	    			$rootScope.$broadcast("LoginFailed", "isNotConnected");
-					FlashService.Error("Erreur ! ", "Pseudo ou mot de passe incorrect", "top-right", "true", 4);
+					FlashService.Error("Erreur ! ", "Pseudo ou mot de passe incorrect", "bottom-right", "true", 4);
 	    		}
 	    	});
 		}else
 		{
-			FlashService.Error('Erreur ! ', 'Pseudo ou mot de passe incorrect', 'top-right', true, 4);
+			FlashService.Error('Erreur ! ', 'Pseudo ou mot de passe incorrect', 'bottom-right', true, 4);
 		}
   };
   $scope.$on('$viewContentLoaded', function() {
     if (authenticateService.getCurrentUser() !== null) {
-     	FlashService.Success("Déconnexion réussie ! ", "A bientôt ! ", "top-right", true, 4);
+     	FlashService.Success("Déconnexion réussie ! ", "A bientôt ! ", "bottom-right", true, 4);
       	authenticateService.clearCredentials();
       	$rootScope.$broadcast("LogoutSuccess", "isDisconnected");		
     }

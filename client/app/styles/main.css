@@ -1,21 +1,9 @@
 body {
-  /* Location of the image */
   background-image: url(../images/background.png);
-
-  /* Background image is centered vertically and horizontally at all times */
   background-position: center center;
-
-  /* Background image doesn't tile */
   background-repeat: no-repeat;
-
-  /* Background image is fixed in the viewport so that it doesn't move when
-     the content's height is greater than the image's height */
   background-attachment: fixed;
-
-  /* This is what makes the background image rescale based
-     on the container's size */
   background-size: cover;
-
 }
 table > thead > tr > th,
 table > tbody > tr > td
@@ -43,24 +31,19 @@ md-toolbar .md-toolbar-tools h2
 
 /* Custom page header */
 .header {
-  border-bottom: 1px #e5e5e5;
-  margin-bottom: 10px;
-}
-/* Make the masthead heading the same height as the navigation */
-.header h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 40px;
-  padding-bottom: 19px;
+  min-height:64px;
 }
 
 /* Custom page footer */
 .footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 2px solid #777;
+  background-color: white;
+  -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.3);
 }
-
+.footer > .container{ 
+  text-align: center;
+  vertical-align: middle;
+}
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {

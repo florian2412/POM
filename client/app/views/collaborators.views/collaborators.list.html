@@ -25,7 +25,7 @@
           <td>{{ collaborator.pseudo }}</td>
           <td><a ui-sref=".details({id:collaborator.manager})"> {{ collaborator.manager }} </a></td>
           <td>{{ collaborator.role }}</td>
-          <td><a ng-click="deleteCollaborator(collaborator._id)"><span class="glyphicon glyphicon-remove-circle" style="color: orange;font-size:1.5em;"></span> </a></td>
+          <td><a ng-click="deleteCollaborator(collaborator._id)"><span class="fa fa-trash-o fa-lg" style="color: red;"></span> </a></td>
         </tr>
         </tbody>
       </table>

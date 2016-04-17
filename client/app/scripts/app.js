@@ -126,7 +126,7 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
     .state('restricted', {
       url : '/restricted',
       title : 'Accès refusé',
-      template: '<h4>Vous n\'avez pas les droits d\'accès. Contactez votre manager.</h4>',
+      templateUrl: 'views/partials/restricted.html',
       authorized: [ "public", "collaborateur", "admin", "manager"]
     });
 }
