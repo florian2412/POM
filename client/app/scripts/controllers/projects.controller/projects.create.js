@@ -9,7 +9,7 @@
  */
 
 angular.module('pomApp')
-  .controller('ProjectsCreateCtrl', function ($scope, $state, $mdDialog, databaseService, authenticateService) {
+  .controller('ProjectsCreateCtrl', function ($scope, $state, $mdDialog, databaseService, FlashService, authenticateService) {
 
     $scope.createProject = function() {
 
@@ -29,7 +29,7 @@ angular.module('pomApp')
       //var ligne_budgetaire = $scope.budget._id;
 
       // TODO Faire la validation du formulaire de création de projet
-      var data = "{ \"nom\": " + "\"" + nom + "\" "
+      /*var data = "{ \"nom\": " + "\"" + nom + "\" "
         + ", \"statut\": " + "\"" + statut + "\" "
         + ", \"chef_projet\": \"" + chef_projet + "\" "
         + ", \"date_debut\": \"" + date_debut + "\" "
@@ -37,12 +37,21 @@ angular.module('pomApp')
       /*+ ", \"collaborateurs\": \"" + collaborateurs + "\" "
        + ", \"collaborateurs\": \"" + collaborateurs + "\" } ";*/
 
+      var data = {
+        "nom" : nom,
+        "statut" : statut,
+        "chef_projet" : chef_projet,
+        "date_debut" : date_debut,
+        "date_fin_theorique" : date_fin_theorique
+      };
+
       console.log(data);
 
       databaseService.createObject('projects', data)
         .success(function (data) {
           console.log(data);
-          showSuccessDialog();
+          //showSuccessDialog();
+          FlashService.Success("Création du projet " + nom + " réussie.", "", "top-right", true, 4);
           $state.go("projects");
         })
         .error(function (err) {

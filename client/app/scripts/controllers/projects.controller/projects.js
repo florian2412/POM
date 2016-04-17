@@ -45,7 +45,18 @@ angular
       databaseService.deleteObject('projects', id)
         .success(function (data) {
           // Update liste projets
-          $scope.showAllProjects();
+          var index = -1;   
+          var comArr = eval( $scope.projects );
+          for( var i = 0; i < comArr.length; i++ ) {
+            if( comArr[i]._id === id ) {
+              index = i;
+              break;
+            }
+          }
+          if( index === -1 ) {
+            alert( "Something gone wrong" );
+          }
+          $scope.projects.splice( index, 1 );    
         })
         .error(function(err) {
           console.log(err);

@@ -35,7 +35,8 @@ a:hover{
 
 /* Font color white */
 .md-button.md-raised.md-primary > span,
-.md-button.md-raised.md-primary 
+.md-button.md-raised.md-primary,
+md-toolbar .md-toolbar-tools h2 
 {
   color : white;
 }

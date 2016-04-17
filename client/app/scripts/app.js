@@ -101,10 +101,9 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
     .state('statistics', {
       url : '/statistics',
       title : 'Statistiques',
-      /* templateUrl: 'views/login.html',
-       controller: 'LoginCtrl',
+      templateUrl: 'views/statistics.html',
+      /* controller: 'LoginCtrl',
        controllerAs: 'login',*/
-      template: '<h4>stats des projets</h4>',
       authorized: ["collaborateur", "admin", "manager"]
     })
     .state('settings', {
@@ -119,11 +118,10 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
     .state('help', {
       url : '/help',
       title : 'Aide',
-      /* templateUrl: 'views/login.html',
-       controller: 'LoginCtrl',
+      templateUrl: 'views/help.html',
+      /* controller: 'LoginCtrl',
        controllerAs: 'login',*/
-      template: '<h4>Aide ici</h4>',
-      authorized: ["public", "collaborateur", "admin", "manager"]
+      authorized: ["collaborateur", "admin", "manager"]
     })
     .state('restricted', {
       url : '/restricted',

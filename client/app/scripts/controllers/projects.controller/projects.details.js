@@ -116,4 +116,4 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($scope, $st
 
     $scope.getProjectById($stateParams.id);
   });
-});
+};
