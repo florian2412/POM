@@ -11,6 +11,7 @@
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
     <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -20,6 +21,7 @@
     <!-- endbuild -->
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
@@ -33,6 +35,7 @@
     <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
     <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -86,6 +89,18 @@
              <!--  <li data-match-route="/settings"><a ui-sref="settings" nra-auth="['admin', 'collaborateur', 'manager']" >Préférences</a></li> -->
               <li data-match-route="/about"><a ui-sref="about" nra-auth="['admin', 'collaborateur', 'manager']" >A propos</a></li>
               <li data-match-route="/help"><a ui-sref="help" nra-auth="['admin', 'collaborateur', 'manager']" >Aide</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li class="dropdown-header">Nav header</li>
+                  <li><a href="#">Separated link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a ng-show="isAuthenticated"><strong>{{userFirstname}} {{userLastname}}</strong></a></li>
@@ -111,7 +126,7 @@
             Version API : <b>{{ apiVersion }}</b>
           </div>
           <div class="col-md-3">
-            Version API : <b>{{ appClientVersion }}</b>
+            Version client : <b>{{ appClientVersion }}</b>
           </div>
         </div>
       </div>
