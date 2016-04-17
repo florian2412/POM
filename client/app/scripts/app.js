@@ -133,47 +133,34 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
 
 function appRun($rootScope, $location, $state, $http, authenticateService, AuthService, localStorageService) {
   var cur_user = localStorageService.get('currentUser');
-  var version = $http.get('http://localhost:3000/version')
-  					 	.then(function(res){ 
-  							$rootScope.apiVersion = res.data.api;
-  							$rootScope.appClientVersion = res.data.appClient;
-  						},function(err){ console.log("erreur get version");});
+  getVersion();
+  AuthService.setRole(((cur_user === null) ? "public" : cur_user.role));
   $rootScope.isAuthenticated = cur_user;
   if(cur_user){
-  	$rootScope.userFirstname = cur_user.prenom;
-  	$rootScope.userLastname = cur_user.nom;
+	  $rootScope.userFirstname = cur_user.prenom;
+	  $rootScope.userLastname = cur_user.nom;
   }
- 
+  // Fire when url changes
   $rootScope.$on('$locationChangeSuccess', function(){
     if (authenticateService.getCurrentUser() === null){
       $location.path("/login");
     }
   });
+
+  // Fire when state changes
   $rootScope.$on('$stateChangeStart', function(event, toState) {
     $rootScope.title = toState.title;
   });
-  AuthService.getRole = function(){
-    var cur = localStorageService.get('currentUser');
-    return ((cur === null) ? "public" : cur.role);
-  };
 
-  $rootScope.$on('LoginSuccess', function(){
-    var cur_user = localStorageService.get('currentUser');
-  	$rootScope.isAuthenticated = cur_user;
-  	if(cur_user){
-  		$rootScope.userFirstname = cur_user.prenom;
-  		$rootScope.userLastname = cur_user.nom;
-  	}
-    AuthService.getRole = function(){
-      return authenticateService.getCurrentUser().role ;
-    };
-  });
-  $rootScope.$on('LogoutSuccess', function(){
-    $rootScope.isAuthenticated = localStorageService.get('currentUser');
-    AuthService.getRole = function(){
-      return "public";
-    };
-  });
+  function getVersion(){
+	var version = $http.get('http://localhost:3000/version')
+  				       .then(function(res){ 
+  							$rootScope.apiVersion = res.data.api;
+  							$rootScope.appClientVersion = res.data.appClient;
+  						   },function(err){ console.log("erreur get version : " + err);}
+  						);
+  }
 }
+
 pomApp.config(appConfig);
 pomApp.run(appRun);

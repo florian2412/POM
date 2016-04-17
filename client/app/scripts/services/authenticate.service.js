@@ -42,9 +42,19 @@ function Service($http, $rootScope, localStorageService){
 
   function GetCurrentUser(){ return localStorageService.get('currentUser');}
 
-  function SetCredentials(collaborator) { localStorageService.set('currentUser',collaborator);}
+  function SetCredentials(collaborator) { 
+    localStorageService.set('currentUser',collaborator);
+    $rootScope.isAuthenticated = collaborator;
+    $rootScope.userFirstname = collaborator.prenom;
+    $rootScope.userLastname = collaborator.nom;
+  }
 
-  function ClearCredentials() { localStorageService.remove('currentUser'); }
+  function ClearCredentials() { 
+    localStorageService.remove('currentUser'); 
+    $rootScope.isAuthenticated = null;
+    delete $rootScope.userFirstname;
+    delete $rootScope.userLastname;
+  }
 
   function Logout() { ClearCredentials(); }
 };

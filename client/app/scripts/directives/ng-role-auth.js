@@ -68,9 +68,14 @@
   function Service($rootScope, $state, $location, $window, NRA_MSG){
 
     var self = this;
+    var role = null;
 
     this.getRole = function(){
-      return null;
+      return role;
+    };
+
+    this.setRole = function(r){
+      role = r;
     };
 
     this.isAuthorized = function(auth){

@@ -82,6 +82,7 @@
 
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
             <ul class="nav navbar-nav">
+              <li ng-show="!isAuthenticated"><img src="images/slogan.png" alt="Slogan"></li>
               <li data-match-route="/$"><a ui-sref="/" nra-auth="['admin', 'collaborateur', 'manager']">Accueil</a></li>
               <li data-match-route="/projects" ><a ui-sref="projects" nra-auth="['admin', 'collaborateur', 'manager']">Projets</a></li>
               <li data-match-route="/collaborators" ><a ui-sref="collaborators" nra-auth="['admin', 'collaborateur', 'manager']" >Collaborateurs</a></li>
@@ -99,11 +100,11 @@
         </div>
       </div>
     </div>
-
+    <!-- Main content -->
     <div class="container">
       <div ui-view></div>
     </div>
-
+    <!-- Footer content -->
     <div class="footer navbar-fixed-bottom">
       <div class="container">
         <div class="row">
