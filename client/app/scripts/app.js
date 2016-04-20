@@ -134,7 +134,7 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
 function appRun($rootScope, $location, $state, $http, authenticateService, AuthService, localStorageService) {
   var cur_user = localStorageService.get('currentUser');
   getVersion();
-  AuthService.setRole(((cur_user === null) ? "public" : cur_user.role));
+  AuthService.setRole(((cur_user) ? cur_user.role : "public"));
   $rootScope.isAuthenticated = cur_user;
   if(cur_user){
 	  $rootScope.userFirstname = cur_user.prenom;
