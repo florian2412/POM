@@ -12,7 +12,7 @@
 var pomApp = angular.module('pomApp', ['ui.router', 'ngMaterial', 'ngMessages', 'ngRoleAuth', 'ngSanitize', 'ngPassword', 'LocalStorageModule', 'mgcrea.ngStrap']);
 
 function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $mdThemingProvider) {
-  $mdThemingProvider.theme('default').primaryPalette('green').accentPalette('orange');
+  $mdThemingProvider.theme('default').primaryPalette('green').accentPalette('blue');
   $mdDateLocaleProvider.formatDate = function(date) { return moment(date).format('DD/MM/YYYY');};
   $urlRouterProvider.otherwise('/');
   $stateProvider

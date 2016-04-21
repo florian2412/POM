@@ -51,7 +51,7 @@ angular.module('pomApp')
         .success(function (data) {
           console.log(data);
           //showSuccessDialog();
-          FlashService.Success("Création du projet " + nom + " réussie.", "", "top-right", true, 4);
+          FlashService.Success("Création du projet " + nom + " réussie.", "", "bottom-right", true, 4);
           $state.go("projects");
         })
         .error(function (err) {
