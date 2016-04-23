@@ -11,5 +11,4 @@ angular.module('pomApp')
   .controller('MainCtrl', function ($scope, $rootScope, $location, localStorageService) {
 
   	$scope.user = localStorageService.get('currentUser').pseudo;
-	
-  });
+});

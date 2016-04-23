@@ -20,7 +20,9 @@ table > tbody > tr > td
 a:hover{
   cursor: pointer;
 }
-
+/*md-tabs {
+    transition: 0s !important;
+}*/
 /* Font color white */
 .md-button.md-raised.md-primary > span,
 .md-button.md-raised.md-primary,

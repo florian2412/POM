@@ -1,94 +1,78 @@
-<md-card>
-
-  <md-toolbar layout="row">
-    <div class="md-toolbar-tools">
-      <h2 class="md-flex" style="color:white">Détails / Modification du projet {{ project.nom }}</h2>
-    </div>
-  </md-toolbar>
-
-  <md-card-content>
-
-    <md-tabs md-dynamic-height md-border-bottom>
-      <md-tab label="Infos">
-        <md-content class="md-padding">
-          <!--<h1 class="md-display-2">Détails du projet</h1>-->
-
+<md-content ng-cloak class="md-whiteframe-z2" layout-padding layout-align="center start">
+  <div class="col-md-6 col-md-offset-3">
           <form class="form-horizontal" >
-
-            <md-input-container class="md-block">
-              <label>Nom du projet</label>
-              <input ng-model="project.nom" required>
-            </md-input-container>
-
-            <md-input-container class="md-block">
-              <label>Chef de projet</label>
-              <input ng-model="chef_projet" disabled>
-            </md-input-container>
-
-            <div class="form-group">
-              <label class="col-xs-4">Date de début de projet</label>
-              <md-datepicker ng-model="project.date_debut" md-placeholder="Entrer date"></md-datepicker>
-            </div>
-            <br>
-            <div class="form-group">
-              <label class="col-xs-4">Date de fin <b>théorique</b> de projet</label>
-              <md-datepicker ng-model="project.date_fin_theorique" md-placeholder="Entrer date"></md-datepicker>
-            </div>
-            <br>
-
-            <!-- Statut -->
-            <md-input-container class="md-block">
-              <label>Statut</label>
-              <md-select ng-model="project.statut" >
-                <md-option ng-repeat="statut in statuts" value="{{statut}}">
-                  {{statut}}
-                </md-option>
-              </md-select>
-            </md-input-container>
-
-            <br>
-
-            <div class="form-group">
-              <label class="col-xs-4">Date de fin <b>réelle</b> de projet</label>
-              <md-datepicker ng-model="project.date_fin_reelle" md-placeholder="Entrer date"></md-datepicker>
-            </div>
-
-            <br>
-
-            <!-- Ligne budgétaire -->
-            <md-input-container class="md-block">
-              <label>Ligne budgétaire</label>
-              <md-select ng-model="project.ligne_budgetaire" >
-                <md-option ng-repeat="budget in budgets" value="{{budget}}">
-                  <!--{{ budget.libelle }} {{ budget.montant_depart }}-->
-                  {{ budget }}
-                </md-option>
-              </md-select>
-            </md-input-container>
-
-            <!--<md-button class="md-raised" ng-click="">Gestion des tâches</md-button>-->
-
-            <md-input-container class="md-block">
-              <div layout="row">
-                <md-button class="md-raised" ng-click="showCancelDialog()">Annuler</md-button>
-                <md-button class="md-raised md-primary" type="submit" ng-click="updateProject()">Valider</md-button>
+            <div class="row">
+              <div class="col-md-6">
+                <md-input-container class="md-block">
+                  <label>Nom du projet</label>
+                  <input ng-model="project.nom" required>
+                </md-input-container>
               </div>
-            </md-input-container>
+              <div class="col-md-6">
+                <md-input-container class="md-block">
+                  <label>Chef de projet</label>
+                  <input ng-model="chef_projet" disabled>
+                </md-input-container>
+              </div>
+            </div>
+           
+            <div class="row">
+              <div class="col-md-6">
+                <label> Date de début du projet </label>
+                <md-datepicker ng-model="project.date_debut"></md-datepicker>
+              </div>
+          
+              <div class="col-md-6">
+                <label> Date de fin <b>théorique</b> de projet</label>
+                <md-datepicker ng-model="project.date_fin_theorique"></md-datepicker>
+              </div>
+            </div>
+
+            <br>
+            <br>
+            <div class="row">
+              <!-- Statut -->
+              <div class="col-md-6">
+                <md-input-container class="md-block">
+                  <label>Statut</label>
+                  <md-select ng-model="project.statut" >
+                    <md-option ng-repeat="statut in statuts" value="{{statut}}">
+                      {{statut}}
+                    </md-option>
+                  </md-select>
+                </md-input-container>
+              </div>
+              <div class="col-md-6">
+                <!-- Ligne budgétaire -->
+                <md-input-container class="md-block">
+                  <label>Ligne budgétaire</label>
+                  <md-select ng-model="project.ligne_budgetaire" >
+                    <md-option ng-repeat="budget in budgets" value="{{budget}}">
+                      <!--{{ budget.libelle }} {{ budget.montant_depart }}-->
+                      {{ budget }}
+                    </md-option>
+                  </md-select>
+                </md-input-container>
+              </div>
+            </div>
+
+            <br>
+            <div class="row">
+              <div class="col-md-12">
+                <label>Date de fin <b>réelle</b> de projet</label>
+                <md-datepicker ng-model="project.date_fin_reelle" md-placeholder="Entrer date"></md-datepicker>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-9 col-md-offset-3">
+                <md-input-container class="md-block">
+                  <div layout="row">
+                    <md-button class="md-raised" ng-click="showCancelDialog()">Annuler</md-button>
+                    <md-button class="md-raised md-primary" type="submit" ng-click="updateProject()">Enregistrer</md-button>
+                  </div>
+                </md-input-container>
+              </div>
+            </div>
           </form>
-
-
-        </md-content>
-      </md-tab>
-      <md-tab label="Gestion des tâches">
-        <md-content class="md-padding">
-          <h1 class="md-display-2">Gestion des tâches</h1>
-
-        </md-content>
-      </md-tab>
-    </md-tabs>
-
-  </md-card-content>
-
-</md-card>
-
-<br>
+  </div>
+</md-content>
