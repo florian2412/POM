@@ -20,9 +20,7 @@ table > tbody > tr > td
 a:hover{
   cursor: pointer;
 }
-/*md-tabs {
-    transition: 0s !important;
-}*/
+
 /* Font color white */
 .md-button.md-raised.md-primary > span,
 .md-button.md-raised.md-primary,
@@ -42,6 +40,7 @@ md-toolbar .md-toolbar-tools h2
   -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.3);
   box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.3);
 }
+
 .footer > .container{ 
   text-align: center;
   vertical-align: middle;

@@ -20,7 +20,7 @@
         <tr ng-repeat="project in projects" ng-switch on="project.statut">
 
           <!--<td><a ng-click="getProjectById(project._id)">{{ project.nom }}</a></td>-->
-          <td><a ui-sref=".details({id:project._id})"> {{ project.nom }} </a></td>
+          <td><a ui-sref=".details.info({id:project._id})"> {{ project.nom }} </a></td>
           <!--<td><a ui-sref="collaborators.details({id:project.chef_projet})"> {{ project.chef_projet }} </a></td>-->
           <td>{{ project.date_debut | date:'dd/MM/yyyy' }}</td>
           
