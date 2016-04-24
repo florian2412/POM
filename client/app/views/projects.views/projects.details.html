@@ -1,18 +1,16 @@
 <md-content ng-cloak class="md-whiteframe-z2" layout-padding style="min-height:460px">
-  <section layout flex>
+  <section layout >
     <md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4">
-     <md-toolbar layout="row">
-     <div class="md-toolbar-tools">
-        <h2>
-          <span>Menu</span>
-        </h2>
-        <span flex></span>
-        <md-button class="md-icon-button" aria-label="Close" ng-click="closeMenu()">
-          <md-tooltip>Fermer</md-tooltip>
-          <md-icon class="md-default-theme" class="material-icons"><i class="material-icons" style="color:white">clear</i></i></md-icon>
-        </md-button>
-       </div>
-    </md-toolbar> 
+      <md-toolbar layout="row">
+        <div class="md-toolbar-tools">
+          <h2>Menu</h2>
+          <span flex></span>
+          <md-button class="md-icon-button" aria-label="Close" ng-click="closeMenu()">
+            <md-tooltip>Fermer</md-tooltip>
+            <md-icon class="md-default-theme" class="material-icons"><i class="material-icons" style="color:white">clear</i></i></md-icon>
+          </md-button>
+        </div>
+      </md-toolbar> 
       <md-content layout="column" layout-padding>
         <md-list>
           <md-subheader>Infos</md-subheader>
@@ -33,12 +31,22 @@
         </md-list>
       </md-content>
     </md-sidenav>
-    <!--  <md-button ng-click="openMenu()" class="md-primary">{{navTitle}}</md-button> -->
-    <md-button ng-click="openMenu()" class="md-fab md-primary">
-      <md-icon><i class="material-icons" style="color: white">menu</i></md-icon>
-    </md-button>
-  <md-content flex layout="row" layout-fill layout-align="center center">
-      <ui-view></ui-view>
-  </md-content>
+    
+
+    <div layout="column" style="min-height:430px">
+      <div flex layout layout-align="center start">
+        <h3><strong>{{project.nom}}</strong></h3>
+      </div>
+      <div flex layout layout-align="start end">
+        <md-button ng-click="openMenu()" class="md-fab md-primary" >
+          <md-icon><i class="material-icons" style="color: white">menu</i></md-icon>
+        </md-button> 
+      </div>
+    </div>
+    
+    <!-- <md-content flex layout="column" > -->
+      <ui-view flex layout="column"></ui-view>
+    <!-- </md-content>
+   -->
   </section>
 </md-content>

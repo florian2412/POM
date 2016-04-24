@@ -9,7 +9,7 @@
  */
 
 angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,$scope, $stateParams,$log, $mdSidenav,$mdDialog, $state, databaseService) {
-  $scope.navTitle = "Infos";
+ 
   $scope.openMenu = function(){ $mdSidenav('left').toggle(); };
   $scope.closeMenu = function () { $mdSidenav('left').close() };
   $rootScope.$on('$stateChangeStart', function(event, toState) {

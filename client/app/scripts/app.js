@@ -54,16 +54,16 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
     })
     .state('projects.details.info', {
       url : '/info',
-      title : 'Détails du projet',
+      title : 'Informations du projet',
       authorized: ["collaborateur", "admin", "manager"],
       templateUrl: 'views/projects.views/projects.details.info.html',
       controller: 'ProjectsDetailsCtrl'
     })
     .state('projects.details.tasks', {
       url : '/tasks',
-      title : 'Détails du projet',
+      title : 'Tâches du projet',
       authorized: ["collaborateur", "admin", "manager"],
-      templateUrl: 'views/partials/restricted.html',
+      templateUrl: 'views/projects.views/projects.details.tasks.html',
       controller: 'ProjectsDetailsCtrl'
     })
     .state('projects.create', {
