@@ -66,6 +66,15 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       templateUrl: 'views/projects.views/projects.details.tasks.html',
       controller: 'ProjectsDetailsCtrl'
     })
+
+    .state('projects.details.taskcreate', {
+      url : '/taskcreate',
+      title : 'Création d\'une tâche',
+      authorized: ["admin", "manager"],
+      templateUrl: 'views/projects.views/projects.details.tasks.create.html',
+      controller: 'ProjectsDetailsTasksCreateCtrl'
+    })
+
     .state('projects.create', {
       title : 'Création d\'un nouveau projet',
       authorized: ["admin", "manager"],

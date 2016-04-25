@@ -10,7 +10,7 @@
             <md-icon class="md-default-theme" class="material-icons"><i class="material-icons" style="color:white">clear</i></i></md-icon>
           </md-button>
         </div>
-      </md-toolbar> 
+      </md-toolbar>
       <md-content layout="column" layout-padding>
         <md-list>
           <md-subheader>Infos</md-subheader>
@@ -26,12 +26,12 @@
              <md-button class="md-primary">Liste des tâches</md-button>
           </md-list-item>
           <md-list-item>
-             <md-button class="md-primary">Assigner des tâches</md-button>
+             <md-button class="md-primary" ui-sref='projects.details.taskcreate'>Assigner des tâches</md-button>
           </md-list-item>
         </md-list>
       </md-content>
     </md-sidenav>
-    
+
 
     <div layout="column" style="min-height:430px">
       <div flex layout layout-align="center start">
@@ -40,10 +40,10 @@
       <div flex layout layout-align="start end">
         <md-button ng-click="openMenu()" class="md-fab md-primary" >
           <md-icon><i class="material-icons" style="color: white">menu</i></md-icon>
-        </md-button> 
+        </md-button>
       </div>
     </div>
-    
+
     <!-- <md-content flex layout="column" > -->
       <ui-view flex layout="column"></ui-view>
     <!-- </md-content>

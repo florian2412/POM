@@ -1,0 +1,78 @@
+<div flex layout>
+  <div flex layout layout-align="center center">
+
+    <form class="form-horizontal" name="createTaskForm">
+
+      <md-input-container class="md-block">
+        <label>Nom de la tâche</label>
+        <input ng-model="task.name" maxlength="20" name="nom" required>
+        <div ng-messages="createTaskForm.nom.$error">
+          <div ng-message="required">Ce champ est obligatoire.</div>
+          <div ng-message="maxlength">Le nom de la tâche ne doit pas dépasser 20 caractères.</div>
+        </div>
+      </md-input-container>
+
+
+     <!--<div class="form-group">
+        <label class="col-xs-4">Date de début de projet</label>
+        <md-datepicker ng-model="project.startDate" md-placeholder="Entrer date" md-min-date="minDate" name="dateDebut" ></md-datepicker>
+      </div>
+
+      <br>
+
+      <div class="form-group">
+        <label class="col-xs-4">Date de fin <b>théorique</b> de projet</label>
+        <md-datepicker ng-model="project.endDate" md-placeholder="Entrer date" md-min-date="minDate" name="dateFinTheorique" ></md-datepicker>
+      </div>
+
+      <br>
+
+      <div layout-gt-sm="row"> -->
+
+        <!-- Statut
+        <md-input-container class="md-block" flex-gt-sm="">
+          <label>Statut</label>
+          <md-select ng-model="project.statut" name="statut" required>
+            <md-option ng-repeat="statut in statuts" value="{{statut}}">
+              {{statut}}
+            </md-option>
+          </md-select>
+          <div ng-messages="createProjectForm.statut.$error">
+            <div ng-message="required">Ce champ est obligatoire.</div>
+          </div>
+        </md-input-container>
+
+        <div flex="5" hide-xs="" hide-sm="">
+          <!-- Spacer // -->
+       <!-- </div> -->
+
+        <!-- Ligne budgétaire
+        <md-input-container class="md-block" flex-gt-sm="">
+          <label>Ligne budgétaire</label>
+          <md-select ng-model="project.budget" name="budget" required>
+            <md-option ng-repeat="budget in budgets" value="{{budget}}">
+              <!--{{ budget.libelle }} {{ budget.montant_depart }}
+              {{ budget }}
+            </md-option>
+          </md-select>
+          <div ng-messages="createProjectForm.budget.$error">
+            <div ng-message="required">Ce champ est obligatoire.</div>
+          </div>
+        </md-input-container> -->
+
+      </div>
+
+      <md-input-container class="md-block">
+        <div layout="row">
+          <md-button class="md-raised md-warn" ng-click="showCancelDialog($event)">Annuler</md-button>
+          <md-button class="md-raised md-primary" type="submit" ng-click="createTask()" ng-disabled="createTaskForm.$invalid">Créer</md-button>
+        </div>
+      </md-input-container>
+
+      </div>
+
+    </form>
+
+    </div>
+</div>
+
