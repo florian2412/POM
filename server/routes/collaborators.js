@@ -5,6 +5,13 @@ var _ = require('lodash');
 var bcrypt = require('bcryptjs');
 var Collaborator = require('../models/Collaborator.js');
 
+var api_key  = 'key-1e5b8a89092328c8991dd07bf0c04f17';
+var d        = 'miagepom.aqlli.com'; //sous domaine temporaire pour le projet -  valide pendant 4 mois
+var from_    = "Mailgun Sandbox" + "<" + "postmaster@sandbox5f0051cc48324952845e2c6072ac3024.mailgun.org>";
+const crypto = require('crypto');
+var   mailgun  = require('mailgun-js')({apiKey: api_key, domain: d});
+
+
 router.get('/', getAllCollaborators);
 router.post('/', createCollaborator);
 router.get('/:id', getCollaborator);
@@ -12,6 +19,7 @@ router.put('/:id', updateCollaborator);
 router.delete('/:id', deleteCollaborator);
 router.post('/authenticate',authenticate);
 router.get('/role/:role', getRoleCollaborators);
+router.post('/password.reset', sendNewPass);
 
 
 /* GET collaborators listing. */
@@ -99,5 +107,35 @@ function authenticate(req, res, next) {
     });
 };
 
+/* envoie d'un nouveau mot de passe*/
+function sendNewPass( req, res, next){
+
+    var to_ = req.body.mail;
+    console.log( "mail: " + to_);
+    if( !to_) return false;
+    var newPass = crypto.randomBytes(6).toString('hex'); //generation du pwd
+    var message = "Bonjour " + to_ + ' , votre nouveau mot de passe est: ' + newPass;
+    var data = {
+        from: from_,
+        to: to_,
+        subject: 'Votre nouveau mot de passe | POM',
+        text: message
+    };
+    mailgun.messages().send( data, function ( error, body) {
+        if( body && !error){ //update user password
+            Collaborator.findOne({"pseudo" : to_}, function(err, coll){
+                if ( err) return next( err);
+                if ( coll) {
+                    coll.mot_de_passe = bcrypt.hashSync( newPass, 10);
+                    next( new Error( "Ce pseudo est déjà utilisé : " + req.body.pseudo));
+                }
+            });
+        }
+        if( error){
+            console.log( error);
+        }
+    });
+    return to_;
+}
 
 module.exports = router;
