@@ -8,7 +8,7 @@
  * Controller of the pomApp
  */
 
-angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope, $stateParams, $state, $mdDialog, authenticateService, databaseService) {
+angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope, $stateParams, $state, $mdDialog, authenticateService, databaseService, FlashService) {
 
   $scope.getCollaboratorById = function(id) {
     databaseService.getObjectById('collaborators', id)
@@ -55,6 +55,7 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
     $scope.getAllRoles();
   });
 
+  /*
   function showSuccessDialog() {
     $mdDialog.show(
       $mdDialog.alert()
@@ -65,7 +66,8 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
         .ariaLabel('Modification du collaborateur réussie')
         .ok('Ok'));
   };
-
+*/
+  
   $scope.showCancelDialog = function(event) {
     var confirm = $mdDialog.confirm()
       .title('Alerte')

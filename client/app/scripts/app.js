@@ -152,8 +152,8 @@ function appRun($rootScope, $location, $state, $http, authenticateService, AuthS
   AuthService.setRole(((cur_user) ? cur_user.role : "public"));
   $rootScope.isAuthenticated = cur_user;
   if(cur_user){
-	  $rootScope.userFirstname = cur_user.prenom;
-	  $rootScope.userLastname = cur_user.nom;
+    $rootScope.userFirstname = cur_user.prenom;
+    $rootScope.userLastname = cur_user.nom;
   }
   // Fire when url changes
   $rootScope.$on('$locationChangeSuccess', function(){
@@ -168,12 +168,12 @@ function appRun($rootScope, $location, $state, $http, authenticateService, AuthS
   });
 
   function getVersion(){
-	var version = $http.get('http://localhost:3000/version')
-  				       .then(function(res){ 
-  							$rootScope.apiVersion = res.data.api;
-  							$rootScope.appClientVersion = res.data.appClient;
-  						   },function(err){ console.log("erreur get version : " + err);}
-  						);
+    var version = $http.get('http://localhost:3000/version')
+      .then(function(res){
+          $rootScope.apiVersion = res.data.api;
+          $rootScope.appClientVersion = res.data.appClient;
+        },function(err){ console.log("erreur get version : " + err);}
+      );
   }
 }
 

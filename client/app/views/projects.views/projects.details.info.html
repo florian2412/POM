@@ -5,7 +5,7 @@
     <div flex="45">
       <md-input-container class="md-block">
           <label>Nom du projet</label>
-          <input ng-model="project.nom" required>
+          <input ng-model="project.nom" maxlength="20" required>
       </md-input-container>
     </div>
     <div flex="10"></div>
@@ -16,12 +16,12 @@
       </md-input-container>
     </div>
   </div>
-        
+
   <div layout layout-align="center center">
     <div flex="45">
       <label>Date de début</label>
       <md-datepicker ng-model="project.date_debut"></md-datepicker>
-    </div> 
+    </div>
     <div flex="10"></div>
     <div flex="45">
       <label>Date de fin <b>théorique</b></label>
@@ -50,7 +50,7 @@
       </md-input-container>
     </div>
   </div>
-  
+
   <div layout layout-align="center center">
     <div>
       <label>Date de fin <b>réelle</b></label>

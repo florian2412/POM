@@ -28,15 +28,6 @@ angular.module('pomApp')
        var date_fin_theorique = new Date();*/
       //var ligne_budgetaire = $scope.budget._id;
 
-      // TODO Faire la validation du formulaire de création de projet
-      /*var data = "{ \"nom\": " + "\"" + nom + "\" "
-        + ", \"statut\": " + "\"" + statut + "\" "
-        + ", \"chef_projet\": \"" + chef_projet + "\" "
-        + ", \"date_debut\": \"" + date_debut + "\" "
-        + ", \"date_fin_theorique\": \"" + date_fin_theorique + "\" }";
-      /*+ ", \"collaborateurs\": \"" + collaborateurs + "\" "
-       + ", \"collaborateurs\": \"" + collaborateurs + "\" } ";*/
-
       var data = {
         "nom" : nom,
         "statut" : statut,
@@ -67,19 +58,22 @@ angular.module('pomApp')
       $scope.statuts = ["Initial", "En cours", "Annulé", "Terminé"]
     });
 
-    function showSuccessDialog() {
-      $mdDialog.show(
-        $mdDialog.alert()
-          .parent(angular.element(document.querySelector('#popupContainer')))
-          .clickOutsideToClose(true)
-          .title('Confirmation de création')
-          .textContent('Le projet ' + $scope.project.name + ' a bien été créé !')
-          .ariaLabel('Création du projet réussie')
-          .ok('Ok'));
-    };
+    /*
+     function showSuccessDialog() {
+     $mdDialog.show(
+     $mdDialog.alert()
+     .parent(angular.element(document.querySelector('#popupContainer')))
+     .clickOutsideToClose(true)
+     .title('Confirmation de création')
+     .textContent('Le projet ' + $scope.project.name + ' a bien été créé !')
+     .ariaLabel('Création du projet réussie')
+     .ok('Ok'));
+     };
+     */
 
     $scope.minDate = new Date();
 
+    // Appelé depuis la view
     $scope.showCancelDialog = function(event) {
 
       var confirm = $mdDialog.confirm()

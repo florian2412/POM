@@ -8,8 +8,8 @@
  * Controller of the pomApp
  */
 
-angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,$scope, $stateParams,$log, $mdSidenav,$mdDialog, $state, databaseService) {
- 
+angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,$scope, $stateParams,$log, $mdSidenav,$mdDialog, $state, databaseService, FlashService) {
+
   $scope.openMenu = function(){ $mdSidenav('left').toggle(); };
   $scope.closeMenu = function () { $mdSidenav('left').close() };
   $rootScope.$on('$stateChangeStart', function(event, toState) {
@@ -30,37 +30,32 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,
 
   $scope.updateProject = function() {
 
-    var nom = $scope.project.nom;
-    var statut = $scope.project.statut;
-    var date_debut = $scope.project.date_debut;
-    var date_fin_theorique = $scope.project.date_fin_theorique;
-    var date_fin_reelle = $scope.project.date_fin_reelle;
-    /*var date_debut = new Date();
-     var date_fin_theorique = new Date();*/
-    //var ligne_budgetaire = $scope.budget._id;
+    var vm = this;
 
-    // TODO Faire la validation du formulaire de création de projet
-   /* var data = "{ \"nom\": " + "\"" + nom + "\" "
-      + ", \"statut\": " + "\"" + statut + "\" "
-      + ", \"date_debut\": \"" + date_debut + "\" "
-      + ", \"date_fin_theorique\": \"" + date_fin_theorique + "\" }";
-    /*+ ", \"collaborateurs\": \"" + collaborateurs + "\" "
-     + ", \"collaborateurs\": \"" + collaborateurs + "\" } ";*/
+    var idProject = vm.project._id;
+
+    var nom = vm.project.nom;
+    var statut = vm.project.statut;
+    var date_debut = vm.project.date_debut;
+    var date_fin_theorique = vm.project.date_fin_theorique;
+    var date_fin_reelle = vm.project.date_fin_reelle;
+    var ligne_budgetaire = vm.project.ligne_budgetaire;
 
     var data = {
       "nom" : nom,
       "statut" : statut,
-      "chef_projet" : chef_projet,
       "date_debut" : date_debut,
-      "date_fin_theorique" : date_fin_theorique
+      "date_fin_theorique" : date_fin_theorique,
+      "date_fin_reelle" : date_fin_reelle,
+      "ligne_budgetaire" : ligne_budgetaire
     };
 
     console.log(data);
 
-    databaseService.updateObject('projects', data)
+    databaseService.updateObject('projects', idProject, data)
       .success(function (data) {
         console.log(data);
-        showSuccessDialog();
+        FlashService.Success("Le projet " + $scope.project.nom + " a bien été mis à jour !", "", "bottom-right", true, 4);
         $state.go("projects");
       })
       .error(function (err) {
@@ -68,17 +63,19 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,
       });
   };
 
-
+/*
   function showSuccessDialog() {
+    var vm = this;
     $mdDialog.show(
       $mdDialog.alert()
         .parent(angular.element(document.querySelector('#popupContainer')))
         .clickOutsideToClose(true)
         .title('Confirmation de modification')
-        .textContent('Le projet ' + $scope.project.name + ' a bien été mis à jour !')
+        .textContent('Le projet ' + $scope.project.nom + ' a bien été mis à jour !')
         .ariaLabel('Modification du projet réussie')
         .ok('Ok'));
   };
+  */
 
   $scope.showCancelDialog = function() {
     var confirm = $mdDialog.confirm()

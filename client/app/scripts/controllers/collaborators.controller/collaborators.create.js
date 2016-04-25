@@ -9,7 +9,7 @@
  */
 
 angular.module('pomApp')
-  .controller('CollaboratorsCreateCtrl', function ($scope, $state, $mdDialog, databaseService) {
+  .controller('CollaboratorsCreateCtrl', function ($scope, $state, $mdDialog, databaseService, FlashService) {
 
     $scope.createCollaborator = function() {
 
@@ -33,13 +33,13 @@ angular.module('pomApp')
         + ", \"cout_horaire\": \"" + cost + "\" "
         + ", \"email\": \"" + email + "\" } ";
 */
-      var data = {"nom": lastName, 
+      var data = {"nom": lastName,
                   "prenom": firstName,
                   "manager": manager,
                   "pseudo": login,
                   "mot_de_passe": password,
                   "statut" : "Président",
-                  "cout_horaire" : cost, 
+                  "cout_horaire" : cost,
                   "role": role,
                   "email" : email
                 };
@@ -49,7 +49,8 @@ angular.module('pomApp')
       databaseService.createObject('collaborators', data)
         .success(function (data) {
           console.log(data);
-          showSuccessDialog();
+          //showSuccessDialog();
+          FlashService.Success("Création du collaborateur " + firstName + " " + lastName + " réussie.", "", "bottom-right", true, 4);
           $state.go("collaborators");
         })
         .error(function (err) {
@@ -78,6 +79,7 @@ angular.module('pomApp')
       $scope.getCollaboratorsByRole('manager');
     });
 
+    /*
     function showSuccessDialog() {
       $mdDialog.show(
         $mdDialog.alert()
@@ -88,7 +90,9 @@ angular.module('pomApp')
           .ariaLabel('Création du collaborateur réussie')
           .ok('Ok'));
     };
+*/
 
+    // Appelé depuis la view
     $scope.showCancelDialog = function(event) {
 
       var confirm = $mdDialog.confirm()
