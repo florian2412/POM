@@ -13,7 +13,8 @@
           <th>Date début</th>
           <th>Statut</th>
           <th>Dernière modification</th>
-          <th>Supprimer</th>
+          <th>Archiver ?</th>
+          <th>Supprimer ?</th>
         </tr>
         </thead>
         <tbody>
@@ -22,14 +23,17 @@
           <!--<td><a ng-click="getProjectById(project._id)">{{ project.nom }}</a></td>-->
           <td><a ui-sref=".details.info({id:project._id})"> {{ project.nom }} </a></td>
           <!--<td><a ui-sref="collaborators.details({id:project.chef_projet})"> {{ project.chef_projet }} </a></td>-->
-          <td>{{ project.date_debut | date:'dd/MM/yyyy' }}</td>
-          
+          <td>{{ project.date_debut | date:"dd/MM/yyyy" }}</td>
+
           <td ng-switch-when="Initial"><span class="fa fa-exclamation-circle" style="color:blue;font-size:1.5em;"></span></td>
           <td ng-switch-when="En cours"><span class="fa fa-exclamation-circle" style="color:orange;font-size:1.5em;"></span></td>
           <td ng-switch-when="Terminé"><span class="fa fa-check-circle" style="color:green;font-size:1.5em;"></span></td>
           <td ng-switch-when="Annulé"><span class="fa fa-times-circle" style="color:red;font-size:1.5em;"></span></td>
-          
-          <td>{{ project.infos_techniques.date_creation | date:'dd/MM/yyyy' }}</td>
+
+          <td>{{ project.date_derniere_modif | date:"dd/MM/yyyy 'à' HH:mm:ss" }}</td>
+
+
+          <td><a ng-click="archivingProject(project._id)"><span class="fa fa-archive fa-lg" style="color: red;"></span> </a></td>
           <td><a ng-click="deleteProject(project._id)"><span class="fa fa-trash-o fa-lg" style="color: red;"></span> </a></td>
 
         </tr>

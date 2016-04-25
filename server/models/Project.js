@@ -32,7 +32,9 @@ var schemaProject = mongoose.Schema({
 
     date_creation: { type: Date, default: Date.now },
 
-    taches: [ Task.schema ]
+    taches: [ Task.schema ],
+
+    date_derniere_modif : { type: Date }
 
 });
 

@@ -40,6 +40,7 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,
     var date_fin_theorique = vm.project.date_fin_theorique;
     var date_fin_reelle = vm.project.date_fin_reelle;
     var ligne_budgetaire = vm.project.ligne_budgetaire;
+    var date_derniere_modif = new Date();
 
     var data = {
       "nom" : nom,
@@ -47,7 +48,8 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,
       "date_debut" : date_debut,
       "date_fin_theorique" : date_fin_theorique,
       "date_fin_reelle" : date_fin_reelle,
-      "ligne_budgetaire" : ligne_budgetaire
+      "ligne_budgetaire" : ligne_budgetaire,
+      "date_derniere_modif" : date_derniere_modif
     };
 
     console.log(data);

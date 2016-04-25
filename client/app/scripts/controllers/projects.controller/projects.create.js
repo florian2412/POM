@@ -13,6 +13,9 @@ angular.module('pomApp')
 
     $scope.createProject = function() {
 
+      // TODO Replace $scope by vm
+      var vm = this;
+
       if(!$scope.project.startDate)
         $scope.project.startDate = new Date();
 
@@ -24,6 +27,8 @@ angular.module('pomApp')
       var statut = $scope.project.statut;
       var date_debut = $scope.project.startDate;
       var date_fin_theorique = $scope.project.endDate;
+      var date_derniere_modif = new Date();
+
       /*var date_debut = new Date();
        var date_fin_theorique = new Date();*/
       //var ligne_budgetaire = $scope.budget._id;
@@ -33,7 +38,8 @@ angular.module('pomApp')
         "statut" : statut,
         "chef_projet" : chef_projet,
         "date_debut" : date_debut,
-        "date_fin_theorique" : date_fin_theorique
+        "date_fin_theorique" : date_fin_theorique,
+        "date_derniere_modif" : date_derniere_modif
       };
 
       console.log(data);
