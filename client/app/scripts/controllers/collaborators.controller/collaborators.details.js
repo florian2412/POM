@@ -38,16 +38,53 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
       });
   };
 
+  $scope.updateCollaborator = function() {
+
+    var vm = this;
+
+    var idCollaborator = vm.collaborator._id;
+
+    var lastName = $scope.collaborator.nom;
+    var firstName = $scope.collaborator.prenom;
+    var manager = $scope.collaborator.manager;
+    var role = $scope.collaborator.role;
+    var login = $scope.collaborator.pseudo;
+    var cost = $scope.collaborator.cout_horaire;
+    var email = $scope.collaborator.email;
+
+    var data = {
+      "nom": lastName,
+      "prenom": firstName,
+      "manager": manager,
+      "pseudo": login,
+      "cout_horaire" : cost,
+      "role": role,
+      "email" : email
+    };
+
+    console.log(data);
+
+    databaseService.updateObject('collaborators', idCollaborator, data)
+      .success(function (data) {
+        console.log(data);
+        FlashService.Success("Le collaborateur " + $scope.collaborator.prenom + " " + $scope.collaborator.nom + " a bien été mis à jour !", "", "bottom-right", true, 4);
+        $state.go("collaborators");
+      })
+      .error(function (err) {
+        console.log(err);
+      });
+  };
+
   // Permet de lancer au chargement de la page : récupère tous les projets
   $scope.$on('$viewContentLoaded', function() {
     $scope.getCollaboratorById($stateParams.id);
 
     /*
-    if(authenticateService.getCurrentUser().role == 'manager')
-      $scope.getCollaboratorsByRole('admin');
-    else if(authenticateService.getCurrentUser().role == 'collaborator')
-      $scope.getCollaboratorsByRole('manager');
-    */
+     if(authenticateService.getCurrentUser().role == 'manager')
+     $scope.getCollaboratorsByRole('admin');
+     else if(authenticateService.getCurrentUser().role == 'collaborator')
+     $scope.getCollaboratorsByRole('manager');
+     */
 
     $scope.getCollaboratorsByRole('manager');
 
@@ -55,19 +92,7 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
     $scope.getAllRoles();
   });
 
-  /*
-  function showSuccessDialog() {
-    $mdDialog.show(
-      $mdDialog.alert()
-        .parent(angular.element(document.querySelector('#popupContainer')))
-        .clickOutsideToClose(true)
-        .title('Confirmation de modification')
-        .textContent('Le collaborateur ' + $scope.collaborator.firstName + ' ' + $scope.collaborator.lastName + ' a bien été modifié !')
-        .ariaLabel('Modification du collaborateur réussie')
-        .ok('Ok'));
-  };
-*/
-  
+
   $scope.showCancelDialog = function(event) {
     var confirm = $mdDialog.confirm()
       .title('Alerte')

@@ -16,33 +16,24 @@ angular.module('pomApp')
       var lastName = $scope.collaborator.lastName;
       var firstName = $scope.collaborator.firstName;
       var manager = $scope.collaborator.manager;
-      var role = $scope.collaborator.role.toLowerCase();
+      var role = $scope.collaborator.role;
       var login = $scope.collaborator.login;
       var password = $scope.collaborator.password;
       var confirmPassword = $scope.collaborator.confirmPassword;
       var cost = $scope.collaborator.cost;
       var email = $scope.collaborator.email;
 
-/*
-      var data = "{ \"nom\": " + "\"" + lastName + "\" "
-        + ", \"prenom\": " + "\"" + firstName + "\" "
-        + ", \"manager\": \"" + manager + "\" "
-        + ", \"role\": \"" + role + "\" "
-        + ", \"pseudo\": \"" + login + "\" "
-        + ", \"mot_de_passe\": \"" + password + "\" "
-        + ", \"cout_horaire\": \"" + cost + "\" "
-        + ", \"email\": \"" + email + "\" } ";
-*/
-      var data = {"nom": lastName,
-                  "prenom": firstName,
-                  "manager": manager,
-                  "pseudo": login,
-                  "mot_de_passe": password,
-                  "statut" : "Président",
-                  "cout_horaire" : cost,
-                  "role": role,
-                  "email" : email
-                };
+      var data = {
+        "nom": lastName,
+        "prenom": firstName,
+        "manager": manager,
+        "pseudo": login,
+        "mot_de_passe": password,
+        "statut" : "Président",
+        "cout_horaire" : cost,
+        "role": role,
+        "email" : email
+      };
 
       console.log(data);
 
@@ -80,17 +71,17 @@ angular.module('pomApp')
     });
 
     /*
-    function showSuccessDialog() {
-      $mdDialog.show(
-        $mdDialog.alert()
-          .parent(angular.element(document.querySelector('#popupContainer')))
-          .clickOutsideToClose(true)
-          .title('Confirmation de création')
-          .textContent('Le collaborateur ' + $scope.collaborator.firstName + ' ' + $scope.collaborator.lastName + ' a bien été créé !')
-          .ariaLabel('Création du collaborateur réussie')
-          .ok('Ok'));
-    };
-*/
+     function showSuccessDialog() {
+     $mdDialog.show(
+     $mdDialog.alert()
+     .parent(angular.element(document.querySelector('#popupContainer')))
+     .clickOutsideToClose(true)
+     .title('Confirmation de création')
+     .textContent('Le collaborateur ' + $scope.collaborator.firstName + ' ' + $scope.collaborator.lastName + ' a bien été créé !')
+     .ariaLabel('Création du collaborateur réussie')
+     .ok('Ok'));
+     };
+     */
 
     // Appelé depuis la view
     $scope.showCancelDialog = function(event) {
