@@ -67,7 +67,7 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
     databaseService.updateObject('collaborators', idCollaborator, data)
       .success(function (data) {
         console.log(data);
-        FlashService.Success("Le collaborateur " + $scope.collaborator.prenom + " " + $scope.collaborator.nom + " a bien été mis à jour !", "", "bottom-right", true, 4);
+        flashService.Success("Le collaborateur " + $scope.collaborator.prenom + " " + $scope.collaborator.nom + " a bien été mis à jour !", "", "bottom-right", true, 4);
         $state.go("collaborators");
       })
       .error(function (err) {

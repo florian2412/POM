@@ -14,7 +14,7 @@
 
 angular.module('pomApp')
   .controller('ProjectsDetailsTasksCreateCtrl',
-    function ($scope, $state, $mdDialog, $stateParams, databaseService, flashService, authenticateService) {
+    function ($scope, $state, $mdDialog, $stateParams, databaseService, flashService) {
 
       var collaborateursId = [];
 
