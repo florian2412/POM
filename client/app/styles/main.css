@@ -21,6 +21,10 @@ a:hover{
   cursor: pointer;
 }
 
+md-content {
+  margin-bottom: 50px;
+}
+
 /* Font color white */
 .md-button.md-raised.md-primary > span,
 .md-button.md-raised.md-primary,
