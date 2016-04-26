@@ -3,14 +3,15 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 var _ = require('lodash');
 var bcrypt = require('bcryptjs');
+
 var Collaborator = require('../models/Collaborator.js');
+var Project = require('../models/Project.js');
 
 var api_key  = 'key-1e5b8a89092328c8991dd07bf0c04f17';
 var d        = 'miagepom.aqlli.com'; //sous domaine temporaire pour le projet -  valide pendant 4 mois
 var from_    = "Mailgun Sandbox" + "<" + "postmaster@sandbox5f0051cc48324952845e2c6072ac3024.mailgun.org>";
 const crypto = require('crypto');
 var mailgun  = require('mailgun-js')({apiKey: api_key, domain: d});
-
 
 router.get('/', getAllCollaborators);
 router.post('/', createCollaborator);
@@ -20,7 +21,7 @@ router.delete('/:id', deleteCollaborator);
 router.post('/authenticate',authenticate);
 router.get('/role/:role', getRoleCollaborators);
 router.post('/resetPassword', sendNewPass);
-
+router.get('/:id/projects', getProjectsCollaborator);
 
 /* GET collaborators listing. */
 function getAllCollaborators(req, res, next) {
@@ -30,6 +31,28 @@ function getAllCollaborators(req, res, next) {
         res.json(collaborators);
     });
 };
+
+/* GET collaborators tasks listing. */
+function getProjectsCollaborator(req, res, next) {
+    Project.find({
+            "collaborateurs":req.params.id
+        },
+        function (err, collaborators) {
+            if (err)
+                return next(err);
+            res.json(collaborators);
+        });
+};
+
+/* GET /collaborators/id */
+/*function getTasksCollaborator(req, res, next) {
+ console.log("OUIII");
+ Collaborator.findById(req.params.id, function (err, collaborators) {
+ if (err)
+ return next(err);
+ res.json(collaborators);
+ });
+ };*/
 
 /* GET with query collaborators listing. */
 function getRoleCollaborators(req, res, next) {
@@ -109,14 +132,14 @@ function authenticate(req, res, next) {
 
 /* envoie d'un nouveau mot de passe*/
 function sendNewPass( req, res, next){
-    
+
     Collaborator.findOne({"pseudo" : req.body.pseudo}, function (err, coll) {
         if (err) return next(err);
         if (!coll) return res.json({"success": false, "message": "Cet utilisateur n'existe pas. Impossible de réinitialiser son mot de passe."});
         resetPassword(coll);
         res.json({"success": true, "message": "Le nouveau mot de passe a été envoyé à l'adresse : " + coll.email});
     });
-   
+
     function resetPassword(user){
         var newPass = crypto.randomBytes(6).toString('hex'); //generation du pwd
         var message = "Bonjour " + user.pseudo + ' , votre nouveau mot de passe est: ' + newPass;
@@ -131,7 +154,7 @@ function sendNewPass( req, res, next){
                 // Re-hash password
                 newPass = bcrypt.hashSync(newPass, 10);
                 Collaborator.findByIdAndUpdate({"_id" : user._id},{mot_de_passe: newPass}, function(err, coll){
-                    if (err) return next(err); 
+                    if (err) return next(err);
                     if (coll) return res.json({"success": true, "message": "Envoi du nouveau mot de passe réussi."});
                     else res.json({"success": false, "message": "Utilisateur introuvable."});
                 });

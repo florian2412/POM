@@ -44,13 +44,13 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
 
     var idCollaborator = vm.collaborator._id;
 
-    var lastName = $scope.collaborator.nom;
-    var firstName = $scope.collaborator.prenom;
-    var manager = $scope.collaborator.manager;
-    var role = $scope.collaborator.role;
-    var login = $scope.collaborator.pseudo;
-    var cost = $scope.collaborator.cout_horaire;
-    var email = $scope.collaborator.email;
+    var lastName = vm.collaborator.nom;
+    var firstName = vm.collaborator.prenom;
+    var manager = vm.collaborator.manager;
+    var role = vm.collaborator.role;
+    var login = vm.collaborator.pseudo;
+    var cost = vm.collaborator.cout_horaire;
+    var email = vm.collaborator.email;
 
     var data = {
       "nom": lastName,
@@ -67,7 +67,7 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
     databaseService.updateObject('collaborators', idCollaborator, data)
       .success(function (data) {
         console.log(data);
-        flashService.Success("Le collaborateur " + $scope.collaborator.prenom + " " + $scope.collaborator.nom + " a bien été mis à jour !", "", "bottom-right", true, 4);
+        flashService.Success("Le collaborateur " + vm.collaborator.prenom + " " + vm.collaborator.nom + " a bien été mis à jour !", "", "bottom-right", true, 4);
         $state.go("collaborators");
       })
       .error(function (err) {

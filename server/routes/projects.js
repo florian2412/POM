@@ -52,4 +52,18 @@ router.delete('/:id', function(req, res, next) {
   });
 });
 
+/* GET collaborators tasks listing. */
+/*router.delete('/:id', function(req, res, next) {
+function getTasksCollaborator(req, res, next) {
+    Project.find({
+            "taches.collaborateurs":req.params.id
+        },
+        function (err, collaborators) {
+            if (err)
+                return next(err);
+            res.json(collaborators);
+        });
+};
+*/
+
 module.exports = router;
