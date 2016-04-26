@@ -14,7 +14,7 @@
 
 angular.module('pomApp')
   .controller('ProjectsDetailsTasksCreateCtrl',
-    function ($scope, $state, $mdDialog, $stateParams, databaseService, FlashService, authenticateService) {
+    function ($scope, $state, $mdDialog, $stateParams, databaseService, flashService, authenticateService) {
 
       var collaborateursId = [];
 
@@ -61,7 +61,7 @@ angular.module('pomApp')
               .success(function (data) {
                 console.log(data);
                 //showSuccessDialog();
-                FlashService.Success("Création de la tâche " + nom + " réussie.", "", "bottom-right", true, 4);
+                flashService.Success("Création de la tâche " + nom + " réussie.", "", "bottom-right", true, 4);
                 $state.go("projects.details.tasks");
               })
               .error(function (err) {
