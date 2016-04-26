@@ -8,13 +8,14 @@
  * Controller of the pomApp
  */
 
-angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,$scope, $stateParams,$log, $mdSidenav,$mdDialog, $state, databaseService, FlashService) {
+angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope, $scope, $stateParams, $log, $mdSidenav, $mdDialog, $state, databaseService, flashService) {
 
   $scope.openMenu = function(){ $mdSidenav('left').toggle(); };
   $scope.closeMenu = function () { $mdSidenav('left').close() };
   $rootScope.$on('$stateChangeStart', function(event, toState) {
     $mdSidenav('left').close()
   });
+
   $scope.getProjectById = function(id) {
     databaseService.getObjectById('projects', id)
       .success(function (data) {
@@ -25,8 +26,31 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,
             var collaborator = data;
             $scope.chef_projet = collaborator.prenom + ' ' + collaborator.nom;
           })
+
+        // TODO
+        // Récupérer les date début et fin théorique
+        // Claculer la durée totale du projet en Jours
+        // Faire la sousctration de date de fin - date du jour
+        // blabla
+        // La progression est le résultat de : durée total / le calcul précedant
+        var d1 = $scope.project.date_debut;
+        var d2 = $scope.project.date_fin_theorique;
+        var d3 = dateDiff(d1, d2);
+        console.log ("DATEEEE : " + d3);
+
+        $scope.progressProject = 100;
       })
   };
+
+  function dateDiff(date1, date2){
+    var diff = {}                           // Initialisation du retour
+    var tmp = date2 - date1;
+
+    tmp = Math.floor((tmp-diff.hour)/24);   // Nombre de jours restants
+    diff.day = tmp;
+
+    return diff;
+  }
 
   $scope.updateProject = function() {
 
@@ -57,27 +81,13 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,
     databaseService.updateObject('projects', idProject, data)
       .success(function (data) {
         console.log(data);
-        FlashService.Success("Le projet " + $scope.project.nom + " a bien été mis à jour !", "", "bottom-right", true, 4);
+        flashService.Success("Le projet " + $scope.project.nom + " a bien été mis à jour !", "", "bottom-right", true, 4);
         $state.go("projects");
       })
       .error(function (err) {
         console.log(err);
       });
   };
-
-/*
-  function showSuccessDialog() {
-    var vm = this;
-    $mdDialog.show(
-      $mdDialog.alert()
-        .parent(angular.element(document.querySelector('#popupContainer')))
-        .clickOutsideToClose(true)
-        .title('Confirmation de modification')
-        .textContent('Le projet ' + $scope.project.nom + ' a bien été mis à jour !')
-        .ariaLabel('Modification du projet réussie')
-        .ok('Ok'));
-  };
-  */
 
   $scope.showCancelDialog = function() {
     var confirm = $mdDialog.confirm()
@@ -89,7 +99,7 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,
 
     $mdDialog.show(confirm).then(function() {
         $state.go("projects");
-        }, function() {}
+      }, function() {}
     );
   };
 

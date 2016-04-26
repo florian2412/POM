@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('pomApp').factory('FlashService', Service);
+    angular.module('pomApp').factory('flashService', Service);
 
     function Service($rootScope, $alert) {
         var service = {};

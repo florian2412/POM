@@ -14,16 +14,18 @@
 
 angular.module('pomApp')
   .controller('ProjectsDetailsTasksCreateCtrl',
-    function ($scope, $state, $mdDialog, $stateParams, databaseService, FlashService, authenticateService) {
+    function ($scope, $state, $mdDialog, $stateParams, databaseService, flashService) {
 
       var collaborateursId = [];
+      var Idcollaborators = [];
+      var idProject = $stateParams.id;
+      var idTask = $stateParams.id;
 
       $scope.createTask = function() {
-        var idProject = $stateParams.id
 
         databaseService.getObjectById('projects',idProject)
           .success(function (data) {
-            console.log(data);
+
 
             var project = data;
 
@@ -55,19 +57,15 @@ angular.module('pomApp')
               "taches" : tasks
             };
 
-            console.log(data);
-
             databaseService.updateObject('projects', idProject, data)
               .success(function (data) {
-                console.log(data);
-                //showSuccessDialog();
-                FlashService.Success("Création de la tâche " + nom + " réussie.", "", "bottom-right", true, 4);
+                flashService.Success("Création de la tâche " + nom + " réussie.", "", "bottom-right", true, 4);
                 $state.go("projects.details.tasks");
               })
               .error(function (err) {
                 console.log(err);
-          });
-      })
+              });
+          })
           .error(function (err) {
             console.log(err);
           });
@@ -86,21 +84,33 @@ angular.module('pomApp')
             collaborateursId.splice(indexCol, 1);
           }
         }
-
       };
 
 
       // Lancement au chargement de la page
       $scope.$on('$viewContentLoaded', function() {
-        databaseService.getAllObjects('collaborators')
+        databaseService.getObjectById('projects',idProject)
           .success(function (data) {
-            console.log(data);
-            $scope.collaborators=data;
+
+            var projectCollaborators = [];
+
+            Idcollaborators = data.collaborateurs;
+
+            for (var i=0; i < Idcollaborators.length; i++) {
+
+              databaseService.getObjectById('collaborators',Idcollaborators[i])
+                .success(function (data) {
+                  projectCollaborators.push(data);
+                })
+                .error(function (err) {
+                  console.log(err);
+                });
+            }
+            $scope.collaborators = projectCollaborators;
           })
           .error(function (err) {
             console.log(err);
           });
-
 
       });
 

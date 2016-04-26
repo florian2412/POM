@@ -11,16 +11,17 @@ angular.module('pomApp').factory('databaseService', Service);
 
 function Service($http) {
   var service = {};
-  
+
   service.getAllObjects = getAllObjects;
   service.getObjectById = getObjectById;
   service.createObject = createObject;
   service.deleteObject = deleteObject;
   service.updateObject = updateObject;
   service.getCollaboratorsByRole = getCollaboratorsByRole;
+  service.getProjectsCollaborator = getProjectsCollaborator;
 
   return service;
-  
+
   function getAllObjects(collection){
     console.log(collection);
     return  $http({
@@ -30,8 +31,8 @@ function Service($http) {
   }
 
   function getObjectById(collection, id){
-    console.log(collection);
-    console.log(id);
+    /*console.log(collection);
+    console.log(id);*/
     return  $http({
             method: 'GET',
             url: 'http://localhost:3000/' + collection + '/' + id
@@ -70,7 +71,7 @@ function Service($http) {
             headers: { 'Content-Type': 'application/json' }
             });
   }
-      
+
   // Resources Collaborators
   function getCollaboratorsByRole(role){
     console.log(role);
@@ -78,6 +79,14 @@ function Service($http) {
             method: 'GET',
             url: 'http://localhost:3000/collaborators/role/' + role
             });
+  }
+
+  // Resources Collaborators
+  function getProjectsCollaborator(id){
+    return  $http({
+      method: 'GET',
+      url: 'http://localhost:3000/collaborators/' + id + '/projects'
+    });
   }
 }
 
