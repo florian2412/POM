@@ -13,66 +13,63 @@
       </md-input-container>
 
 
-     <!--<div class="form-group">
-        <label class="col-xs-4">Date de début de projet</label>
-        <md-datepicker ng-model="project.startDate" md-placeholder="Entrer date" md-min-date="minDate" name="dateDebut" ></md-datepicker>
+     <div class="form-group">
+        <label class="col-xs-4">Date de début de la tâche</label>
+        <md-datepicker ng-model="task.startDate" md-placeholder="Entrer date" md-min-date="minDate" name="dateDebut" ></md-datepicker>
       </div>
 
       <br>
 
       <div class="form-group">
-        <label class="col-xs-4">Date de fin <b>théorique</b> de projet</label>
-        <md-datepicker ng-model="project.endDate" md-placeholder="Entrer date" md-min-date="minDate" name="dateFinTheorique" ></md-datepicker>
+        <label class="col-xs-4">Date de fin <b>théorique</b> de la tâche</label>
+        <md-datepicker ng-model="task.endDate" md-placeholder="Entrer date" md-min-date="minDate" name="dateFinTheorique" ></md-datepicker>
       </div>
 
       <br>
 
-      <div layout-gt-sm="row"> -->
-
-        <!-- Statut
+      <div layout-gt-sm="row">
+        <!-- Statut -->
         <md-input-container class="md-block" flex-gt-sm="">
           <label>Statut</label>
-          <md-select ng-model="project.statut" name="statut" required>
+          <md-select ng-model="task.statut" name="statut" required>
             <md-option ng-repeat="statut in statuts" value="{{statut}}">
               {{statut}}
             </md-option>
           </md-select>
-          <div ng-messages="createProjectForm.statut.$error">
+          <div ng-messages="createTaskForm.statut.$error">
             <div ng-message="required">Ce champ est obligatoire.</div>
           </div>
         </md-input-container>
 
-        <div flex="5" hide-xs="" hide-sm="">
+        <!--<div flex="5" hide-xs="" hide-sm="">-->
+
           <!-- Spacer // -->
-       <!-- </div> -->
-
-        <!-- Ligne budgétaire
-        <md-input-container class="md-block" flex-gt-sm="">
-          <label>Ligne budgétaire</label>
-          <md-select ng-model="project.budget" name="budget" required>
-            <md-option ng-repeat="budget in budgets" value="{{budget}}">
-              <!--{{ budget.libelle }} {{ budget.montant_depart }}
-              {{ budget }}
-            </md-option>
-          </md-select>
-          <div ng-messages="createProjectForm.budget.$error">
-            <div ng-message="required">Ce champ est obligatoire.</div>
-          </div>
-        </md-input-container> -->
-
       </div>
 
-      <md-input-container class="md-block">
-        <div layout="row">
-          <md-button class="md-raised md-warn" ng-click="showCancelDialog($event)">Annuler</md-button>
-          <md-button class="md-raised md-primary" type="submit" ng-click="createTask()" ng-disabled="createTaskForm.$invalid">Créer</md-button>
+      <div layout-gt-sm="row">
+        <!-- Collaborateurs -->
+        <md-list flex="">
+          <md-subheader class="md-no-sticky">Liste des collaborateurs</md-subheader>
+          <md-list-item class="md-2-line" ng-repeat="collaborator in collaborators" ng-click="selectCollaborator(collaborator)">
+            <div class="md-list-item-text" layout="column">
+              <h3>{{ collaborator.prenom }} {{ collaborator.nom }}</h3>
+              <p>{{ collaborator.pseudo }}</p>
+            </div>
+            <md-checkbox nra-auth="['admin','manager']" class="md-primary" ng-checked="collaborator.checked"></md-checkbox>
+          </md-list-item>
+        </md-list>
+      </div>
+
+      <div layout layout-align="center center">
+        <div>
+          <md-input-container class="md-block">
+            <md-button class="md-raised" ng-click="showCancelDialog()">Annuler</md-button>
+            <md-button class="md-raised md-primary" type="submit" ng-click="createTask()" ng-disabled="createTaskForm.$invalid"">Créer</md-button>
+          </md-input-container>
         </div>
-      </md-input-container>
-
       </div>
 
-    </form>
-
+      </form>
     </div>
 </div>
 
