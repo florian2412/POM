@@ -9,7 +9,7 @@
  */
 
 angular.module('pomApp')
-  .controller('ProjectsCreateCtrl', function ($scope, $state, $mdDialog, databaseService, FlashService, authenticateService) {
+  .controller('ProjectsCreateCtrl', function ($scope, $state, $mdDialog, databaseService, flashService, authenticateService) {
 
     $scope.createProject = function() {
 

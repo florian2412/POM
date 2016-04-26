@@ -7,7 +7,8 @@
  * # LoginCtrl
  * Controller of the pomApp
  */
-angular.module('pomApp').controller('LoginCtrl', function ($scope, $alert, $location, $state, $mdDialog, $rootScope, authenticateService, FlashService, AuthService){
+
+angular.module('pomApp').controller('LoginCtrl', function ($scope, $alert, $location, $state, $mdDialog, $rootScope, authenticateService, flashService, AuthService){
 	$scope.authenticate = function() {
   		if($scope.pseudo && $scope.mot_de_passe){
 	    authenticateService.authenticate(JSON.stringify({"pseudo":$scope.pseudo, "mot_de_passe":$scope.mot_de_passe}),

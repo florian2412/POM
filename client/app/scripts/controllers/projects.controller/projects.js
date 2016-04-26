@@ -44,7 +44,7 @@ angular.module('pomApp')
       databaseService.deleteObject('projects', id)
         .success(function (data) {
           // Update liste projets
-          var index = -1;   
+          var index = -1;
           var comArr = eval( $scope.projects );
           for( var i = 0; i < comArr.length; i++ ) {
             if( comArr[i]._id === id ) {
@@ -52,10 +52,13 @@ angular.module('pomApp')
               break;
             }
           }
+
+          //var index2 = $scope.projects._id.indexOf(id);
+
           if( index === -1 ) {
             alert( "Something gone wrong" );
           }
-          $scope.projects.splice( index, 1 );    
+          $scope.projects.splice( index, 1 );
         })
         .error(function(err) {
           console.log(err);

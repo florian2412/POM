@@ -8,7 +8,7 @@
  * Controller of the pomApp
  */
 
-angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope, $stateParams, $state, $mdDialog, authenticateService, databaseService, FlashService) {
+angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope, $stateParams, $state, $mdDialog, authenticateService, databaseService, flashService) {
 
   $scope.getCollaboratorById = function(id) {
     databaseService.getObjectById('collaborators', id)

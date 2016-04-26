@@ -9,7 +9,7 @@ var api_key  = 'key-1e5b8a89092328c8991dd07bf0c04f17';
 var d        = 'miagepom.aqlli.com'; //sous domaine temporaire pour le projet -  valide pendant 4 mois
 var from_    = "Mailgun Sandbox" + "<" + "postmaster@sandbox5f0051cc48324952845e2c6072ac3024.mailgun.org>";
 const crypto = require('crypto');
-var   mailgun  = require('mailgun-js')({apiKey: api_key, domain: d});
+var mailgun  = require('mailgun-js')({apiKey: api_key, domain: d});
 
 
 router.get('/', getAllCollaborators);

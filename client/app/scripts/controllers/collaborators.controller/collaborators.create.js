@@ -9,7 +9,7 @@
  */
 
 angular.module('pomApp')
-  .controller('CollaboratorsCreateCtrl', function ($scope, $state, $mdDialog, databaseService, FlashService) {
+  .controller('CollaboratorsCreateCtrl', function ($scope, $state, $mdDialog, databaseService, flashService) {
 
     $scope.createCollaborator = function() {
 
