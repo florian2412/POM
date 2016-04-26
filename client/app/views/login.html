@@ -16,7 +16,7 @@
 
             <md-input-container class="md-icon-float md-block">
               <label>Pseudo</label>
-              <md-icon><span class="fa fa-user fa-2x"></span></md-icon>
+              <md-icon><i class="material-icons">person_outline</i></span></md-icon>
               <input type="text" ng-model="pseudo" name="pseudo" required>
               <div ng-messages="loginForm.pseudo.$error">
                 <div ng-message="required">Pseudo obligatoire</div>
@@ -25,7 +25,7 @@
 
             <md-input-container class="md-icon-float md-block">
               <label>Mot de passe</label>
-              <md-icon><span class="fa fa-lock fa-2x"></span></md-icon>
+              <md-icon><i class="material-icons">lock_outline</i></span></md-icon>
               <input ng-model="mot_de_passe" name="mot_de_passe" type="password" required>
               <div ng-messages="loginForm.mot_de_passe.$error">
                 <div ng-message="required">Mot de passe obligatoire</div>
@@ -38,8 +38,8 @@
 
             <md-button class="md-raised md-primary" type="submit" ng-click="authenticate()">Se connecter</md-button>
             <div flex="flex"></div>
-            <md-button href="#" >Mot de passe oublié ? </md-button>
-
+           <!--  <md-button ng-click="resetPassword()" >Mot de passe oublié ? </md-button> -->
+            <md-button ng-click="showPrompt($event)">Mot de passe oublié ?</md-button>
           </md-card-actions>
 
         </div>

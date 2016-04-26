@@ -19,7 +19,7 @@ router.put('/:id', updateCollaborator);
 router.delete('/:id', deleteCollaborator);
 router.post('/authenticate',authenticate);
 router.get('/role/:role', getRoleCollaborators);
-router.post('/password.reset', sendNewPass);
+router.post('/resetPassword', sendNewPass);
 
 
 /* GET collaborators listing. */
@@ -109,33 +109,35 @@ function authenticate(req, res, next) {
 
 /* envoie d'un nouveau mot de passe*/
 function sendNewPass( req, res, next){
-
-    var to_ = req.body.mail;
-    console.log( "mail: " + to_);
-    if( !to_) return false;
-    var newPass = crypto.randomBytes(6).toString('hex'); //generation du pwd
-    var message = "Bonjour " + to_ + ' , votre nouveau mot de passe est: ' + newPass;
-    var data = {
-        from: from_,
-        to: to_,
-        subject: 'Votre nouveau mot de passe | POM',
-        text: message
-    };
-    mailgun.messages().send( data, function ( error, body) {
-        if( body && !error){ //update user password
-            Collaborator.findOne({"pseudo" : to_}, function(err, coll){
-                if ( err) return next( err);
-                if ( coll) {
-                    coll.mot_de_passe = bcrypt.hashSync( newPass, 10);
-                    next( new Error( "Ce pseudo est déjà utilisé : " + req.body.pseudo));
-                }
-            });
-        }
-        if( error){
-            console.log( error);
-        }
+    
+    Collaborator.findOne({"pseudo" : req.body.pseudo}, function (err, coll) {
+        if (err) return next(err);
+        if (!coll) return res.json({"success": false, "message": "Cet utilisateur n'existe pas. Impossible de réinitialiser son mot de passe."});
+        resetPassword(coll);
+        res.json({"success": true, "message": "Le nouveau mot de passe a été envoyé à l'adresse : " + coll.email});
     });
-    return to_;
-}
+   
+    function resetPassword(user){
+        var newPass = crypto.randomBytes(6).toString('hex'); //generation du pwd
+        var message = "Bonjour " + user.pseudo + ' , votre nouveau mot de passe est: ' + newPass;
+        var data = {
+            from: from_,
+            to: user.email,
+            subject: 'Votre nouveau mot de passe | POM',
+            text: message
+        };
+        mailgun.messages().send( data, function ( error, body) {
+            if( body && !error){ //update user password
+                // Re-hash password
+                newPass = bcrypt.hashSync(newPass, 10);
+                Collaborator.findByIdAndUpdate({"_id" : user._id},{mot_de_passe: newPass}, function(err, coll){
+                    if (err) return next(err); 
+                    if (coll) return res.json({"success": true, "message": "Envoi du nouveau mot de passe réussi."});
+                    else res.json({"success": false, "message": "Utilisateur introuvable."});
+                });
+            }
+        });
+    }
+};
 
 module.exports = router;

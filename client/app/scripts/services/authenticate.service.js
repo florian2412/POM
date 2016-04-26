@@ -17,6 +17,7 @@ function Service($http, $rootScope, localStorageService){
   service.clearCredentials = ClearCredentials;
   service.getCurrentUser = GetCurrentUser;
   service.logout = Logout;
+  service.resetPassword = ResetPassword;
 
   return service;
 
@@ -57,4 +58,19 @@ function Service($http, $rootScope, localStorageService){
   }
 
   function Logout() { ClearCredentials(); }
+
+  function ResetPassword(pseudo,callback) {
+    var response;
+    var res = $http({ method: 'POST',
+                      data: pseudo,
+                      headers: { 'Content-Type': 'application/json' },
+                      url: 'http://localhost:3000/collaborators/resetPassword'});
+    res.success(function (r) {
+      response = { "success" : r.success, "message" : r.message };
+      callback(response);
+    })
+    .error(function (err) {
+      console.error("Reset password failed : " + err);
+    });
+  }
 };

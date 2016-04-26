@@ -90,7 +90,7 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       title : 'Collaborateurs',
       templateUrl: 'views/collaborators.views/collaborators.list.html',
       controller: 'CollaboratorsCtrl',
-      controllerAs: 'collaborators',
+      controllerAs: 'vm',
       authorized: ["collaborateur", "admin", "manager"]
     })
     .state('collaborators.details', {

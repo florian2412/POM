@@ -7,7 +7,7 @@
  * # LoginCtrl
  * Controller of the pomApp
  */
-angular.module('pomApp').controller('LoginCtrl', function ($scope, $alert, $location, $state, $rootScope, authenticateService, FlashService, AuthService){
+angular.module('pomApp').controller('LoginCtrl', function ($scope, $alert, $location, $state, $mdDialog, $rootScope, authenticateService, FlashService, AuthService){
 	$scope.authenticate = function() {
   		if($scope.pseudo && $scope.mot_de_passe){
 	    authenticateService.authenticate(JSON.stringify({"pseudo":$scope.pseudo, "mot_de_passe":$scope.mot_de_passe}),
@@ -35,6 +35,31 @@ angular.module('pomApp').controller('LoginCtrl', function ($scope, $alert, $loca
      	FlashService.Success("Déconnexion réussie ! ", "A bientôt ! ", "bottom-right", true, 4);
     	AuthService.setRole("public");
       	authenticateService.clearCredentials();
-    }
+   	}
   });
+
+  var resetPassword = function (pseudo){
+  	if(pseudo){
+	    authenticateService.resetPassword(JSON.stringify({"pseudo":pseudo}),
+	    	function(response){
+	    		if(response.success){
+	    			FlashService.Success("Envoi réussi ! ", response.message, "bottom-right", "true", 4);
+	    		}else{ FlashService.Error("Erreur ! ", response.message, "bottom-right", "true", 4);}
+	    	});
+		} else {FlashService.Error('Erreur ! ', 'Veuillez entrer votre pseudo', 'bottom-right', true, 4);}
+  }
+  $scope.showPrompt = function(ev) {
+    var confirm = $mdDialog.prompt()
+          .title('Réinitialisation de votre mot de passe')
+          .textContent('Entrer votre pseudo : ')
+          .placeholder('pseudo')
+          .ariaLabel('Pseudo')
+          .targetEvent(ev)
+          .ok('Réinitialiser')
+          .cancel('Annuler');
+    $mdDialog.show(confirm).then(function(result) {
+    	resetPassword(result);
+    }, function() {});
+  };
+
 })

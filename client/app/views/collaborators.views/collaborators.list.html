@@ -1,6 +1,6 @@
 
 <md-card>
-  <div layout="column" role="main" g-controller="ProjectsCtrl">
+  <div layout="column" role="main">
     <md-toolbar layout="row">
       <div class="md-toolbar-tools">
         <h2 class="md-flex">Liste des collaborateurs</h2>
@@ -19,7 +19,7 @@
         </thead>
 
         <tbody>
-        <tr ng-repeat="collaborator in collaborators">
+        <tr ng-repeat="collaborator in vm.collaborators">
           <td><a ui-sref=".details({id:collaborator._id})"> {{ collaborator.prenom }} {{ collaborator.nom }} </a></td>
 
           <td>{{ collaborator.pseudo }}</td>
