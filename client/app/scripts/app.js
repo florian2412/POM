@@ -40,6 +40,8 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       controllerAs: 'projects',
       authorized: ["admin", "manager"]
     })
+
+
     .state('projects.details', {
       url : '/details/:id',
       abstract:true,
@@ -74,7 +76,13 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       templateUrl: 'views/projects.views/projects.details.tasks.create.html',
       controller: 'ProjectsDetailsTasksCreateCtrl'
     })
-
+    .state('projects.details.tasksinfo', {
+      url : '/tasks/info',
+      title : 'Tâches',
+      templateUrl: 'views/projects.views/projects.details.tasks.info.html',
+      controller: 'TasksCtrl',
+      authorized: ["admin", "manager"]
+    })
     .state('projects.create', {
       url : '/create',
       title : 'Création d\'un nouveau projet',
