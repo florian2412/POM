@@ -76,6 +76,7 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
     })
 
     .state('projects.create', {
+      url : '/create',
       title : 'Création d\'un nouveau projet',
       authorized: ["admin", "manager"],
       views: {
@@ -105,6 +106,7 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       }
     })
     .state('collaborators.create', {
+      url : '/create',
       title : 'Création d\'un nouveau collaborateur',
       authorized: ["admin", "manager"],
       views: {
