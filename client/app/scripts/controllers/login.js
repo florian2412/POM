@@ -20,20 +20,20 @@ angular.module('pomApp').controller('LoginCtrl', function ($scope, $alert, $loca
 	    		else
 	    		{
 	    			$rootScope.$broadcast("LoginFailed", "isNotConnected");
-					FlashService.Error("Erreur ! ", "Pseudo ou mot de passe incorrect", "bottom-right", "true", 4);
+            flashService.Error("Erreur ! ", "Pseudo ou mot de passe incorrect", "bottom-right", "true", 4);
 	    		}
 	    	});
 		}
 		else
 		{
-			FlashService.Error('Erreur ! ', 'Pseudo ou mot de passe incorrect', 'bottom-right', true, 4);
+			flashService.Error('Erreur ! ', 'Pseudo ou mot de passe incorrect', 'bottom-right', true, 4);
 		}
   };
   $scope.$on('$viewContentLoaded', function() {
 
   	// Si un utilisateur déjà connecté redemande la page de login, alors il est automatiquement déconnecté
     if (authenticateService.getCurrentUser() !== null) {
-     	FlashService.Success("Déconnexion réussie ! ", "A bientôt ! ", "bottom-right", true, 4);
+      flashService.Success("Déconnexion réussie ! ", "A bientôt ! ", "bottom-right", true, 4);
     	AuthService.setRole("public");
       	authenticateService.clearCredentials();
    	}
@@ -44,10 +44,10 @@ angular.module('pomApp').controller('LoginCtrl', function ($scope, $alert, $loca
 	    authenticateService.resetPassword(JSON.stringify({"pseudo":pseudo}),
 	    	function(response){
 	    		if(response.success){
-	    			FlashService.Success("Envoi réussi ! ", response.message, "bottom-right", "true", 4);
-	    		}else{ FlashService.Error("Erreur ! ", response.message, "bottom-right", "true", 4);}
+            flashService.Success("Envoi réussi ! ", response.message, "bottom-right", "true", 4);
+	    		}else{ flashService.Error("Erreur ! ", response.message, "bottom-right", "true", 4);}
 	    	});
-		} else {FlashService.Error('Erreur ! ', 'Veuillez entrer votre pseudo', 'bottom-right', true, 4);}
+		} else {flashService.Error('Erreur ! ', 'Veuillez entrer votre pseudo', 'bottom-right', true, 4);}
   }
   $scope.showPrompt = function(ev) {
     var confirm = $mdDialog.prompt()
