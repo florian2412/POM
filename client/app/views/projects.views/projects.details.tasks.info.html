@@ -18,7 +18,7 @@
       <tr ng-repeat="task in tasks" ng-switch on="task.statut">
 
         <!--<td><a ng-click="getProjectById(project._id)">{{ project.nom }}</a></td>-->
-        <td><a ui-sref=".details.info({id:task._id})"> {{ task.libelle }} </a></td>
+        <td><a> {{ task.libelle }} </a></td>
         <!--<td><a ui-sref="collaborators.details({id:project.chef_projet})"> {{ project.chef_projet }} </a></td>-->
         <td>{{ task.date_debut | date:"dd/MM/yyyy" }}</td>
 

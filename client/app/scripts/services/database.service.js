@@ -18,6 +18,7 @@ function Service($http) {
   service.deleteObject = deleteObject;
   service.updateObject = updateObject;
   service.getCollaboratorsByRole = getCollaboratorsByRole;
+  service.getProjectsCollaborator = getProjectsCollaborator;
 
   return service;
 
@@ -78,6 +79,14 @@ function Service($http) {
             method: 'GET',
             url: 'http://localhost:3000/collaborators/role/' + role
             });
+  }
+
+  // Resources Collaborators
+  function getProjectsCollaborator(id){
+    return  $http({
+      method: 'GET',
+      url: 'http://localhost:3000/collaborators/' + id + '/projects'
+    });
   }
 }
 
