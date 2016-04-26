@@ -26,7 +26,6 @@ function CollaboratorsCtrl($scope,databaseService) {
     };
 
     vm.deleteCollaborator = function(id) {
-      console.log(id);
       databaseService.deleteObject('collaborators', id)
         .success(function (data) {
           var index = -1;   

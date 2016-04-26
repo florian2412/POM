@@ -23,17 +23,6 @@ angular.module('pomApp')
       var cost = $scope.collaborator.cost;
       var email = $scope.collaborator.email;
 
-
-      /*
-       var data = "{ \"nom\": " + "\"" + lastName + "\" "
-       + ", \"prenom\": " + "\"" + firstName + "\" "
-       + ", \"manager\": \"" + manager + "\" "
-       + ", \"role\": \"" + role + "\" "
-       + ", \"pseudo\": \"" + login + "\" "
-       + ", \"mot_de_passe\": \"" + password + "\" "
-       + ", \"cout_horaire\": \"" + cost + "\" "
-       + ", \"email\": \"" + email + "\" } ";
-       */
       var data = {
         "nom": lastName,
         "prenom": firstName,

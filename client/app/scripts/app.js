@@ -95,7 +95,7 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       authorized: ["collaborateur", "admin", "manager"]
     })
     .state('collaborators.details', {
-      url : '/:id',
+      url : '/details/:id',
       title : 'Détails du collaborateur',
       authorized: ["admin", "manager"],
       views: {
@@ -112,8 +112,9 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       views: {
         '@': {
           templateUrl: 'views/collaborators.views/collaborators.create.html',
-          controller: 'CollaboratorsCreateCtrl'
-        }
+          controller: 'CollaboratorsCreateCtrl',
+          controllerAs : 'createCollaborators'
+         }
       }
     })
     .state('login', {
