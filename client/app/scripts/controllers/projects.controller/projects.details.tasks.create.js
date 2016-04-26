@@ -86,12 +86,12 @@ angular.module('pomApp')
             collaborateursId.splice(indexCol, 1);
           }
         }
-
       };
 
 
       // Lancement au chargement de la page
       $scope.$on('$viewContentLoaded', function() {
+        /*
         databaseService.getAllObjects('collaborators')
           .success(function (data) {
             console.log(data);
@@ -100,7 +100,7 @@ angular.module('pomApp')
           .error(function (err) {
             console.log(err);
           });
-
+*/
 
       });
 

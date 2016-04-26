@@ -11,6 +11,9 @@
 angular.module('pomApp')
   .controller('ProjectsCreateCtrl', function ($scope, $state, $mdDialog, databaseService, flashService, authenticateService) {
 
+    var collaborateursId = [];
+    $scope.minDate = new Date();
+
     $scope.createProject = function() {
 
       // TODO Replace $scope by vm
@@ -39,16 +42,15 @@ angular.module('pomApp')
         "chef_projet" : chef_projet,
         "date_debut" : date_debut,
         "date_fin_theorique" : date_fin_theorique,
-        "date_derniere_modif" : date_derniere_modif
+        "date_derniere_modif" : date_derniere_modif,
+        "collaborateurs": collaborateursId
       };
 
       console.log(data);
 
       databaseService.createObject('projects', data)
         .success(function (data) {
-          console.log(data);
-          //showSuccessDialog();
-          FlashService.Success("Création du projet " + nom + " réussie.", "", "bottom-right", true, 4);
+          flashService.Success("Création du projet " + nom + " réussie.", "", "bottom-right", true, 4);
           $state.go("projects");
         })
         .error(function (err) {
@@ -57,27 +59,36 @@ angular.module('pomApp')
     };
 
 
+
+    $scope.selectCollaborator = function (collaborator) {
+      if(!collaborator.checked) {
+        collaborateursId.push(collaborator._id);
+        collaborator.checked = true;
+      } else {
+        collaborator.checked = false;
+
+        var indexCol = collaborateursId.indexOf(collaborator._id);
+        if (indexCol > -1) {
+          collaborateursId.splice(indexCol, 1);
+        }
+      }
+    };
+
     // Lancement au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
       // Infos en dur pour le moment
       $scope.budgets = ["Ligne budget 1 : 30000€", "Ligne budget 2 : 50000€", "Ligne budget 3 : 100000€"];
       $scope.statuts = ["Initial", "En cours", "Annulé", "Terminé"]
+
+      databaseService.getAllObjects('collaborators')
+        .success(function (data) {
+          $scope.collaborators = data;
+        })
+        .error(function (err) {
+          console.log(err);
+        });
+
     });
-
-    /*
-     function showSuccessDialog() {
-     $mdDialog.show(
-     $mdDialog.alert()
-     .parent(angular.element(document.querySelector('#popupContainer')))
-     .clickOutsideToClose(true)
-     .title('Confirmation de création')
-     .textContent('Le projet ' + $scope.project.name + ' a bien été créé !')
-     .ariaLabel('Création du projet réussie')
-     .ok('Ok'));
-     };
-     */
-
-    $scope.minDate = new Date();
 
     // Appelé depuis la view
     $scope.showCancelDialog = function(event) {
