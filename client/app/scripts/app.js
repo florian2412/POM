@@ -209,8 +209,7 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       views: {
         '@': {
           templateUrl: 'views/budgets.views/budgets.create.html',
-          controller: 'BudgetsCreateCtrl',
-          controllerAs: 'createBudget'
+          controller: 'BudgetsCreateCtrl'
         }
       }
     });

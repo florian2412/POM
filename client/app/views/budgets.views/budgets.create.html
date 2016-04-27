@@ -24,7 +24,7 @@
 
         <md-input-container class="md-block" flex-gt-sm="">
           <label>Montant</label>
-          <input ng-model="budget.montant" name="montant" type="number" step="100" ng-model="project.rate" min="100" required>
+          <input ng-model="budget.montant" name="montant" type="number" min="100" required>
           <div ng-messages="createBudgetForm.montant.$error">
             <div ng-message="required">Ce champ est obligatoire.</div>
             <div ng-message="min">Le montant minimum est de 100 €.</div>
