@@ -37,9 +37,7 @@ angular.module('pomApp')
       var ligne_budgetaire = {
           "id":id_ligne_budgetaire,
           "montant_restant": montant_restant
-      }
-
-      console.log(ligne_budgetaire);
+      };
 
       var data = {
         "nom" : nom,

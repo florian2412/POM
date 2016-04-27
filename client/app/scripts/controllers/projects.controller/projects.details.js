@@ -130,7 +130,13 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,
 
   // Permet de lancer au chargement de la page : récupère tous les projets
   $scope.$on('$viewContentLoaded', function() {
-    $scope.budgets = ["Ligne budget 1 : 30000€", "Ligne budget 2 : 50000€", "Ligne budget 3 : 100000€"];
+    databaseService.getAllObjects('budgets')
+      .success(function (data) {
+        $scope.budgets = data;
+      })
+      .error(function (err) {
+        console.log(err);
+      });
 
     $scope.statuts = ["Initial", "En cours", "Annulé", "Terminé"]
 

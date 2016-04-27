@@ -44,8 +44,10 @@
     <div flex="45">
       <md-input-container class="md-block">
         <label>Ligne budgétaire</label>
-        <md-select ng-model="project.ligne_budgetaire" >
-          <md-option ng-repeat="budget in budgets" value="{{budget}}">{{ budget }}</md-option>
+        <md-select ng-model="project.ligne_budgetaire" name="budget" >
+          <md-option ng-repeat="budget in budgets" value="{{budget}}">
+            {{ budget.libelle }} - {{ budget.montant }} €
+          </md-option>
         </md-select>
       </md-input-container>
     </div>
