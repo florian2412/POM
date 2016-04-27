@@ -10,7 +10,6 @@ router.get('/:id', getProjectById);
 router.put('/:id', updateProject);
 router.delete('/:id', deleteProject);
 
-
 /* GET projects listing. */
 function getAllProjects(req, res, next) {
     Project.find(function (err, projects) {
@@ -20,6 +19,20 @@ function getAllProjects(req, res, next) {
         
    	});
 };
+
+/* GET project collaborator tasks. */
+/*
+function getProjectsCollaboratorTasks(req, res, next) {
+    Project.find({
+            "collaborateurs":req.params.id
+        },
+        function (err, collaborators) {
+            if (err)
+                return next(err);
+            res.json(collaborators);
+        });
+};
+*/
 
 /* POST /projects */
 function createProject(req, res, next) {

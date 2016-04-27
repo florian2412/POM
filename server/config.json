@@ -1,6 +1,6 @@
 {
     "connectionString": "localhost:",
-    "connectionStringDev": "mongodb://florian2412:password@ds027505.mlab.com:",
+    "connectionStringDev": "mongodb://@ds027505.mlab.com:",
     "apiUrl":  "http://localhost:3000/",
     "secret": "POM",
     "serverPort": 3000,
