@@ -191,6 +191,14 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       title : 'Accès refusé',
       templateUrl: 'views/partials/restricted.html',
       authorized: [ "public", "collaborateur", "admin", "manager"]
+    })
+    .state('budgets', {
+      url : '/budgets',
+      title : 'Lignes budgétaire',
+      templateUrl: 'views/budgets.html',
+      controller: 'BudgetsCtrl',
+      controllerAs: 'budgets',
+      authorized: [ "admin" ]
     });
 }
 

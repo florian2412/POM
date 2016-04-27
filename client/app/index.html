@@ -44,6 +44,7 @@
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/about.js"></script>
+    <script src="scripts/controllers/budgets.js"></script>
     <script src="scripts/controllers/projects.controller/projects.js"></script>
     <script src="scripts/controllers/projects.controller/projects.details.js"></script>
     <script src="scripts/controllers/projects.controller/projects.create.js"></script>
@@ -89,6 +90,7 @@
               <li data-match-route="/$"><a ui-sref="/" nra-auth="['admin', 'collaborateur', 'manager']">Accueil</a></li>
               <li data-match-route="/projects" ><a ui-sref="projects" nra-auth="['admin', 'collaborateur', 'manager']">Projets</a></li>
               <li data-match-route="/collaborators" ><a ui-sref="collaborators" nra-auth="['admin', 'collaborateur', 'manager']" >Collaborateurs</a></li>
+              <li data-match-route="/budgets"><a ui-sref="budgets" nra-auth="['admin']">Lignes budgétaire</a></li>
               <li data-match-route="/statistics"><a ui-sref="statistics" nra-auth="['admin', 'collaborateur', 'manager']" >Statistiques</a></li>
              <!--  <li data-match-route="/settings"><a ui-sref="settings" nra-auth="['admin', 'collaborateur', 'manager']" >Préférences</a></li> -->
               <li data-match-route="/about"><a ui-sref="about" nra-auth="['admin', 'collaborateur', 'manager']" >A propos</a></li>
