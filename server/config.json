@@ -9,6 +9,6 @@
     "mongoDBName": "dbPOM",
     "mongoDBNameDev": "dbpom",
     "version": {"api": "1.0.0", "appClient" : "1.2.0"},
-    "cloudMode": true
+    "cloudMode": false
 }
 
