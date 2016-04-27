@@ -13,27 +13,24 @@
           <th>Libellé</th>
           <th>Budget</th>
           <th>Description</th>
+          <th>Supprimer ?</th>
 
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="budget in budgets">
-
-          <!--<td><a ng-click="getProjectById(project._id)">{{ project.nom }}</a></td>-->
-          <td> {{ budget.libelle }} </td>
+          <td><a> {{ budget.libelle }} </a></td>
           <td> {{ budget.montant }} € </td>
           <td> {{ budget.description }} </td>
-
-
+          <td><a ng-click="deleteBudget(budget._id)"><span class="fa fa-trash-o fa-lg" style="color: red;"></span> </a></td>
         </tr>
         </tbody>
       </table>
 
 
       <div layout="row" layout-align="center">
-        <md-button nra-auth="['admin']" class="md-raised md-primary" ui-sref=".create">Créer une nouvelle ligne budgétaire</md-button>
+        <md-button class="md-raised md-primary" ui-sref=".create">Créer une nouvelle ligne budgétaire</md-button>
       </div>
-
 
       <br>
     </md-card-content>

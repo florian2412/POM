@@ -2,18 +2,16 @@
 
 /**
  * @ngdoc function
- * @name pomApp.controller:ProjectsCreateCtrl
+ * @name pomApp.controller:BudgetsCreateCtrl
  * @description
- * # ProjectsCreateCtrl
- * Controller of the projects.create
+ * # BudgetsCreateCtrl
+ * Controller of the budget creation
  */
 
 angular.module('pomApp')
   .controller('BudgetsCreateCtrl', function ($scope, $state, $mdDialog, databaseService, flashService) {
 
     $scope.createBudget = function() {
-
-      console.log("Création d'un budget !!!");
 
       var libelle = $scope.budget.libelle;
       var montant = $scope.budget.montant;
@@ -24,8 +22,6 @@ angular.module('pomApp')
         "montant" : montant,
         "description" : description
       };
-
-      console.log(data);
 
       databaseService.createObject('budgets', data)
         .success(function (data) {
@@ -55,9 +51,7 @@ angular.module('pomApp')
 
       $mdDialog.show(confirm).then(function() {
         $state.go("budgets");
-      }, function() {
-
-      });
+      }, function() {});
     };
 
   });
