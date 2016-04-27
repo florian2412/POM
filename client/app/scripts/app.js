@@ -149,7 +149,7 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
           templateUrl: 'views/collaborators.views/collaborators.create.html',
           controller: 'CollaboratorsCreateCtrl',
           controllerAs : 'createCollaborators'
-         }
+        }
       }
     })
     .state('login', {
@@ -194,10 +194,25 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
     .state('budgets', {
       url : '/budgets',
       title : 'Lignes budgétaire',
-      templateUrl: 'views/budgets.html',
+      templateUrl: 'views/budgets.views/budgets.html',
       controller: 'BudgetsCtrl',
       controllerAs: 'budgets',
       authorized: [ "admin" ]
+    })
+    .state('budgets.create', {
+      url : '/create',
+      title : 'Création d\'une ligne budgétaire',
+      /*templateUrl: 'views/budgets.views/budgets.create.html',
+       controller: 'BudgetsCreateCtrl',
+       controllerAs: 'createBudget',*/
+      authorized: [ "admin" ],
+      views: {
+        '@': {
+          templateUrl: 'views/budgets.views/budgets.create.html',
+          controller: 'BudgetsCreateCtrl',
+          controllerAs: 'createBudget'
+        }
+      }
     });
 }
 
