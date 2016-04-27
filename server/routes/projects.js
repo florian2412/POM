@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 //var mongoose = require('mongoose');
 var Project = require('../models/Project.js');
 
+//router.get('/:id/tasks', getProjectsCollaborator);
 
 /* GET projects listing. */
 router.get('/', function(req, res, next) {
@@ -15,6 +16,20 @@ router.get('/', function(req, res, next) {
         
    	});
 });
+
+/* GET project collaborator tasks. */
+/*
+function getProjectsCollaboratorTasks(req, res, next) {
+    Project.find({
+            "collaborateurs":req.params.id
+        },
+        function (err, collaborators) {
+            if (err)
+                return next(err);
+            res.json(collaborators);
+        });
+};
+*/
 
 /* POST /projects */
 router.post('/', function(req, res, next) {
