@@ -31,10 +31,15 @@ angular.module('pomApp')
       var date_debut = $scope.project.startDate;
       var date_fin_theorique = $scope.project.endDate;
       var date_derniere_modif = new Date();
+      var budget = JSON.parse($scope.project.ligne_budgetaire);
+      var id_ligne_budgetaire = budget._id;
+      var montant_restant = budget.montant;
+      var ligne_budgetaire = {
+          "id":id_ligne_budgetaire,
+          "montant_restant": montant_restant
+      }
 
-      /*var date_debut = new Date();
-       var date_fin_theorique = new Date();*/
-      //var ligne_budgetaire = $scope.budget._id;
+      console.log(ligne_budgetaire);
 
       var data = {
         "nom" : nom,
@@ -43,7 +48,8 @@ angular.module('pomApp')
         "date_debut" : date_debut,
         "date_fin_theorique" : date_fin_theorique,
         "date_derniere_modif" : date_derniere_modif,
-        "collaborateurs": collaborateursId
+        "collaborateurs": collaborateursId,
+        "ligne_budgetaire": ligne_budgetaire
       };
 
       console.log(data);
@@ -76,8 +82,16 @@ angular.module('pomApp')
 
     // Lancement au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
-      // Infos en dur pour le moment
-      $scope.budgets = ["Ligne budget 1 : 30000€", "Ligne budget 2 : 50000€", "Ligne budget 3 : 100000€"];
+
+      databaseService.getAllObjects('budgets')
+        .success(function (data) {
+          $scope.budgets = data;
+        })
+        .error(function (err) {
+          console.log(err);
+        });
+
+
       $scope.statuts = ["Initial", "En cours", "Annulé", "Terminé"]
 
       databaseService.getAllObjects('collaborators')
