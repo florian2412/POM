@@ -25,8 +25,11 @@ app.use(cors());
 app.use('/projects', require('./routes/projects'));
 app.use('/collaborators', require('./routes/collaborators'));
 app.use('/rolesCollaborator', require('./routes/rolesCollaborator'));
+app.use('/budgets', require('./routes/budgets'));
 app.use('/version', require('./routes/version'));
 
+
+// Gestion CORS
 app.all('*', function(req, res, next) {
     res.set('Access-Control-Allow-Origin', '*');
     res.set('Access-Control-Allow-Credentials', true);
