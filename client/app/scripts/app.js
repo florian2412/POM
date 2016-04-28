@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 
-var pomApp = angular.module('pomApp', ['ui.router', 'ngMaterial', 'ngMessages', 'ngRoleAuth', 'ngSanitize', 'ngPassword', 'LocalStorageModule', 'mgcrea.ngStrap']);
+var pomApp = angular.module('pomApp', ['ui.router', 'ngMaterial', 'ngMessages', 'ngRoleAuth', 'ngSanitize', 'ngPassword', 'LocalStorageModule', 'mgcrea.ngStrap', 'chart.js']);
 
 function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $mdThemingProvider) {
   $mdThemingProvider.theme('default').primaryPalette('green').accentPalette('blue');
@@ -31,6 +31,14 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       templateUrl: 'views/about.html',
       controller: 'AboutCtrl',
       controllerAs: 'about',
+      authorized: [ "collaborateur", "admin", "manager"]
+    })
+    .state('account', {
+      url : '/account',
+      title : 'Mon compte',
+      templateUrl: 'views/account.html',
+      controller: 'AccountCtrl',
+      controllerAs: 'account',
       authorized: [ "collaborateur", "admin", "manager"]
     })
     .state('projects', {
