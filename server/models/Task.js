@@ -12,7 +12,7 @@ var schemaTask = mongoose.Schema({
     date_fin_theorique: Date,
     date_fin_reelle: Date,
     statut : String,
-    projet: mongoose.Schema.ObjectId,
+    projet_id: mongoose.Schema.ObjectId,
     collaborateurs: [ mongoose.Schema.ObjectId ],
 });
 

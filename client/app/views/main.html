@@ -42,7 +42,7 @@
               <md-list-item class="md-2-line" ng-repeat="task in tasks">
 
                 <div class="md-list-item-text" layout="column">
-                  <h3> <a ui-sref=""> {{ task.libelle }} </a></h3>
+                  <h3> <a ui-sref="projects.details.tasks.details({id:task.projet_id, idtask:task._id})"> {{ task.libelle }} </a></h3>
                   <p>{{ task._id }}</p>
                 </div>
 

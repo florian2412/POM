@@ -19,13 +19,11 @@ angular.module('pomApp')
       var collaborateursId = [];
       var Idcollaborators = [];
       var idProject = $stateParams.id;
-      var idTask = $stateParams.id;
 
       $scope.createTask = function() {
 
         databaseService.getObjectById('projects',idProject)
           .success(function (data) {
-
 
             var project = data;
 
@@ -45,9 +43,13 @@ angular.module('pomApp')
               "date_debut" : date_debut,
               "date_fin_theorique" : date_fin_theorique,
               "statut" : statut,
-              "collaborateurs" : collaborateursId
+              "collaborateurs" : collaborateursId,
+              "projet_id" : idProject
 
             };
+
+            console.log("MA TAHCE DE TEST : ");
+            console.log(task);
 
             var tasks = project.taches;
 
