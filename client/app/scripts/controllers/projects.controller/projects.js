@@ -14,8 +14,8 @@ angular.module('pomApp')
     $scope.showAllProjects = function(){
       databaseService.getAllObjects('projects')
           .success(function (data) {
-              $scope.projects = data;
-          })
+          $scope.projects = data;
+        })
           .error(function (err) {
               console.error(err);
           });
