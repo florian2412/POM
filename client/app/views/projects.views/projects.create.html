@@ -81,6 +81,21 @@
         </md-list>
 
       </div>
+      <div layout-gt-sm="row">
+        <md-content class="md-padding autocomplete" layout="column">
+          <md-contact-chips
+              ng-model="projectCreate.contacts"
+              md-contacts="projectCreate.querySearch($query)"
+              md-contact-name="name"
+              md-contact-image="image"
+              md-contact-email="email"
+              md-require-match="true"
+              md-highlight-flags="i"
+              filter-selected="projectCreate.filterSelected"
+              placeholder="Collaborateurs">
+          </md-contact-chips>
+        </md-content>
+      </div>
 
 
       <md-input-container class="md-block">

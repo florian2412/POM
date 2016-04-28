@@ -83,6 +83,7 @@ angular.module('pomApp')
       databaseService.getAllObjects('collaborators')
         .success(function (data) {
           $scope.collaborators = data;
+          console.log("collaborators : " + data);
         })
         .error(function (err) {
           console.log(err);
@@ -108,4 +109,53 @@ angular.module('pomApp')
       });
     };
 
+    var self = this;
+    var cachedQuery;
+    self.allContacts = loadContacts();
+    self.contacts = [self.allContacts[0]];
+    self.filterSelected = true;
+    self.querySearch = querySearch;
+
+    /**
+     * Search for contacts; use a random delay to simulate a remote call
+     */
+    function querySearch (criteria) {
+      cachedQuery = cachedQuery || criteria;
+      return cachedQuery ? self.allContacts.filter(createFilterFor(cachedQuery)) : [];
+    }
+
+     /**
+     * Create filter function for a query string
+     */
+    function createFilterFor(query) {
+      var lowercaseQuery = angular.lowercase(query);
+      return function filterFn(contact) {
+        return (contact._lowername.indexOf(lowercaseQuery) != -1);;
+      };
+    }
+
+
+    function loadContacts() {
+      var contacts = [
+        'Marina Augustine',
+        'Oddr Sarno',
+        'Nick Giannopoulos',
+        'Narayana Garner',
+        'Anita Gros',
+        'Megan Smith',
+        'Tsvetko Metzger',
+        'Hector Simek',
+        'Some-guy withalongalastaname'
+      ];
+      return contacts.map(function (c, index) {
+        var cParts = c.split(' ');
+        var contact = {
+          name: c,
+          email: cParts[0][0].toLowerCase() + '.' + cParts[1].toLowerCase() + '@example.com',
+          image: 'http://lorempixel.com/50/50/people?' + index
+        };
+        contact._lowername = contact.name.toLowerCase();
+        return contact;
+      });
+    }
   });

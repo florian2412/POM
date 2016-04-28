@@ -90,7 +90,8 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       views: {
         '@': {
           templateUrl: 'views/projects.views/projects.create.html',
-          controller: 'ProjectsCreateCtrl'
+          controller: 'ProjectsCreateCtrl',
+          controllerAs: 'projectCreate'
         }
       }
     })
