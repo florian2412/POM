@@ -1,0 +1,59 @@
+<md-card>
+
+  <md-toolbar layout="row">
+    <div class="md-toolbar-tools">
+      <h2 class="md-flex">Création d'une nouvelle ligne budgétaire</h2>
+    </div>
+  </md-toolbar>
+
+  <md-card-content>
+
+    <form class="form-horizontal" name="createBudgetForm">
+
+      <div layout-gt-sm="row">
+
+        <md-input-container class="md-block" flex-gt-sm="">
+          <label>Nom de la ligne budgétaire</label>
+          <input ng-model="budget.libelle" maxlength="20" name="libelle" required>
+          <div ng-messages="createBudgetForm.libelle.$error">
+            <div ng-message="required">Ce champ est obligatoire.</div>
+          </div>
+        </md-input-container>
+
+        <div flex="5" hide-xs="" hide-sm=""></div>
+
+        <md-input-container class="md-block" flex-gt-sm="">
+          <label>Montant</label>
+          <input ng-model="budget.montant" name="montant" type="number" min="100" required>
+          <div ng-messages="createBudgetForm.montant.$error">
+            <div ng-message="required">Ce champ est obligatoire.</div>
+            <div ng-message="min">Le montant minimum est de 100 €.</div>
+          </div>
+        </md-input-container>
+
+      </div>
+
+      <md-input-container class="md-block" flex-gt-sm="">
+        <label>Description</label>
+        <textarea ng-model="budget.description" maxlength="250" md-maxlength="250" rows="3" md-select-on-focus></textarea>
+        <div ng-messages="createBudgetForm.description.$error">
+          <div ng-message="required">Ce champ est obligatoire.</div>
+        </div>
+      </md-input-container>
+
+      <md-input-container class="md-block">
+        <div layout="row">
+          <md-button class="md-raised" ng-click="showCancelDialog($event)">Annuler</md-button>
+          <md-button class="md-raised md-primary" type="submit" ng-click="createBudget()" ng-disabled="createBudgetForm.$invalid">Créer</md-button>
+        </div>
+      </md-input-container>
+
+      </div>
+
+    </form>
+
+  </md-card-content>
+
+</md-card>
+
+<br>

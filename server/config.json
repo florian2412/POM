@@ -1,9 +1,14 @@
 {
     "connectionString": "localhost:",
+    "connectionStringDev": "mongodb://@ds027505.mlab.com:",
     "apiUrl":  "http://localhost:3000/",
     "secret": "POM",
     "serverPort": 3000,
     "mongodbPort": 27017,
+    "mongodbPortDev": 27505,
     "mongoDBName": "dbPOM",
-    "version": {"api": "1.0.0", "appClient" : "1.2.0"}
+    "mongoDBNameDev": "dbpom",
+    "version": {"api": "1.0.0", "appClient" : "1.2.0"},
+    "cloudMode": false
 }
+

@@ -16,6 +16,7 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
   $mdDateLocaleProvider.formatDate = function(date) { return moment(date).format('DD/MM/YYYY');};
   $urlRouterProvider.otherwise('/');
   $stateProvider
+  // Menu's routes
     .state('/', {
       url: '/',
       title : 'Home',
@@ -40,61 +41,6 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       controllerAs: 'projects',
       authorized: ["admin", "manager"]
     })
-
-
-    .state('projects.details', {
-      url : '/details/:id',
-      abstract:true,
-      title : 'Détails du projet',
-      authorized: ["collaborateur", "admin", "manager"],
-      views: {
-        '@': {
-          templateUrl: 'views/projects.views/projects.details.html',
-          controller: 'ProjectsDetailsCtrl'
-        }
-      }
-    })
-    .state('projects.details.info', {
-      url : '/info',
-      title : 'Informations du projet',
-      authorized: ["collaborateur", "admin", "manager"],
-      templateUrl: 'views/projects.views/projects.details.info.html',
-      controller: 'ProjectsDetailsCtrl'
-    })
-    .state('projects.details.tasks', {
-      url : '/tasks',
-      title : 'Tâches du projet',
-      authorized: ["collaborateur", "admin", "manager"],
-      templateUrl: 'views/projects.views/projects.details.tasks.html',
-      controller: 'ProjectsDetailsCtrl'
-    })
-
-    .state('projects.details.taskcreate', {
-      url : '/tasks/create',
-      title : 'Création d\'une tâche',
-      authorized: ["admin", "manager"],
-      templateUrl: 'views/projects.views/projects.details.tasks.create.html',
-      controller: 'ProjectsDetailsTasksCreateCtrl'
-    })
-    .state('projects.details.tasksinfo', {
-      url : '/tasks/info',
-      title : 'Tâches',
-      templateUrl: 'views/projects.views/projects.details.tasks.info.html',
-      controller: 'TasksCtrl',
-      authorized: ["admin", "manager"]
-    })
-    .state('projects.create', {
-      url : '/create',
-      title : 'Création d\'un nouveau projet',
-      authorized: ["admin", "manager"],
-      views: {
-        '@': {
-          templateUrl: 'views/projects.views/projects.create.html',
-          controller: 'ProjectsCreateCtrl',
-          controllerAs: 'projectCreate'
-        }
-      }
-    })
     .state('collaborators', {
       url : '/collaborators',
       title : 'Collaborateurs',
@@ -102,29 +48,6 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       controller: 'CollaboratorsCtrl',
       controllerAs: 'vm',
       authorized: ["collaborateur", "admin", "manager"]
-    })
-    .state('collaborators.details', {
-      url : '/details/:id',
-      title : 'Détails du collaborateur',
-      authorized: ["admin", "manager"],
-      views: {
-        '@': {
-          templateUrl: 'views/collaborators.views/collaborators.details.html',
-          controller: 'CollaboratorsDetailsCtrl'
-        }
-      }
-    })
-    .state('collaborators.create', {
-      url : '/create',
-      title : 'Création d\'un nouveau collaborateur',
-      authorized: ["admin", "manager"],
-      views: {
-        '@': {
-          templateUrl: 'views/collaborators.views/collaborators.create.html',
-          controller: 'CollaboratorsCreateCtrl',
-          controllerAs : 'createCollaborators'
-         }
-      }
     })
     .state('login', {
       url : '/login',
@@ -164,6 +87,106 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       title : 'Accès refusé',
       templateUrl: 'views/partials/restricted.html',
       authorized: [ "public", "collaborateur", "admin", "manager"]
+    })
+    .state('budgets', {
+      url : '/budgets',
+      title : 'Lignes budgétaire',
+      templateUrl: 'views/budgets.views/budgets.list.html',
+      controller: 'BudgetsCtrl',
+      controllerAs: 'budgets',
+      authorized: [ "admin" ]
+    })
+
+    .state('projects.create', {
+      url : '/create',
+      title : 'Création d\'un nouveau projet',
+      authorized: ["admin", "manager"],
+      views: {
+        '@': {
+          templateUrl: 'views/projects.views/projects.create.html',
+          controller: 'ProjectsCreateCtrl'
+        }
+      }
+    })
+    .state('projects.details', {
+      url : '/details/:id',
+      abstract:true,
+      title : 'Détails du projet',
+      authorized: ["collaborateur", "admin", "manager"],
+      views: {
+        '@': {
+          templateUrl: 'views/projects.views/projects.details.html',
+          controller: 'ProjectsDetailsCtrl'
+        }
+      }
+    })
+    .state('projects.details.info', {
+      url : '/info',
+      title : 'Informations du projet',
+      authorized: ["collaborateur", "admin", "manager"],
+      templateUrl: 'views/projects.views/projects.details.info.html',
+      controller: 'ProjectsDetailsCtrl'
+    })
+
+    .state('projects.details.tasks', {
+      url : '/tasks',
+      title : 'Tâches du projet',
+      authorized: ["admin", "manager"],
+      templateUrl: 'views/projects.views/projects.details.tasks.html',
+      controller: 'TasksCtrl'
+    })
+    .state('projects.details.tasks.create', {
+      parent:'projects.details',
+      url : '/tasks/create',
+      title : 'Création d\'une tâche',
+      authorized: ["admin", "manager"],
+      templateUrl: 'views/projects.views/projects.details.tasks.create.html',
+      controller: 'ProjectsDetailsTasksCreateCtrl'
+    })
+
+    .state('projects.details.tasks.details', {
+      parent:'projects.details',
+      url : '/tasks/:idtask/details',
+      title : 'Information de la Tâche',
+      authorized: ["admin", "manager"],
+      templateUrl: 'views/projects.views/projects.details.tasks.info.details.html',
+      controller: 'TaskCtrl'
+    })
+
+    .state('collaborators.create', {
+      url : '/create',
+      title : 'Création d\'un nouveau collaborateur',
+      authorized: ["admin", "manager"],
+      views: {
+        '@': {
+          templateUrl: 'views/collaborators.views/collaborators.create.html',
+          controller: 'CollaboratorsCreateCtrl',
+          controllerAs : 'createCollaborators'
+        }
+      }
+    })
+    .state('collaborators.details', {
+      url : '/details/:id',
+      title : 'Détails du collaborateur',
+      authorized: ["admin", "manager"],
+      views: {
+        '@': {
+          templateUrl: 'views/collaborators.views/collaborators.details.html',
+          controller: 'CollaboratorsDetailsCtrl'
+        }
+      }
+    })
+
+    .state('budgets.create', {
+      url : '/create',
+      title : 'Création d\'une ligne budgétaire',
+      authorized: [ "admin" ],
+      views: {
+        '@': {
+          templateUrl: 'views/budgets.views/budgets.create.html',
+          controller: 'BudgetsCreateCtrl'
+        }
+      }
     });
 }
 

@@ -3,7 +3,7 @@
     <md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4">
       <md-toolbar layout="row">
         <div class="md-toolbar-tools">
-          <h2>Menu</h2>
+          <h2>Menu Projet</h2>
           <span flex></span>
           <md-button class="md-icon-button" aria-label="Close" ng-click="closeMenu()">
             <md-tooltip>Fermer</md-tooltip>
@@ -18,15 +18,15 @@
             <md-button class="md-primary" ui-sref="projects.details.info">Général</md-button>
           </md-list-item>
           <md-list-item>
-            <md-button class="md-primary" ui-sref="projects.details.tasks">Calendrier</md-button>
+            <md-button class="md-primary" ui-sref="projects.details.info">Calendrier</md-button>
           </md-list-item>
           <md-divider></md-divider>
           <md-subheader>Tâches</md-subheader>
           <md-list-item>
-             <md-button class="md-primary"  ui-sref="projects.details.tasksinfo">Liste des tâches</md-button>
+             <md-button class="md-primary"  ui-sref="projects.details.tasks">Liste des tâches</md-button>
           </md-list-item>
           <md-list-item>
-             <md-button class="md-primary" ui-sref='projects.details.taskcreate'>Assigner des tâches</md-button>
+             <md-button class="md-primary" ui-sref='projects.details.tasks.create'>Assigner des tâches</md-button>
           </md-list-item>
         </md-list>
       </md-content>

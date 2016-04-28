@@ -3,11 +3,12 @@
 /client/dist
 /client/.tmp
 /client/bower_components
-/client/npm-debug.log
+/client/npm-debug.*
 
 <!-- Server -->
 /server/node_modules
-/server/npm-debug.log
+/server/npm-debug.*
 
 .idea
 utils
+npm-debug.*

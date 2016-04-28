@@ -54,10 +54,9 @@
         <!-- Ligne budgétaire -->
         <md-input-container class="md-block" flex-gt-sm="">
           <label>Ligne budgétaire</label>
-          <md-select ng-model="project.budget" name="budget" required>
+          <md-select ng-model="project.ligne_budgetaire" name="budget" required>
             <md-option ng-repeat="budget in budgets" value="{{budget}}">
-              <!--{{ budget.libelle }} {{ budget.montant_depart }}-->
-              {{ budget }}
+              {{ budget.libelle }} - {{ budget.montant }} €
             </md-option>
           </md-select>
           <div ng-messages="createProjectForm.budget.$error">

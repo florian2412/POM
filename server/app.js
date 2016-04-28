@@ -25,8 +25,11 @@ app.use(cors());
 app.use('/projects', require('./routes/projects'));
 app.use('/collaborators', require('./routes/collaborators'));
 app.use('/rolesCollaborator', require('./routes/rolesCollaborator'));
+app.use('/budgets', require('./routes/budgets'));
 app.use('/version', require('./routes/version'));
 
+
+// Gestion CORS
 app.all('*', function(req, res, next) {
     res.set('Access-Control-Allow-Origin', '*');
     res.set('Access-Control-Allow-Credentials', true);
@@ -75,15 +78,26 @@ module.exports = app;
 // Connexion BDD Mongo avec module mongoose
 var mongoose = require('mongoose');
 
-mongoose.connect(config.connectionString + config.mongodbPort + "/" + config.mongoDBName, function(err) {
-    if(err) {
-        console.log('Connection error !', err);
-    } else {
-        console.log('Connection successful at http://' + config.connectionString + config.mongodbPort + "/" + config.mongoDBName);
-    }
-});
+if(config.cloudMode) {
+    mongoose.connect(config.connectionStringDev + config.mongodbPortDev + "/" + config.mongoDBNameDev, function(err) {
+        if(err) {
+            console.log('Connection error !', err);
+        } else {
+            console.log('Connection successful at http://' + config.connectionStringDev + config.mongodbPortDev + "/" + config.mongoDBNameDev);
+        }
+    });
+}
+else {
+    mongoose.connect(config.connectionString + config.mongodbPort + "/" + config.mongoDBName, function(err) {
+        if(err) {
+            console.log('Connection error !', err);
+        } else {
+            console.log('Connection successful at http://' + config.connectionString + config.mongodbPort + "/" + config.mongoDBName);
+        }
+    });
+}
 
-// start server
+// Start server
 app.listen(config.serverPort, function () {
     console.log('Server listening at ' + config.apiUrl);
 });
