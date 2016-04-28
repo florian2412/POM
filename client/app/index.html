@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
     <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -37,36 +38,31 @@
     <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/Chart.js/Chart.js"></script>
+    <script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
-
     <script src="scripts/controllers/main.js"></script>
-
     <script src="scripts/controllers/about.js"></script>
-
     <script src="scripts/controllers/login.js"></script>
-
     <script src="scripts/controllers/budgets.controller/budgets.list.js"></script>
     <script src="scripts/controllers/budgets.controller/budgets.create.js"></script>
-
+    <script src="scripts/controllers/account.js"></script>
     <script src="scripts/controllers/projects.controller/projects.js"></script>
     <script src="scripts/controllers/projects.controller/projects.details.js"></script>
     <script src="scripts/controllers/projects.controller/projects.create.js"></script>
     <script src="scripts/controllers/projects.controller/projects.details.tasks.create.js"></script>
     <script src="scripts/controllers/projects.controller/projects.details.tasks.info.js"></script>
     <script src="scripts/controllers/projects.controller/projects.details.tasks.info.details.js"></script>
-
     <script src="scripts/controllers/collaborators.controller/collaborators.js"></script>
     <script src="scripts/controllers/collaborators.controller/collaborators.details.js"></script>
     <script src="scripts/controllers/collaborators.controller/collaborators.create.js"></script>
-
     <script src="scripts/services/database.service.js"></script>
     <script src="scripts/services/authenticate.service.js"></script>
     <script src="scripts/services/flash.service.js"></script>
-
     <script src="scripts/directives/ng-role-auth.js"></script>
 
     <!-- endbower -->
@@ -107,7 +103,7 @@
               <li data-match-route="/help"><a ui-sref="help" nra-auth="['admin', 'collaborateur', 'manager']" >Aide</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a ng-show="isAuthenticated"><strong>{{userFirstname}} {{userLastname}}</strong></a></li>
+              <li data-match-route="/account"><a ui-sref="account" ng-show="isAuthenticated"><strong>{{userFirstname}} {{userLastname}}</strong></a></li>
               <li data-match-route="/login"><a ui-sref="login" ng-show="!isAuthenticated">Se connecter <span class="fa fa-sign-in"></span></a></li>
               <li data-match-route="/login"><a ui-sref="login" ng-show="isAuthenticated">Se déconnecter <span style="color:red;" class="fa fa-power-off"></span></a></li>
             </ul>
