@@ -1,9 +1,9 @@
-<div flex layout>
+<div flex layout >
   <div flex layout layout-align="center center">
 
     <form class="form-horizontal" name="createTaskForm">
 
-      <md-input-container class="md-block">
+      <md-input-container class="md-block" flex="250">
         <label>Nom de la tâche</label>
         <input ng-model="task.name" maxlength="20" name="nom" required>
         <div ng-messages="createTaskForm.nom.$error">
@@ -13,7 +13,7 @@
       </md-input-container>
 
 
-     <div class="form-group">
+      <div class="form-group">
         <label class="col-xs-4">Date de début de la tâche</label>
         <md-datepicker ng-model="task.startDate" md-placeholder="Entrer date" md-min-date="minDate" name="dateDebut" ></md-datepicker>
       </div>
@@ -43,7 +43,7 @@
 
         <!--<div flex="5" hide-xs="" hide-sm="">-->
 
-          <!-- Spacer // -->
+        <!-- Spacer // -->
       </div>
 
       <div layout-gt-sm="row">
@@ -69,7 +69,10 @@
         </div>
       </div>
 
-      </form>
-    </div>
+
+
+    </form>
+  </div>
 </div>
+
 
