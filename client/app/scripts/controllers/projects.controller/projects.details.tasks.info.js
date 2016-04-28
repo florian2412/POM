@@ -39,17 +39,14 @@ angular.module('pomApp')
     $scope.deleteTask = function(id) {
       databaseService.getObjectById('projects', idProject)
         .success(function (data) {
-          console.log("ID TASK TO DELETE : " + id);
+
           var tasks = data.taches;
-          console.log("DATA : " + tasks[0]._id);
           var indexTaskToDelete = arrayObjectIndexOf(tasks, id, "_id");
-          console.log("INDEX : " + indexTaskToDelete);
+
           if(indexTaskToDelete > -1) {
             tasks.splice(indexTaskToDelete, 1);
 
-            var dataToUpdate = {
-              "taches":tasks
-            };
+            var dataToUpdate = {"taches":tasks};
 
             databaseService.updateObject('projects',idProject,dataToUpdate)
               .success(function (data) {
@@ -58,7 +55,7 @@ angular.module('pomApp')
               .error(function(err) {
                 console.log(err);
               });
-
+            $scope.tasks.splice( indexTaskToDelete, 1 );
           }
           else {
             alert( "Something gone wrong" );
