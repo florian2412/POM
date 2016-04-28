@@ -25,6 +25,7 @@ angular.module('pomApp')
         $scope.numberProjects = numberProjet;
 
         var tasksCollaborator = [];
+        var taskID_projectID = { taskID : "", projectID :""};
 
         for(var i = 0; i < projects.length; i++) {
           // On récupère les taches du projet courant
@@ -37,10 +38,12 @@ angular.module('pomApp')
             // Si > -1 alors il existe
             if(indexCurrentUser > -1) {
               tasksCollaborator.push(projectTasks[j]);
+              //tasksCollaborator[0].push(projectTasks[j]);
+              //tasksCollaborator[1].push(projectTasks[j]);
             }
           }
         }
-
+        
         var numberTasks = tasksCollaborator.length;
         $scope.numberTasks = numberTasks;
         $scope.tasks = tasksCollaborator;
