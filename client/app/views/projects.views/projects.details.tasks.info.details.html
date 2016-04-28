@@ -1,0 +1,83 @@
+
+<div flex layout>
+  <div flex layout layout-align="center center">
+    <form>
+      <div layout layout-align="center center">
+        <div flex="45">
+          <md-input-container class="md-block">
+            <label>Nom de la tâche</label>
+            <input ng-model="task.libelle" maxlength="20" required>
+          </md-input-container>
+        </div>
+        <div flex="10"></div>
+        <div flex="45">
+          <md-input-container class="md-block">
+            <label>Cout</label>
+            <input ng-model="cout" disabled>
+          </md-input-container>
+        </div>
+      </div>
+
+      <div layout layout-align="center center">
+        <div flex="45">
+          <label>Date de début </label>
+
+          <md-datepicker ng-model="task.date_debut" ng-value="task.date_debut"></md-datepicker>
+        </div>
+        <div flex="10"></div>
+        <div flex="45">
+          <label>Date de fin <b>théorique</b></label>
+          <md-datepicker ng-model="task.date_fin_theorique" md-min-date="task.date_debut"  ng-value="task.date_fin_theorique"></md-datepicker>
+        </div>
+      </div>
+
+      <br>
+      <br>
+      <div layout layout-align="center center">
+        <div flex="45">
+          <md-input-container class="md-block">
+            <label>Statut</label>
+            <md-select ng-model="task.statut" >
+              <md-option ng-repeat="statut in statuts" value="{{statut}}">{{statut}}</md-option>
+            </md-select>
+          </md-input-container>
+        </div>
+        <div flex="10"></div>
+
+        <!--<div flex="45">
+          <md-input-container class="md-block">
+            <label>Ligne budgétaire</label>
+            <md-select ng-model="project.ligne_budgetaire" >
+              <md-option ng-repeat="budget in budgets" value="{{budget}}">{{ budget }}</md-option>
+            </md-select>
+          </md-input-container>
+        </div>-->
+      </div>
+
+      <div layout layout-align="center center">
+        <div>
+          <label>Date de fin <b>réelle</b></label>
+          <md-datepicker ng-model="task.date_fin_reelle" md-min-date="task.date_debut" md-placeholder="Entrer date"></md-datepicker>
+        </div>
+      </div>
+      <br>
+      <div layout layout-align="center center">
+        <div>
+          <md-input-container class="md-block">
+            <md-button class="md-raised" ng-click="showCancelDialog()">Annuler</md-button>
+            <md-button class="md-raised md-primary" type="submit" ng-click="updateTask()">Enregistrer</md-button>
+          </md-input-container>
+        </div>
+      </div>
+
+      <!-- TODO Changer de place !!! -->
+      <!--<p>Avancement global du projet</p>
+        <md-progress-linear md-mode="determinate" value="{{progressProject}}"></md-progress-linear>-->
+
+    </form>
+
+
+
+  </div>
+</div>
+

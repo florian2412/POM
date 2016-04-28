@@ -64,25 +64,52 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
     .state('projects.details.tasks', {
       url : '/tasks',
       title : 'Tâches du projet',
-      authorized: ["collaborateur", "admin", "manager"],
+      authorized: ["admin", "manager"],
       templateUrl: 'views/projects.views/projects.details.tasks.html',
-      controller: 'ProjectsDetailsCtrl'
+      controller: 'TasksCtrl'
     })
 
-    .state('projects.details.taskcreate', {
+    .state('projects.details.tasks.create', {
+      parent:'projects.details',
       url : '/tasks/create',
       title : 'Création d\'une tâche',
       authorized: ["admin", "manager"],
       templateUrl: 'views/projects.views/projects.details.tasks.create.html',
       controller: 'ProjectsDetailsTasksCreateCtrl'
     })
-    .state('projects.details.tasksinfo', {
+
+    .state('projects.details.tasks.details', {
+      parent:'projects.details',
+      url : '/tasks/:idtask/details',
+      title : 'Information de la Tâche',
+      authorized: ["admin", "manager"],
+      templateUrl: 'views/projects.views/projects.details.tasks.info.details.html',
+      controller: 'TaskCtrl'
+    })
+
+    /*.state('projects.details.tasksinfo', {
       url : '/tasks/info',
       title : 'Tâches',
       templateUrl: 'views/projects.views/projects.details.tasks.info.html',
       controller: 'TasksCtrl',
       authorized: ["admin", "manager"]
+    })*/
+
+    /*.state('projects.details.tasks.details', {
+      url : '/details/:idtask',
+      title : 'Information de la Tâche',
+      //templateUrl: 'views/projects.views/projects.details.tasks.info.details.html',
+      //templateUrl: 'views/test.html',
+      //controller: 'TaskCtrl',
+      authorized: ["admin", "manager"],
+      views: {
+        '@': {
+          templateUrl: 'views/projects.views/projects.details.tasks.info.details.html',
+          controller: 'TaskCtrl'
+        }
+      }
     })
+*/
     .state('projects.create', {
       url : '/create',
       title : 'Création d\'un nouveau projet',

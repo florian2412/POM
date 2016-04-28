@@ -5,16 +5,16 @@
 
 /**
  * @ngdoc function
- * @name pomApp.controller:ProjectsCtrl
+ * @name pomApp.controller:TasksCtrl
  * @description
- * # ProjectsCtrl
+ * # TasksCtrl
  * Controller of the pomApp
  */
 angular.module('pomApp')
   .controller('TasksCtrl', function ($scope, $location, $http, databaseService, $stateParams) {
     var idProject = $stateParams.id;
 
-    // Affiche ou rafraichit tous les projets dans le tableau des projets
+    // Affiche ou rafraichit toutes les taches dans le tableau de taches
     $scope.showAllTasks = function(){
       databaseService.getObjectById('projects',idProject)
         .success(function (data) {

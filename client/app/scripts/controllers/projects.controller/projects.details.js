@@ -36,7 +36,7 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,
         var d1 = $scope.project.date_debut;
         var d2 = $scope.project.date_fin_theorique;
         var d3 = dateDiff(d1, d2);
-        console.log ("DATEEEE : " + d3);
+        console.log ("DATE : " + d3);
 
         $scope.progressProject = 100;
       })
