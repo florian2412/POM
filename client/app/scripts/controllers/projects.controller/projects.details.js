@@ -19,13 +19,22 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,
   $scope.getProjectById = function(id) {
     databaseService.getObjectById('projects', id)
       .success(function (data) {
+
         convertDateStringsToDates(data);
+
         $scope.project = data;
+
+        var budgetId = data.ligne_budgetaire.id;
+        var budgetsList = $scope.budgets;
+        var indexBudgetToSelect = arrayObjectIndexOf(budgetsList, budgetId, "_id");
+
+        $scope.selectedBudget = budgetsList[indexBudgetToSelect];
+
         databaseService.getObjectById('collaborators', $scope.project.chef_projet)
           .success(function (data) {
             var collaborator = data;
             $scope.chef_projet = collaborator.prenom + ' ' + collaborator.nom;
-          })
+          });
 
         // TODO
         // Récupérer les date début et fin théorique
@@ -36,6 +45,7 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,
         var d1 = $scope.project.date_debut;
         var d2 = $scope.project.date_fin_theorique;
         var d3 = dateDiff(d1, d2);
+        
         console.log ("DATE : " + d3);
 
         $scope.progressProject = 100;
@@ -43,7 +53,7 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,
   };
 
   function dateDiff(date1, date2){
-    var diff = {}                           // Initialisation du retour
+    var diff = {};                          // Initialisation du retour
     var tmp = date2 - date1;
 
     tmp = Math.floor((tmp-diff.hour)/24);   // Nombre de jours restants
@@ -63,7 +73,14 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,
     var date_debut = vm.project.date_debut;
     var date_fin_theorique = vm.project.date_fin_theorique;
     var date_fin_reelle = vm.project.date_fin_reelle;
-    var ligne_budgetaire = vm.project.ligne_budgetaire;
+
+    // TODO SAVE BUDGETS
+    var ligne_budgetaire_id = $scope.selectedBudget._id;
+    var ligne_budgetaire = {
+      "id": ligne_budgetaire_id,
+      "montant_restant": vm.selectedBudget.montant
+    };
+
     var date_derniere_modif = new Date();
 
     var data = {
@@ -76,11 +93,8 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,
       "date_derniere_modif" : date_derniere_modif
     };
 
-    console.log(data);
-
     databaseService.updateObject('projects', idProject, data)
       .success(function (data) {
-        console.log(data);
         flashService.Success("Le projet " + $scope.project.nom + " a bien été mis à jour !", "", "bottom-right", true, 4);
         $state.go("projects");
       })
@@ -128,8 +142,15 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,
     }
   };
 
-  // Permet de lancer au chargement de la page : récupère tous les projets
+  function arrayObjectIndexOf(myArray, searchTerm, property) {
+    for(var i = 0, len = myArray.length; i < len; i++) {
+      if (myArray[i][property] === searchTerm) return i;
+    }
+    return -1;
+  }
+
   $scope.$on('$viewContentLoaded', function() {
+
     databaseService.getAllObjects('budgets')
       .success(function (data) {
         $scope.budgets = data;
@@ -138,8 +159,8 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,
         console.log(err);
       });
 
-    $scope.statuts = ["Initial", "En cours", "Annulé", "Terminé"]
+    $scope.statuts = ["Initial", "En cours", "Annulé", "Terminé"];
 
     $scope.getProjectById($stateParams.id);
   });
-})
+});
