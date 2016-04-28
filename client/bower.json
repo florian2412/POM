@@ -13,7 +13,6 @@
     "angular-strap": "^2.3.8",
     "angular-sanitize": "^1.5.3",
     "bootstrap": "^3.3.6",
-    "Chart.js": "^2.0.2",
     "angular-chart.js": "^0.10.2"
   },
   "devDependencies": {
