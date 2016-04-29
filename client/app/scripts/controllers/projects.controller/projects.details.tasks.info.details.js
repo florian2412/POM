@@ -29,14 +29,11 @@ angular.module('pomApp')
           var indexTaskToDisplay = utilsService.arrayObjectIndexOf(tasks, idTask, "_id");
           $scope.currentIndexTask = indexTaskToDisplay;
 
-          var task = tasks[indexTaskToDisplay]
-
-          console.log("INDEX : " + indexTaskToDisplay);
-          var d1 = task.date_debut;
-          var d2 = task.date_fin_theorique;
-
-          var d3 = utilsService.dateDiff(d1, d2);
-          $scope.cout =d3.day ;
+          var task = tasks[indexTaskToDisplay];
+          //calcul du cout
+          var date1 = new Date(task.date_debut);
+          var date2 = new Date(task.date_fin_theorique);
+          $scope.coutTask =  dateDiff(date1,date2);
 
           utilsService.convertDateStringsToDates(task);
           $scope.task = task;
@@ -47,6 +44,14 @@ angular.module('pomApp')
         });
 
     });
+    //fonction de calcul de diff entre deux date
+    function dateDiff(date1, date2){
+
+      var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+      var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+      return diffDays;
+    }
 
     //modification de la tache
     $scope.updateTask = function() {

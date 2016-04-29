@@ -23,6 +23,12 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,
         convertDateStringsToDates(data);
 
         $scope.project = data;
+        $scope.minDateProject =  new Date(data.date_debut);
+
+        //durée du projet
+        var date1 = new Date(data.date_debut);
+        var date2 = new Date(data.date_fin_theorique);
+        $scope.dureeProject =  dateDiff(date1,date2);
 
         var budgetId = data.ligne_budgetaire.id;
         var budgetsList = $scope.budgets;
@@ -36,30 +42,16 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,
             $scope.chef_projet = collaborator.prenom + ' ' + collaborator.nom;
           });
 
-        // TODO
-        // Récupérer les date début et fin théorique
-        // Claculer la durée totale du projet en Jours
-        // Faire la sousctration de date de fin - date du jour
-        // blabla
-        // La progression est le résultat de : durée total / le calcul précedant
-        var d1 = $scope.project.date_debut;
-        var d2 = $scope.project.date_fin_theorique;
-        var d3 = dateDiff(d1, d2);
-        
-        console.log ("DATE : " + d3);
-
         $scope.progressProject = 100;
       })
   };
 
+  //fonction de calcul de de difference entre deux dates et le cout
   function dateDiff(date1, date2){
-    var diff = {};                          // Initialisation du retour
-    var tmp = date2 - date1;
 
-    tmp = Math.floor((tmp-diff.hour)/24);   // Nombre de jours restants
-    diff.day = tmp;
-
-    return diff;
+    var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    return diffDays;
   }
 
   $scope.updateProject = function() {
