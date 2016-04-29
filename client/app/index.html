@@ -16,10 +16,10 @@
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/bootstrap.min.css">
-    <link rel="stylesheet" href="styles/angular.strap.css">
-    <link rel="stylesheet" href="styles/main.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles/angular.strap.css">
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -79,8 +79,6 @@
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-
-    <!-- Add your site or application content here -->
     <div class="header">
       <div class="navbar navbar-default navbar-fixed-top" role="navigation" bs-navbar>
         <div class="container-fluid">
@@ -120,8 +118,9 @@
     </div>
 
     <!-- Main content -->
-    <div class="container" style="margin-bottom: 50px;">
-      <div ui-view></div>
+    <div class="container" >
+      <div ng-include="'views/shared/project.sidenav.html'" layout="vertical" layout-fill></div>
+      <ui-view></ui-view>
     </div>
 
     <!-- Footer content -->
