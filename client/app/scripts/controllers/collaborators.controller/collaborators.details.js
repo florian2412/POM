@@ -11,6 +11,7 @@
 angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope, $stateParams, $state, $mdDialog, authenticateService, databaseService, flashService, localStorageService, utilsService) {
 
   var currentUser = localStorageService.get('currentUser');
+  var userIdToUpdate = $stateParams.id;
 
   $scope.getCollaboratorById = function(id) {
     databaseService.getObjectById('collaborators', id)
@@ -33,11 +34,27 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
   $scope.getCollaboratorsByRole = function(role) {
     databaseService.getCollaboratorsByRole(role)
       .success(function (data) {
-        //$scope.collaborators = data;
-
         // TODO ENLEVER SOI MEME DE LA LISTE
         if(data.length > 0) {
           data.push(currentUser);
+
+          console.log("DATTTTTTAAAAA");
+          console.log(data);
+
+          console.log("userIdToUpdate");
+          console.log(userIdToUpdate);
+
+          var indexToDelete = utilsService.arrayObjectIndexOf(data, userIdToUpdate, '_id');
+
+          console.log("indexToDelete");
+          console.log(indexToDelete);
+
+
+
+          data.splice(indexToDelete, 1);
+          console.log("DATATTATAT 2");
+          console.log(data);
+
           $scope.collaborators = data;
         }
         else {
