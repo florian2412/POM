@@ -70,9 +70,9 @@
       <div layout-gt-sm="row" nra-auth="'admin'">
 
         <!-- Rôle -->
-        <md-input-container class="md-block" flex-gt-sm="">
+        <md-input-container class="md-block" flex-gt-sm="" >
           <label>Rôle</label>
-          <md-select ng-model="collaborator.role" name="role" required>
+          <md-select ng-model="collaborator.role" name="role" required nra-auth="'admin'">
             <md-option ng-repeat="role in roles" value="{{role.libelle_court}}" >
               {{role.libelle_long}}
             </md-option>
@@ -89,7 +89,7 @@
         <!-- Manager -->
         <md-input-container class="md-block" flex-gt-sm="">
           <label>Manager</label>
-          <md-select ng-model="collaborator.manager" name="manager" required>
+          <md-select ng-model="collaborator.manager" name="manager" required nra-auth="'admin'">
             <md-option ng-repeat="collaborator in collaborators" value="{{ collaborator._id }}">
               {{ collaborator.prenom }} {{ collaborator.nom }}
             </md-option>

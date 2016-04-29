@@ -24,6 +24,13 @@ angular.module('pomApp')
       var cost = $scope.collaborator.cost;
       var email = $scope.collaborator.email;
 
+      // TODO Tester le role affecté et le manager affecté lorsque le currentUser est un manager
+      console.log("ROLEE");
+      console.log(role);
+
+      console.log("MANAGERR");
+      console.log(manager);
+
       var data = {
         "nom": lastName,
         "prenom": firstName,
@@ -61,17 +68,13 @@ angular.module('pomApp')
     $scope.getCollaboratorsByRole = function(role) {
       databaseService.getCollaboratorsByRole(role)
         .success(function (data) {
-
           if(data.length > 0) {
             data.push(currentUser);
             $scope.collaborators = data;
           }
           else {
             $scope.collaborators = [currentUser];
-            //$scope.collaborator.role = 'collaborateur';
-            //$scope.collaborator.manager = currentUser._id;
           }
-
         });
     };
 
@@ -85,8 +88,14 @@ angular.module('pomApp')
       }
       // Si on est manager, on doit sélectionner automatiquement le role et le manager
       else {
+        $scope.roles = ['collaborateur']
+        $scope.role = 'collaborateur';
+
+        $scope.collaborators = [currentUser];
+        $scope.collaborator = currentUser;
+
+        $scope.collaborator.role = $scope.role;
         $scope.collaborator.manager = currentUser._id;
-        $scope.collaborator.role = 'manager';
       }
 
     });
