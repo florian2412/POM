@@ -228,6 +228,5 @@ function appRun($rootScope, $location, $state, $http, authenticateService, AuthS
       );
   }
 }
-
 pomApp.config(appConfig);
 pomApp.run(appRun);
