@@ -93,7 +93,7 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
     .state('restricted', {
       url : '/restricted',
       title : 'Accès refusé',
-      templateUrl: 'views/partials/restricted.html',
+      templateUrl: 'views/shared/restricted.html',
       authorized: [ "public", "collaborateur", "admin", "manager"]
     })
     .state('budgets', {
@@ -198,7 +198,7 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
     });
 }
 
-function appRun($rootScope, $location, $state, $http, authenticateService, AuthService, localStorageService) {
+function appRun($rootScope, $location, $state, $http,$mdSidenav, authenticateService, AuthService, localStorageService) {
   var cur_user = localStorageService.get('currentUser');
   getVersion();
   AuthService.setRole(((cur_user) ? cur_user.role : "public"));
@@ -218,6 +218,10 @@ function appRun($rootScope, $location, $state, $http, authenticateService, AuthS
   $rootScope.$on('$stateChangeStart', function(event, toState) {
     $rootScope.title = toState.title;
   });
+
+  $rootScope.openMenu = function(sidenavID){ $mdSidenav(sidenavID).toggle(); };
+  $rootScope.closeMenu = function (sidenavID) { $mdSidenav(sidenavID).close(); };
+  $rootScope.onSideNavBtnClick = function(sidenavID){ $rootScope.closeMenu(sidenavID);};
 
   function getVersion(){
     var version = $http.get('http://localhost:3000/version')
