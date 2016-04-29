@@ -222,8 +222,7 @@ function appRun($rootScope, $location, $state, $http,$mdSidenav, authenticateSer
 
   $rootScope.openMenu = function(sidenavID){ $mdSidenav(sidenavID).toggle(); };
   $rootScope.closeMenu = function (sidenavID) { $mdSidenav(sidenavID).close(); };
-  $rootScope.onSideNavBtnClick = function(sidenavID){ $rootScope.closeMenu(sidenavID);};
-
+  
   function getVersion(){
     var version = $http.get('http://localhost:3000/version')
       .then(function(res){
