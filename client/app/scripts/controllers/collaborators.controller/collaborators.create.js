@@ -24,20 +24,12 @@ angular.module('pomApp')
       var cost = $scope.collaborator.cost;
       var email = $scope.collaborator.email;
 
-      // TODO Tester le role affecté et le manager affecté lorsque le currentUser est un manager
-      console.log("ROLEE");
-      console.log(role);
-
-      console.log("MANAGERR");
-      console.log(manager);
-
       var data = {
         "nom": lastName,
         "prenom": firstName,
         "manager": manager,
         "pseudo": login,
         "mot_de_passe": password,
-        //"statut" : "Président",
         "cout_horaire" : cost,
         "role": role,
         "email" : email
@@ -88,7 +80,7 @@ angular.module('pomApp')
       }
       // Si on est manager, on doit sélectionner automatiquement le role et le manager
       else {
-        $scope.roles = ['collaborateur']
+        $scope.roles = ['collaborateur'];
         $scope.role = 'collaborateur';
 
         $scope.collaborators = [currentUser];
