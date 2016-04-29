@@ -1,12 +1,18 @@
 <md-card>
-  <div layout="column" role="main" ng-controller="ProjectsCtrl">
+  <div layout="column" role="main">
     <md-toolbar layout="row" layout-align="center center">
       <div class="md-toolbar-tools">
         <h2 class="md-flex">Statistiques</h2>
       </div>
     </md-toolbar>
     <md-card-content>
-	<p>Analyse des projets réalisés</p>
+      <md-card-content>
+        <p>Bonjour <strong>{{user.prenom}}</strong>,<br>Voici l'état des projets : </p>
+        <canvas id="doughnut" class="chart chart-doughnut" chart-data="doughnutData"
+                chart-labels="doughnutLabels" chart-legend="true"
+                chart-click="onClick" chart-colours = "colours">
+        </canvas>
+      </md-card-content>
  </md-card-content>
   </div>
 </md-card>

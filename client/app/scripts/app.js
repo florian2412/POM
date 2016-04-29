@@ -73,6 +73,15 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       controller: 'StatisticsCtrl',
       controllerAs: 'statisticsVm'
     })
+    .state('settings', {
+      url : '/settings',
+      title : 'Préférences',
+      /* templateUrl: 'views/login.html',
+       controller: 'LoginCtrl',
+       controllerAs: 'login',*/
+      template: '<h4>Préférences ici</h4>',
+      authorized: ["collaborateur", "admin", "manager"]
+    })
     .state('help', {
       url : '/help',
       title : 'Aide',
@@ -215,7 +224,7 @@ function appRun($rootScope, $location, $state, $http,$mdSidenav, authenticateSer
 
   $rootScope.openMenu = function(sidenavID){ $mdSidenav(sidenavID).toggle(); };
   $rootScope.closeMenu = function (sidenavID) { $mdSidenav(sidenavID).close(); };
-  
+
   function getVersion(){
     var version = $http.get('http://localhost:3000/version')
       .then(function(res){
