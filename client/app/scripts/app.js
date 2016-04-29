@@ -217,6 +217,7 @@ function appRun($rootScope, $location, $state, $http,$mdSidenav, authenticateSer
   // Fire when state changes
   $rootScope.$on('$stateChangeStart', function(event, toState) {
     $rootScope.title = toState.title;
+    $mdSidenav('projectSideNav').close();
   });
 
   $rootScope.openMenu = function(sidenavID){ $mdSidenav(sidenavID).toggle(); };

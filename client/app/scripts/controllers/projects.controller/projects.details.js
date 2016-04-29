@@ -10,12 +10,9 @@
 
 angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope, $scope, $stateParams, $log, $mdSidenav, $mdDialog, $state, databaseService, flashService) {
 
-  $scope.openMenu = function(){ $mdSidenav('left').toggle(); };
-  $scope.closeMenu = function () { $mdSidenav('left').close() };
-  $rootScope.$on('$stateChangeStart', function(event, toState) {
-    $mdSidenav('left').close()
-  });
-
+  $rootScope.openMenu = function(){ $mdSidenav('projectSideNav').toggle(); };
+  $rootScope.closeMenu = function () { $mdSidenav('projectSideNav').close() };
+  
   $scope.getProjectById = function(id) {
     databaseService.getObjectById('projects', id)
       .success(function (data) {
