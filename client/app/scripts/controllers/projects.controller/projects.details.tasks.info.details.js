@@ -68,15 +68,16 @@ angular.module('pomApp')
       var date_derniere_modif = new Date();
 
       updateTaskInProject();
+
       function updateTaskInProject(){
         var tasksList = $scope.currentProject.taches;
         var t = tasksList[$scope.currentIndexTask];
         t.libelle = libelle;
         t.statut = statut;
-        t.date_debut  = date_debut;
-        t.date_fin_theorique =date_fin_theorique;
-        t.date_fin_reelle =date_fin_reelle;
-        t.date_derniere_modif =date_derniere_modif;
+        t.date_debut = date_debut;
+        t.date_fin_theorique = date_fin_theorique;
+        t.date_fin_reelle = date_fin_reelle;
+        t.date_derniere_modif = date_derniere_modif;
 
       };
 

@@ -8,7 +8,9 @@
  * Controller of the pomApp
  */
 
-angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope, $stateParams, $state, $mdDialog, authenticateService, databaseService, flashService) {
+angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope, $stateParams, $state, $mdDialog, authenticateService, databaseService, flashService, localStorageService, utilsService) {
+
+  var currentUser = localStorageService.get('currentUser');
 
   $scope.getCollaboratorById = function(id) {
     databaseService.getObjectById('collaborators', id)
@@ -20,6 +22,11 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
   $scope.getAllRoles = function() {
     databaseService.getAllObjects('rolesCollaborator')
       .success(function (data) {
+        // On récupère l'index du role d'admin pour le supprimer ensuite
+        var indexToDelete = utilsService.arrayObjectIndexOf(data, 'admin', 'libelle_court');
+        // On supprime le role admin de la liste des roles
+        data.splice(indexToDelete, 1);
+        // On affecte
         $scope.roles = data;
       });
   };
@@ -27,6 +34,11 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
   $scope.getAllCollaborators = function() {
     databaseService.getAllObjects('collaborators')
       .success(function (data) {
+        // On récupère l'index du currentUser
+        var indexToDelete = utilsService.arrayObjectIndexOf(data, currentUser._id, '_id');
+        // On supprime le currentUser de data
+        data.splice(indexToDelete, 1);
+        // On affecte
         $scope.collaborators = data;
       });
   };
@@ -79,17 +91,18 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
   $scope.$on('$viewContentLoaded', function() {
     $scope.getCollaboratorById($stateParams.id);
 
-    /*
-     if(authenticateService.getCurrentUser().role == 'manager')
-     $scope.getCollaboratorsByRole('admin');
-     else if(authenticateService.getCurrentUser().role == 'collaborator')
-     $scope.getCollaboratorsByRole('manager');
-     */
+    if(currentUser.role === 'admin') {
+      $scope.getAllRoles();
+      $scope.getCollaboratorsByRole('manager');
+    } else {
+      $scope.collaborator.manager = currentUser._id;
+      $scope.collaborator.role = 'manager';
+    }
 
-    $scope.getCollaboratorsByRole('manager');
+/*    $scope.getCollaboratorsByRole('manager');
 
     // Rôle proposé dans le combo du formulaire de création
-    $scope.getAllRoles();
+    $scope.getAllRoles();*/
   });
 
 

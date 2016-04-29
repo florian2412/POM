@@ -9,7 +9,9 @@
  */
 
 angular.module('pomApp')
-  .controller('CollaboratorsCreateCtrl', function ($scope, $state, $mdDialog, databaseService, flashService) {
+  .controller('CollaboratorsCreateCtrl', function ($scope, $state, $mdDialog, databaseService, flashService, localStorageService, utilsService) {
+
+    var currentUser = localStorageService.get('currentUser');
 
     $scope.createCollaborator = function() {
 
@@ -28,18 +30,14 @@ angular.module('pomApp')
         "manager": manager,
         "pseudo": login,
         "mot_de_passe": password,
-        "statut" : "Président",
+        //"statut" : "Président",
         "cout_horaire" : cost,
         "role": role,
         "email" : email
       };
 
-      console.log(data);
-
       databaseService.createObject('collaborators', data)
         .success(function (data) {
-          console.log(data);
-          console.log("BLABABALBAKNAHJBKASAVHGSKLN§GCHFJLKGCFKHLJGFHDJLKGHFHJLKMFDYGIHPOGHJIU");
           flashService.Success("Création du collaborateur " + firstName + " " + lastName + " réussie.", "", "bottom-right", true, 4);
           $state.go("collaborators");
         })
@@ -51,6 +49,11 @@ angular.module('pomApp')
     $scope.getAllRoles = function(id) {
       databaseService.getAllObjects('rolesCollaborator')
         .success(function (data) {
+          // On récupère l'index du role d'admin pour le supprimer ensuite
+          var indexToDelete = utilsService.arrayObjectIndexOf(data, 'admin', 'libelle_court');
+          // On supprime le role admin de la liste des roles
+          data.splice(indexToDelete, 1);
+          // On affecte
           $scope.roles = data;
         });
     };
@@ -58,15 +61,34 @@ angular.module('pomApp')
     $scope.getCollaboratorsByRole = function(role) {
       databaseService.getCollaboratorsByRole(role)
         .success(function (data) {
-          $scope.collaborators = data;
+
+          if(data.length > 0) {
+            data.push(currentUser);
+            $scope.collaborators = data;
+          }
+          else {
+            $scope.collaborators = [currentUser];
+            //$scope.collaborator.role = 'collaborateur';
+            //$scope.collaborator.manager = currentUser._id;
+          }
+
         });
     };
 
     // Lancement au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
-      // Rôle proposé dans le combo du formulaire de création
-      $scope.getAllRoles();
-      $scope.getCollaboratorsByRole('manager');
+
+      // Si on est admin
+      if(currentUser.role === 'admin') {
+        $scope.getAllRoles();
+        $scope.getCollaboratorsByRole('manager');
+      }
+      // Si on est manager, on doit sélectionner automatiquement le role et le manager
+      else {
+        $scope.collaborator.manager = currentUser._id;
+        $scope.collaborator.role = 'manager';
+      }
+
     });
 
     // Appelé depuis la view
