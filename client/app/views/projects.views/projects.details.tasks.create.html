@@ -1,78 +1,83 @@
-<div flex layout >
-  <div flex layout layout-align="center center">
+<!-- <div flex  layout> -->
+<form name="createTaskForm"> 
+  <div layout="row" flex  layout-align="center">
+    <h4>Création d'une tâche</h4>
+  </div>
+  <div flex layout>
 
-    <form class="form-horizontal" name="createTaskForm">
+    <div flex layout="row" layout-xs="column" layout-align="center">
+      <!-- Colonne 1 -->
+      <div flex="50" flex-xs="100" layout="row" layout-align="center">
+        <div flex="70" >
+          <md-input-container class="md-block">
+            <label>Nom de la tâche</label>
+            <input ng-model="task.name" maxlength="20" name="nom" required>
+            <div ng-messages="createTaskForm.nom.$error">
+              <div ng-message="required">Ce champ est obligatoire.</div>
+              <div ng-message="maxlength">Le nom de la tâche ne doit pas dépasser 20 caractères.</div>
+            </div>
+          </md-input-container>
+       
+          <div flex layout="row" layout-xs="column" >
+            <div flex="45"><label>Date de début</label></div>
+            <div flex="10"></div>
+            <div flex="45">
+              <md-datepicker ng-model="task.startDate" md-placeholder="Entrer date" md-min-date="minDate" name="dateDebut" ></md-datepicker>
+            </div>
+          </div>
 
-      <md-input-container class="md-block" flex="250">
-        <label>Nom de la tâche</label>
-        <input ng-model="task.name" maxlength="20" name="nom" required>
-        <div ng-messages="createTaskForm.nom.$error">
-          <div ng-message="required">Ce champ est obligatoire.</div>
-          <div ng-message="maxlength">Le nom de la tâche ne doit pas dépasser 20 caractères.</div>
-        </div>
-      </md-input-container>
+          <br>
 
+          <div flex layout="row" layout-xs="column" >
+            <div flex="45"><label>Date de fin <b>théorique</b></label></div>
+            <div flex="10"></div>
+            <div flex="45">
+              <md-datepicker ng-model="task.endDate" md-placeholder="Entrer date" md-min-date="minDate" name="dateFinTheorique" ></md-datepicker>
+            </div>
+          </div>
 
-      <div class="form-group">
-        <label class="col-xs-4">Date de début de la tâche</label>
-        <md-datepicker ng-model="task.startDate" md-placeholder="Entrer date" md-min-date="minDate" name="dateDebut" ></md-datepicker>
       </div>
-
-      <br>
-
-      <div class="form-group">
-        <label class="col-xs-4">Date de fin <b>théorique</b> de la tâche</label>
-        <md-datepicker ng-model="task.endDate" md-placeholder="Entrer date" md-min-date="minDate" name="dateFinTheorique" ></md-datepicker>
-      </div>
-
-      <br>
-
-      <div layout-gt-sm="row">
-        <!-- Statut -->
+    </div>
+      <!-- Colonne 2 -->
+    <div flex="50" flex-xs="100" layout="row" layout-align="center" >
+      <div flex="70">
+        
         <md-input-container class="md-block" flex-gt-sm="">
           <label>Statut</label>
           <md-select ng-model="task.statut" name="statut" required>
-            <md-option ng-repeat="statut in statuts" value="{{statut}}">
-              {{statut}}
-            </md-option>
+            <md-option ng-repeat="statut in statuts" value="{{statut}}">{{statut}}</md-option>
           </md-select>
           <div ng-messages="createTaskForm.statut.$error">
             <div ng-message="required">Ce champ est obligatoire.</div>
           </div>
         </md-input-container>
-
-        <!--<div flex="5" hide-xs="" hide-sm="">-->
-
-        <!-- Spacer // -->
-      </div>
-
-      <div layout-gt-sm="row">
-        <!-- Collaborateurs -->
-        <md-list flex="">
-          <md-subheader class="md-no-sticky">Liste des collaborateurs</md-subheader>
-          <md-list-item class="md-2-line" ng-repeat="collaborator in collaborators" ng-click="selectCollaborator(collaborator)">
-            <div class="md-list-item-text" layout="column">
-              <h3>{{ collaborator.prenom }} {{ collaborator.nom }}</h3>
-              <p>{{ collaborator.pseudo }}</p>
-            </div>
-            <md-checkbox nra-auth="['admin','manager']" class="md-primary" ng-checked="collaborator.checked"></md-checkbox>
-          </md-list-item>
-        </md-list>
-      </div>
-
-      <div layout layout-align="center center">
+     
         <div>
-          <md-input-container class="md-block">
-            <md-button class="md-raised" ng-click="showCancelDialog()">Annuler</md-button>
-            <md-button class="md-raised md-primary" type="submit" ng-click="createTask()" ng-disabled="createTaskForm.$invalid"">Créer</md-button>
-          </md-input-container>
+          <md-list>
+            <md-subheader class="md-no-sticky">Liste des collaborateurs</md-subheader>
+              <md-list-item class="md-2-line" ng-repeat="collaborator in collaborators" ng-click="selectCollaborator(collaborator)">
+              <div class="md-list-item-text" layout="column">
+                <h3>{{ collaborator.prenom }} {{ collaborator.nom }}</h3>
+                <p>{{ collaborator.pseudo }}</p>
+              </div>
+              <md-checkbox nra-auth="['admin','manager']" class="md-primary" ng-checked="collaborator.checked"></md-checkbox>
+            </md-list-item>
+          </md-list>
         </div>
+
       </div>
-
-
-
-    </form>
+    </div>
+    
   </div>
-</div>
+  </div>
+  
+  <div flex layout layout-align="center center">
+    <div>
+      <md-input-container class="md-block">
+        <md-button class="md-raised" ng-click="showCancelDialog()">Annuler</md-button>
+        <md-button class="md-raised md-primary" type="submit" ng-click="createTask()" ng-disabled="createTaskForm.$invalid">Créer</md-button>
+      </md-input-container>
+    </div>
+  </div>
 
-
+</form> 

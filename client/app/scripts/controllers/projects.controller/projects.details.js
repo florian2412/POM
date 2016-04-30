@@ -8,9 +8,11 @@
  * Controller of the pomApp
  */
 
-angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope, $scope, $stateParams, $log, $mdDialog, $state, databaseService, flashService) {
+angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope, $scope, $stateParams, $mdSidenav, $mdDialog, $state, databaseService, flashService) {
 
-   $scope.getProjectById = function(id) {
+  $rootScope.$on('$stateChangeStart', function() {$mdSidenav('projectSideNav').close();});
+
+  $scope.getProjectById = function(id) {
     databaseService.getObjectById('projects', id)
       .success(function (data) {
 
