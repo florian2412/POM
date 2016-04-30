@@ -9,7 +9,9 @@ var mongoose = require('mongoose');
 var schemaBudget = mongoose.Schema({
     libelle: String,
     montant: Number,
-    description: String
+    description: String,
+    date_creation: { type: Date, default: Date.now },
+    date_derniere_modif : { type: Date }
 });
 
 module.exports = mongoose.model('Budget', schemaBudget);

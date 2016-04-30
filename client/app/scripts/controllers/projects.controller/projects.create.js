@@ -8,53 +8,42 @@
  * Controller of the projects.create
  */
 
-angular.module('pomApp')
-  .controller('ProjectsCreateCtrl', function ($scope, $state, $mdDialog, databaseService, flashService, authenticateService) {
+ProjectsCreateCtrl.$inject = ['$scope', '$state', '$mdDialog', 'databaseService', 'flashService', 'authenticateService'];
 
+angular.module('pomApp').controller('ProjectsCreateCtrl', ProjectsCreateCtrl);
+
+function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashService, authenticateService) {
+    var vm = this;
     var collaborateursId = [];
-    $scope.minDate = new Date();
+    vm.minDate = new Date();
 
-    $scope.createProject = function() {
+    vm.createProject = function() {
 
-      // TODO Replace $scope by vm
-      var vm = this;
+      if(!vm.project.startDate)
+        vm.project.startDate = new Date();
 
-      if(!$scope.project.startDate)
-        $scope.project.startDate = new Date();
+      if(!vm.project.endDate)
+        vm.project.endDate = new Date();
 
-      if(!$scope.project.endDate)
-        $scope.project.endDate = new Date();
-
-      var nom = $scope.project.name;
-      var chef_projet = authenticateService.getCurrentUser()._id;
-      var statut = $scope.project.statut;
-      var date_debut = $scope.project.startDate;
-      var date_fin_theorique = $scope.project.endDate;
-      var date_derniere_modif = new Date();
-      var budget = JSON.parse($scope.project.ligne_budgetaire);
-      var id_ligne_budgetaire = budget._id;
-      var montant_restant = budget.montant;
-      var ligne_budgetaire = {
-          "id":id_ligne_budgetaire,
-          "montant_restant": montant_restant
-      };
+      var budget = JSON.parse(vm.project.ligne_budgetaire);
 
       var data = {
-        "nom" : nom,
-        "statut" : statut,
-        "chef_projet" : chef_projet,
-        "date_debut" : date_debut,
-        "date_fin_theorique" : date_fin_theorique,
-        "date_derniere_modif" : date_derniere_modif,
+        "nom" : vm.project.name,
+        "statut" : vm.project.statut,
+        "chef_projet" : authenticateService.getCurrentUser()._id,
+        "date_debut" : vm.project.startDate,
+        "date_fin_theorique" : vm.project.endDate,
+        "date_derniere_modif" : new Date(),
         "collaborateurs": collaborateursId,
-        "ligne_budgetaire": ligne_budgetaire
+        "ligne_budgetaire": {
+            "id": budget._id,
+            "montant_restant": budget.montant
+        }
       };
-
-      console.log(data);
 
       databaseService.createObject('projects', data)
         .success(function (data) {
-          flashService.Success("Création du projet " + nom + " réussie.", "", "bottom-right", true, 4);
+          flashService.Success("Création du projet " + vm.project.name + " réussie.", "", "bottom-right", true, 4);
           $state.go("projects");
         })
         .error(function (err) {
@@ -62,9 +51,7 @@ angular.module('pomApp')
         });
     };
 
-
-
-    $scope.selectCollaborator = function (collaborator) {
+    vm.selectCollaborator = function (collaborator) {
       if(!collaborator.checked) {
         collaborateursId.push(collaborator._id);
         collaborator.checked = true;
@@ -83,18 +70,18 @@ angular.module('pomApp')
 
       databaseService.getAllObjects('budgets')
         .success(function (data) {
-          $scope.budgets = data;
+          vm.budgets = data;
         })
         .error(function (err) {
           console.log(err);
         });
 
 
-      $scope.statuts = ["Initial", "En cours", "Annulé", "Terminé"]
+      vm.statuts = ["Initial", "En cours", "Annulé", "Terminé"]
 
       databaseService.getAllObjects('collaborators')
         .success(function (data) {
-          $scope.collaborators = data;
+          vm.collaborators = data;
           console.log("collaborators : " + data);
         })
         .error(function (err) {
@@ -104,7 +91,7 @@ angular.module('pomApp')
     });
 
     // Appelé depuis la view
-    $scope.showCancelDialog = function(event) {
+    vm.showCancelDialog = function(event) {
 
       var confirm = $mdDialog.confirm()
         .title('Alerte')
@@ -170,4 +157,5 @@ angular.module('pomApp')
         return contact;
       });
     }
-  });
+  
+  };

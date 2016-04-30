@@ -12,7 +12,7 @@
 
       <md-input-container class="md-block">
         <label>Nom du projet</label>
-        <input ng-model="project.name" maxlength="20" name="nom" required>
+        <input ng-model="projectCreateVm.project.name" maxlength="20" name="nom" required>
         <div ng-messages="createProjectForm.nom.$error">
           <div ng-message="required">Ce champ est obligatoire.</div>
         </div>
@@ -21,14 +21,14 @@
 
       <div class="form-group">
         <label class="col-xs-4">Date de début de projet</label>
-        <md-datepicker ng-model="project.startDate" md-placeholder="Entrer date" md-min-date="minDate" name="dateDebut"/> </md-datepicker>
+        <md-datepicker ng-model="projectCreateVm.project.startDate" md-placeholder="Entrer date" md-min-date="projectCreateVm.minDate" name="dateDebut"/> </md-datepicker>
       </div>
 
       <br>
 
       <div class="form-group">
         <label class="col-xs-4">Date de fin <b>théorique</b> de projet</label>
-        <md-datepicker ng-model="project.endDate" md-placeholder="Entrer date" md-min-date="project.startDate" name="dateFinTheorique"></md-datepicker>
+        <md-datepicker ng-model="projectCreateVm.project.endDate" md-placeholder="Entrer date" md-min-date="projectCreateVm.project.startDate" name="dateFinTheorique"></md-datepicker>
         </div>
       <br>
 
@@ -37,8 +37,8 @@
         <!-- Statut -->
         <md-input-container class="md-block" flex-gt-sm="">
           <label>Statut</label>
-          <md-select ng-model="project.statut" name="statut" required>
-            <md-option ng-repeat="statut in statuts" value="{{statut}}">
+          <md-select ng-model="projectCreateVm.project.statut" name="statut" required>
+            <md-option ng-repeat="statut in projectCreateVm.statuts" value="{{statut}}">
               {{statut}}
             </md-option>
           </md-select>
@@ -54,8 +54,8 @@
         <!-- Ligne budgétaire -->
         <md-input-container class="md-block" flex-gt-sm="">
           <label>Ligne budgétaire</label>
-          <md-select ng-model="project.ligne_budgetaire" name="budget" required>
-            <md-option ng-repeat="budget in budgets" value="{{budget}}">
+          <md-select ng-model="projectCreateVm.project.ligne_budgetaire" name="budget" required>
+            <md-option ng-repeat="budget in projectCreateVm.budgets" value="{{budget}}">
               {{ budget.libelle }} - {{ budget.montant }} €
             </md-option>
           </md-select>
@@ -70,7 +70,7 @@
         <!-- Collaborateurs -->
         <md-list flex="">
           <md-subheader class="md-no-sticky">Liste des collaborateurs à affecter au projet : </md-subheader>
-          <md-list-item class="md-2-line" ng-repeat="collaborator in collaborators" ng-click="selectCollaborator(collaborator)">
+          <md-list-item class="md-2-line" ng-repeat="collaborator in projectCreateVm.collaborators" ng-click="projectCreateVm.selectCollaborator(collaborator)">
             <div class="md-list-item-text" layout="column">
               <h3>{{ collaborator.prenom }} {{ collaborator.nom }}</h3>
               <p>{{ collaborator.pseudo }}</p>
@@ -80,7 +80,7 @@
         </md-list>
 
       </div>
-      <div layout-gt-sm="row">
+    <!--   <div layout-gt-sm="row">
         <md-content class="md-padding autocomplete" layout="column">
           <md-contact-chips
               ng-model="projectCreate.contacts"
@@ -96,11 +96,11 @@
         </md-content>
       </div>
 
-
+ -->
       <md-input-container class="md-block">
         <div layout="row">
-          <md-button class="md-raised" ng-click="showCancelDialog($event)">Annuler</md-button>
-          <md-button class="md-raised md-primary" type="submit" ng-click="createProject()" ng-disabled="createProjectForm.$invalid">Créer</md-button>
+          <md-button class="md-raised" ng-click="projectCreateVm.showCancelDialog($event)">Annuler</md-button>
+          <md-button class="md-raised md-primary" type="submit" ng-click="projectCreateVm.createProject()" ng-disabled="createProjectForm.$invalid">Créer</md-button>
         </div>
       </md-input-container>
 
