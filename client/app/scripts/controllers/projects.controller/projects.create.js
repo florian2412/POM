@@ -82,7 +82,6 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
       databaseService.getAllObjects('collaborators')
         .success(function (data) {
           vm.collaborators = data;
-          console.log("collaborators : " + data);
         })
         .error(function (err) {
           console.log(err);
@@ -103,59 +102,47 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
 
       $mdDialog.show(confirm).then(function() {
         $state.go("projects");
-      }, function() {
-
-      });
+      }, function() { });
     };
 
-    var self = this;
-    var cachedQuery;
-    self.allContacts = loadContacts();
-    self.contacts = [self.allContacts[0]];
-    self.filterSelected = true;
-    self.querySearch = querySearch;
+    vm.showAdvanced = function(ev) {
 
-    /**
-     * Search for contacts; use a random delay to simulate a remote call
-     */
-    function querySearch (criteria) {
-      cachedQuery = cachedQuery || criteria;
-      return cachedQuery ? self.allContacts.filter(createFilterFor(cachedQuery)) : [];
-    }
-
-     /**
-     * Create filter function for a query string
-     */
-    function createFilterFor(query) {
-      var lowercaseQuery = angular.lowercase(query);
-      return function filterFn(contact) {
-        return (contact._lowername.indexOf(lowercaseQuery) != -1);;
-      };
-    }
-
-
-    function loadContacts() {
-      var contacts = [
-        'Marina Augustine',
-        'Oddr Sarno',
-        'Nick Giannopoulos',
-        'Narayana Garner',
-        'Anita Gros',
-        'Megan Smith',
-        'Tsvetko Metzger',
-        'Hector Simek',
-        'Some-guy withalongalastaname'
-      ];
-      return contacts.map(function (c, index) {
-        var cParts = c.split(' ');
-        var contact = {
-          name: c,
-          email: cParts[0][0].toLowerCase() + '.' + cParts[1].toLowerCase() + '@example.com',
-          image: 'http://lorempixel.com/50/50/people?' + index
-        };
-        contact._lowername = contact.name.toLowerCase();
-        return contact;
+      $mdDialog.show({
+        controller: CollaboratorPickerController,
+        templateUrl: 'views/shared/collaborators.picker.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:true,
+        fullscreen: false,
+        locals: {
+           collaborators: vm.collaborators 
+         },
+      })
+      .then(function(answer) {
+        $scope.status = 'You said the information was "' + answer + '".';
+      }, function() {
+        $scope.status = 'You cancelled the dialog.';
       });
-    }
-  
-  };
+   };
+
+  function CollaboratorPickerController($scope, $mdDialog, collaborators) {
+
+    $scope.collaborators = collaborators;
+     
+    $scope.hide = function() { $mdDialog.hide(); };
+    $scope.cancel = function() { $mdDialog.cancel(); };
+    $scope.answer = function(answer) { $mdDialog.hide(answer); };
+
+    $scope.selectCollaborator = function (collaborator) {
+      if(!collaborator.checked) {
+        collaborateursId.push(collaborator._id);
+        collaborator.checked = true;
+      } else {
+        collaborator.checked = false;
+        var indexCol = collaborateursId.indexOf(collaborator._id);
+        if (indexCol > -1) { collaborateursId.splice(indexCol, 1); }
+      }
+    };
+    
+  }
+}
