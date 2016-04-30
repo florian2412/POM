@@ -1,0 +1,40 @@
+<md-dialog aria-label="Collaborateurs" ng-cloak style="min-width: 400px">
+  <form>
+   <md-toolbar layout="row">
+    <div class="md-toolbar-tools">
+      <h2>Liste des collaborateurs</h2>
+       <span flex></span>
+      <md-button class="md-icon-button" aria-label="Close" ng-click="hide()">
+        <md-tooltip>Fermer</md-tooltip>
+        <md-icon class="md-default-theme" class="material-icons"><i class="material-icons" style="color:white">clear</i></i></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+    <md-dialog-content flex>
+      
+      <div layout="row">
+        <md-list layout-wrap flex>
+          <md-list-item class="md-2-line" ng-repeat="collaborator in collaborators" ng-click="selectCollaborator(collaborator)" flex>
+
+            <md-checkbox ng-checked="collaborator.checked"></md-checkbox>
+            <div class="md-list-item-text" flex>
+              <h3>{{ collaborator.prenom }} {{ collaborator.nom }}</h3>
+              <p>{{ collaborator.statut }}</p>
+            </div>
+       
+          </md-list-item>
+        </md-list>
+      </div>
+
+    </md-dialog-content>
+    <md-dialog-actions layout="row" md-whiteframe="-4">
+      <div flex layout layout-align="center">
+        <md-input-container class="md-block">
+          <md-button ng-click="cancel()" class="md-raised">Annuler</md-button>
+          <md-button ng-click="hide()" class="md-raised md-primary">Valider</md-button>
+        </md-input-container>
+      </div>
+    </md-dialog-actions>
+  
+  </form>
+</md-dialog>
