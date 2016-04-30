@@ -12,7 +12,7 @@ var schemaCollaborator = mongoose.Schema({
     pseudo: String,
     mot_de_passe: String,
     manager: mongoose.Schema.ObjectId,
-    statut: String,
+    fonction: String,
     cout_horaire: Number,
     role: String, // admin, collaborateur, manager
     email: String,

@@ -2,7 +2,7 @@
 
   <md-toolbar layout="row">
     <div class="md-toolbar-tools">
-      <h2 class="md-flex">Détails / Modification du collaborateur {{ collaborator.prenom }} {{ collaborator.nom }}</h2>
+      <h2 class="md-flex"> Modification du collaborateur : {{ collaborator.prenom }} {{ collaborator.nom }}</h2>
     </div>
   </md-toolbar>
 
@@ -10,10 +10,10 @@
 
     <form class="form-horizontal" name="updateCollaboratorForm">
 
-      <div layout-gt-sm="row">
+       <div layout="row" layout-align="center" layout-xs="column">
 
         <!-- Nom -->
-        <md-input-container class="md-block" flex-gt-sm="">
+        <md-input-container class="md-block" flex="35" flex-xs="100">
           <label>Nom</label>
           <input maxlength="20" ng-model="collaborator.nom" name="nom" required>
           <div ng-messages="updateCollaboratorForm.nom.$error">
@@ -22,12 +22,10 @@
           </div>
         </md-input-container>
 
-        <div flex="5" hide-xs="" hide-sm="">
-          <!-- Spacer //-->
-        </div>
+        <div flex="5" hide-xs="" hide-sm=""></div>
 
         <!-- Prénom -->
-        <md-input-container class="md-block" flex-gt-sm="">
+        <md-input-container class="md-block" flex="35" flex-xs="100">
           <label>Prénom</label>
           <input maxlength="20" ng-model="collaborator.prenom" name="prenom" required>
           <div ng-messages="updateCollaboratorForm.prenom.$error">
@@ -38,10 +36,10 @@
 
       </div>
 
-      <div layout-gt-sm="row">
+      <div layout="row" layout-align="center" layout-xs="column">
 
         <!-- Login -->
-        <md-input-container class="md-block" flex-gt-sm="">
+        <md-input-container class="md-block" flex="35" flex-xs="100">
           <label>Login</label>
           <input maxlength="10" ng-model="collaborator.pseudo" name="login" required>
           <div ng-messages="updateCollaboratorForm.login.$error">
@@ -50,12 +48,10 @@
           </div>
         </md-input-container>
 
-        <div flex="5" hide-xs="" hide-sm="">
-          <!-- Spacer //-->
-        </div>
+        <div flex="5" hide-xs="" hide-sm=""></div>
 
         <!-- Coût horaire -->
-        <md-input-container class="md-block" flex-gt-sm="">
+        <md-input-container class="md-block" flex="35" flex-xs="100">
           <label>Coût horaire (€)</label>
           <input ng-model="collaborator.cout_horaire" type="number" min="0" max="9999" name="cout" required>
           <div ng-messages="updateCollaboratorForm.cout.$error" multiple md-auto-hide="true">
@@ -67,10 +63,10 @@
 
       </div>
 
-      <div layout-gt-sm="row" nra-auth="'admin'">
+      <div layout="row" layout-align="center" layout-xs="column" nra-auth="'admin'">
 
         <!-- Rôle -->
-        <md-input-container class="md-block" flex-gt-sm="">
+        <md-input-container class="md-block" flex="35" flex-xs="100">
           <label>Rôle</label>
           <md-select ng-model="collaborator.role" name="role" required nra-auth="'admin'">
             <md-option ng-repeat="role in roles" value="{{role.libelle_court}}" >
@@ -82,12 +78,10 @@
           </div>
         </md-input-container>
 
-        <div flex="5" hide-xs="" hide-sm="">
-          <!-- Spacer //-->
-        </div>
+        <div flex="5" hide-xs="" hide-sm=""></div>
 
         <!-- Manager -->
-        <md-input-container class="md-block" flex-gt-sm="">
+        <md-input-container class="md-block" flex="35" flex-xs="100">
           <label>Manager</label>
           <md-select ng-model="collaborator.manager" name="manager" required nra-auth="'admin'">
             <md-option ng-repeat="collaborator in collaborators" value="{{ collaborator._id }}">
@@ -103,22 +97,45 @@
 
       <br>
 
-      <!-- Addresse mail -->
-      <md-input-container class="md-block">
-        <label>Adresse mail</label>
-        <input ng-model="collaborator.email" type="email" ng-pattern="/^.+@.+\..+$/" name="email" required >
-        <div ng-messages="updateCollaboratorForm.email.$error">
-          <div ng-message="required">Ce champ est obligatoire.</div>
-          <div ng-message="pattern">L'adresse mail doit être une adresse mail valide.</div>
-        </div>
-      </md-input-container>
+      <div layout="row" layout-align="center" layout-xs="column">
 
-      <md-input-container class="md-block">
-        <div layout="row">
-          <md-button class="md-raised" ng-click="showCancelDialog($event)">Annuler</md-button>
-          <md-button class="md-raised md-primary" type="submit" ng-click="updateCollaborator()" ng-disabled="updateCollaboratorForm.$invalid">Enregistrer</md-button>
-        </div>
-      </md-input-container>
+        <!-- Fonction -->
+        <md-input-container class="md-block"  flex="35" flex-xs="100" >
+          <label>Fonction</label>
+          <md-select ng-model="collaborator.fonction" name="fonction" required>
+            <md-option ng-repeat="fonction in fonctions" value="{{fonction}}" >
+              {{fonction}}
+            </md-option>
+          </md-select>
+          <div ng-messages="createCollaboratorForm.fonction.$error">
+            <div ng-message="required">Ce champ est obligatoire.</div>
+          </div>
+        </md-input-container>
+      
+        <div flex="5" hide-xs="" hide-sm=""></div>
+        
+        <!-- Addresse mail -->
+        <md-input-container class="md-block"  flex="35" flex-xs="100" >
+          <label>Adresse mail</label>
+          <input ng-model="collaborator.email" type="email" ng-pattern="/^.+@.+\..+$/" name="email" required >
+          <div ng-messages="updateCollaboratorForm.email.$error">
+            <div ng-message="required">Ce champ est obligatoire.</div>
+            <div ng-message="pattern">L'adresse mail doit être une adresse mail valide.</div>
+          </div>
+        </md-input-container>
+
+      </div>
+
+      <div layout="row" layout-align="center">
+
+        <md-input-container class="md-block">
+          <div layout="row">
+            <md-button class="md-raised" ng-click="showCancelDialog($event)">Annuler</md-button>
+            <md-button class="md-raised md-primary" type="submit" ng-click="updateCollaborator()" ng-disabled="updateCollaboratorForm.$invalid">Enregistrer</md-button>
+          </div>
+        </md-input-container>
+      
+      </div>
 
     </form>
 

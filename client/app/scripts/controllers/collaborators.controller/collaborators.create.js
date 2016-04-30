@@ -18,6 +18,7 @@ angular.module('pomApp')
       var lastName = $scope.collaborator.lastName;
       var firstName = $scope.collaborator.firstName;
       var manager = $scope.collaborator.manager;
+      var fonction = $scope.collaborator.fonction;
       var role = $scope.collaborator.role;
       var login = $scope.collaborator.login;
       var password = $scope.collaborator.password;
@@ -32,7 +33,8 @@ angular.module('pomApp')
         "mot_de_passe": password,
         "cout_horaire" : cost,
         "role": role,
-        "email" : email
+        "email" : email,
+        "fonction":fonction
       };
 
       databaseService.createObject('collaborators', data)
@@ -72,6 +74,7 @@ angular.module('pomApp')
 
     // Lancement au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
+      $scope.fonctions = ["Développeur", "Architecte", "Directeur", "Chef de projet"]
 
       // Si on est admin
       if(currentUser.role === 'admin') {

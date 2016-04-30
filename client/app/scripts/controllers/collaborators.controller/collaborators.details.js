@@ -38,22 +38,9 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
         if(data.length > 0) {
           data.push(currentUser);
 
-          console.log("DATTTTTTAAAAA");
-          console.log(data);
-
-          console.log("userIdToUpdate");
-          console.log(userIdToUpdate);
-
           var indexToDelete = utilsService.arrayObjectIndexOf(data, userIdToUpdate, '_id');
 
-          console.log("indexToDelete");
-          console.log(indexToDelete);
-
-
-
           data.splice(indexToDelete, 1);
-          console.log("DATATTATAT 2");
-          console.log(data);
 
           $scope.collaborators = data;
         }
@@ -66,32 +53,21 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
   $scope.updateCollaborator = function() {
 
     var vm = this;
-
     var idCollaborator = vm.collaborator._id;
 
-    var lastName = vm.collaborator.nom;
-    var firstName = vm.collaborator.prenom;
-    var manager = vm.collaborator.manager;
-    var role = vm.collaborator.role;
-    var login = vm.collaborator.pseudo;
-    var cost = vm.collaborator.cout_horaire;
-    var email = vm.collaborator.email;
-
     var data = {
-      "nom": lastName,
-      "prenom": firstName,
-      "manager": manager,
-      "pseudo": login,
-      "cout_horaire" : cost,
-      "role": role,
-      "email" : email
+      "nom": vm.collaborator.nom,
+      "prenom":  vm.collaborator.prenom,
+      "manager": vm.collaborator.manager,
+      "fonction": vm.collaborator.fonction,
+      "pseudo": vm.collaborator.pseudo,
+      "cout_horaire" : vm.collaborator.cout_horaire,
+      "role": vm.collaborator.role,
+      "email" : vm.collaborator.email
     };
-
-    console.log(data);
 
     databaseService.updateObject('collaborators', idCollaborator, data)
       .success(function (data) {
-        console.log(data);
         flashService.Success("Le collaborateur " + vm.collaborator.prenom + " " + vm.collaborator.nom + " a bien été mis à jour !", "", "bottom-right", true, 4);
         $state.go("collaborators");
       })
@@ -103,6 +79,7 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
   // Permet de lancer au chargement de la page : récupère tous les projets
   $scope.$on('$viewContentLoaded', function() {
     $scope.getCollaboratorById($stateParams.id);
+    $scope.fonctions = ["Développeur", "Architecte", "Directeur", "Chef de projet"]
 
     /*if(currentUser.role === 'admin') {
      $scope.getAllRoles();
