@@ -171,7 +171,7 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
         '@': {
           templateUrl: 'views/collaborators.views/collaborators.create.html',
           controller: 'CollaboratorsCreateCtrl',
-          controllerAs : 'createCollaborators'
+          controllerAs : 'createCollaboratorsVm'
         }
       }
     })

@@ -18,6 +18,7 @@ function Service() {
   service.convertDateStringsToDates = convertDateStringsToDates;
   service.arrayObjectIndexOf = arrayObjectIndexOf;
   service.dateDiff = dateDiff;
+  service.capitalize = capitalize;
 
   return service;
 
@@ -63,6 +64,10 @@ function Service() {
     diff.day = tmp;
     console.log(diff);
     return diff;
+  }
+
+  function capitalize(word){
+    return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
   }
 
 }

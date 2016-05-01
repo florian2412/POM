@@ -14,8 +14,8 @@
 
         <md-input-container class="md-block" flex="35" flex-xs="100">
           <label>Nom</label>
-          <input maxlength="20" ng-model="collaborator.lastName" name="nom" required>
-          <div ng-messages="createCollaboratorForm.nom.$error">
+          <input maxlength="20" ng-model="createCollaboratorsVm.collaborator.n_nom" name="n_nom" required>
+          <div ng-messages="createCollaboratorForm.n_nom.$error">
             <div ng-message="required">Ce champ est obligatoire.</div>
             <div ng-message="md-maxlength">Le nom ne doit pas dépasser 20 caractères.</div>
           </div>
@@ -25,8 +25,8 @@
 
         <md-input-container class="md-block" flex="35" flex-xs="100">
           <label>Prénom</label>
-          <input maxlength="20" ng-model="collaborator.firstName" name="prenom" required>
-          <div ng-messages="createCollaboratorForm.prenom.$error">
+          <input maxlength="20" ng-model="createCollaboratorsVm.collaborator.n_prenom" name="n_prenom" required>
+          <div ng-messages="createCollaboratorForm.n_prenom.$error">
             <div ng-message="required">Ce champ est obligatoire.</div>
             <div ng-message="md-maxlength">Le prénom ne doit pas dépasser 20 caractères.</div>
           </div>
@@ -38,10 +38,10 @@
 
         <md-input-container class="md-block" flex="35" flex-xs="100">
           <label>Login</label>
-          <input maxlength="10" ng-model="collaborator.login" name="login" required>
-          <div ng-messages="createCollaboratorForm.login.$error">
+          <input maxlength="10" ng-model="createCollaboratorsVm.collaborator.n_pseudo" name="n_pseudo" required>
+          <div ng-messages="createCollaboratorForm.n_pseudo.$error">
             <div ng-message="required">Ce champ est obligatoire.</div>
-            <div ng-message="md-maxlength">Le login ne doit pas dépasser 10 caractères.</div>
+            <div ng-message="md-maxlength">Le pseudo ne doit pas dépasser 10 caractères.</div>
           </div>
         </md-input-container>
 
@@ -49,8 +49,8 @@
 
         <md-input-container class="md-block" flex="35" flex-xs="100">
           <label>Coût horaire (€)</label>
-          <input ng-model="collaborator.cost" type="number" min="0" max="9999" name="cout" required>
-          <div ng-messages="createCollaboratorForm.cout.$error" multiple md-auto-hide="true">
+          <input ng-model="createCollaboratorsVm.collaborator.n_cout_horaire" type="number" min="0" max="9999" name="n_cout_horaire" required>
+          <div ng-messages="createCollaboratorForm.n_cout_horaire.$error" multiple md-auto-hide="true">
             <div ng-message="required">Ce champ est obligatoire.</div>
             <div ng-message="min">Le coût horaire du nouveau collaborateur ne peut pas être inférieur à 0€.</div>
             <div ng-message="max">Le coût horaire du nouveau collaborateur ne peut pas être dépasser 9999€.</div>
@@ -63,12 +63,12 @@
       
         <md-input-container class="md-block" flex="35" flex-xs="100">
           <label>Rôle</label>
-          <md-select ng-model="collaborator.role" name="role" required nra-auth="'admin'">
-            <md-option ng-repeat="role in roles" value="{{role.libelle_court}}" >
-              {{role.libelle_long}}
+          <md-select ng-model="createCollaboratorsVm.collaborator.n_role" name="n_role" required nra-auth="'admin'">
+            <md-option ng-repeat="role in createCollaboratorsVm.roles" value="{{role | lowercase}}" >
+              {{role}}
             </md-option>
           </md-select>
-          <div ng-messages="createCollaboratorForm.role.$error">
+          <div ng-messages="createCollaboratorForm.n_role.$error">
             <div ng-message="required">Ce champ est obligatoire.</div>
           </div>
         </md-input-container>
@@ -77,12 +77,12 @@
      
         <md-input-container class="md-block" flex="35" flex-xs="100">
           <label>Manager</label>
-          <md-select ng-model="collaborator.manager" name="manager" required nra-auth="'admin'">
-            <md-option ng-repeat="manager in managers" value="{{ manager._id }}">
+          <md-select ng-model="createCollaboratorsVm.collaborator.n_manager" name="n_manager" required nra-auth="'admin'">
+            <md-option ng-repeat="manager in createCollaboratorsVm.managers" value="{{ manager._id }}">
               {{ manager.prenom }} {{ manager.nom }}
             </md-option>
           </md-select>
-          <div ng-messages="createCollaboratorForm.role.$error">
+          <div ng-messages="createCollaboratorForm.n_manager.$error">
             <div ng-message="required">Ce champ est obligatoire.</div>
           </div>
         </md-input-container>
@@ -95,12 +95,12 @@
 
         <md-input-container class="md-block"  flex="35" flex-xs="100" >
           <label>Fonction</label>
-          <md-select ng-model="collaborator.fonction" name="fonction" required>
-            <md-option ng-repeat="fonction in fonctions" value="{{fonction}}" >
+          <md-select ng-model="createCollaboratorsVm.collaborator.n_fonction" name="n_fonction" required>
+            <md-option ng-repeat="fonction in createCollaboratorsVm.fonctions" value="{{fonction}}" >
               {{fonction}}
             </md-option>
           </md-select>
-          <div ng-messages="createCollaboratorForm.fonction.$error">
+          <div ng-messages="createCollaboratorForm.n_fonction.$error">
             <div ng-message="required">Ce champ est obligatoire.</div>
           </div>
         </md-input-container>
@@ -109,8 +109,8 @@
 
         <md-input-container class="md-block" flex="35" flex-xs="100">
           <label>Adresse mail</label>
-          <input ng-model="collaborator.email" type="email" ng-pattern="/^.+@.+\..+$/" name="email" required>
-          <div ng-messages="createCollaboratorForm.email.$error">
+          <input ng-model="createCollaboratorsVm.collaborator.n_email" type="email" ng-pattern="/^.+@.+\..+$/" name="n_email" required>
+          <div ng-messages="createCollaboratorForm.n_email.$error">
             <div ng-message="required">Ce champ est obligatoire.</div>
             <div ng-message="pattern">L'adresse mail doit être une adresse mail valide.</div>
           </div>
@@ -122,8 +122,8 @@
 
         <md-input-container class="md-block" flex="35" flex-xs="100">
           <label>Mot de passe</label>
-          <input ng-model="collaborator.password" type="password" minlength="6" maxlength="12" name="password" required>
-          <div ng-messages="createCollaboratorForm.password.$error">
+          <input ng-model="createCollaboratorsVm.collaborator.n_mot_de_passe" type="password" minlength="6" maxlength="12" name="n_mot_de_passe" required>
+          <div ng-messages="createCollaboratorForm.n_mot_de_passe.$error">
             <div ng-message="required">Ce champ est obligatoire.</div>
             <div ng-message="minlength">Le mot de passe doit avoir au moins 6 caractères.</div>
             <div ng-message="maxlength">Le mot de passe doit avoir au maximum 12 caractères.</div>
@@ -134,7 +134,7 @@
        
         <md-input-container class="md-block" flex="35" flex-xs="100">
           <label>Confirmation mot de passe</label>
-          <input ng-model="collaborator.confirmPassword" type="password" minlength="6" maxlength="12" name="confirmPassword" match-password="password" required>
+          <input ng-model="createCollaboratorsVm.collaborator.confirmPassword" type="password" minlength="6" maxlength="12" name="confirmPassword" match-password="n_mot_de_passe" required>
           <div ng-messages="createCollaboratorForm.confirmPassword.$error">
             <div ng-message="required">Ce champ est obligatoire.</div>
             <div ng-message="minlength">Le mot de passe doit avoir au moins 6 caractères.</div>
@@ -148,8 +148,8 @@
 
         <md-input-container class="md-block">
           <div layout="row">
-            <md-button class="md-raised" ng-click="showCancelDialog($event)">Annuler</md-button>
-            <md-button class="md-raised md-primary" type="submit" ng-click="createCollaborator()" ng-disabled="createCollaboratorForm.$invalid" >Créer</md-button>
+            <md-button class="md-raised" ng-click="createCollaboratorsVm.showCancelDialog($event)">Annuler</md-button>
+            <md-button class="md-raised md-primary" type="submit" ng-click="createCollaboratorsVm.createCollaborator()" ng-disabled="createCollaboratorForm.$invalid" >Créer</md-button>
           </div>
         </md-input-container>
 
