@@ -1,11 +1,8 @@
 <div layout="row" flex  layout-align="center">
     <h4>Liste des tâches</h4>
-  </div>
+</div>
 <div flex layout>
   <div flex layout layout-align="center" >
-
-    <!--<h2 class="md-flex">Liste des tâches</h2>-->
-
     <table flex="70" class="table table-striped table-hover">
       <thead>
       <tr>
@@ -17,23 +14,21 @@
       </tr>
       </thead>
       <tbody>
-      <tr ng-repeat="task in tasks" ng-switch on="task.statut">
+      <tr ng-repeat="task in tasksListVm.tasks" ng-switch on="task.statut">
         <td><a ui-sref="projects.details.tasks.details({idtask:task._id})"> {{ task.libelle }} </a></td>
         <td>{{ task.date_debut | date:"dd/MM/yyyy" }}</td>
         <td ng-switch-when="Initial"><span class="fa fa-exclamation-circle" style="color:blue;font-size:1.5em;"></span></td>
         <td ng-switch-when="En cours"><span class="fa fa-exclamation-circle" style="color:orange;font-size:1.5em;"></span></td>
-        <td ng-switch-when="Terminé"><span class="fa fa-check-circle" style="color:green;font-size:1.5em;"></span></td>
-        <td ng-switch-when="Annulé"><span class="fa fa-times-circle" style="color:red;font-size:1.5em;"></span></td>
+        <td ng-switch-when="Terminé(e)"><span class="fa fa-check-circle" style="color:green;font-size:1.5em;"></span></td>
+        <td ng-switch-when="Annulé(e)"><span class="fa fa-times-circle" style="color:red;font-size:1.5em;"></span></td>
         <td>{{ task.date_derniere_modif | date:"dd/MM/yyyy 'à' HH:mm:ss" }}</td>
-        <td><a ng-click="deleteTask(task._id)"><span class="fa fa-trash-o fa-lg" style="color: red;"></span> </a></td>
+        <td><a ng-click="tasksListVm.deleteTask(task._id)"><span class="fa fa-trash-o fa-lg" style="color: red;"></span> </a></td>
 
       </tr>
       </tbody>
     </table>
 
     <br>
-
   </div>
-
 </div>
 

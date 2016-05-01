@@ -19,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="project in projects.projects" ng-switch on="project.statut">
+        <tr ng-repeat="project in projectsListVm.projects" ng-switch on="project.statut">
 
           <!--<td><a ng-click="getProjectById(project._id)">{{ project.nom }}</a></td>-->
           <td><a ui-sref=".details.info({id:project._id})"> <b>{{ project.nom }}</b> </a></td>
@@ -28,16 +28,15 @@
 
           <td ng-switch-when="Initial"><span class="fa fa-exclamation-circle" style="color:blue;font-size:1.5em;"></span></td>
           <td ng-switch-when="En cours"><span class="fa fa-exclamation-circle" style="color:orange;font-size:1.5em;"></span></td>
-          <td ng-switch-when="Terminé"><span class="fa fa-check-circle" style="color:green;font-size:1.5em;"></span></td>
-          <td ng-switch-when="Annulé"><span class="fa fa-times-circle" style="color:red;font-size:1.5em;"></span></td>
+          <td ng-switch-when="Terminé(e)"><span class="fa fa-check-circle" style="color:green;font-size:1.5em;"></span></td>
+          <td ng-switch-when="Annulé(e)"><span class="fa fa-times-circle" style="color:red;font-size:1.5em;"></span></td>
 
           <td>{{ project.date_derniere_modif | date:"dd/MM/yyyy 'à' HH:mm:ss" }}</td>
 
-
           <!-- TODO -->
-          <td><a ng-click="projects.archiveProject(project._id)"><span class="fa fa-archive fa-lg" style="color: gray;"></span> </a></td>
+          <td><a ng-click="projectsListVm.archiveProject(project._id)"><span class="fa fa-archive fa-lg" style="color: gray;"></span> </a></td>
 
-          <td><a ng-click="projects.deleteProject(project._id)"><span class="fa fa-trash-o fa-lg" style="color: red;"></span> </a></td>
+          <td><a ng-click="projectsListVm.deleteProject(project._id)"><span class="fa fa-trash-o fa-lg" style="color: red;"></span> </a></td>
 
         </tr>
       </tbody>

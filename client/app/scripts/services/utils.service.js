@@ -13,6 +13,7 @@
 angular.module('pomApp').factory('utilsService', Service);
 
 function Service() {
+  
   var service = {};
 
   service.convertDateStringsToDates = convertDateStringsToDates;
@@ -56,7 +57,7 @@ function Service() {
     return -1;
   };
 
-  function dateDiff(date1, date2){
+/*  function dateDiff(date1, date2){
     var diff = {};                          // Initialisation du retour
     var tmp = date2 - date1;
 
@@ -64,7 +65,14 @@ function Service() {
     diff.day = tmp;
     console.log(diff);
     return diff;
+  }*/
+
+  function dateDiff(date1, date2){
+    var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    return diffDays;
   }
+
 
   function capitalize(word){
     return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();

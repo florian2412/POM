@@ -2,17 +2,17 @@
 
 /**
  * @ngdoc function
- * @name pomApp.controller:ProjectsCtrl
+ * @name pomApp.controller:ProjectsListCtrl
  * @description
- * # ProjectsCtrl
+ * # ProjectsListCtrl
  * Controller of the pomApp
  */
 
-ProjectsCtrl.$inject = ['$scope', 'databaseService'];
+ProjectsListCtrl.$inject = ['$scope', 'databaseService'];
 
-angular.module('pomApp').controller('ProjectsCtrl', ProjectsCtrl);
+angular.module('pomApp').controller('ProjectsListCtrl', ProjectsListCtrl);
 
-function ProjectsCtrl($scope, databaseService) {
+function ProjectsListCtrl($scope, databaseService) {
   var vm = this;
 
   vm.showAllProjects = showAllProjects;

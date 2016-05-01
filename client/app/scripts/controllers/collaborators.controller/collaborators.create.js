@@ -48,7 +48,11 @@ function CollaboratorsCreateCtrl($scope, $state, $mdDialog, databaseService, fla
 
     // Lancement au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
-      vm.fonctions = ["Développeur", "Architecte", "Directeur", "Chef de projet"]
+     
+      databaseService.getSettings('fonctions')
+        .success(function(data){ 
+          vm.fonctions = data;
+        });
       
       // Si on est admin
       if(currentUser.role === 'admin') {

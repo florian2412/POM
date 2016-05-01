@@ -22,7 +22,7 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       title : 'Home',
       templateUrl: 'views/main.html',
       controller: 'MainCtrl',
-      controllerAs: 'main',
+      controllerAs: 'mainVm',
       authorized: [ "collaborateur", "admin", "manager"]
     })
     .state('about', {
@@ -30,7 +30,7 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       title : 'A propos',
       templateUrl: 'views/about.html',
       controller: 'AboutCtrl',
-      controllerAs: 'about',
+      controllerAs: 'aboutVm',
       authorized: [ "collaborateur", "admin", "manager"]
     })
     .state('account', {
@@ -38,23 +38,23 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       title : 'Mon compte',
       templateUrl: 'views/account.html',
       controller: 'AccountCtrl',
-      controllerAs: 'account',
+      controllerAs: 'accountVm',
       authorized: [ "collaborateur", "admin", "manager"]
     })
     .state('projects', {
       url : '/projects',
       title : 'Projets',
       templateUrl: 'views/projects.views/projects.list.html',
-      controller: 'ProjectsCtrl',
-      controllerAs: 'projects',
+      controller: 'ProjectsListCtrl',
+      controllerAs: 'projectsListVm',
       authorized: ["admin", "manager"]
     })
     .state('collaborators', {
       url : '/collaborators',
       title : 'Collaborateurs',
       templateUrl: 'views/collaborators.views/collaborators.list.html',
-      controller: 'CollaboratorsCtrl',
-      controllerAs: 'collaborators',
+      controller: 'CollaboratorsListCtrl',
+      controllerAs: 'collaboratorsListVm',
       authorized: ["collaborateur", "admin", "manager"]
     })
     .state('login', {
@@ -69,25 +69,12 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       url : '/statistics',
       title : 'Statistiques',
       templateUrl: 'views/statistics.html',
-      /* controller: 'LoginCtrl',
-       controllerAs: 'login',*/
-      authorized: ["collaborateur", "admin", "manager"]
-    })
-    .state('settings', {
-      url : '/settings',
-      title : 'Préférences',
-      /* templateUrl: 'views/login.html',
-       controller: 'LoginCtrl',
-       controllerAs: 'login',*/
-      template: '<h4>Préférences ici</h4>',
       authorized: ["collaborateur", "admin", "manager"]
     })
     .state('help', {
       url : '/help',
       title : 'Aide',
       templateUrl: 'views/help.html',
-      /* controller: 'LoginCtrl',
-       controllerAs: 'login',*/
       authorized: ["collaborateur", "admin", "manager"]
     })
     .state('restricted', {
@@ -104,7 +91,6 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       controllerAs: 'budgets',
       authorized: [ "admin" ]
     })
-
     .state('projects.create', {
       url : '/create',
       title : 'Création d\'un nouveau projet',
@@ -137,32 +123,32 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       controller: 'ProjectsDetailsCtrl',
       controllerAs: 'projectsDetailsVm'
     })
-
     .state('projects.details.tasks', {
       url : '/tasks',
       title : 'Tâches du projet',
       authorized: ["admin", "manager"],
-      templateUrl: 'views/projects.views/projects.details.tasks.html',
-      controller: 'TasksCtrl'
+      templateUrl: 'views/tasks.views/tasks.list.html',
+      controller: 'TasksListCtrl',
+      controllerAs: 'tasksListVm'
     })
     .state('projects.details.tasks.create', {
       parent:'projects.details',
       url : '/tasks/create',
       title : 'Création d\'une tâche',
       authorized: ["admin", "manager"],
-      templateUrl: 'views/projects.views/projects.details.tasks.create.html',
-      controller: 'ProjectsDetailsTasksCreateCtrl'
+      templateUrl: 'views/tasks.views/tasks.create.html',
+      controller: 'TasksCreateCtrl',
+      controllerAs: 'tasksCreateVm'
     })
-
     .state('projects.details.tasks.details', {
       parent:'projects.details',
       url : '/tasks/:idtask/details',
       title : 'Information de la Tâche',
       authorized: ["admin", "manager"],
-      templateUrl: 'views/projects.views/projects.details.tasks.info.details.html',
-      controller: 'TaskCtrl'
+      templateUrl: 'views/tasks.views/tasks.details.html',
+      controller: 'TasksDetailsCtrl',
+      controllerAs: 'tasksDetailsVm'
     })
-
     .state('collaborators.create', {
       url : '/create',
       title : 'Création d\'un nouveau collaborateur',
@@ -186,7 +172,6 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
         }
       }
     })
-
     .state('budgets.create', {
       url : '/create',
       title : 'Création d\'une ligne budgétaire',

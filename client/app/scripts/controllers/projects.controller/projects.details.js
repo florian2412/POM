@@ -47,11 +47,10 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
         var indexBudgetToSelect = utilsService.arrayObjectIndexOf(budgetsList, budgetId, "_id");
 
         vm.selectedBudget = budgetsList[indexBudgetToSelect];
-
-        databaseService.getObjectById('collaborators', vm.project.chef_projet)
+      
+        databaseService.getObjectById('collaborators', data.chef_projet)
           .success(function (data) {
-            var collaborator = data;
-            vm.chef_projet = collaborator.prenom + ' ' + collaborator.nom;
+            vm.chef_projet = data.prenom + ' ' + data.nom;
           });
 
         vm.progressProject = 100;
@@ -61,15 +60,7 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
 
   function updateProject() {
 
-    var vm = this;
-
-    var idProject = vm.project._id;
-
-    var nom = vm.project.nom;
-    var statut = vm.project.statut;
-    var date_debut = vm.project.date_debut;
-    var date_fin_theorique = vm.project.date_fin_theorique;
-    var date_fin_reelle = vm.project.date_fin_reelle;
+     var idProject = vm.project._id;
 
     // TODO SAVE BUDGETS
     var ligne_budgetaire_id = vm.selectedBudget._id;
@@ -78,16 +69,14 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
       "montant_restant": vm.selectedBudget.montant
     };
 
-    var date_derniere_modif = new Date();
-
     var data = {
-      "nom" : nom,
-      "statut" : statut,
-      "date_debut" : date_debut,
-      "date_fin_theorique" : date_fin_theorique,
-      "date_fin_reelle" : date_fin_reelle,
+      "nom" : vm.project.nom,
+      "statut" : vm.project.statut,
+      "date_debut" : vm.project.date_debut,
+      "date_fin_theorique" : vm.project.date_fin_theorique,
+      "date_fin_reelle" : vm.project.date_fin_reelle,
       "ligne_budgetaire" : ligne_budgetaire,
-      "date_derniere_modif" : date_derniere_modif,
+      "date_derniere_modif" : new Date(),
       "collaborateurs": collaborateursId
     };
   
@@ -117,26 +106,17 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
 
   $scope.$on('$viewContentLoaded', function() {
 
-    databaseService.getAllObjects('budgets')
-      .success(function (data) {
-        vm.budgets = data;
-      })
-      .error(function (err) {
-        console.log(err);
-      });
+    databaseService.getAllObjects('budgets').success(function (data) { vm.budgets = data; })
+      .error(function (err) { console.log(err); });
 
-    databaseService.getAllObjects('collaborators')
-      .success(function (data) {
-        vm.collaborators = data;
-      })
-      .error(function (err) {
-        console.log(err);
-      });
+    databaseService.getAllObjects('collaborators').success(function (data) { vm.collaborators = data;})
+      .error(function (err) { console.log(err); });
   
-    vm.statuts = ["Initial", "En cours", "Annulé", "Terminé"];
-
+    databaseService.getSettings('statuts').success(function(data){ vm.statuts = data; })
+      .error(function(err){ console.log(err); });
+  
     vm.getProjectById($stateParams.id);
-
+    
   });
 
   function showCollaboratorPicker(ev) {
