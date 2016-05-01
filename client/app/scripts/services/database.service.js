@@ -19,6 +19,7 @@ function Service($http) {
   service.updateObject = updateObject;
   service.getCollaboratorsByRole = getCollaboratorsByRole;
   service.getProjectsCollaborator = getProjectsCollaborator;
+  service.getSettings = getSettings;
 
   return service;
 
@@ -88,5 +89,13 @@ function Service($http) {
       url: 'http://localhost:3000/collaborators/' + id + '/projects'
     });
   }
+
+  function getSettings(setting){
+    return  $http({
+            method: 'GET',
+            url: 'http://localhost:3000/settings/'+setting
+            });
+  }
+
 }
 

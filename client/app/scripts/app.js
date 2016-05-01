@@ -134,7 +134,8 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       title : 'Informations du projet',
       authorized: ["collaborateur", "admin", "manager"],
       templateUrl: 'views/projects.views/projects.details.info.html',
-      controller: 'ProjectsDetailsCtrl'
+      controller: 'ProjectsDetailsCtrl',
+      controllerAs: 'projectsDetailsVm'
     })
 
     .state('projects.details.tasks', {

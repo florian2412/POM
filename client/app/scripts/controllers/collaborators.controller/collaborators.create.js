@@ -8,6 +8,7 @@
  * Controller of the collaborators.create
  */
 
+
 angular.module('pomApp')
   .controller('CollaboratorsCreateCtrl', function ($scope, $state, $mdDialog, databaseService, flashService, localStorageService, utilsService) {
 

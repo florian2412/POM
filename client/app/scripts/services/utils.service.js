@@ -12,7 +12,7 @@
  */
 angular.module('pomApp').factory('utilsService', Service);
 
-function Service($http) {
+function Service() {
   var service = {};
 
   service.convertDateStringsToDates = convertDateStringsToDates;
