@@ -62,26 +62,24 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       title : 'Se connecter',
       templateUrl: 'views/login.html',
       controller: 'LoginCtrl',
-      controllerAs: 'login',
+      controllerAs: 'loginVm',
       authorized: ["collaborateur", "admin", "manager", "public"]
     })
     .state('statistics', {
       url : '/statistics',
       title : 'Statistiques',
       templateUrl: 'views/statistics.html',
-      authorized: ["collaborateur", "admin", "manager"]
+      authorized: ["collaborateur", "admin", "manager"],
+      controller: 'StatisticsCtrl',
+      controllerAs: 'statisticsVm'
     })
     .state('help', {
       url : '/help',
       title : 'Aide',
       templateUrl: 'views/help.html',
-      authorized: ["collaborateur", "admin", "manager"]
-    })
-    .state('restricted', {
-      url : '/restricted',
-      title : 'Accès refusé',
-      templateUrl: 'views/shared/restricted.html',
-      authorized: [ "public", "collaborateur", "admin", "manager"]
+      authorized: ["collaborateur", "admin", "manager"],
+      controller: 'HelpCtrl',
+      controllerAs: 'helpVm'
     })
     .state('budgets', {
       url : '/budgets',
@@ -157,7 +155,7 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
         '@': {
           templateUrl: 'views/collaborators.views/collaborators.create.html',
           controller: 'CollaboratorsCreateCtrl',
-          controllerAs : 'createCollaboratorsVm'
+          controllerAs : 'collaboratorsCreateVm'
         }
       }
     })
@@ -168,7 +166,8 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       views: {
         '@': {
           templateUrl: 'views/collaborators.views/collaborators.details.html',
-          controller: 'CollaboratorsDetailsCtrl'
+          controller: 'CollaboratorsDetailsCtrl',
+          controllerAs: 'collaboratorsDetailsVm'
         }
       }
     })
@@ -179,9 +178,16 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       views: {
         '@': {
           templateUrl: 'views/budgets.views/budgets.create.html',
-          controller: 'BudgetsCreateCtrl'
+          controller: 'BudgetsCreateCtrl',
+          controllerAs: 'budgetsCreateVm'
         }
       }
+    })
+    .state('restricted', {
+      url : '/restricted',
+      title : 'Accès refusé',
+      templateUrl: 'views/shared/restricted.html',
+      authorized: [ "public", "collaborateur", "admin", "manager"]
     });
 }
 

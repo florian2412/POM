@@ -7,53 +7,19 @@
  * # CollaboratorCtrl
  * Controller of the pomApp
  */
+CollaboratorsDetailsCtrl.$inject = ['$scope', '$stateParams', '$state', '$mdDialog', 'databaseService', 'flashService', 'localStorageService', 'utilsService'];
 
-angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope, $stateParams, $state, $mdDialog, authenticateService, databaseService, flashService, localStorageService, utilsService) {
+angular.module('pomApp').controller('CollaboratorsDetailsCtrl',CollaboratorsDetailsCtrl);
 
+function CollaboratorsDetailsCtrl($scope, $stateParams, $state, $mdDialog, databaseService, flashService, localStorageService, utilsService) {
+
+  var vm = this;
   var currentUser = localStorageService.get('currentUser');
-  var userIdToUpdate = $stateParams.id;
+  
+  vm.updateCollaborator = updateCollaborator;
+  vm.showCancelDialog = showCancelDialog;
 
-  $scope.getCollaboratorById = function(id) {
-    databaseService.getObjectById('collaborators', id)
-      .success(function (data) {
-        $scope.collaborator = data;
-      });
-  };
-
-  $scope.getAllRoles = function() {
-    databaseService.getAllObjects('rolesCollaborator')
-      .success(function (data) {
-        // On récupère l'index du role d'admin pour le supprimer ensuite
-        var indexToDelete = utilsService.arrayObjectIndexOf(data, 'admin', 'libelle_court');
-        // On supprime le role admin de la liste des roles
-        data.splice(indexToDelete, 1);
-        $scope.roles = data;
-      });
-  };
-
-  $scope.getCollaboratorsByRole = function(role) {
-    databaseService.getCollaboratorsByRole(role)
-      .success(function (data) {
-        // TODO ENLEVER SOI MEME DE LA LISTE
-        if(data.length > 0) {
-          data.push(currentUser);
-
-          var indexToDelete = utilsService.arrayObjectIndexOf(data, userIdToUpdate, '_id');
-
-          data.splice(indexToDelete, 1);
-
-          $scope.collaborators = data;
-        }
-        else {
-          $scope.collaborators = [currentUser];
-        }
-      });
-  };
-
-  $scope.updateCollaborator = function() {
-
-    var vm = this;
-    var idCollaborator = vm.collaborator._id;
+  function updateCollaborator() {
 
     var data = {
       "nom": vm.collaborator.nom,
@@ -66,7 +32,7 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
       "email" : vm.collaborator.email
     };
 
-    databaseService.updateObject('collaborators', idCollaborator, data)
+    databaseService.updateObject('collaborators', vm.collaborator._id, data)
       .success(function (data) {
         flashService.Success("Le collaborateur " + vm.collaborator.prenom + " " + vm.collaborator.nom + " a bien été mis à jour !", "", "bottom-right", true, 4);
         $state.go("collaborators");
@@ -78,43 +44,50 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
 
   // Permet de lancer au chargement de la page : récupère tous les projets
   $scope.$on('$viewContentLoaded', function() {
-    $scope.getCollaboratorById($stateParams.id);
-    $scope.fonctions = ["Développeur", "Architecte", "Directeur", "Chef de projet"]
+    
+    databaseService.getObjectById('collaborators', $stateParams.id).success(function (data) {
+      vm.collaborator = data;
+    });
 
-    /*if(currentUser.role === 'admin') {
-     $scope.getAllRoles();
-     $scope.getCollaboratorsByRole('manager');
-     } else {
-     $scope.collaborator.manager = currentUser._id;
-     $scope.collaborator.role = 'manager';
-     }*/
-
-    // Si on est admin
+    databaseService.getSettings('fonctions').success(function(data){ vm.fonctions = data; });
+      
+      // Si on est admin
     if(currentUser.role === 'admin') {
-      $scope.getAllRoles();
-      $scope.getCollaboratorsByRole('manager');
+      
+      databaseService.getSettings('roles')
+      .success(function(data){ 
+        var i = data.indexOf('admin');
+        data.splice(i, 1);
+        for (var i = data.length - 1; i >= 0; i--) {
+          data[i] = utilsService.capitalize(data[i]);
+        }
+        vm.roles = data;
+      });
+
+      databaseService.getCollaboratorsByRole('manager')
+      .success(function (data) {
+        if(data.length > 0) {
+          data.push(currentUser);
+          var indexToDelete = utilsService.arrayObjectIndexOf(data, $stateParams.id, '_id');
+          data.splice(indexToDelete, 1);
+          vm.managers = data;
+        } else { vm.managers = [currentUser]; }
+      });
+
     }
     // Si on est manager, on doit sélectionner automatiquement le role et le manager
     else {
-      $scope.roles = ['collaborateur'];
-      $scope.role = 'collaborateur';
-
-      $scope.collaborators = [currentUser];
-      $scope.collaborator = currentUser;
-
-      $scope.collaborator.role = $scope.role;
-      $scope.collaborator.manager = currentUser._id;
+      vm.roles = ['collaborateur'];
+      vm.managers = [currentUser];
+      vm.collaborator = currentUser;
+      vm.collaborator.n_role = 'collaborateur';
+      vm.collaborator.n_manager = currentUser._id;
     }
 
-
-    /*    $scope.getCollaboratorsByRole('manager');
-
-     // Rôle proposé dans le combo du formulaire de création
-     $scope.getAllRoles();*/
   });
 
 
-  $scope.showCancelDialog = function(event) {
+  function showCancelDialog(event) {
     var confirm = $mdDialog.confirm()
       .title('Alerte')
       .textContent('Etes-vous sûr d\'annuler la modification du collaborateur ?')
@@ -128,4 +101,4 @@ angular.module('pomApp').controller('CollaboratorsDetailsCtrl', function ($scope
     });
   };
 
-});
+};
