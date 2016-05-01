@@ -11,6 +11,7 @@
 angular.module('pomApp')
   .controller('CollaboratorsCreateCtrl', function ($scope, $state, $mdDialog, databaseService, flashService, localStorageService, utilsService) {
 
+    var vm = this;
     var currentUser = localStorageService.get('currentUser');
 
     $scope.createCollaborator = function() {
@@ -64,10 +65,10 @@ angular.module('pomApp')
         .success(function (data) {
           if(data.length > 0) {
             data.push(currentUser);
-            $scope.collaborators = data;
+            $scope.managers = data;
           }
           else {
-            $scope.collaborators = [currentUser];
+            $scope.managers = [currentUser];
           }
         });
     };
@@ -75,7 +76,7 @@ angular.module('pomApp')
     // Lancement au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
       $scope.fonctions = ["Développeur", "Architecte", "Directeur", "Chef de projet"]
-
+      
       // Si on est admin
       if(currentUser.role === 'admin') {
         $scope.getAllRoles();
@@ -86,7 +87,7 @@ angular.module('pomApp')
         $scope.roles = ['collaborateur'];
         $scope.role = 'collaborateur';
 
-        $scope.collaborators = [currentUser];
+        $scope.managers = [currentUser];
         $scope.collaborator = currentUser;
 
         $scope.collaborator.role = $scope.role;

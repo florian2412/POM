@@ -15,8 +15,8 @@
       <div layout="row">
         <md-list layout-wrap flex>
           <md-list-item class="md-2-line" ng-repeat="collaborator in collaborators" ng-click="selectCollaborator(collaborator)" flex>
-
-            <md-checkbox ng-checked="collaborator.checked"></md-checkbox>
+            <!--  <md-checkbox ng-checked="collaborator.checked"></md-checkbox> -->
+            <md-checkbox ng-checked="selection.indexOf(collaborator._id) > -1"></md-checkbox> 
             <div class="md-list-item-text" flex>
               <h3>{{ collaborator.prenom }} {{ collaborator.nom }}</h3>
               <p>{{ collaborator.fonction }}</p>
@@ -27,7 +27,7 @@
       </div>
 
     </md-dialog-content>
-    <md-dialog-actions layout="row" md-whiteframe="-4">
+    <md-dialog-actions layout="row" md-whiteframe="4">
       <div flex layout layout-align="center">
         <md-input-container class="md-block">
           <md-button ng-click="cancel()" class="md-raised">Annuler</md-button>

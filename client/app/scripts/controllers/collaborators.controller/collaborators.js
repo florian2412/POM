@@ -8,24 +8,37 @@
  * Controller of the pomApp
  */
 
-CollaboratorsCtrl.$inject = ['$scope','databaseService'];
+CollaboratorsCtrl.$inject = ['$scope', '$filter', 'databaseService'];
 
 angular.module('pomApp').controller('CollaboratorsCtrl', CollaboratorsCtrl);
-
-function CollaboratorsCtrl($scope,databaseService) {
+ 
+function CollaboratorsCtrl($scope, $filter, databaseService) {
     var vm = this;
+   
+    vm.showAllCollaborators = showAllCollaborators;
+    vm.deleteCollaborator = deleteCollaborator;
     
-    vm.showAllCollaborators = function() {
+    function showAllCollaborators() {
       databaseService.getAllObjects('collaborators')
-        .success(function (data) {
+        .success(function (data) { 
+          for (var i = data.length - 1; i >= 0; i--) {
+            if(data[i].manager){
+              var m = _getManager(data[i].manager,data);  
+              data[i].manager = m.prenom + ' ' + m.nom ;
+            }
+          }
           vm.collaborators = data;
         })
         .error(function (err) {
           console.error(err);
         });
     };
+    
+    function _getManager(id, all){
+      return $filter('filter')(all, function (d) {return d._id === id;})[0];
+    };
 
-    vm.deleteCollaborator = function(id) {
+    function deleteCollaborator(id) {
       databaseService.deleteObject('collaborators', id)
         .success(function (data) {
           var index = -1;   
@@ -46,7 +59,7 @@ function CollaboratorsCtrl($scope,databaseService) {
 
     // Se lance au chargement de la page : récupère tous les collaborateurs
     $scope.$on('$viewContentLoaded', function() {
-      vm.showAllCollaborators();
+      vm.showAllCollaborators(); 
     });
 
 }

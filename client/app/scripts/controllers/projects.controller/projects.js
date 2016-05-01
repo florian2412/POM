@@ -7,21 +7,43 @@
  * # ProjectsCtrl
  * Controller of the pomApp
  */
-angular.module('pomApp')
-  .controller('ProjectsCtrl', function ($scope, $location, $http, databaseService) {
 
-    // Affiche ou rafraichit tous les projets dans le tableau des projets
-    $scope.showAllProjects = function(){
-      databaseService.getAllObjects('projects')
-          .success(function (data) {
-          $scope.projects = data;
-        })
-          .error(function (err) {
-              console.error(err);
-          });
-    };
+ProjectsCtrl.$inject = ['$scope', 'databaseService'];
 
-    var getObjectById = function(collection, id) {
+angular.module('pomApp').controller('ProjectsCtrl', ProjectsCtrl);
+
+function ProjectsCtrl($scope, databaseService) {
+  var vm = this;
+
+  vm.showAllProjects = showAllProjects;
+  vm.deleteProject = deleteProject;
+  vm.archiveProject = archiveProject;
+
+  function showAllProjects(){
+    databaseService.getAllObjects('projects')
+      .success(function (data) {
+        vm.projects = data;
+      })
+      .error(function (err) {
+        console.error(err);
+      });
+  };
+
+  function archiveProject(id){
+    for (var i = vm.projects.length - 1; i >= 0; i--) {
+      if(vm.projects[i]._id == id)
+        vm.projects[i].statut = "Terminé";
+      }  
+    /*databaseService.updateObject('projects', idProject, data)
+      .success(function (data) {
+        flashService.Success("Le projet " + $scope.project.nom + " a bien été mis à jour !", "", "bottom-right", true, 4);
+        $state.go("projects");
+      })
+      .error(function (err) {
+        console.log(err);
+    });*/
+  }
+   /* var getObjectById = function(collection, id) {
       databaseService.getObjectById(collection, id)
         .success(function (data) {
           return data;
@@ -38,40 +60,38 @@ angular.module('pomApp')
     $scope.getProjectById = function(id){
       $scope.project.projectDetail = getObjectById('projects', id);
     };
+*/
 
-
-    $scope.deleteProject = function(id) {
-      databaseService.deleteObject('projects', id)
-        .success(function (data) {
-          // Update liste projets
-          var index = -1;
-          var comArr = eval( $scope.projects );
-          for( var i = 0; i < comArr.length; i++ ) {
-            if( comArr[i]._id === id ) {
-              index = i;
-              break;
-            }
+  function deleteProject(id) {
+    databaseService.deleteObject('projects', id)
+      .success(function (data) {
+      // Update liste projets
+        var index = -1;
+        var comArr = eval( vm.projects );
+        for( var i = 0; i < comArr.length; i++ ) {
+          if( comArr[i]._id === id ) {
+            index = i;
+            break;
           }
+        }
 
-          //var index2 = $scope.projects._id.indexOf(id);
+        //var index2 = $scope.projects._id.indexOf(id);
 
-          if( index === -1 ) {
-            alert( "Something gone wrong" );
-          }
-          $scope.projects.splice( index, 1 );
-        })
-        .error(function(err) {
-          console.log(err);
-        });
-    };
+        if( index === -1 ) {
+          alert( "Something gone wrong" );
+        }
+        vm.projects.splice( index, 1 );
+        
+      })
+      .error(function(err) {
+        console.log(err);
+      });
+  };
 
+  // Permet de lancer au chargement de la page : récupère tous les projets
+  $scope.$on('$viewContentLoaded', function() {
+    vm.showAllProjects();
+  });
 
-    // Permet de lancer au chargement de la page : récupère tous les projets
-    $scope.$on('$viewContentLoaded', function() {
-        $scope.showAllProjects();
-
-    });
-
-
-});
+};
 

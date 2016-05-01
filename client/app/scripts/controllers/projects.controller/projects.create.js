@@ -128,7 +128,7 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
   function CollaboratorPickerController($scope, $mdDialog, collaborators) {
 
     $scope.collaborators = collaborators;
-     
+    $scope.selection = collaborateursId;
     $scope.hide = function() { $mdDialog.hide(); };
     $scope.cancel = function() { $mdDialog.cancel(); };
     $scope.answer = function(answer) { $mdDialog.hide(answer); };

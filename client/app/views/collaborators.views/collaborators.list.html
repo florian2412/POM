@@ -1,4 +1,3 @@
-
 <md-card>
   <div layout="column" role="main">
     <md-toolbar layout="row">
@@ -9,23 +8,23 @@
     <md-card-content>
       <table class="table table-striped table-hover">
         <thead>
-        <tr>
-          <th>Prénom / Nom</th>
-          <th>Pseudo</th>
-          <th>Manager</th>
-          <th>Rôle</th>
-          <th>Supprimer ?</th>
-        </tr>
+          <tr>
+            <th>Prénom / Nom</th>
+            <th>Pseudo</th>
+            <th>Manager</th>
+            <th>Rôle</th>
+            <th>Supprimer ?</th>
+          </tr>
         </thead>
 
         <tbody>
-        <tr ng-repeat="collaborator in vm.collaborators">
+        <tr ng-repeat="collaborator in collaborators.collaborators">
           <td><a ui-sref=".details({id:collaborator._id})"> {{ collaborator.prenom }} {{ collaborator.nom }} </a></td>
 
           <td>{{ collaborator.pseudo }}</td>
           <td><a ui-sref=".details({id:collaborator.manager})"> {{ collaborator.manager }} </a></td>
           <td>{{ collaborator.role }}</td>
-          <td><a ng-click="vm.deleteCollaborator(collaborator._id)"><span class="fa fa-trash-o fa-lg" style="color: red;"></span> </a></td>
+          <td><a ng-click="collaborators.deleteCollaborator(collaborator._id)"><span class="fa fa-trash-o fa-lg" style="color: red;"></span> </a></td>
         </tr>
         </tbody>
       </table>

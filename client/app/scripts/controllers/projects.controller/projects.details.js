@@ -11,11 +11,16 @@
 angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope, $scope, $stateParams, $mdSidenav, $mdDialog, $state, databaseService, flashService) {
 
   $rootScope.$on('$stateChangeStart', function() {$mdSidenav('projectSideNav').close();});
-
+  var collaborateursId = [];
+  
   $scope.getProjectById = function(id) {
     databaseService.getObjectById('projects', id)
       .success(function (data) {
-
+        var collList = data.collaborateurs;
+        
+        for (var i = collList.length - 1; i >= 0; i--) {
+          collaborateursId.push(collList[i]);
+        }
         convertDateStringsToDates(data);
 
         $scope.project = data;
@@ -78,9 +83,10 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,
       "date_fin_theorique" : date_fin_theorique,
       "date_fin_reelle" : date_fin_reelle,
       "ligne_budgetaire" : ligne_budgetaire,
-      "date_derniere_modif" : date_derniere_modif
+      "date_derniere_modif" : date_derniere_modif,
+      "collaborateurs": collaborateursId
     };
-
+    console.log("before update = " + collaborateursId);
     databaseService.updateObject('projects', idProject, data)
       .success(function (data) {
         flashService.Success("Le projet " + $scope.project.nom + " a bien été mis à jour !", "", "bottom-right", true, 4);
@@ -146,9 +152,59 @@ angular.module('pomApp').controller('ProjectsDetailsCtrl', function ($rootScope,
       .error(function (err) {
         console.log(err);
       });
-
+    databaseService.getAllObjects('collaborators')
+      .success(function (data) {
+        $scope.collaborators = data;
+      })
+      .error(function (err) {
+        console.log(err);
+      });
+  
     $scope.statuts = ["Initial", "En cours", "Annulé", "Terminé"];
 
     $scope.getProjectById($stateParams.id);
+
+
   });
+
+  $scope.showAdvanced = function(ev) {
+
+      $mdDialog.show({
+        controller: CollaboratorPickerController,
+        templateUrl: 'views/shared/collaborators.picker.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:true,
+        fullscreen: false,
+        locals: {
+           collaborators: $scope.collaborators 
+         },
+      })
+      .then(function(answer) {
+        $scope.status = 'You said the information was "' + answer + '".';
+      }, function() {
+        $scope.status = 'You cancelled the dialog.';
+      });
+   };
+
+  function CollaboratorPickerController($scope, $mdDialog, collaborators) {
+
+    $scope.collaborators = collaborators;
+    $scope.selection = collaborateursId;
+    $scope.hide = function() { $mdDialog.hide(); };
+    $scope.cancel = function() { $mdDialog.cancel(); };
+    $scope.answer = function(answer) { $mdDialog.hide(answer); };
+    
+    $scope.selectCollaborator = function (collaborator) {
+      if(collaborateursId.indexOf(collaborator._id) < 0) {
+        collaborateursId.push(collaborator._id);
+        collaborator.checked = true;
+      } else {
+        collaborator.checked = false;
+        var indexCol =  collaborateursId.indexOf(collaborator._id);
+        if (indexCol > -1) { collaborateursId.splice(indexCol, 1); }
+      }
+    };
+    
+  }
 });

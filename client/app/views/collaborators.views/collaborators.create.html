@@ -11,7 +11,7 @@
     <form class="form-horizontal" name="createCollaboratorForm">
 
       <div layout="row" layout-align="center" layout-xs="column">
-        
+
         <md-input-container class="md-block" flex="35" flex-xs="100">
           <label>Nom</label>
           <input maxlength="20" ng-model="collaborator.lastName" name="nom" required>
@@ -78,8 +78,8 @@
         <md-input-container class="md-block" flex="35" flex-xs="100">
           <label>Manager</label>
           <md-select ng-model="collaborator.manager" name="manager" required nra-auth="'admin'">
-            <md-option ng-repeat="collaborator in collaborators" value="{{ collaborator._id }}">
-              {{ collaborator.prenom }} {{ collaborator.nom }}
+            <md-option ng-repeat="manager in managers" value="{{ manager._id }}">
+              {{ manager.prenom }} {{ manager.nom }}
             </md-option>
           </md-select>
           <div ng-messages="createCollaboratorForm.role.$error">

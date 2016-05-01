@@ -44,6 +44,7 @@
             </md-select>
           </md-input-container>
         </div>
+
         <div flex="10"></div>
 
         <div flex="45">
@@ -58,12 +59,25 @@
         </div>
       </div>
 
+      <br>
+      
       <div layout layout-align="center center">
-        <div>
+        <div flex="45">
           <label>Date de fin <b>réelle</b></label>
           <md-datepicker ng-model="project.date_fin_reelle" md-min-date="project.date_debut" md-placeholder="Entrer date"></md-datepicker>
         </div>
+        <div flex="10"></div>
+        <div flex="45">
+          <md-input-container class="md-block">
+            <div layout="row" flex>
+              <md-button class="md-raised" ng-click="showAdvanced($event)">
+                Choisir les collaborateurs
+              </md-button>
+            </div>
+          </md-input-container>
+        </div>
       </div>
+
       <br>
       <div layout layout-align="center center">
         <div>
