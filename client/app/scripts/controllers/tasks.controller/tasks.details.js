@@ -10,12 +10,12 @@
 
 angular.module('pomApp').controller('TasksDetailsCtrl', TasksDetailsCtrl);
 
-function TasksDetailsCtrl($scope, $state, $stateParams, databaseService,  flashService, utilsService) {
-    
+function TasksDetailsCtrl($scope, $state, $stateParams, $mdDialog, databaseService,  flashService, utilsService) {
+
   var vm = this;
 
   vm.updateTask = updateTask;
-
+  vm.showCancelDialog = showCancelDialog;
 
   function updateTask() {
 
@@ -36,6 +36,23 @@ function TasksDetailsCtrl($scope, $state, $stateParams, databaseService,  flashS
       .error(function (err) {
         console.log(err);
       });
+  };
+
+  function showCancelDialog(event) {
+
+    var confirm = $mdDialog.confirm()
+      .title('Alerte')
+      .textContent('Etes-vous sûr d\'annuler la modification de la tâche ?')
+      .ariaLabel('Annulation')
+      .targetEvent(event)
+      .ok('Oui')
+      .cancel('Non');
+
+    $mdDialog.show(confirm).then(function() {
+      $state.go("projects.details.tasks");
+    }, function() {
+
+    });
   };
 
   $scope.$on('$viewContentLoaded', function() {
@@ -64,10 +81,10 @@ function TasksDetailsCtrl($scope, $state, $stateParams, databaseService,  flashS
         console.log(err);
       });
 
-      
+
     databaseService.getSettings('statuts').success(function(data){ vm.statuts = data; })
       .error(function(err){ console.log(err); });
-  
+
   });
 
 };
