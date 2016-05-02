@@ -81,7 +81,7 @@
       <br>
       <div layout layout-align="center center">
         <div>
-          <md-input-container class="md-block">
+          <md-input-container class="md-block" nra-auth="['manager','admin']">
             <md-button class="md-raised" ng-click="projectsDetailsVm.showCancelDialog()">Annuler</md-button>
             <md-button class="md-raised md-primary" type="submit" ng-click="projectsDetailsVm.updateProject()">Enregistrer</md-button>
           </md-input-container>

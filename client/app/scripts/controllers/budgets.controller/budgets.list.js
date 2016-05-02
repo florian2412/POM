@@ -8,48 +8,51 @@
  * Controller of the projects.create
  */
 
-angular.module('pomApp')
-  .controller('BudgetsCtrl', function ($scope, databaseService) {
+angular.module('pomApp').controller('BudgetsListCtrl', BudgetsListCtrl);
 
-    $scope.deleteBudget = function(idBudget) {
-      databaseService.deleteObject('budgets', idBudget)
-        .success(function () {
+function BudgetsListCtrl($scope, databaseService, flashService) {
 
+  var vm = this;
 
+  vm.deleteBudget = deleteBudget;
+  vm.showAllBudgets = showAllBudgets;
+
+  function deleteBudget(idBudget) {
+    databaseService.deleteObject('budgets', idBudget)
+      .success(function (data) {
+        if(data.success){
           var index = -1;
-          var comArr = eval( $scope.budgets );
+          var comArr = eval( vm.budgets );
           for( var i = 0; i < comArr.length; i++ ) {
             if( comArr[i]._id === idBudget ) {
               index = i;
               break;
             }
           }
-          if( index === -1 ) { alert( "Something gone wrong" ); }
-          $scope.budgets.splice( index, 1 );
-        })
-        .error(function (err) {
-          console.log(err);
-        });
-    };
+          vm.budgets.splice( index, 1 );
+          flashService.Success("Succés ! ", data.message, "bottom-right", true, 4);
+        }
+        else flashService.Error("Erreur ! ", data.message, "bottom-right", true, 4);
+         
+      })
+      .error(function (err) {
+        console.log(err);
+      });
+  };
 
-    var getAllBudgets = function() {
-      databaseService.getAllObjects('budgets')
-        .success(function (data) {
-          $scope.budgets = data;
-        })
-        .error(function (err) {
-          console.log(err);
-        });
-    };
+  function showAllBudgets() {
+    databaseService.getAllObjects('budgets')
+      .success(function (data) {
+        if(data.success) vm.budgets = data.data;
+        else flashService.Error("Erreur ! ", data.message, "bottom-right", true, 4);
+      })
+      .error(function (err) {
+        console.log(err);
+      });
+  };
 
-    // Lancement au chargement de la page
-    $scope.$on('$viewContentLoaded', function() {
-
-      // Récupère toutes lignes budgétaires et les affiche dans "budgets"
-      getAllBudgets();
-
-    });
-
-
-
+  $scope.$on('$viewContentLoaded', function() {
+    vm.showAllBudgets();
   });
+
+};

@@ -7,7 +7,8 @@
  * # AboutCtrl
  * Controller of the pomApp
  */
-angular.module('pomApp')
-  .controller('AboutCtrl', function () {
+angular.module('pomApp').controller('AboutCtrl', AboutCtrl);
+
+function AboutCtrl() {
   
-  });
+};

@@ -47,7 +47,7 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       templateUrl: 'views/projects.views/projects.list.html',
       controller: 'ProjectsListCtrl',
       controllerAs: 'projectsListVm',
-      authorized: ["admin", "manager"]
+      authorized: ["admin", "manager", "collaborateur"]
     })
     .state('collaborators', {
       url : '/collaborators',
@@ -55,7 +55,7 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       templateUrl: 'views/collaborators.views/collaborators.list.html',
       controller: 'CollaboratorsListCtrl',
       controllerAs: 'collaboratorsListVm',
-      authorized: ["collaborateur", "admin", "manager"]
+      authorized: ["admin", "manager"]
     })
     .state('login', {
       url : '/login',
@@ -94,8 +94,8 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       url : '/budgets',
       title : 'Lignes budgétaire',
       templateUrl: 'views/budgets.views/budgets.list.html',
-      controller: 'BudgetsCtrl',
-      controllerAs: 'budgets',
+      controller: 'BudgetsListCtrl',
+      controllerAs: 'budgetsListVm',
       authorized: [ "admin" ]
     })
     .state('projects.create', {
@@ -133,7 +133,7 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
     .state('projects.details.tasks', {
       url : '/tasks',
       title : 'Tâches du projet',
-      authorized: ["admin", "manager"],
+      authorized: ["admin", "manager", "collaborateur"],
       templateUrl: 'views/tasks.views/tasks.list.html',
       controller: 'TasksListCtrl',
       controllerAs: 'tasksListVm'
@@ -151,7 +151,7 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       parent:'projects.details',
       url : '/tasks/:idtask/details',
       title : 'Information de la Tâche',
-      authorized: ["admin", "manager"],
+      authorized: ["admin", "manager", "collaborateur"],
       templateUrl: 'views/tasks.views/tasks.details.html',
       controller: 'TasksDetailsCtrl',
       controllerAs: 'tasksDetailsVm'

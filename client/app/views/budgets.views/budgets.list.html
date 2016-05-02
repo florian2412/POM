@@ -1,5 +1,5 @@
 <md-card>
-  <div layout="column" role="main" ng-controller="BudgetsCtrl">
+  <div layout="column" role="main">
     <md-toolbar layout="row" layout-align="center center">
       <div class="md-toolbar-tools">
         <h2 class="md-flex">Liste des lignes budgétaires</h2>
@@ -13,16 +13,16 @@
           <th>Libellé</th>
           <th>Budget</th>
           <th>Description</th>
-          <th>Supprimer ?</th>
+          <th>Supprimer</th>
 
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="budget in budgets">
+        <tr ng-repeat="budget in budgetsListVm.budgets">
           <td><a> {{ budget.libelle }} </a></td>
           <td> {{ budget.montant }} € </td>
           <td> {{ budget.description }} </td>
-          <td><a ng-click="deleteBudget(budget._id)"><span class="fa fa-trash-o fa-lg" style="color: red;"></span> </a></td>
+          <td><a ng-click="budgetsListVm.deleteBudget(budget._id)"><span class="fa fa-trash-o fa-lg" style="color: red;"></span> </a></td>
         </tr>
         </tbody>
       </table>

@@ -68,6 +68,7 @@ function createCollaborator(req, res, next) {
         if (err) return next(err);
         if (coll) {
             // username already exists
+            res.json({"success":false, "message": "Ce pseudo est déjà utilisé."});
             next(new Error("Ce pseudo est déjà utilisé : " + req.body.pseudo));
         } else {
             createColl();

@@ -37,8 +37,14 @@ function CollaboratorsCreateCtrl($scope, $state, $mdDialog, databaseService, fla
 
       databaseService.createObject('collaborators', data)
         .success(function (data) {
-          flashService.Success("Création du collaborateur " + vm.collaborator.n_nom + " " + vm.collaborator.n_prenom + " réussie.", "", "bottom-right", true, 4);
-          $state.go("collaborators");
+          console.log("Reponse du server : " + data.message);
+          if(!data.success){
+            flashService.Error("Erreur : ", data.message, "bottom-right", true, 4);
+          }
+          else{
+            flashService.Success("Création du collaborateur " + vm.collaborator.n_nom + " " + vm.collaborator.n_prenom + " réussie.", "", "bottom-right", true, 4);
+            $state.go("collaborators");
+          }
         })
         .error(function (err) {
           console.log(err);
