@@ -8,10 +8,20 @@
  * Controller of the pomApp
  */
 
-angular.module('pomApp').controller('LoginCtrl', function ($scope, $alert, $location, $state, $mdDialog, $rootScope, authenticateService, flashService, AuthService){
-	$scope.authenticate = function() {
-  		if($scope.pseudo && $scope.mot_de_passe){
-	    authenticateService.authenticate(JSON.stringify({"pseudo":$scope.pseudo, "mot_de_passe":$scope.mot_de_passe}),
+LoginCtrl.$inject = ['$scope', '$alert', '$location', '$state', '$mdDialog', '$rootScope', 'authenticateService', 'flashService', 'AuthService'];
+
+angular.module('pomApp').controller('LoginCtrl', LoginCtrl);
+
+function LoginCtrl($scope, $alert, $location, $state, $mdDialog, $rootScope, authenticateService, flashService, AuthService){
+	
+  var vm = this;
+
+  vm.authenticate = authenticate;
+  vm.showPrompt = showPrompt;
+
+  function authenticate() {
+  		if(vm.pseudo && vm.mot_de_passe){
+	    authenticateService.authenticate(JSON.stringify({"pseudo":vm.pseudo, "mot_de_passe":vm.mot_de_passe}),
 	    	function(response){
 	    		if(response.success){
 	    			AuthService.setRole(authenticateService.getCurrentUser().role);
@@ -49,7 +59,8 @@ angular.module('pomApp').controller('LoginCtrl', function ($scope, $alert, $loca
 	    	});
 		} else {flashService.Error('Erreur ! ', 'Veuillez entrer votre pseudo', 'bottom-right', true, 4);}
   }
-  $scope.showPrompt = function(ev) {
+
+  function showPrompt(ev) {
     var confirm = $mdDialog.prompt()
           .title('Réinitialisation de votre mot de passe')
           .textContent('Entrer votre pseudo : ')
@@ -63,4 +74,4 @@ angular.module('pomApp').controller('LoginCtrl', function ($scope, $alert, $loca
     }, function() {});
   };
 
-})
+}

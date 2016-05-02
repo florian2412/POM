@@ -1,13 +1,9 @@
-<div class="row" ng-controller="LoginCtrl">
+<div class="row">
 <div class="col-md-8 col-md-offset-2">
   <md-card>
 
     <div layout="column" role="main">
-     <!--  <md-toolbar layout="row">
-      <div class="md-toolbar-tools">
-        <h2 class="md-flex">Se connecter</h2>
-      </div>
-      </md-toolbar> -->
+
       <form class="form-horizontal" name="loginForm" >
 
         <div class="col-md-6 col-md-offset-3">
@@ -17,7 +13,7 @@
             <md-input-container class="md-icon-float md-block">
               <label>Pseudo</label>
               <md-icon><i class="material-icons">person_outline</i></span></md-icon>
-              <input type="text" ng-model="pseudo" name="pseudo" required>
+              <input type="text" ng-model="loginVm.pseudo" name="pseudo" required>
               <div ng-messages="loginForm.pseudo.$error">
                 <div ng-message="required">Pseudo obligatoire</div>
               </div>
@@ -26,7 +22,7 @@
             <md-input-container class="md-icon-float md-block">
               <label>Mot de passe</label>
               <md-icon><i class="material-icons">lock_outline</i></span></md-icon>
-              <input ng-model="mot_de_passe" name="mot_de_passe" type="password" required>
+              <input ng-model="loginVm.mot_de_passe" name="mot_de_passe" type="password" required>
               <div ng-messages="loginForm.mot_de_passe.$error">
                 <div ng-message="required">Mot de passe obligatoire</div>
               </div>
@@ -36,10 +32,10 @@
 
           <md-card-actions layout="row" layout-align="center center">
 
-            <md-button class="md-raised md-primary" type="submit" ng-click="authenticate()">Se connecter</md-button>
+            <md-button class="md-raised md-primary" type="submit" ng-click="loginVm.authenticate()">Se connecter</md-button>
             <div flex="flex"></div>
            <!--  <md-button ng-click="resetPassword()" >Mot de passe oublié ? </md-button> -->
-            <md-button ng-click="showPrompt($event)">Mot de passe oublié ?</md-button>
+            <md-button ng-click="loginVm.showPrompt($event)">Mot de passe oublié ?</md-button>
           </md-card-actions>
 
         </div>

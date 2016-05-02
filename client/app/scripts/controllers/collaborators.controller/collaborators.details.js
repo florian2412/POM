@@ -19,6 +19,7 @@ function CollaboratorsDetailsCtrl($scope, $stateParams, $state, $mdDialog, datab
   vm.updateCollaborator = updateCollaborator;
   vm.showCancelDialog = showCancelDialog;
 
+
   function updateCollaborator() {
 
     var data = {
