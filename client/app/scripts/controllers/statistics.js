@@ -8,7 +8,7 @@
  * Controller of the pomApp
  */
 angular.module('pomApp')
-  .controller('StatisticsCtrl', function ($scope, $rootScope, $location, localStorageService, databaseService) {
+  .controller('StatisticsCtrl', function ($scope, $rootScope, $location, localStorageService, databaseService, $mdDialog) {
 
     $scope.user = localStorageService.get('currentUser');
     var idCurrentUser = localStorageService.get('currentUser')._id;
@@ -50,12 +50,32 @@ angular.module('pomApp')
         /* Intitulés des statuts */
         $scope.doughnutLabels = nb[0];
       });
+    $scope.onClick= function(ev) {
+      $mdDialog.show({
+          controller: DialogController,
+          templateUrl: '../views/statistics.views/statistics.details.html',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          clickOutsideToClose:true
+        })
+    };
+    function DialogController($scope, $mdDialog) {
+      $scope.hide = function() {
+        $mdDialog.hide();
+      };
+      $scope.cancel = function() {
+        $mdDialog.cancel();
+      };
+      $scope.answer = function(answer) {
+        $mdDialog.hide(answer);
+      };
+    }
   })
-  .config(function(ChartJsProvider) {
-    // Configure all charts
-    ChartJsProvider.setOptions('Doughnut',{
-      colours: ['#FF0000', '#FF6600','#0000FF' , '#00FF00'],
-      responsive: true
-    });
+.config(function(ChartJsProvider) {
+  // Configure all charts
+  ChartJsProvider.setOptions('Doughnut',{
+    colours: ['#FF0000', '#FF6600','#0000FF' , '#00FF00'],
+    responsive: true
   });
+});
 
