@@ -59,7 +59,8 @@ angular.module('pomApp')
           clickOutsideToClose:true
         })
     };
-    function DialogController($scope, $mdDialog) {
+    function DialogController($scope, $mdDialog, localStorageService) {
+      $scope.state = localStorageService.get('projects');
       $scope.hide = function() {
         $mdDialog.hide();
       };

@@ -18,6 +18,7 @@ var schemaCollaborator = mongoose.Schema({
     email: String,
     date_creation: { type: Date, default: Date.now },
     date_derniere_modif: { type: Date }
+    avatar: { data: Buffer, contentType: String }
 });
 
 module.exports = mongoose.model('Collaborateur', schemaCollaborator);

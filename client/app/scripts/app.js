@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 
-var pomApp = angular.module('pomApp', ['ui.router', 'ngMaterial', 'ngMessages', 'ngRoleAuth', 'ngSanitize', 'ngPassword', 'LocalStorageModule', 'mgcrea.ngStrap', 'chart.js']);
+var pomApp = angular.module('pomApp', ['ui.router', 'ngMaterial', 'ngMessages', 'ngRoleAuth', 'ngSanitize', 'ngPassword', 'LocalStorageModule', 'mgcrea.ngStrap', 'chart.js', 'ngImgCrop']);
 
 function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $mdThemingProvider) {
   $mdThemingProvider.theme('default').primaryPalette('green').accentPalette('blue');
@@ -68,8 +68,8 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
     .state('statistics', {
       url : '/statistics',
       title : 'Statistiques',
-      templateUrl: 'views/statistics.html',
       authorized: ["collaborateur", "admin", "manager"],
+      templateUrl: 'views/statistics.views/statistics.html',
       controller: 'StatisticsCtrl',
       controllerAs: 'statisticsVm'
     })
