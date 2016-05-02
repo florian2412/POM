@@ -48,6 +48,7 @@ function Service($http, $rootScope, localStorageService){
     $rootScope.isAuthenticated = collaborator;
     $rootScope.userFirstname = collaborator.prenom;
     $rootScope.userLastname = collaborator.nom;
+    $rootScope.userRole = collaborator.role;
   }
 
   function ClearCredentials() { 
@@ -55,6 +56,7 @@ function Service($http, $rootScope, localStorageService){
     $rootScope.isAuthenticated = null;
     delete $rootScope.userFirstname;
     delete $rootScope.userLastname;
+    delete $rootScope.userRole;
   }
 
   function Logout() { ClearCredentials(); }

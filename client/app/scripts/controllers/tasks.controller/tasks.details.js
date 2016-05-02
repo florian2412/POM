@@ -8,8 +8,6 @@
  * Controller of the pomApp
  */
 
-TasksDetailsCtrl.$inject = ['$scope', '$state', '$stateParams', 'databaseService',  'flashService', 'utilsService'];
-
 angular.module('pomApp').controller('TasksDetailsCtrl', TasksDetailsCtrl);
 
 function TasksDetailsCtrl($scope, $state, $stateParams, databaseService,  flashService, utilsService) {

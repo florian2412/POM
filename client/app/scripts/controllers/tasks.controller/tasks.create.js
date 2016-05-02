@@ -8,8 +8,6 @@
  * Controller of the tasks create
  */
 
-TasksCreateCtrl.$inject = ['$scope', '$state', '$mdDialog', '$stateParams', 'databaseService', 'flashService'];
-
 angular.module('pomApp').controller('TasksCreateCtrl', TasksCreateCtrl);
 
 function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams, databaseService, flashService) {

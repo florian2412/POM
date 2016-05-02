@@ -82,7 +82,7 @@ function createCollaborator(req, res, next) {
             if (err)
                 return next(err);
             // On retourne le body de la réponse
-            res.json(req.body);
+            res.json({"success":true, "message": "Création du collaborateur réussie.", "data": req.body});
         });
     }
 

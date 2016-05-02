@@ -7,7 +7,6 @@
  * # CollaboratorCtrl
  * Controller of the pomApp
  */
-CollaboratorsDetailsCtrl.$inject = ['$scope', '$stateParams', '$state', '$mdDialog', 'databaseService', 'flashService', 'localStorageService', 'utilsService'];
 
 angular.module('pomApp').controller('CollaboratorsDetailsCtrl',CollaboratorsDetailsCtrl);
 

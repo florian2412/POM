@@ -7,9 +7,6 @@
  * # LoginCtrl
  * Controller of the pomApp
  */
-
-LoginCtrl.$inject = ['$scope', '$alert', '$location', '$state', '$mdDialog', '$rootScope', 'authenticateService', 'flashService', 'AuthService'];
-
 angular.module('pomApp').controller('LoginCtrl', LoginCtrl);
 
 function LoginCtrl($scope, $alert, $location, $state, $mdDialog, $rootScope, authenticateService, flashService, AuthService){

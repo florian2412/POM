@@ -8,8 +8,6 @@
  * Controller of the projects.create
  */
 
-ProjectsCreateCtrl.$inject = ['$scope', '$state', '$mdDialog', 'databaseService', 'flashService', 'localStorageService'];
-
 angular.module('pomApp').controller('ProjectsCreateCtrl', ProjectsCreateCtrl);
 
 function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashService, localStorageService) {
@@ -57,7 +55,7 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
     // Lancement au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
 
-      databaseService.getAllObjects('budgets').success(function (data){ vm.budgets = data;})
+      databaseService.getAllObjects('budgets').success(function (data){ vm.budgets = data.data;})
         .error(function (err) { console.log(err); });
 
       databaseService.getAllObjects('collaborators').success(function(data){ vm.collaborators = data;})

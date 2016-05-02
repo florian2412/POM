@@ -7,8 +7,6 @@
  * # ProjectCtrl
  * Controller of the pomApp
  */
-ProjectsDetailsCtrl.$inject = ['$rootScope', '$scope', '$stateParams', '$mdSidenav', '$mdDialog', '$state', 'databaseService', 'flashService', 'utilsService'];
-
 angular.module('pomApp').controller('ProjectsDetailsCtrl', ProjectsDetailsCtrl);
 
 function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDialog, $state, databaseService, flashService, utilsService) {
@@ -106,7 +104,7 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
 
   $scope.$on('$viewContentLoaded', function() {
 
-    databaseService.getAllObjects('budgets').success(function (data) { vm.budgets = data; })
+    databaseService.getAllObjects('budgets').success(function (data) { vm.budgets = data.data; })
       .error(function (err) { console.log(err); });
 
     databaseService.getAllObjects('collaborators').success(function (data) { vm.collaborators = data;})

@@ -8,8 +8,6 @@
  * Controller of the collaborators.create
  */
 
-CollaboratorsCreateCtrl.$inject = ['$scope', '$state', '$mdDialog', 'databaseService', 'flashService', 'localStorageService', 'utilsService'];
-
 angular.module('pomApp').controller('CollaboratorsCreateCtrl', CollaboratorsCreateCtrl);
 
 function CollaboratorsCreateCtrl($scope, $state, $mdDialog, databaseService, flashService, localStorageService, utilsService) {
@@ -39,7 +37,7 @@ function CollaboratorsCreateCtrl($scope, $state, $mdDialog, databaseService, fla
         .success(function (data) {
           console.log("Reponse du server : " + data.message);
           if(!data.success){
-            flashService.Error("Erreur : ", data.message, "bottom-right", true, 4);
+            flashService.Error("Erreur ! ", data.message, "bottom-right", true, 4);
           }
           else{
             flashService.Success("Création du collaborateur " + vm.collaborator.n_nom + " " + vm.collaborator.n_prenom + " réussie.", "", "bottom-right", true, 4);

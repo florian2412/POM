@@ -10,7 +10,6 @@
  * # TasksCtrl
  * Controller of the pomApp
  */
-TasksListCtrl.$inject = ['$scope', 'databaseService', '$stateParams', 'utilsService'];
 
 angular.module('pomApp').controller('TasksListCtrl', TasksListCtrl);
 

@@ -8,8 +8,6 @@
  * Controller of the pomApp
  */
 
-CollaboratorsListCtrl.$inject = ['$scope', '$filter', 'databaseService'];
-
 angular.module('pomApp').controller('CollaboratorsListCtrl', CollaboratorsListCtrl);
  
 function CollaboratorsListCtrl($scope, $filter, databaseService) {
