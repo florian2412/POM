@@ -22,7 +22,7 @@ function CollaboratorsListCtrl($scope, $filter, databaseService) {
       databaseService.getAllObjects('collaborators')
         .success(function (data) { 
           for (var i = data.length - 1; i >= 0; i--) {
-            if(data[i].manager){
+            if(data[i].manager && data[i].role != "admin"){
               var m = _getManager(data[i].manager,data);  
               data[i].manager = m.prenom + ' ' + m.nom ;
             }

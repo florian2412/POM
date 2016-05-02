@@ -1,6 +1,6 @@
 {
 	"roles" : [ "admin", "manager", "collaborateur" ],
-	"statuts" : [ "Initial", "En cours", "Terminé(e)", "Annulé(e)" ],
+	"statuts" : [ "Initial", "En cours", "Terminé(e)", "Annulé(e)", "Archivé" ],
 	"fonctions" : [ "Développeur", "Architecte", "Directeur", 
 					 "Chef(fe) de projet technique","Analyste-Programmeur", "Consultant(e)",
 					 "Administrateur réseaux", "Leader Technique", "Administrateur Base de données",

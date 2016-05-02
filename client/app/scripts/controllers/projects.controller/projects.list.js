@@ -32,7 +32,7 @@ function ProjectsListCtrl($scope, databaseService) {
   function archiveProject(id){
     for (var i = vm.projects.length - 1; i >= 0; i--) {
       if(vm.projects[i]._id == id)
-        vm.projects[i].statut = "Terminé";
+        vm.projects[i].statut = "Terminé(e)";
       }  
     /*databaseService.updateObject('projects', idProject, data)
       .success(function (data) {
