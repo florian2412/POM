@@ -3,9 +3,9 @@
 </div>
 <br>
 <div flex layout>
-  <div flex layout layout-align="center center">
+  <div flex layout layout-align="center">
     <form name="tasksDetailsForm">
-      <div layout layout-align="center center">
+      <div layout layout-align="center">
         <div flex="45">
           <md-input-container class="md-block">
             <label>Nom de la tâche</label>
@@ -24,7 +24,7 @@
         </div>
       </div>
 
-      <div layout layout-align="center center">
+      <div layout layout-align="center">
         <div flex="45">
           <label>Date de début </label>
           <md-datepicker ng-model="tasksDetailsVm.task.date_debut" md-min-date="tasksDetailsVm.minDateTask" ng-value="tasksDetailsVm.task.date_debut"></md-datepicker>
@@ -38,7 +38,7 @@
 
       <br>
       <br>
-      <div layout layout-align="center center">
+      <div layout layout-align="center">
         <div flex="45">
           <md-input-container class="md-block">
             <label>Statut</label>
@@ -54,7 +54,7 @@
         <div flex="10"></div>
         
         <div flex="45">
-          <div layout layout-align="center center">
+          <div layout layout-align="center">
             <div>
               <label>Date de fin <b>réelle</b></label>
               <md-datepicker ng-model="tasksDetailsVm.task.date_fin_reelle" md-min-date="tasksDetailsVm.task.date_debut" md-placeholder="Entrer date"></md-datepicker>
@@ -63,10 +63,10 @@
         </div>
 
       </div>
-
+      
       <br>
       
-      <div layout layout-align="center center">
+      <div layout layout-align="center">
         <div flex="100">
           <md-input-container class="md-block" flex-xs="100">
             <label>Description</label>
@@ -74,6 +74,17 @@
             <div ng-messages="tasksDetailsForm.description.$error">
               <div ng-message="required">Ce champ est obligatoire.</div>
             </div>
+          </md-input-container>
+        </div>
+      </div>
+
+
+      <div layout layout-align="center">
+        <div>
+          <md-input-container class="md-block" flex-xs="100" flex="70">
+              <md-button class="md-raised" ng-click="tasksDetailsVm.showCollaboratorPicker($event)">
+                Voir les collaborateurs
+              </md-button>
           </md-input-container>
         </div>
       </div>
