@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
 
 var schemaTask = mongoose.Schema({
     libelle: String,
+    description: String,
     date_debut: Date,
     date_fin_theorique: Date,
     date_fin_reelle: Date,

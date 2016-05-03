@@ -200,7 +200,7 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
     });
 }
 
-function appRun($rootScope, $state, $http,$mdSidenav, authenticateService, AuthService, localStorageService) {
+function appRun($rootScope, $state, $location, $http,$mdSidenav, $mdDialog, authenticateService, AuthService, localStorageService) {
   var cur_user = localStorageService.get('currentUser');
   getVersion();
   AuthService.setRole(((cur_user) ? cur_user.role : "public"));
@@ -215,7 +215,7 @@ function appRun($rootScope, $state, $http,$mdSidenav, authenticateService, AuthS
   // Fire when url changes
   $rootScope.$on('$locationChangeSuccess', function(){
     if (authenticateService.getCurrentUser() === null){
-      $state.go("/login");
+      $location.path("/login");
     }
   });
 
@@ -223,6 +223,8 @@ function appRun($rootScope, $state, $http,$mdSidenav, authenticateService, AuthS
   $rootScope.$on('$stateChangeStart', function(event, toState) {
     $rootScope.title = toState.title;
     $rootScope.closeMenu('projectSideNav');
+   // $mdSidenav('projectSideNav').close();
+    $mdDialog.hide();
   });
 
   $rootScope.openMenu = function(sidenavID){ $mdSidenav(sidenavID).toggle(); };

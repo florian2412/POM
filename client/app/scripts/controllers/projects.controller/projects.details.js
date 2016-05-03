@@ -102,16 +102,18 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
     );
   };
 
+  // Lancer au chargement de la page
   $scope.$on('$viewContentLoaded', function() {
 
-    databaseService.getAllObjects('budgets').success(function (data) { vm.budgets = data.data; })
-      .error(function (err) { console.log(err); });
+    databaseService.getAllObjects('budgets').success(function (data) { vm.budgets = data.data; });
 
-    databaseService.getAllObjects('collaborators').success(function (data) { vm.collaborators = data;})
-      .error(function (err) { console.log(err); });
+    databaseService.getAllObjects('collaborators').success(function (data) { vm.collaborators = data;});
   
-    databaseService.getSettings('statuts').success(function(data){ vm.statuts = data; })
-      .error(function(err){ console.log(err); });
+    databaseService.getSettings('statuts').success(function(data){ 
+      data.splice(data.indexOf("Archivé"),1);
+      data.splice(data.indexOf("Initial"),1);
+      vm.statuts = data; 
+    });
   
     vm.getProjectById($stateParams.id);
     
@@ -129,6 +131,10 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
         locals: {
            collaborators: vm.collaborators 
          },
+      })
+      .then(function(count) {
+        console.log(count);
+        //vm.numberOfCollaborators = count.length;
       });
    };
 
@@ -136,7 +142,7 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
 
     $scope.collaborators = collaborators;
     $scope.selection = collaborateursId;
-    $scope.hide = function() { $mdDialog.hide(); };
+    $scope.hide = function() { $mdDialog.hide($scope.selection); };
     $scope.userRole = $rootScope.userRole;
 
     $scope.selectCollaborator = function (collaborator) {

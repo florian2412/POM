@@ -23,6 +23,7 @@ function TasksDetailsCtrl($scope, $state, $stateParams, $mdDialog, databaseServi
     var t = tasksList[vm.currentIndexTask];
     t.libelle = vm.task.libelle;
     t.statut = vm.task.statut;
+    t.description = vm.task.description;
     t.date_debut = vm.task.date_debut;
     t.date_fin_theorique = vm.task.date_fin_theorique;
     t.date_fin_reelle = vm.task.date_fin_reelle;

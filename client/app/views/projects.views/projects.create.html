@@ -53,7 +53,7 @@
           
           <div layout="column" layout-align="center" flex >
 
-            <div layout-align="center" layout>
+          <!--   <div layout-align="center" layout>
               <md-input-container class="md-block" flex="80" flex-xs="100">
                 <label>Statut</label>
                 <md-select ng-model="projectCreateVm.project.statut" name="statut" required>
@@ -65,7 +65,7 @@
                   <div ng-message="required">Ce champ est obligatoire.</div>
                 </div>
               </md-input-container>
-            </div>
+            </div> -->
 
 
             <div layout-align="center" layout>
@@ -96,6 +96,13 @@
               </div>
             </div>
 
+            <div layout-align="center" layout>
+              <div flex="50" flex-xs="100">
+                <p ng-show="projectCreateVm.numberOfCollaborators > 0" > <b>{{projectCreateVm.numberOfCollaborators}}</b> collaborateurs associés au projet.
+                </p>
+              </div>
+            </div>
+          
           </div>
 
         </div>

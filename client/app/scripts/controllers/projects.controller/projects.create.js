@@ -18,8 +18,7 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
     vm.createProject = createProject;
     vm.showCancelDialog = showCancelDialog;
     vm.showCollaboratorPicker = showCollaboratorPicker;
-
-
+    
     function createProject() {
 
       if(!vm.project.startDate) vm.project.startDate = new Date();
@@ -30,7 +29,7 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
 
       var data = {
         "nom" : vm.project.name,
-        "statut" : vm.project.statut,
+        "statut" : "Initial", // statut initial par défaut à la création
         "chef_projet" : localStorageService.get('currentUser')._id,
         "date_debut" : vm.project.startDate,
         "date_fin_theorique" : vm.project.endDate,
@@ -61,9 +60,6 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
       databaseService.getAllObjects('collaborators').success(function(data){ vm.collaborators = data;})
         .error(function (err) { console.log(err); });
 
-      databaseService.getSettings('statuts').success(function(data){ vm.statuts = data; })
-        .error(function(err){ console.log(err); });
-
     });
 
     function showCancelDialog(event) {
@@ -91,16 +87,19 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
         clickOutsideToClose:true,
         fullscreen: false,
         locals: {
-           collaborators: vm.collaborators
-         },
+           collaborators: vm.collaborators 
+        },
+      })
+      .then(function(count) {
+        vm.numberOfCollaborators = count.length;
       });
    };
 
-  function _CollaboratorPickerController($rootScope, $scope, $mdDialog, collaborators) {
+  function _CollaboratorPickerController($rootScope, $scope, $mdDialog, $state, collaborators) {
 
     $scope.collaborators = collaborators;
     $scope.selection = collaborateursId;
-    $scope.hide = function() { $mdDialog.hide(); };
+    $scope.hide = function() { $mdDialog.hide($scope.selection); };
     $scope.userRole = $rootScope.userRole;
 
 

@@ -21,13 +21,12 @@
       <tbody>
         <tr ng-repeat="project in projectsListVm.projects" ng-switch on="project.statut">
 
-          <!--<td><a ng-click="getProjectById(project._id)">{{ project.nom }}</a></td>-->
           <td><a ui-sref=".details.info({id:project._id})"> <b>{{ project.nom }}</b> </a></td>
           <!--<td><a ui-sref="collaborators.details({id:project.chef_projet})"> {{ project.chef_projet }} </a></td>-->
           <td>{{ project.date_debut | date:"dd/MM/yyyy" }}</td>
 
-          <td ng-switch-when="Initial"><span class="fa fa-exclamation-circle" style="color:blue;font-size:1.5em;"></span></td>
-          <td ng-switch-when="En cours"><span class="fa fa-exclamation-circle" style="color:orange;font-size:1.5em;"></span></td>
+          <td ng-switch-when="Initial"><i class="material-icons" style="color:blue;font-size:1.5em;">fiber_new</i></td>
+          <td ng-switch-when="En cours"><i class="fa fa-cog fa-spin fa-fw margin-bottom" style="color:orange;font-size:1.5em;"></i></td>
           <td ng-switch-when="Terminé(e)"><span class="fa fa-check-circle" style="color:green;font-size:1.5em;"></span></td>
           <td ng-switch-when="Annulé(e)"><span class="fa fa-times-circle" style="color:red;font-size:1.5em;"></span></td>
 

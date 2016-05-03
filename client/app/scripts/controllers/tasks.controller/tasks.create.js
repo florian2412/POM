@@ -33,6 +33,7 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams, databaseServic
         var task = {
           "libelle" : vm.task.name,
           "date_debut" : vm.task.startDate,
+          "description" : vm.task.description,
           "date_fin_theorique" : vm.task.endDate,
           "statut" : vm.task.statut,
           "collaborateurs" : collaborateursId,
@@ -122,7 +123,7 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams, databaseServic
 
     $scope.collaborators = collaborators;
     $scope.selection = collaborateursId;
-    $scope.hide = function() { $mdDialog.hide(); };
+    $scope.hide = function() { $mdDialog.hide($scope.selection); };
     $scope.userRole = $rootScope.userRole;
 
     $scope.selectCollaborator = function (collaborator) {

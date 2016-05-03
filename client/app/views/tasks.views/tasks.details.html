@@ -4,12 +4,15 @@
 <br>
 <div flex layout>
   <div flex layout layout-align="center center">
-    <form>
+    <form name="tasksDetailsForm">
       <div layout layout-align="center center">
         <div flex="45">
           <md-input-container class="md-block">
             <label>Nom de la tâche</label>
-            <input ng-model="tasksDetailsVm.task.libelle" maxlength="20" required>
+            <input ng-model="tasksDetailsVm.task.libelle" maxlength="20" required name="nom">
+            <div ng-messages="tasksDetailsForm.nom.$error">
+              <div ng-message="required">Ce champ est obligatoire.</div>
+            </div>
           </md-input-container>
         </div>
         <div flex="10"></div>
@@ -24,7 +27,6 @@
       <div layout layout-align="center center">
         <div flex="45">
           <label>Date de début </label>
-
           <md-datepicker ng-model="tasksDetailsVm.task.date_debut" md-min-date="tasksDetailsVm.minDateTask" ng-value="tasksDetailsVm.task.date_debut"></md-datepicker>
         </div>
         <div flex="10"></div>
@@ -40,27 +42,40 @@
         <div flex="45">
           <md-input-container class="md-block">
             <label>Statut</label>
-            <md-select ng-model="tasksDetailsVm.task.statut" >
+            <md-select ng-model="tasksDetailsVm.task.statut" name="statut">
               <md-option ng-repeat="statut in tasksDetailsVm.statuts" value="{{statut}}">{{statut}}</md-option>
             </md-select>
+            <div ng-messages="tasksDetailsForm.statut.$error">
+              <div ng-message="required">Ce champ est obligatoire.</div>
+            </div>
           </md-input-container>
         </div>
+        
         <div flex="10"></div>
-
-        <!--<div flex="45">
-          <md-input-container class="md-block">
-            <label>Ligne budgétaire</label>
-            <md-select ng-model="project.ligne_budgetaire" >
-              <md-option ng-repeat="budget in budgets" value="{{budget}}">{{ budget }}</md-option>
-            </md-select>
-          </md-input-container>
-        </div>-->
-        <div layout layout-align="center center">
-        <div>
-          <label>Date de fin <b>réelle</b></label>
-          <md-datepicker ng-model="tasksDetailsVm.task.date_fin_reelle" md-min-date="tasksDetailsVm.task.date_debut" md-placeholder="Entrer date"></md-datepicker>
+        
+        <div flex="45">
+          <div layout layout-align="center center">
+            <div>
+              <label>Date de fin <b>réelle</b></label>
+              <md-datepicker ng-model="tasksDetailsVm.task.date_fin_reelle" md-min-date="tasksDetailsVm.task.date_debut" md-placeholder="Entrer date"></md-datepicker>
+            </div>
+          </div>
         </div>
+
       </div>
+
+      <br>
+      
+      <div layout layout-align="center center">
+        <div flex="100">
+          <md-input-container class="md-block" flex-xs="100">
+            <label>Description</label>
+            <textarea ng-model="tasksDetailsVm.task.description" name="description" maxlength="250" md-maxlength="250" rows="10"></textarea>
+            <div ng-messages="tasksDetailsForm.description.$error">
+              <div ng-message="required">Ce champ est obligatoire.</div>
+            </div>
+          </md-input-container>
+        </div>
       </div>
 
       <br>
