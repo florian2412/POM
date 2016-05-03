@@ -12,7 +12,7 @@
  */
 angular.module('pomApp').factory('utilsService', Service);
 
-function Service() {
+function Service(databaseService) {
 
   var service = {};
 
@@ -22,8 +22,9 @@ function Service() {
   service.capitalize = capitalize;
   service.calculProjectDuration = calculProjectDuration;
   service.calculProjectLeftDuration = calculProjectLeftDuration;
+  service.calculTaskPassedDuration = calculTaskPassedDuration;
   service.calculTaskDuration = calculTaskDuration;
-  service.calculTaskLeftDuration = calculTaskLeftDuration ;
+  service.calculTaskLeftDuration = calculTaskLeftDuration;
 
   return service;
 
@@ -61,16 +62,6 @@ function Service() {
     return -1;
   };
 
-  /*  function dateDiff(date1, date2){
-   var diff = {};                          // Initialisation du retour
-   var tmp = date2 - date1;
-
-   tmp = Math.floor((tmp-diff.hour)/24);   // Nombre de jours restants
-   diff.day = tmp;
-   console.log(diff);
-   return diff;
-   }*/
-
   function dateDiff(date1, date2){
     var timeDiff = Math.abs(date2.getTime() - date1.getTime());
     var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
@@ -85,24 +76,42 @@ function Service() {
     return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
   }
 
+  // Retourne la durée totale théorique d'une tache
   function calculTaskDuration(task) {
     var firstDate = new Date(task.date_debut);
     var endDate = new Date(task.date_fin_theorique);
     return dateDiff(firstDate, endDate);
   };
 
+  // Retourne la durée restante théorique d'une tache
   function calculTaskLeftDuration(task) {
     var firstDate = new Date();
     var endDate = new Date(task.date_fin_theorique);
     return dateDiff(firstDate, endDate);
   };
 
+  // Retourne la durée déjà passée théorique d'une tache
+  function calculTaskPassedDuration(task) {
+    var firstDate = new Date(task.date_debut);
+    var endDate = new Date();
+    // -2 car on enlève la date du jour et le +1 que ajoute au retour de la fonction dateDiff
+    var diff = dateDiff(firstDate, endDate) - 2;
+    // Si la tache a commencé avant aujourd'hui
+    if(diff > 0)
+      return diff;
+    // Si la tache commence aujourd'hui
+    else
+      return diff + 1;
+  };
+
+  // Retourne la durée totale théorique d'un projet
   function calculProjectDuration(project) {
     var firstDate = new Date(project.date_debut);
     var endDate = new Date(project.date_fin_theorique);
     return dateDiff(firstDate, endDate);
   };
 
+  // Retourne la durée restante théorique d'un projet
   function calculProjectLeftDuration(project) {
     var firstDate = new Date();
     var endDate = new Date(project.date_fin_theorique);

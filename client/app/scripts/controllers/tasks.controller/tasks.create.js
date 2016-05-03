@@ -14,9 +14,10 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams, databaseServic
 
   var vm = this;
   var collaborateursId = [];
-  var Idcollaborators = [];
+  var collaboratorsIds = [];
 
-  vm.minDate = new Date();
+  //vm.minDate = new Date();
+
   vm.createTask = createTask;
   vm.showCollaboratorPicker = showCollaboratorPicker;
   vm.showCancelDialog = showCancelDialog;
@@ -57,19 +58,19 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams, databaseServic
 
   // Lancement au chargement de la page
   $scope.$on('$viewContentLoaded', function() {
-    
+
     databaseService.getSettings('statuts').success(function(data){ vm.statuts = data; })
-     .error(function(err){ console.log(err); });
+      .error(function(err){ console.log(err); });
 
     databaseService.getObjectById('projects',$stateParams.id)
       .success(function (data) {
 
         var projectCollaborators = [];
-        Idcollaborators = data.collaborateurs;
+        collaboratorsIds = data.collaborateurs;
 
-        for (var i=0; i < Idcollaborators.length; i++) {
+        for (var i=0; i < collaboratorsIds.length; i++) {
 
-          databaseService.getObjectById('collaborators',Idcollaborators[i])
+          databaseService.getObjectById('collaborators',collaboratorsIds[i])
             .success(function (data) {
               projectCollaborators.push(data);
             })
@@ -102,20 +103,20 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams, databaseServic
     });
   };
 
-   function showCollaboratorPicker(ev) {
+  function showCollaboratorPicker(ev) {
 
-      $mdDialog.show({
-        controller: _CollaboratorPickerController,
-        templateUrl: 'views/shared/collaborators.picker.html',
-        parent: angular.element(document.body),
-        targetEvent: ev,
-        clickOutsideToClose:true,
-        fullscreen: false,
-        locals: {
-           collaborators: vm.collaborators 
-         },
-      });
-   };
+    $mdDialog.show({
+      controller: _CollaboratorPickerController,
+      templateUrl: 'views/shared/collaborators.picker.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose:true,
+      fullscreen: false,
+      locals: {
+        collaborators: vm.collaborators
+      },
+    });
+  };
 
   function _CollaboratorPickerController($rootScope, $scope, $mdDialog, collaborators) {
 
@@ -123,7 +124,7 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams, databaseServic
     $scope.selection = collaborateursId;
     $scope.hide = function() { $mdDialog.hide(); };
     $scope.userRole = $rootScope.userRole;
-    
+
     $scope.selectCollaborator = function (collaborator) {
       if(collaborateursId.indexOf(collaborator._id) < 0) {
         collaborateursId.push(collaborator._id);
@@ -133,7 +134,7 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams, databaseServic
         var indexCol =  collaborateursId.indexOf(collaborator._id);
         if (indexCol > -1) { collaborateursId.splice(indexCol, 1); }
       }
-    };  
+    };
   }
 
 

@@ -8,7 +8,7 @@
     "mongodbPortDev": 27505,
     "mongoDBName": "dbPOM",
     "mongoDBNameDev": "dbpom",
-    "version": {"api": "1.0.0", "appClient" : "1.2.0"},
+    "version": {"api": "1.0.0", "appClient" : "1.0.0"},
     "cloudMode": false
 }
 

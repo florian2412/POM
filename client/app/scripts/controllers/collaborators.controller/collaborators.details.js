@@ -14,7 +14,7 @@ function CollaboratorsDetailsCtrl($scope, $stateParams, $state, $mdDialog, datab
 
   var vm = this;
   var currentUser = localStorageService.get('currentUser');
-  
+
   vm.updateCollaborator = updateCollaborator;
   vm.showCancelDialog = showCancelDialog;
 
@@ -44,35 +44,35 @@ function CollaboratorsDetailsCtrl($scope, $stateParams, $state, $mdDialog, datab
 
   // Permet de lancer au chargement de la page : récupère tous les projets
   $scope.$on('$viewContentLoaded', function() {
-    
+
     databaseService.getObjectById('collaborators', $stateParams.id).success(function (data) {
       vm.collaborator = data;
     });
 
     databaseService.getSettings('fonctions').success(function(data){ vm.fonctions = data; });
-      
-      // Si on est admin
+
+    // Si on est admin
     if(currentUser.role === 'admin') {
-      
+
       databaseService.getSettings('roles')
-      .success(function(data){ 
-        var i = data.indexOf('admin');
-        data.splice(i, 1);
-        for (var i = data.length - 1; i >= 0; i--) {
-          data[i] = utilsService.capitalize(data[i]);
-        }
-        vm.roles = data;
-      });
+        .success(function(data){
+          var i = data.indexOf('admin');
+          data.splice(i, 1);
+          for (var i = data.length - 1; i >= 0; i--) {
+            data[i] = utilsService.capitalize(data[i]);
+          }
+          vm.roles = data;
+        });
 
       databaseService.getCollaboratorsByRole('manager')
-      .success(function (data) {
-        if(data.length > 0) {
-          data.push(currentUser);
-          var indexToDelete = utilsService.arrayObjectIndexOf(data, $stateParams.id, '_id');
-          data.splice(indexToDelete, 1);
-          vm.managers = data;
-        } else { vm.managers = [currentUser]; }
-      });
+        .success(function (data) {
+          if(data.length > 0) {
+            data.push(currentUser);
+            var indexToDelete = utilsService.arrayObjectIndexOf(data, $stateParams.id, '_id');
+            data.splice(indexToDelete, 1);
+            vm.managers = data;
+          } else { vm.managers = [currentUser]; }
+        });
 
     }
     // Si on est manager, on doit sélectionner automatiquement le role et le manager

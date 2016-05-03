@@ -13,8 +13,8 @@ angular.module('pomApp').controller('ProjectsCreateCtrl', ProjectsCreateCtrl);
 function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashService, localStorageService) {
     var vm = this;
     var collaborateursId = [];
-    
-    vm.minDate = new Date();
+
+    //vm.minDate = new Date();
     vm.createProject = createProject;
     vm.showCancelDialog = showCancelDialog;
     vm.showCollaboratorPicker = showCollaboratorPicker;
@@ -91,7 +91,7 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
         clickOutsideToClose:true,
         fullscreen: false,
         locals: {
-           collaborators: vm.collaborators 
+           collaborators: vm.collaborators
          },
       });
    };
@@ -103,6 +103,7 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
     $scope.hide = function() { $mdDialog.hide(); };
     $scope.userRole = $rootScope.userRole;
 
+
     $scope.selectCollaborator = function (collaborator) {
       if(!collaborator.checked) {
         collaborateursId.push(collaborator._id);
@@ -113,6 +114,6 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
         if (indexCol > -1) { collaborateursId.splice(indexCol, 1); }
       }
     };
-    
+
   }
 }
