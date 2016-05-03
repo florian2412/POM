@@ -34,7 +34,7 @@ function CollaboratorsDetailsCtrl($scope, $stateParams, $state, $mdDialog, datab
 
     databaseService.updateObject('collaborators', vm.collaborator._id, data)
       .success(function (data) {
-        flashService.Success("Le collaborateur " + vm.collaborator.prenom + " " + vm.collaborator.nom + " a bien été mis à jour !", "", "bottom-right", true, 4);
+        flashService.success("Le collaborateur " + vm.collaborator.prenom + " " + vm.collaborator.nom + " a bien été mis à jour !", "", "bottom-right", true, 4);
         $state.go("collaborators");
       })
       .error(function (err) {

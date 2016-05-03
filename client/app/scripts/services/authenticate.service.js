@@ -53,7 +53,7 @@ function Service($http, $rootScope, localStorageService){
 
   function ClearCredentials() { 
     localStorageService.remove('currentUser'); 
-    $rootScope.isAuthenticated = null;
+    delete $rootScope.isAuthenticated;
     delete $rootScope.userFirstname;
     delete $rootScope.userLastname;
     delete $rootScope.userRole;

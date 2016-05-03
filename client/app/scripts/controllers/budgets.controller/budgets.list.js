@@ -30,9 +30,9 @@ function BudgetsListCtrl($scope, databaseService, flashService) {
             }
           }
           vm.budgets.splice( index, 1 );
-          flashService.Success("Succés ! ", data.message, "bottom-right", true, 4);
+          flashService.success("Succés ! ", data.message, "bottom-right", true, 4);
         }
-        else flashService.Error("Erreur ! ", data.message, "bottom-right", true, 4);
+        else flashService.error("Erreur ! ", data.message, "bottom-right", true, 4);
          
       })
       .error(function (err) {
@@ -44,7 +44,7 @@ function BudgetsListCtrl($scope, databaseService, flashService) {
     databaseService.getAllObjects('budgets')
       .success(function (data) {
         if(data.success) vm.budgets = data.data;
-        else flashService.Error("Erreur ! ", data.message, "bottom-right", true, 4);
+        else flashService.error("Erreur ! ", data.message, "bottom-right", true, 4);
       })
       .error(function (err) {
         console.log(err);

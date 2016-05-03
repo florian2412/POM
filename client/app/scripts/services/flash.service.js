@@ -3,35 +3,16 @@
 
   angular.module('pomApp').factory('flashService', Service);
 
-  function Service($rootScope, $alert) {
+  function Service($alert) {
     var service = {};
 
-    service.Success = Success;
-    service.Error = Error;
-    service.Info = Info;
-
-    initService();
+    service.success = success;
+    service.error = error;
+    service.info = info;
 
     return service;
 
-    function initService() {
-      $rootScope.$on('$locationChangeStart', function () {
-        clearFlashMessage();
-      });
-
-      function clearFlashMessage() {
-        var flash = $rootScope.flash;
-        if (flash) {
-          if (!flash.keepAfterLocationChange) {
-            delete $rootScope.flash;
-          } else {
-            flash.keepAfterLocationChange = false;
-          }
-        }
-      }
-    }
-
-    function Success(title, message, placement, dismissable, duration)  {
+    function success(title, message, placement, dismissable, duration)  {
       $alert({
         title: title,
         content: message,
@@ -44,7 +25,7 @@
       });
     }
 
-    function Error(title,message,placement, dismissable,duration)  {
+    function error(title,message,placement, dismissable,duration)  {
       $alert({
         title: title,
         content: message,
@@ -57,7 +38,7 @@
       });
     }
 
-    function Info(title,message,placement, dismissable,duration) {
+    function info(title,message,placement, dismissable,duration) {
       $alert({
         title: title,
         content: message,

@@ -29,10 +29,10 @@ function BudgetsCreateCtrl($scope, $state, $mdDialog, databaseService, flashServ
     databaseService.createObject('budgets', budget)
       .success(function (data) {
         if(data.success){
-          flashService.Success("Succés ! ", "Création du budget " + vm.budget.libelle + " réussie.", "bottom-right", true, 4);
+          flashService.success("Succés ! ", "Création du budget " + vm.budget.libelle + " réussie.", "bottom-right", true, 4);
           $state.go("budgets");
         } 
-        else flashService.Error("Erreur ! ", data.message, "bottom-right", true, 4);        
+        else flashService.error("Erreur ! ", data.message, "bottom-right", true, 4);        
       })
       .error(function (err) {
         console.log(err);

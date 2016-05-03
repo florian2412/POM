@@ -44,7 +44,7 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
 
       databaseService.createObject('projects', data)
         .success(function (data) {
-          flashService.Success("Création du projet " + vm.project.name + " réussie.", "", "bottom-right", true, 4);
+          flashService.success("Création du projet " + vm.project.name + " réussie.", "", "bottom-right", true, 4);
           $state.go("projects");
         })
         .error(function (err) {
@@ -96,12 +96,13 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
       });
    };
 
-  function _CollaboratorPickerController($scope, $mdDialog, collaborators) {
+  function _CollaboratorPickerController($rootScope, $scope, $mdDialog, collaborators) {
 
     $scope.collaborators = collaborators;
     $scope.selection = collaborateursId;
     $scope.hide = function() { $mdDialog.hide(); };
-    
+    $scope.userRole = $rootScope.userRole;
+
     $scope.selectCollaborator = function (collaborator) {
       if(!collaborator.checked) {
         collaborateursId.push(collaborator._id);

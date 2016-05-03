@@ -30,7 +30,7 @@ function TasksDetailsCtrl($scope, $state, $stateParams, databaseService,  flashS
 
     databaseService.updateObject('projects', $stateParams.id, vm.currentProject)
       .success(function (data) {
-        flashService.Success("La tâche " + vm.task.libelle + " a été mise à jour.", "", "bottom-right", true, 4);
+        flashService.success("La tâche " + vm.task.libelle + " a été mise à jour.", "", "bottom-right", true, 4);
         $state.go("projects.details.tasks");
       })
       .error(function (err) {

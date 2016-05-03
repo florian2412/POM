@@ -14,13 +14,12 @@
       
       <div layout="row">
         <md-list layout-wrap flex>
-          <md-list-item ng-disabled="userRole==collaborateur" class="md-2-line" ng-repeat="collaborator in collaborators" ng-click="selectCollaborator(collaborator)" flex>
+          <md-list-item ng-disabled="userRole=='collaborateur'" class="md-2-line" ng-repeat="collaborator in collaborators" ng-click="selectCollaborator(collaborator)" flex>
             <md-checkbox ng-checked="selection.indexOf(collaborator._id) > -1"></md-checkbox> 
             <div class="md-list-item-text" flex>
               <h3>{{ collaborator.prenom }} {{ collaborator.nom }}</h3>
               <p>{{ collaborator.fonction }}</p>
             </div>
-       
           </md-list-item>
         </md-list>
       </div>

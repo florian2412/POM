@@ -80,7 +80,7 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
   
     databaseService.updateObject('projects', idProject, data)
       .success(function (data) {
-        flashService.Success("Le projet " + vm.project.nom + " a bien été mis à jour !", "", "bottom-right", true, 4);
+        flashService.success("Le projet " + vm.project.nom + " a bien été mis à jour !", "", "bottom-right", true, 4);
         $state.go("projects");
       })
       .error(function (err) {
@@ -132,12 +132,13 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
       });
    };
 
-  function _CollaboratorPickerController($scope, $mdDialog, collaborators) {
+  function _CollaboratorPickerController($rootScope, $scope, $mdDialog, collaborators) {
 
     $scope.collaborators = collaborators;
     $scope.selection = collaborateursId;
     $scope.hide = function() { $mdDialog.hide(); };
-    
+    $scope.userRole = $rootScope.userRole;
+
     $scope.selectCollaborator = function (collaborator) {
       if(collaborateursId.indexOf(collaborator._id) < 0) {
         collaborateursId.push(collaborator._id);

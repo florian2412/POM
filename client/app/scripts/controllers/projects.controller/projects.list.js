@@ -10,7 +10,7 @@
 
 angular.module('pomApp').controller('ProjectsListCtrl', ProjectsListCtrl);
 
-function ProjectsListCtrl($scope, databaseService) {
+function ProjectsListCtrl($scope, databaseService, utilsService) {
   var vm = this;
 
   vm.showAllProjects = showAllProjects;
@@ -41,52 +41,20 @@ function ProjectsListCtrl($scope, databaseService) {
         console.log(err);
     });*/
   }
-   /* var getObjectById = function(collection, id) {
-      databaseService.getObjectById(collection, id)
-        .success(function (data) {
-          return data;
-        })
-        .error(function (err) {
-          return err;
-        });
-    };
-
-    $scope.getCollaboratorById = function(id) {
-      $scope.project.chef_projet = getObjectById('collaborators', id);
-    };
-
-    $scope.getProjectById = function(id){
-      $scope.project.projectDetail = getObjectById('projects', id);
-    };
-*/
 
   function deleteProject(id) {
     databaseService.deleteObject('projects', id)
       .success(function (data) {
-      // Update liste projets
-        var index = -1;
-        var comArr = eval( vm.projects );
-        for( var i = 0; i < comArr.length; i++ ) {
-          if( comArr[i]._id === id ) {
-            index = i;
-            break;
-          }
+        var i = utilsService.arrayObjectIndexOf(vm.projects,id, '_id');
+        if(i > -1){ 
+          vm.projects.splice( i, 1 );
+          flashService.success("Succés ! ", "Suppression du projet réussie.", 'bottom-right', true, 4);
         }
-
-        //var index2 = $scope.projects._id.indexOf(id);
-
-        if( index === -1 ) {
-          alert( "Something gone wrong" );
-        }
-        vm.projects.splice( index, 1 );
-        
-      })
-      .error(function(err) {
-        console.log(err);
+        else flashService.error("Erreur ! ", "Impossible de supprimer le projet.",'bottom-right', true,4);
       });
   };
 
-  // Permet de lancer au chargement de la page : récupère tous les projets
+  // Affiche la liste des projets au chargement de la page
   $scope.$on('$viewContentLoaded', function() {
     vm.showAllProjects();
   });

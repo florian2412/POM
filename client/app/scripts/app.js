@@ -200,11 +200,12 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
     });
 }
 
-function appRun($rootScope, $location, $state, $http,$mdSidenav, authenticateService, AuthService, localStorageService) {
+function appRun($rootScope, $state, $http,$mdSidenav, authenticateService, AuthService, localStorageService) {
   var cur_user = localStorageService.get('currentUser');
   getVersion();
   AuthService.setRole(((cur_user) ? cur_user.role : "public"));
   $rootScope.isAuthenticated = cur_user;
+
   if(cur_user){
     $rootScope.userFirstname = cur_user.prenom;
     $rootScope.userLastname = cur_user.nom;
@@ -213,7 +214,7 @@ function appRun($rootScope, $location, $state, $http,$mdSidenav, authenticateSer
   // Fire when url changes
   $rootScope.$on('$locationChangeSuccess', function(){
     if (authenticateService.getCurrentUser() === null){
-      $location.path("/login");
+      $state.go("/login");
     }
   });
 

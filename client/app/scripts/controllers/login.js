@@ -9,7 +9,7 @@
  */
 angular.module('pomApp').controller('LoginCtrl', LoginCtrl);
 
-function LoginCtrl($scope, $alert, $location, $state, $mdDialog, $rootScope, authenticateService, flashService, AuthService){
+function LoginCtrl($scope, $state, $mdDialog, $rootScope, authenticateService, flashService, AuthService){
 	
   var vm = this;
 
@@ -27,22 +27,21 @@ function LoginCtrl($scope, $alert, $location, $state, $mdDialog, $rootScope, aut
 	    		else
 	    		{
 	    			$rootScope.$broadcast("LoginFailed", "isNotConnected");
-            flashService.Error("Erreur ! ", "Pseudo ou mot de passe incorrect", "bottom-right", "true", 4);
+            flashService.error("Erreur ! ", "Pseudo ou mot de passe incorrect", "bottom-right", "true", 4);
 	    		}
 	    	});
 		}
 		else
-		{
-			flashService.Error('Erreur ! ', 'Pseudo ou mot de passe incorrect', 'bottom-right', true, 4);
-		}
+			flashService.error('Erreur ! ', 'Pseudo ou mot de passe incorrect', 'bottom-right', true, 4);
   };
+
   $scope.$on('$viewContentLoaded', function() {
 
   	// Si un utilisateur déjà connecté redemande la page de login, alors il est automatiquement déconnecté
     if (authenticateService.getCurrentUser() !== null) {
-      flashService.Success("Déconnexion réussie ! ", "A bientôt ! ", "bottom-right", true, 4);
+      flashService.success("Déconnexion réussie ! ", "A bientôt ! ", "bottom-right", true, 4);
     	AuthService.setRole("public");
-      	authenticateService.clearCredentials();
+      authenticateService.clearCredentials();
    	}
   });
 
@@ -51,10 +50,10 @@ function LoginCtrl($scope, $alert, $location, $state, $mdDialog, $rootScope, aut
 	    authenticateService.resetPassword(JSON.stringify({"pseudo":pseudo}),
 	    	function(response){
 	    		if(response.success){
-            flashService.Success("Envoi réussi ! ", response.message, "bottom-right", "true", 4);
-	    		}else{ flashService.Error("Erreur ! ", response.message, "bottom-right", "true", 4);}
+            flashService.success("Envoi réussi ! ", response.message, "bottom-right", "true", 4);
+	    		}else{ flashService.error("Erreur ! ", response.message, "bottom-right", "true", 4);}
 	    	});
-		} else {flashService.Error('Erreur ! ', 'Veuillez entrer votre pseudo', 'bottom-right', true, 4);}
+		} else {flashService.error('Erreur ! ', 'Veuillez entrer votre pseudo', 'bottom-right', true, 4);}
   }
 
   function showPrompt(ev) {

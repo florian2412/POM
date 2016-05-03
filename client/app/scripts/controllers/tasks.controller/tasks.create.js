@@ -43,7 +43,7 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams, databaseServic
 
         databaseService.updateObject('projects', $stateParams.id, data)
           .success(function (data) {
-            flashService.Success("Création de la tâche " + vm.task.name + " réussie.", "", "bottom-right", true, 4);
+            flashService.success("Création de la tâche " + vm.task.name + " réussie.", "", "bottom-right", true, 4);
             $state.go("projects.details.tasks");
           })
           .error(function (err) {
@@ -117,11 +117,12 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams, databaseServic
       });
    };
 
-  function _CollaboratorPickerController($scope, $mdDialog, collaborators) {
+  function _CollaboratorPickerController($rootScope, $scope, $mdDialog, collaborators) {
 
     $scope.collaborators = collaborators;
     $scope.selection = collaborateursId;
     $scope.hide = function() { $mdDialog.hide(); };
+    $scope.userRole = $rootScope.userRole;
     
     $scope.selectCollaborator = function (collaborator) {
       if(collaborateursId.indexOf(collaborator._id) < 0) {
