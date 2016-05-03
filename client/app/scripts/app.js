@@ -210,6 +210,7 @@ function appRun($rootScope, $state, $http,$mdSidenav, authenticateService, AuthS
     $rootScope.userFirstname = cur_user.prenom;
     $rootScope.userLastname = cur_user.nom;
     $rootScope.userRole = cur_user.role;
+
   }
   // Fire when url changes
   $rootScope.$on('$locationChangeSuccess', function(){
