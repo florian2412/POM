@@ -5,14 +5,22 @@
         <h2 class="md-flex">Statistiques</h2>
       </div>
     </md-toolbar>
+
     <md-card-content>
-      <md-card-content>
-        <p>Bonjour <strong>{{user.prenom}}</strong>,<br>Voici l'état des projets : </p>
-        <canvas id="doughnut" class="chart chart-doughnut" chart-data="doughnutData"
-                chart-labels="doughnutLabels" chart-legend="true"
-                chart-click="onClick" chart-colours = "colours">
-        </canvas>
-      </md-card-content>
- </md-card-content>
+      <p>Bonjour <strong>{{user.prenom}}</strong>,<br>Voici l'état des projets : </p>
+      <canvas id="doughnut" class="chart chart-doughnut" chart-data="doughnutData"
+              chart-labels="doughnutLabels" chart-legend="true"
+              chart-click="onClick" chart-colours = "colours">
+      </canvas>
+
+
+
+
+
+
+
+
+    </md-card-content>
+
   </div>
 </md-card>

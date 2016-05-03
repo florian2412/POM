@@ -8,11 +8,13 @@
  * Controller of the pomApp
  */
 angular.module('pomApp')
-  .controller('MainCtrl', function ($scope, $rootScope, $location, localStorageService, databaseService) {
+  .controller('MainCtrl', function ($scope, $rootScope, $location, localStorageService, databaseService, utilsService) {
+
+    var vm = this;
+    var currentUser = localStorageService.get('currentUser');
 
     $scope.user = localStorageService.get('currentUser').pseudo;
     var idCurrentUser = localStorageService.get('currentUser')._id;
-    console.log(idCurrentUser);
 
     databaseService.getProjectsCollaborator(idCurrentUser)
       .success(function (data) {
@@ -21,13 +23,17 @@ angular.module('pomApp')
         var projects = data;
         var numberProjet = projects.length;
 
-        $scope.projects = projects;
-        $scope.numberProjects = numberProjet;
+        vm.projects = projects;
+        vm.numberProjects = numberProjet;
 
         var tasksCollaborator = [];
-        var taskID_projectID = { taskID : "", projectID :""};
+        //var taskID_projectID = { taskID : "", projectID :""};
 
         for(var i = 0; i < projects.length; i++) {
+          // On calcule la durée du projet
+          projects[i].duration = utilsService.calculProjectDuration(projects[i]);
+          projects[i].leftDuration = utilsService.calculProjectLeftDuration(projects[i]);
+
           // On récupère les taches du projet courant
           var projectTasks = projects[i].taches;
           for(var j = 0; j < projectTasks.length; j++) {
@@ -37,16 +43,18 @@ angular.module('pomApp')
             var indexCurrentUser = collaborators.indexOf(idCurrentUser);
             // Si > -1 alors il existe
             if(indexCurrentUser > -1) {
+              projectTasks[j].duration = utilsService.calculTaskDuration(projectTasks[j]);
+              projectTasks[j].leftDuration = utilsService.calculTaskLeftDuration(projectTasks[j]);
               tasksCollaborator.push(projectTasks[j]);
-              //tasksCollaborator[0].push(projectTasks[j]);
-              //tasksCollaborator[1].push(projectTasks[j]);
+
+
             }
           }
         }
-        
+
         var numberTasks = tasksCollaborator.length;
-        $scope.numberTasks = numberTasks;
-        $scope.tasks = tasksCollaborator;
+        vm.numberTasks = numberTasks;
+        vm.tasks = tasksCollaborator;
 
       })
       .error(function (err) {

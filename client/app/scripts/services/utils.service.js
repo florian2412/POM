@@ -13,20 +13,24 @@
 angular.module('pomApp').factory('utilsService', Service);
 
 function Service() {
-  
+
   var service = {};
 
   service.convertDateStringsToDates = convertDateStringsToDates;
   service.arrayObjectIndexOf = arrayObjectIndexOf;
   service.dateDiff = dateDiff;
   service.capitalize = capitalize;
+  service.calculProjectDuration = calculProjectDuration;
+  service.calculProjectLeftDuration = calculProjectLeftDuration;
+  service.calculTaskDuration = calculTaskDuration;
+  service.calculTaskLeftDuration = calculTaskLeftDuration ;
 
   return service;
 
 
   function convertDateStringsToDates(input) {
     var regexIso8601 = /^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/;
-    
+
     // Ignore things that aren't objects.
     if (typeof input !== "object") return input;
 
@@ -57,26 +61,53 @@ function Service() {
     return -1;
   };
 
-/*  function dateDiff(date1, date2){
-    var diff = {};                          // Initialisation du retour
-    var tmp = date2 - date1;
+  /*  function dateDiff(date1, date2){
+   var diff = {};                          // Initialisation du retour
+   var tmp = date2 - date1;
 
-    tmp = Math.floor((tmp-diff.hour)/24);   // Nombre de jours restants
-    diff.day = tmp;
-    console.log(diff);
-    return diff;
-  }*/
+   tmp = Math.floor((tmp-diff.hour)/24);   // Nombre de jours restants
+   diff.day = tmp;
+   console.log(diff);
+   return diff;
+   }*/
 
   function dateDiff(date1, date2){
     var timeDiff = Math.abs(date2.getTime() - date1.getTime());
     var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    return diffDays;
+    if(diffDays === 1)
+      return diffDays;
+    else
+      return diffDays + 1;
   }
 
 
   function capitalize(word){
     return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
   }
+
+  function calculTaskDuration(task) {
+    var firstDate = new Date(task.date_debut);
+    var endDate = new Date(task.date_fin_theorique);
+    return dateDiff(firstDate, endDate);
+  };
+
+  function calculTaskLeftDuration(task) {
+    var firstDate = new Date();
+    var endDate = new Date(task.date_fin_theorique);
+    return dateDiff(firstDate, endDate);
+  };
+
+  function calculProjectDuration(project) {
+    var firstDate = new Date(project.date_debut);
+    var endDate = new Date(project.date_fin_theorique);
+    return dateDiff(firstDate, endDate);
+  };
+
+  function calculProjectLeftDuration(project) {
+    var firstDate = new Date();
+    var endDate = new Date(project.date_fin_theorique);
+    return dateDiff(firstDate, endDate);
+  };
 
 }
 

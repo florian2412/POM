@@ -13,8 +13,51 @@ angular.module('pomApp')
 
     $scope.showPrompt = showCollaboratorPicker;
     $scope.user = localStorageService.get('currentUser');
-    var idCurrentUser = localStorageService.get('currentUser')._id;
+    var currentUser = localStorageService.get('currentUser');
+    var idCurrentUser = currentUser._id;
     console.log(idCurrentUser);
+
+    var vm = this;
+
+    //vm.updateCollaborator = updateCollaborator;
+    //vm.showCancelDialog = showCancelDialog;
+
+
+
+/*
+    function updateCollaborator() {
+
+      // TODO UPLOAD IMAGE IN DB
+      var currentUserFirstName = currentUser.prenom;
+      var currentUserLastName = currentUser.nom;
+
+      var imgPath = 'client/app/images/slogan.png';
+
+//      var dataImg = fs.readFileSync(imgPath);
+      var contentTypeImg = 'image/png';
+
+      var avatar = {
+  //      "data": dataImg,
+        "contentType": contentTypeImg
+      };
+
+
+      var data = {
+        "avatar":avatar
+      };
+
+      databaseService.updateObject('collaborators', idCurrentUser, data)
+        .success(function (data) {
+          flashService.Success("Le collaborateur " + currentUserFirstName + " " + currentUserLastName + " a bien été mis à jour !", "", "bottom-right", true, 4);
+          $state.go("collaborators");
+        })
+        .error(function (err) {
+          console.log(err);
+        });
+    };
+*/
+
+
 
     $scope.myImage='';
     $scope.myCroppedImage='';
@@ -37,7 +80,7 @@ angular.module('pomApp')
         var statuts = [];
         var projects = data;
         for (var i = 0; i < projects.length; i++)
-        statuts.push(projects[i].statut);
+          statuts.push(projects[i].statut);
         console.log(statuts);
 
         /* Récupération des intitulés des statuts ainsi que du nombre de projets par statut*/
@@ -69,9 +112,9 @@ angular.module('pomApp')
       });
 
 
-        $scope.lineLabels = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        $scope.lineSeries = ['Théorique', 'Réel'];
-        $scope.data = [
+    $scope.lineLabels = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    $scope.lineSeries = ['Théorique', 'Réel'];
+    $scope.data = [
       [10, 20, 25, 35, 40, 50, 55, 60, 70, 75, 80, 85],
       [10, 23, 30, 37, 42, 48, 52, 62, 70, 73, 80, 90]
     ];
@@ -138,9 +181,13 @@ angular.module('pomApp')
     }
   })
   .config(function(ChartJsProvider) {
-  // Configure all charts
-  ChartJsProvider.setOptions('Doughnut',{
-    colours: ['#FF0000', '#FF6600','#0000FF' , '#00FF00'],
-    responsive: true
+    // Configure all charts
+    ChartJsProvider.setOptions('Doughnut',{
+      colours: ['#FF0000', '#FF6600','#0000FF' , '#00FF00'],
+      responsive: true
+    });
+
+
+
+
   });
-});

@@ -2,31 +2,42 @@
   <md-content class="md-whiteframe-z2 move-up">
     <md-tabs md-dynamic-height md-border-bottom>
 
-      <md-tab>
-        <md-tab-label>Tâches à valider  <span class="badge" style="background-color:red">{{numberTasks}}</span></md-tab-label>
+      <!--
+      <md-tab ng-hide>
+        <md-tab-label>Tâches à valider  <span class="badge" style="background-color:red">{{mainVm.numberTasks}}</span></md-tab-label>
         <md-tab-body>
           <md-content class="md-padding">
             <p>Votre liste de tâches à faire {{userRole}}</p>
 
-
           </md-content>
         </md-tab-body>
       </md-tab>
+      -->
+
 
       <md-tab>
-        <md-tab-label>Mes projets  <span class="badge">{{numberProjects}}</span></md-tab-label>
+        <md-tab-label>Mes projets  <span class="badge" style="background-color:red">{{mainVm.numberProjects}}</span></md-tab-label>
         <md-tab-body>
           <md-content class="md-padding">
 
             <md-list flex="">
-              <md-list-item class="md-2-line" ng-repeat="project in projects">
+              <md-list-item class="md-2-line" ng-repeat="project in mainVm.projects">
 
                 <div class="md-list-item-text" layout="column">
                   <h3> <a ui-sref="projects.details.info({id:project._id})"> {{ project.nom }} </a></h3>
-                  <p>{{ project._id }}</p>
+                  <p>Durée théorique totale du projet : <b> {{ project.duration }} </b></p>
+                  <p>Durée théorique restante du projet : <b> {{ project.leftDuration }} </b></p>
+
+                  <p>Statut du projet : <b>{{ project.statut }} </b></p>
+
+
+                  <br>
+
                 </div>
 
+
               </md-list-item>
+
             </md-list>
 
           </md-content>
@@ -34,16 +45,23 @@
       </md-tab>
 
       <md-tab>
-        <md-tab-label>Mes tâches  <span class="badge">{{numberTasks}}</span></md-tab-label>
+        <md-tab-label>Mes tâches  <span class="badge" style="background-color:red">{{mainVm.numberTasks}}</span></md-tab-label>
         <md-tab-body>
           <md-content class="md-padding">
 
             <md-list flex="">
-              <md-list-item class="md-2-line" ng-repeat="task in tasks">
+              <md-list-item class="md-2-line" ng-repeat="task in mainVm.tasks">
 
                 <div class="md-list-item-text" layout="column">
                   <h3> <a ui-sref="projects.details.tasks.details({id:task.projet_id, idtask:task._id})"> {{ task.libelle }} </a></h3>
-                  <p>{{ task._id }}</p>
+                  <p>Durée de la tâche : <b> {{ task.duration }}</b></p>
+                  <p>Durée théorique restante du projet : <b> {{ task.leftDuration }} </b></p>
+
+                  <p>Statut de la tâche : <b> {{ task.statut }}</b></p>
+
+                  <br>
+
+                  <!--<p>{{ task._id }}</p>-->
                 </div>
 
               </md-list-item>

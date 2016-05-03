@@ -23,6 +23,7 @@ router.post('/resetPassword', sendNewPass);
 router.get('/:id/projects', getProjectsCollaborator);
 router.post('/updatePass', updatePass);
 
+
 /* GET collaborators listing. */
 function getAllCollaborators(req, res, next) {
     Collaborator.find(function (err, collaborators) {

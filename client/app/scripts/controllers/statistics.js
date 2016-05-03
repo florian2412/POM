@@ -13,6 +13,7 @@ angular.module('pomApp')
     $scope.user = localStorageService.get('currentUser');
     var idCurrentUser = localStorageService.get('currentUser')._id;
     console.log(idCurrentUser);
+    
 
     databaseService.getAllObjects('projects')
       .success(function (data) {
@@ -52,12 +53,12 @@ angular.module('pomApp')
       });
     $scope.onClick= function(ev) {
       $mdDialog.show({
-          controller: DialogController,
-          templateUrl: '../views/statistics.views/statistics.details.html',
-          parent: angular.element(document.body),
-          targetEvent: ev,
-          clickOutsideToClose:true
-        })
+        controller: DialogController,
+        templateUrl: '../views/statistics.views/statistics.details.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:true
+      })
     };
     function DialogController($scope, $mdDialog, localStorageService) {
       $scope.state = localStorageService.get('projects');
@@ -72,11 +73,11 @@ angular.module('pomApp')
       };
     }
   })
-.config(function(ChartJsProvider) {
-  // Configure all charts
-  ChartJsProvider.setOptions('Doughnut',{
-    colours: ['#FF0000', '#FF6600','#0000FF' , '#00FF00'],
-    responsive: true
+  .config(function(ChartJsProvider) {
+    // Configure all charts
+    ChartJsProvider.setOptions('Doughnut',{
+      colours: ['#FF0000', '#FF6600','#0000FF' , '#00FF00'],
+      responsive: true
+    });
   });
-});
 
