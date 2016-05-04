@@ -31,7 +31,8 @@ function ProjectsListCtrl($scope, databaseService, utilsService) {
     for (var i = vm.projects.length - 1; i >= 0; i--) {
       if(vm.projects[i]._id == id)
         vm.projects[i].statut = "Terminé(e)";
-      }  
+      }
+
     /*databaseService.updateObject('projects', idProject, data)
       .success(function (data) {
         flashService.Success("Le projet " + $scope.project.nom + " a bien été mis à jour !", "", "bottom-right", true, 4);
@@ -46,11 +47,14 @@ function ProjectsListCtrl($scope, databaseService, utilsService) {
     databaseService.deleteObject('projects', id)
       .success(function (data) {
         var i = utilsService.arrayObjectIndexOf(vm.projects,id, '_id');
-        if(i > -1){ 
+        if(i > -1){
           vm.projects.splice( i, 1 );
           flashService.success("Succés ! ", "Suppression du projet réussie.", 'bottom-right', true, 4);
         }
         else flashService.error("Erreur ! ", "Impossible de supprimer le projet.",'bottom-right', true,4);
+      })
+      .error(function(err) {
+        console.log(err);
       });
   };
 

@@ -21,6 +21,7 @@ router.post('/authenticate',authenticate);
 router.get('/role/:role', getRoleCollaborators);
 router.post('/resetPassword', sendNewPass);
 router.get('/:id/projects', getProjectsCollaborator);
+router.post('/updatePass', updatePass);
 
 /* GET collaborators listing. */
 function getAllCollaborators(req, res, next) {
@@ -163,4 +164,30 @@ function sendNewPass( req, res, next){
     }
 };
 
+function updatePass(req, res, next){
+    debugger;
+    console.log( "user id " +  req.body.user._id + " password " +  req.body.password);
+    var result = false;
+    var newPass = bcrypt.hashSync(req.body.password, 10);
+    Collaborator.findByIdAndUpdate({"_id" : req.body.user._id},{mot_de_passe: newPass}, function(err, coll){
+        if (err) return next(err);
+        if (!coll) return res.json({"Error": false, "message": "Impossible d'envoyer l'email."});
+        passWordUpdateMail( req.body.user.pseudo, req.body.user.email, res);
+    });
+};
+
+function passWordUpdateMail( pseudo, email, res){
+    var message = "Bonjour " + pseudo + ' , votre mot de passe à bien été mis à jour.';
+     var data = {
+        from: from_,
+        to: email,
+        subject: 'Mise à jour du mot de passe | POM',
+        text: message
+     };
+     mailgun.messages().send( data, function ( error, body) {
+        if( body && !error){
+            res.json({"success": true, "message": "E-mail de confirmation bien envoyé."});
+        }
+     });
+}
 module.exports = router;

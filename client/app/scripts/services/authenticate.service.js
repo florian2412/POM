@@ -8,7 +8,7 @@
  * Service in the pomApp.
  */
 angular.module('pomApp').factory('authenticateService', Service);
-    
+
 function Service($http, $rootScope, localStorageService){
   var service = {};
 
@@ -18,6 +18,7 @@ function Service($http, $rootScope, localStorageService){
   service.getCurrentUser = GetCurrentUser;
   service.logout = Logout;
   service.resetPassword = ResetPassword;
+  service.updatePassword = UpdatePassword;
 
   return service;
 
@@ -31,7 +32,7 @@ function Service($http, $rootScope, localStorageService){
     res.success(function (r) {
       if(r.success){
         SetCredentials(r.collaborator);
-        response = { "success" : r.success, "message" : r.message }; 
+        response = { "success" : r.success, "message" : r.message };
       } else { response = { "success" : r.success, "message" : "Pseudo ou mot de passe incorrect" }; }
 
       callback(response);
@@ -43,7 +44,7 @@ function Service($http, $rootScope, localStorageService){
 
   function GetCurrentUser(){ return localStorageService.get('currentUser');}
 
-  function SetCredentials(collaborator) { 
+  function SetCredentials(collaborator) {
     localStorageService.set('currentUser',collaborator);
     $rootScope.isAuthenticated = collaborator;
     $rootScope.userFirstname = collaborator.prenom;
@@ -51,9 +52,14 @@ function Service($http, $rootScope, localStorageService){
     $rootScope.userRole = collaborator.role;
   }
 
-  function ClearCredentials() { 
-    localStorageService.remove('currentUser'); 
-    delete $rootScope.isAuthenticated;
+
+  /*function ClearCredentials() {
+    localStorageService.remove('currentUser');
+    delete $rootScope.isAuthenticated;*/
+
+  function ClearCredentials() {
+    localStorageService.remove('currentUser');
+    $rootScope.isAuthenticated = null;
     delete $rootScope.userFirstname;
     delete $rootScope.userLastname;
     delete $rootScope.userRole;
@@ -74,5 +80,23 @@ function Service($http, $rootScope, localStorageService){
     .error(function (err) {
       console.error("Reset password failed : " + err);
     });
+  }
+
+  function UpdatePassword( user, password, callback) {
+    var response;
+    var dtajson = {"user" : user, "password" : password};
+    //var dtajson = {"password" : password};
+
+    var res = $http({ method: 'POST',
+      data: dtajson,
+      headers: { 'Content-Type': 'application/json' },
+      url: 'http://localhost:3000/collaborators/updatePass'});
+    res.success(function (r) {
+        response = { "success" : r.success, "message" : r.message };
+        callback(response);
+      })
+      .error(function (err) {
+        console.error("Update password failed : " + err);
+      });
   }
 };

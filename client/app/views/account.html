@@ -7,6 +7,7 @@
     </md-toolbar>
     <md-card-content>
 
+
       <!--<p>Bonjour <strong>{{user.prenom}}</strong>,<br>Voici l'état de vos projets : </p>
       <canvas id="doughnut" class="chart chart-doughnut" chart-data="doughnutData"
               chart-labels="doughnutLabels" chart-legend="true"
@@ -19,6 +20,26 @@
       </div>
       <div>Aperçu de votre avatar :</div>
       <div class="cropPicture"><img ng-src="{{myCroppedImage}}"/></div>
+
+      <md-content flex layout layout-align="center">
+        <div layout-gt-sm flex flex-get-sm="80" flex-gt-md="100">
+          <paper flex flex-gt-sm="20">
+            <p><img style="width:100px" src="http://takeyourchance.fr/img/Icon-user.png"/></p>
+            <p >Bonjour <strong>{{user.nom}} {{user.prenom}}</strong></p>
+            <p><strong>{{user.fonction}}</strong></p>
+            <p><strong>{{user.role}}</strong></p>
+            <p><strong>{{user.email}}</strong></p>
+            <md-button ng-click="showPrompt($event)">Changer de mot de passe</md-button>
+          </paper>
+          <paper flex>
+            <p>Voici l'état de vos projets : </p>
+            <canvas id="doughnut" class="chart chart-doughnut" chart-data="donghnutData"
+                    chart-labels="doughnutLabels" chart-legend="true"
+                    chart-click="onClick">
+            </canvas>
+          </paper>
+        </div>
+      </md-content>
 
     </md-card-content>
   </div>
