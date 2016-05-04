@@ -17,31 +17,49 @@
       <md-tab>
         <md-tab-label>Mes projets  <span class="badge" style="background-color:red">{{mainVm.numberProjects}}</span></md-tab-label>
         <md-tab-body>
-          <md-content class="md-padding">
+          <md-content class="md-padding" layout>
 
-            <md-list flex="">
-              <md-list-item class="md-2-line" ng-repeat="project in mainVm.projects">
+            <div flex="35">
+              <md-list flex="">
+                <md-list-item class="md-2-line" ng-repeat="project in mainVm.projects">
 
-                <div class="md-list-item-text" layout="column">
-                  <h3> <a ui-sref="projects.details.info({id:project._id})"> {{ project.nom }} </a></h3>
-                  <p>Durée théorique totale du projet : <b> {{ project.duration }} </b></p>
-                  <p>Durée théorique restante du projet : <b> {{ project.leftDuration }} </b></p>
+                  <div class="md-list-item-text" layout="column">
 
-                  <p>Nombre de collaborateurs affectés au projet : <b> {{ project.collaborateurs.length }} </b></p>
+                    <h3> <a ui-sref="projects.details.info({id:project._id})"> {{ project.nom }} </a></h3>
 
+                    <p>Durée théorique <b>totale</b> du projet : <b> {{ project.duration }} </b></p>
 
-                  <p>Statut du projet : <b>{{ project.statut }} </b></p>
+                    <p>Durée théorique <b>restante</b> du projet : <b> {{ project.leftDuration }} </b></p>
 
+                    <p>Durée théorique <b>passée</b> du projet : <b> {{ project.passedDuration }} </b></p>
 
-                  <br>
-
-                </div>
+                    <p>Nombre de collaborateurs affectés au projet : <b> {{ project.collaborateurs.length }} </b></p>
 
 
-              </md-list-item>
+                    <p>Statut du projet : <b>{{ project.statut }} </b></p>
 
-            </md-list>
+                    <br>
 
+                    <!-- Par rapport à la ligne budgétaire(budget)-->
+                    <p>Avancement théorique du projet ({{ project.advancement }}% du budget)</p>
+                    <md-progress-linear md-mode="determinate" value="{{ project.advancement }}"></md-progress-linear>
+
+                    <br>
+
+                    <!-- Par rapport à la durée (date)-->
+                    <p>Avancement théorique du projet ({{ project.timeAdvancement }}% de la durée théorique)</p>
+                    <md-progress-linear md-mode="determinate" value="{{ project.timeAdvancement }}"></md-progress-linear>
+
+
+                    <br>
+
+                  </div>
+
+
+                </md-list-item>
+
+              </md-list>
+            </div>
           </md-content>
         </md-tab-body>
       </md-tab>
@@ -49,36 +67,44 @@
       <md-tab>
         <md-tab-label>Mes tâches  <span class="badge" style="background-color:red">{{mainVm.tasks.length}}</span></md-tab-label>
         <md-tab-body>
-          <md-content class="md-padding">
+          <md-content class="md-padding" layout >
 
-            <md-list flex="">
-              <md-list-item class="md-2-line" ng-repeat="task in mainVm.tasks">
+            <div flex="35">
+              <md-list flex="">
+                <md-list-item class="md-2-line" ng-repeat="task in mainVm.tasks">
 
-                <div class="md-list-item-text" layout="column">
+                  <div class="md-list-item-text" layout="column">
 
-                  <h3> <a ui-sref="projects.details.tasks.details({id:task.projet_id, idtask:task._id})"> {{ task.libelle }} </a></h3>
+                    <h3> <a ui-sref="projects.details.tasks.details({id:task.projet_id, idtask:task._id})"> {{ task.libelle }} </a></h3>
 
-                  <p>Statut de la tâche : <b> {{ task.statut }}</b></p>
+                    <p>Statut de la tâche : <b> {{ task.statut }}</b></p>
 
-                  <p>Durée de la tâche : <b> {{ task.duration }}</b></p>
+                    <p>Durée de la tâche : <b> {{ task.duration }}</b></p>
 
-                  <p>Durée théorique <b>restante</b> de la tâche : <b> {{ task.leftDuration }} </b></p>
+                    <p>Durée théorique <b>restante</b> de la tâche : <b> {{ task.leftDuration }} </b></p>
 
-                  <p>Durée théorique <b>passée</b> de la tâche : <b> {{ task.passedDuration }} </b></p>
+                    <p>Durée théorique <b>passée</b> de la tâche : <b> {{ task.passedDuration }} </b></p>
 
-                  <p>Coût théorique <b>total</b> de la tâche : <b> {{ task.totalCost }} </b></p>
+                    <p>Coût théorique <b>total</b> de la tâche : <b> {{ task.totalCost }} </b></p>
 
-                  <p>Coût théorique <b>au jour</b> de la tâche : <b> {{ task.nowCost }} </b></p>
+                    <p>Coût théorique <b>au jour</b> de la tâche : <b> {{ task.nowCost }} </b></p>
 
+                    <br>
 
+                    <p>Avancement théorique de la tâche ({{ task.advancement }}% du budget)</p>
+                    <md-progress-linear md-mode="determinate" value="{{ task.advancement }}"></md-progress-linear>
 
-                  <br>
+                    <!-- Par rapport à la durée (date)-->
+                    <!--<p>Avancement théorique de la tâche ({{ task.advancement }}% du budget)</p>
+                    <md-progress-linear md-mode="determinate" value="{{ task.advancement }}"></md-progress-linear>-->
 
-                </div>
+                    <br>
 
-              </md-list-item>
-            </md-list>
+                  </div>
 
+                </md-list-item>
+              </md-list>
+            </div>
           </md-content>
         </md-tab-body>
       </md-tab>

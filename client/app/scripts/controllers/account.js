@@ -139,7 +139,7 @@ angular.module('pomApp')
 
       $mdDialog.show({
         controller: _PasswordUpdateController,
-        templateUrl: 'views/shared/updatePass.html',
+        templateUrl: 'views/shared/updatePassword.html',
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose:true,

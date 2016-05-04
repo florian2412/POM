@@ -24,22 +24,22 @@ function Service($http, $rootScope, localStorageService){
 
   function Authenticate(data,callback){
     var response;
-  	var res = $http({ method: 'POST',
-					            data: data,
-          			      headers: { 'Content-Type': 'application/json' },
-  					          url: 'http://localhost:3000/collaborators/authenticate'});
+    var res = $http({ method: 'POST',
+      data: data,
+      headers: { 'Content-Type': 'application/json' },
+      url: 'http://localhost:3000/collaborators/authenticate'});
 
     res.success(function (r) {
-      if(r.success){
-        SetCredentials(r.collaborator);
-        response = { "success" : r.success, "message" : r.message };
-      } else { response = { "success" : r.success, "message" : "Pseudo ou mot de passe incorrect" }; }
+        if(r.success){
+          SetCredentials(r.collaborator);
+          response = { "success" : r.success, "message" : r.message };
+        } else { response = { "success" : r.success, "message" : "Pseudo ou mot de passe incorrect" }; }
 
-      callback(response);
-    })
-    .error(function (err) {
-      console.error("Login error !" + err);
-    });
+        callback(response);
+      })
+      .error(function (err) {
+        console.error("Login error !" + err);
+      });
   }
 
   function GetCurrentUser(){ return localStorageService.get('currentUser');}
@@ -54,8 +54,8 @@ function Service($http, $rootScope, localStorageService){
 
 
   /*function ClearCredentials() {
-    localStorageService.remove('currentUser');
-    delete $rootScope.isAuthenticated;*/
+   localStorageService.remove('currentUser');
+   delete $rootScope.isAuthenticated;*/
 
   function ClearCredentials() {
     localStorageService.remove('currentUser');
@@ -70,16 +70,16 @@ function Service($http, $rootScope, localStorageService){
   function ResetPassword(pseudo,callback) {
     var response;
     var res = $http({ method: 'POST',
-                      data: pseudo,
-                      headers: { 'Content-Type': 'application/json' },
-                      url: 'http://localhost:3000/collaborators/resetPassword'});
+      data: pseudo,
+      headers: { 'Content-Type': 'application/json' },
+      url: 'http://localhost:3000/collaborators/resetPassword'});
     res.success(function (r) {
-      response = { "success" : r.success, "message" : r.message };
-      callback(response);
-    })
-    .error(function (err) {
-      console.error("Reset password failed : " + err);
-    });
+        response = { "success" : r.success, "message" : r.message };
+        callback(response);
+      })
+      .error(function (err) {
+        console.error("Reset password failed : " + err);
+      });
   }
 
   function UpdatePassword( user, password, callback) {
@@ -87,10 +87,13 @@ function Service($http, $rootScope, localStorageService){
     var dtajson = {"user" : user, "password" : password};
     //var dtajson = {"password" : password};
 
-    var res = $http({ method: 'POST',
+    var res = $http({
+      method: 'POST',
       data: dtajson,
       headers: { 'Content-Type': 'application/json' },
-      url: 'http://localhost:3000/collaborators/updatePass'});
+      url: 'http://localhost:3000/collaborators/updatePassword'
+    });
+
     res.success(function (r) {
         response = { "success" : r.success, "message" : r.message };
         callback(response);

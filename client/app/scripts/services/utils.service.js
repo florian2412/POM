@@ -24,7 +24,7 @@ function Service(databaseService) {
   service.calculProjectLeftDuration = calculProjectLeftDuration;
   service.calculTaskPassedDuration = calculTaskPassedDuration;
   service.calculTaskDuration = calculTaskDuration;
-  service.calculTaskLeftDuration = calculTaskLeftDuration;
+  //service.calculTaskLeftDuration = calculTaskLeftDuration;
 
   return service;
 
@@ -71,7 +71,6 @@ function Service(databaseService) {
       return diffDays + 1;
   }
 
-
   function capitalize(word){
     return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
   }
@@ -84,18 +83,20 @@ function Service(databaseService) {
   };
 
   // Retourne la durée restante théorique d'une tache
-  function calculTaskLeftDuration(task) {
-    var firstDate = new Date();
-    var endDate = new Date(task.date_fin_theorique);
-    return dateDiff(firstDate, endDate);
-  };
+  /*function calculTaskLeftDuration(task) {
+   var firstDate = new Date();
+   var endDate = new Date(task.date_fin_theorique);
+   return dateDiff(firstDate, endDate);
+   };*/
 
   // Retourne la durée déjà passée théorique d'une tache
   function calculTaskPassedDuration(task) {
     var firstDate = new Date(task.date_debut);
     var endDate = new Date();
+
     // -2 car on enlève la date du jour et le +1 que ajoute au retour de la fonction dateDiff
     var diff = dateDiff(firstDate, endDate) - 2;
+
     // Si la tache a commencé avant aujourd'hui
     if(diff > 0)
       return diff;

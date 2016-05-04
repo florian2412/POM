@@ -8,7 +8,6 @@ var mongoose = require('mongoose');
 var Task = require('../models/Task.js');
 
 var schemaProject = mongoose.Schema({
-
     nom: String,
     chef_projet: mongoose.Schema.ObjectId,
     date_debut: { type: Date },
