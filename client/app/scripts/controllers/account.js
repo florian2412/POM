@@ -11,11 +11,10 @@ angular.module('pomApp')
   .controller('AccountCtrl', function ($scope, $rootScope, $location, $mdDialog,localStorageService, databaseService, authenticateService, flashService) {
 
 
-    $scope.showPrompt = showCollaboratorPicker;
+    $scope.showUpdatePassword = showUpdatePassword;
     $scope.user = localStorageService.get('currentUser');
-    var currentUser = localStorageService.get('currentUser');
-    var idCurrentUser = currentUser._id;
-    console.log(idCurrentUser);
+
+    var idCurrentUser = localStorageService.get('currentUser')._id;
 
     var vm = this;
 
@@ -135,11 +134,11 @@ angular.module('pomApp')
       }, function() {});
     };
 
-    function showCollaboratorPicker(ev) {
+    function showUpdatePassword(ev) {
 
       $mdDialog.show({
         controller: _PasswordUpdateController,
-        templateUrl: 'views/shared/updatePassword.html',
+        templateUrl: 'views/shared/update.password.html',
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose:true,
@@ -149,35 +148,24 @@ angular.module('pomApp')
 
     function _PasswordUpdateController($scope, $mdDialog) {
       $scope.cancel = function() { $mdDialog.hide(); }
-      $scope.updpass = function(usr){
-        var pass = [];
-        if( usr.pass){
-          pass.push( usr.pass);
-        }
-        if( usr.confirm){
-          pass.push( usr.confirm);
-        }
-        if( pass.length > 1 && (pass[0] === pass[1])){
-          process( localStorageService.get('currentUser'), pass[0]);
-        }else{
-          flashService.Error('Erreur ! ', 'Imposible de mettre à jour le mot de passe', 'bottom-right', true, 4);
+      $scope.updatePassword = function(user){
+
+        if(user){
+          authenticateService.updatePassword(user.confirmedNewPassword,
+            function(response){
+              if(response.success){
+                flashService.success("Succés ! ", response.message, "bottom-right", "true", 4);
+              }
+              else { 
+                flashService.error("Echec ! ", response.message, "bottom-right", "true", 4);
+              }
+            });
+        } 
+        else {
+          flashService.error('Erreur ! ', 'Veuillez entrer un nouveau mot de passe', 'bottom-right', true, 4);
         }
         $mdDialog.hide();
       }
-    }
-
-    function process( user, pass){
-      processUpdatePass( user, pass);
-    };
-    var processUpdatePass = function (user, pass){
-      if(user && pass){
-        authenticateService.updatePassword( user, pass,
-          function(response){
-            if(response.success){
-              flashService.success("Mise à jour du mot de passe réussie ! ", response.message, "bottom-right", "true", 4);
-            }else{ flashService.Error("Echec de la mise à jour du mot de passe ! ", response.message, "bottom-right", "true", 4);}
-          });
-      } else {flashService.Error('Erreur ! ', 'Veuillez entrer un nouveau mot de passe', 'bottom-right', true, 4);}
     }
   })
   .config(function(ChartJsProvider) {

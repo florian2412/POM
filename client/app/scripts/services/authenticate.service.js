@@ -82,18 +82,14 @@ function Service($http, $rootScope, localStorageService){
       });
   }
 
-  function UpdatePassword( user, password, callback) {
+  function UpdatePassword(newPassword, callback) {
     var response;
-    var dtajson = {"user" : user, "password" : password};
-    //var dtajson = {"password" : password};
+    var data = JSON.stringify({"user" : localStorageService.get('currentUser') , "password" : newPassword});
 
-    var res = $http({
-      method: 'POST',
-      data: dtajson,
-      headers: { 'Content-Type': 'application/json' },
-      url: 'http://localhost:3000/collaborators/updatePassword'
-    });
-
+    var res = $http({ method: 'POST',
+                      data: data,
+                      headers: { 'Content-Type': 'application/json' },
+                      url: 'http://localhost:3000/collaborators/updatePassword'});
     res.success(function (r) {
         response = { "success" : r.success, "message" : r.message };
         callback(response);

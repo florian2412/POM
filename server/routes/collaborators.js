@@ -23,7 +23,6 @@ router.post('/resetPassword', sendNewPassword);
 router.get('/:id/projects', getProjectsCollaborator);
 router.post('/updatePassword', updatePassword);
 
-
 /* GET collaborators listing. */
 function getAllCollaborators(req, res, next) {
     Collaborator.find(function (err, collaborators) {
@@ -166,29 +165,25 @@ function sendNewPassword(req, res, next){
 };
 
 function updatePassword(req, res, next){
-    debugger;
-    console.log( "user id " +  req.body.user._id + " password " +  req.body.password);
-    var result = false;
     var newPass = bcrypt.hashSync(req.body.password, 10);
     Collaborator.findByIdAndUpdate({"_id" : req.body.user._id},{mot_de_passe: newPass}, function(err, coll){
         if (err) return next(err);
-        if (!coll) return res.json({"Error": false, "message": "Impossible d'envoyer l'email."});
-        passwordUpdateMail( req.body.user.pseudo, req.body.user.email, res);
+        if (!coll) return res.json({"Error": false, "message": "Impossible d'envoyer l'email."})
+        else {
+            var message = "Bonjour " + req.body.user.pseudo + ' , votre mot de passe à bien été mis à jour.';
+            var data = {
+                from: from_,
+                to: req.body.user.email,
+                subject: 'Mise à jour du mot de passe | POM',
+                text: message
+            };
+            mailgun.messages().send( data, function ( error, body) {
+                if(body && !error){
+                    res.json({"success": true, "message": "Mot de passe mis à jour. E-mail de confirmation bien envoyé."});
+                }
+            });
+        }
     });
 };
 
-function passwordUpdateMail(pseudo, email, res){
-    var message = "Bonjour " + pseudo + ', votre mot de passe à bien été mis à jour.';
-    var data = {
-        from: from_,
-        to: email,
-        subject: 'Mise à jour du mot de passe | POM',
-        text: message
-    };
-    mailgun.messages().send( data, function ( error, body) {
-        if( body && !error){
-            res.json({"success": true, "message": "E-mail de confirmation bien envoyé."});
-        }
-    });
-}
 module.exports = router;
