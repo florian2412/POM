@@ -12,7 +12,7 @@
  */
 angular.module('pomApp').factory('utilsService', Service);
 
-function Service(databaseService) {
+function Service() {
 
   var service = {};
 
@@ -24,7 +24,6 @@ function Service(databaseService) {
   service.calculProjectLeftDuration = calculProjectLeftDuration;
   service.calculTaskPassedDuration = calculTaskPassedDuration;
   service.calculTaskDuration = calculTaskDuration;
-  service.projectStats = projectStats;
 
   return service;
 
@@ -120,36 +119,6 @@ function Service(databaseService) {
 
 
 
-  function projectStats(project, saveBudgets, sumNowCostProject) {
-    if (project.statut === 'Initial') {
-      console.log('Statut projet : Initial')
-    }
-
-
-    else if (project.statut === 'En cours') {
-      // Calcul de l'avancement du projet en pourcentage du budget et en pourcentage de date
-      var indexBudgetLineProject = arrayObjectIndexOf(saveBudgets, project.ligne_budgetaire.id, '_id');
-      var budgetLine = 0;
-      if(indexBudgetLineProject > -1)
-        budgetLine = saveBudgets[indexBudgetLineProject];
-      project.advancement = Math.round((sumNowCostProject * 100) / budgetLine.montant);
-      project.passedDuration = calculTaskPassedDuration(project);
-      project.timeAdvancement = Math.round((project.passedDuration * 100) / project.duration);
-    }
-
-
-    else if (project.statut === 'Terminé(e)') {
-      console.log('Statut projet : Terminé(e)')
-    }
-    else if (project.statut === 'Annulé(e)') {
-      console.log('Statut projet : Annulé(e)')
-    }
-    else if (project.statut === 'Archivé') {
-      console.log('Statut projet : Archivé')
-    }
-
-    return project;
-  }
 
 
 }

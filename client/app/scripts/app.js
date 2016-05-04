@@ -106,7 +106,7 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
         '@': {
           templateUrl: 'views/projects.views/projects.create.html',
           controller: 'ProjectsCreateCtrl',
-          controllerAs: 'projectCreateVm',
+          controllerAs: 'projectCreateVm'
         }
       }
     })
