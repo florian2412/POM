@@ -10,55 +10,43 @@
 
 angular.module('pomApp').controller('CollaboratorsListCtrl', CollaboratorsListCtrl);
 
-function CollaboratorsListCtrl($scope, $filter, databaseService) {
-  var vm = this;
-
-  vm.showAllCollaborators = showAllCollaborators;
-  vm.deleteCollaborator = deleteCollaborator;
-
-  function showAllCollaborators() {
-    databaseService.getAllObjects('collaborators')
-      .success(function (data) {
-        for (var i = data.length - 1; i >= 0; i--) {
-          if(data[i].manager){
-            var m = _getManager(data[i].manager,data);
-            data[i].manager = m.prenom + ' ' + m.nom ;
-
+function CollaboratorsListCtrl($scope, $filter, databaseService, utilsService) {
+    var vm = this;
+   
+    vm.showAllCollaborators = showAllCollaborators;
+    vm.deleteCollaborator = deleteCollaborator;
+    
+    function showAllCollaborators() {
+      databaseService.getAllObjects('collaborators')
+        .success(function (data) { 
+          for (var i = data.length - 1; i >= 0; i--) {
+            if(data[i].manager && data[i].role != "admin"){
+              var id = data[i].manager;
+              var m = _getManager(id,data);
+              data[i].manager = {"id" : id, "prenom" : m.prenom , "nom" : m.nom };
+            }
           }
-        }
-        vm.collaborators = data;
-      })
-      .error(function (err) {
-        console.error(err);
-      });
-  };
+          vm.collaborators = data;
+        });
+    };
+    
+    function _getManager(id, all){
+      return $filter('filter')(all, function (d) {return d._id === id;})[0];
+    };
 
-  function _getManager(id, all){
-    return $filter('filter')(all, function (d) {return d._id === id;})[0];
-  };
+    function deleteCollaborator(id) {
+      databaseService.deleteObject('collaborators', id)
+        .success(function (data) {
+          var i = utilsService.arrayObjectIndexOf(vm.collaborators,id,'_id');
 
-  function deleteCollaborator(id) {
-    databaseService.deleteObject('collaborators', id)
-      .success(function (data) {
-        var index = -1;
-        var comArr = eval( vm.collaborators );
-        for( var i = 0; i < comArr.length; i++ ) {
-          if( comArr[i]._id === id ) {
-            index = i;
-            break;
-          }
-        }
-        if( index === -1 ) { alert( "Something gone wrong" ); }
-        vm.collaborators.splice( index, 1 );
-      })
-      .error(function(err) {
-        console.log(err);
-      });
-  };
+          if(i>-1)
+            vm.collaborators.splice( i, 1 );
+        });
+    };
 
-  // Se lance au chargement de la page : récupère tous les collaborateurs
-  $scope.$on('$viewContentLoaded', function() {
-    vm.showAllCollaborators();
-  });
+    // Se lance au chargement de la page : récupère tous les collaborateurs
+    $scope.$on('$viewContentLoaded', function() {
+      vm.showAllCollaborators(); 
+    });
 
 }

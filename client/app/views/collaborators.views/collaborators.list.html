@@ -22,7 +22,7 @@
           <td><a ui-sref=".details({id:collaborator._id})"> {{ collaborator.prenom }} {{ collaborator.nom }} </a></td>
 
           <td>{{ collaborator.pseudo }}</td>
-          <td><a ui-sref=".details({id:collaborator.manager})"> {{ collaborator.manager }} </a></td>
+          <td><a ui-sref=".details({id:collaborator.manager.id})"> {{ collaborator.manager.prenom + ' ' +collaborator.manager.nom}} </a></td>
           <td>{{ collaborator.role }}</td>
           <td><a ng-click="collaboratorsListVm.deleteCollaborator(collaborator._id)"><span class="fa fa-trash-o fa-lg" style="color: red;"></span> </a></td>
         </tr>
