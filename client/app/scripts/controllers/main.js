@@ -18,21 +18,19 @@ angular.module('pomApp')
 
     function populatePage () {
 
-      vm.projects = vm.saveCollaboratorProjects;
-
-      vm.numberProjects = vm.saveCollaboratorProjects.length;
+      vm.numberProjects = vm.projects.length;
 
       var tasksCollaborator = [];
 
-      for (var i = 0; i < vm.saveCollaboratorProjects.length; i++) {
+      for (var i = 0; i < vm.projects.length; i++) {
 
         // On calcule la durée du projet
-        vm.saveCollaboratorProjects[i].duration = utilsService.calculProjectDuration(vm.saveCollaboratorProjects[i]);
+        vm.projects[i].duration = utilsService.calculProjectDuration(vm.projects[i]);
 
-        vm.saveCollaboratorProjects[i].leftDuration = utilsService.calculProjectLeftDuration(vm.saveCollaboratorProjects[i]);
+        vm.projects[i].leftDuration = utilsService.calculProjectLeftDuration(vm.projects[i]);
 
         // On récupère les taches du projet courant
-        var projectTasks = vm.saveCollaboratorProjects[i].taches;
+        var projectTasks = vm.projects[i].taches;
 
         var sumNowCostProject = 0;
 
@@ -115,32 +113,20 @@ angular.module('pomApp')
         }
 
 
-        if (vm.projects[i].statut === 'Initial') {
-
-        }
-        else if (vm.projects[i].statut === 'En cours') {
-          var indexBudgetLineProject = utilsService.arrayObjectIndexOf(vm.saveBudgets, vm.projects[i].ligne_budgetaire.id, '_id');
-          var budgetLine = 0;
-          if(indexBudgetLineProject > -1)
-            budgetLine = vm.saveBudgets[indexBudgetLineProject];
-          vm.projects[i].advancement = Math.round((sumNowCostProject * 100) / budgetLine.montant);
-          vm.projects[i].passedDuration = utilsService.calculTaskPassedDuration(vm.projects[i]);
-          vm.projects[i].timeAdvancement = Math.round((vm.projects[i].passedDuration * 100) / vm.projects[i].duration);
-        }
-        else if (vm.projects[i].statut === 'Terminé(e)') {
-
-        }
-        else if (vm.projects[i].statut === 'Annulé(e)') {
-
-        }
-        else if (vm.projects[i].statut === 'Archivé') {
-
-        }
+        vm.projects[i] = utilsService.projectStats(vm.projects[i], vm.saveBudgets, sumNowCostProject);
 
       }
 
       vm.tasks = tasksCollaborator;
     }
+
+
+
+
+
+
+
+
 
     // Au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
@@ -154,7 +140,7 @@ angular.module('pomApp')
       databaseService.getAllObjects('budgets').success(function(data){ vm.saveBudgets = data.data; })
        .error(function(err){ console.log(err); });
 
-      databaseService.getCollaboratorProjects(idCurrentUser).success(function(data){ vm.saveCollaboratorProjects = data; })
+      databaseService.getCollaboratorProjects(idCurrentUser).success(function(data){ vm.projects = data; })
         .error(function(err){ console.log(err); });
 
       $timeout(function() {

@@ -24,10 +24,9 @@ function Service(databaseService) {
   service.calculProjectLeftDuration = calculProjectLeftDuration;
   service.calculTaskPassedDuration = calculTaskPassedDuration;
   service.calculTaskDuration = calculTaskDuration;
-  //service.calculTaskLeftDuration = calculTaskLeftDuration;
+  service.projectStats = projectStats;
 
   return service;
-
 
   function convertDateStringsToDates(input) {
     var regexIso8601 = /^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/;
@@ -118,6 +117,40 @@ function Service(databaseService) {
     var endDate = new Date(project.date_fin_theorique);
     return dateDiff(firstDate, endDate);
   };
+
+
+
+  function projectStats(project, saveBudgets, sumNowCostProject) {
+    if (project.statut === 'Initial') {
+      console.log('Statut projet : Initial')
+    }
+
+
+    else if (project.statut === 'En cours') {
+      // Calcul de l'avancement du projet en pourcentage du budget et en pourcentage de date
+      var indexBudgetLineProject = arrayObjectIndexOf(saveBudgets, project.ligne_budgetaire.id, '_id');
+      var budgetLine = 0;
+      if(indexBudgetLineProject > -1)
+        budgetLine = saveBudgets[indexBudgetLineProject];
+      project.advancement = Math.round((sumNowCostProject * 100) / budgetLine.montant);
+      project.passedDuration = calculTaskPassedDuration(project);
+      project.timeAdvancement = Math.round((project.passedDuration * 100) / project.duration);
+    }
+
+
+    else if (project.statut === 'Terminé(e)') {
+      console.log('Statut projet : Terminé(e)')
+    }
+    else if (project.statut === 'Annulé(e)') {
+      console.log('Statut projet : Annulé(e)')
+    }
+    else if (project.statut === 'Archivé') {
+      console.log('Statut projet : Archivé')
+    }
+
+    return project;
+  }
+
 
 }
 
