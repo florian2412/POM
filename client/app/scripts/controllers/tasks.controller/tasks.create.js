@@ -35,7 +35,7 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams, databaseServic
           "date_debut" : vm.task.startDate,
           "description" : vm.task.description,
           "date_fin_theorique" : vm.task.endDate,
-          "statut" : vm.task.statut,
+          "statut" : "Initial",
           "collaborateurs" : collaborateursId,
           "projet_id" : $stateParams.id,
           "date_derniere_modif" : new Date()
