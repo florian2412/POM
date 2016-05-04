@@ -91,7 +91,7 @@ angular.module('pomApp')
               //projectTasks[j].totalCost = 0;
               projectTasks[j].passedDuration = 0;
             }
-            
+
 
             tasksCollaborator.push(projectTasks[j]);
           }

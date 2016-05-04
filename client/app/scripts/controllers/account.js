@@ -74,7 +74,7 @@ angular.module('pomApp')
     };
     angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
 
-    databaseService.getProjectsCollaborator(idCurrentUser)
+    databaseService.getCollaboratorProjects(idCurrentUser)
       .success(function (data) {
         console.log(data);
         var statuts = [];
@@ -174,7 +174,7 @@ angular.module('pomApp')
         authenticateService.updatePassword( user, pass,
           function(response){
             if(response.success){
-              flashService.Success("Mise à jour du mot de passe réussie ! ", response.message, "bottom-right", "true", 4);
+              flashService.success("Mise à jour du mot de passe réussie ! ", response.message, "bottom-right", "true", 4);
             }else{ flashService.Error("Echec de la mise à jour du mot de passe ! ", response.message, "bottom-right", "true", 4);}
           });
       } else {flashService.Error('Erreur ! ', 'Veuillez entrer un nouveau mot de passe', 'bottom-right', true, 4);}
