@@ -9,7 +9,7 @@
         <div flex="45">
           <md-input-container class="md-block">
             <label>Nom de la tâche</label>
-            <input ng-model="tasksDetailsVm.task.libelle" maxlength="20" required name="nom">
+            <input ng-model="tasksDetailsVm.task.libelle" maxlength="100" required name="nom">
             <div ng-messages="tasksDetailsForm.nom.$error">
               <div ng-message="required">Ce champ est obligatoire.</div>
             </div>

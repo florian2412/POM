@@ -10,21 +10,32 @@
 
 angular.module('pomApp').controller('ProjectsListCtrl', ProjectsListCtrl);
 
-function ProjectsListCtrl($scope, databaseService, utilsService) {
+function ProjectsListCtrl($scope, databaseService, utilsService, localStorageService) {
   var vm = this;
-
+  
   vm.showAllProjects = showAllProjects;
   vm.deleteProject = deleteProject;
   vm.archiveProject = archiveProject;
 
+
   function showAllProjects(){
-    databaseService.getAllObjects('projects')
-      .success(function (data) {
-        vm.projects = data;
-      })
-      .error(function (err) {
-        console.error(err);
-      });
+    var currentUser = localStorageService.get('currentUser');
+    
+    if(currentUser.role != 'admin'){
+      databaseService.getProjectsCollaborator(currentUser._id)
+        .success(function(data){
+          vm.projects = data;
+        });
+    }
+    else {
+      databaseService.getAllObjects('projects')
+        .success(function (data) {
+          vm.projects = data;
+        })
+        .error(function (err) {
+          console.error(err);
+        });
+    }
   };
 
   function archiveProject(id){

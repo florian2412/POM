@@ -12,10 +12,10 @@
           
           <md-input-container class="md-block">
             <label>Nom de la tâche</label>
-            <input ng-model="tasksCreateVm.task.name" maxlength="20" name="nom" required>
+            <input ng-model="tasksCreateVm.task.name" maxlength="100" name="nom" required>
             <div ng-messages="createTaskForm.nom.$error">
               <div ng-message="required">Ce champ est obligatoire.</div>
-              <div ng-message="maxlength">Le nom de la tâche ne doit pas dépasser 20 caractères.</div>
+              <div ng-message="maxlength">Le nom de la tâche ne doit pas dépasser 100 caractères.</div>
             </div>
           </md-input-container>
        

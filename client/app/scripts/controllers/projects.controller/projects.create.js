@@ -10,7 +10,7 @@
 
 angular.module('pomApp').controller('ProjectsCreateCtrl', ProjectsCreateCtrl);
 
-function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashService, localStorageService) {
+function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashService, utilsService, localStorageService) {
     var vm = this;
     var collaborateursId = [];
 
@@ -20,12 +20,13 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
     vm.showCollaboratorPicker = showCollaboratorPicker;
     
     function createProject() {
-
+      
       if(!vm.project.startDate) vm.project.startDate = new Date();
 
       if(!vm.project.endDate) vm.project.endDate = new Date();
 
       var budget = JSON.parse(vm.project.ligne_budgetaire);
+      collaborateursId.push(vm.currentUser._id);
 
       var data = {
         "nom" : vm.project.name,
@@ -53,11 +54,16 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
 
     // Lancement au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
+      vm.currentUser = localStorageService.get('currentUser');
 
       databaseService.getAllObjects('budgets').success(function (data){ vm.budgets = data.data;})
         .error(function (err) { console.log(err); });
 
-      databaseService.getAllObjects('collaborators').success(function(data){ vm.collaborators = data;})
+      databaseService.getAllObjects('collaborators').success(function(data){ 
+          var curUserIndex = utilsService.arrayObjectIndexOf(data,vm.currentUser._id,"_id");
+          data.splice(curUserIndex,1);
+          vm.collaborators = data;
+        })
         .error(function (err) { console.log(err); });
 
     });

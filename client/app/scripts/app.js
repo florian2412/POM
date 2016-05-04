@@ -29,7 +29,7 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       url : '/about',
       title : 'A propos',
       templateUrl: 'views/about.html',
-      controller: 'AboutCtrl',
+      /*controller: 'AboutCtrl',*/
       controllerAs: 'aboutVm',
       authorized: [ "collaborateur", "admin", "manager"]
     })
@@ -73,21 +73,12 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       controller: 'StatisticsCtrl',
       controllerAs: 'statisticsVm'
     })
-    .state('settings', {
-      url : '/settings',
-      title : 'Préférences',
-      /* templateUrl: 'views/login.html',
-       controller: 'LoginCtrl',
-       controllerAs: 'login',*/
-      template: '<h4>Préférences ici</h4>',
-      authorized: ["collaborateur", "admin", "manager"]
-    })
     .state('help', {
       url : '/help',
       title : 'Aide',
       templateUrl: 'views/help.html',
       authorized: ["collaborateur", "admin", "manager"],
-      controller: 'HelpCtrl',
+      /*controller: 'HelpCtrl',*/
       controllerAs: 'helpVm'
     })
     .state('budgets', {
