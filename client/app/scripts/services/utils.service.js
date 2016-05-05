@@ -24,6 +24,7 @@ function Service() {
   service.calculProjectLeftDuration = calculProjectLeftDuration;
   service.calculTaskPassedDuration = calculTaskPassedDuration;
   service.calculTaskDuration = calculTaskDuration;
+  service.addZero = addZero;
 
   return service;
 
@@ -117,9 +118,10 @@ function Service() {
     return dateDiff(firstDate, endDate);
   };
 
-
-
-
+  function addZero(str, max) {
+    str = str.toString();
+    return str.length < max ? addZero("0" + str, max) : str;
+  }
 
 }
 

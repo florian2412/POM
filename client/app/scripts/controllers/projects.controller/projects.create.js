@@ -27,9 +27,11 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
 
       var budget = JSON.parse(vm.project.ligne_budgetaire);
       collaborateursId.push(vm.currentUser._id);
-
-      var data = {
+      
+      generateProjectCode(new Date(vm.project.startDate).getFullYear(), function(code){
+        var data = {
         "nom" : vm.project.name,
+        "code" : code,
         "statut" : "Initial", // statut initial par défaut à la création
         "chef_projet" : localStorageService.get('currentUser')._id,
         "date_debut" : vm.project.startDate,
@@ -39,24 +41,25 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
         "ligne_budgetaire": {
             "id": budget._id,
             "montant_restant": budget.montant
-        }
-      };
+          }
+        }; 
 
-      databaseService.createObject('projects', data)
-        .success(function (data) {
-          flashService.success("Création du projet " + vm.project.name + " réussie.", "", "bottom-right", true, 4);
-          $state.go("projects");
-        })
-        .error(function (err) {
-          console.log(err);
-        });
+        databaseService.createObject('projects', data)
+          .success(function (data) {
+            flashService.success("Création du projet " + vm.project.name + " réussie.", "", "bottom-right", true, 4);
+            $state.go("projects");
+          })
+          .error(function (err) {
+            console.log(err);
+          });
+      });     
     };
 
     // Lancement au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
       vm.currentUser = localStorageService.get('currentUser');
 
-      databaseService.getAllObjects('budgets').success(function (data){ vm.budgets = data.data;})
+      databaseService.getAllObjects('budgets').success(function (data){ vm.budgets = data.data; })
         .error(function (err) { console.log(err); });
 
       databaseService.getAllObjects('collaborators').success(function(data){ 
@@ -65,8 +68,48 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
           vm.collaborators = data;
         })
         .error(function (err) { console.log(err); });
-
     });
+
+    function generateProjectCode(year, callback){
+      databaseService.getAllObjects('projects').success(function(data){ 
+
+        var dateMax = null, lastID;
+
+        for (var i = data.length - 1; i >= 0; i--) { 
+          var d = new Date(data[i].date_debut).getFullYear();
+          if(d == year){
+            if (dateMax < new Date(data[i].date_debut)){
+              dateMax = new Date(data[i].date_debut);
+              lastID = data[i]._id;
+            }
+          } 
+        }
+        
+        if(dateMax && lastID){
+
+          var index = utilsService.arrayObjectIndexOf(data,lastID,"_id");
+          var lastProjectCode = data[index].code;
+          
+          if(lastProjectCode){
+            vm.code = _incrementCodeProject(lastProjectCode);
+          }
+          else
+            vm.code = year+'P001';
+          
+        } else
+          vm.code = year+'P001';
+
+        callback(vm.code);
+      });
+              
+    };
+
+    function _incrementCodeProject(lastCode){
+      var begin = lastCode.substring(0,5);
+      var code = parseInt(lastCode.substring(5,8)) + 1;
+      var newCode = begin + utilsService.addZero(code,3);
+      return newCode;
+    };
 
     function showCancelDialog(event) {
 

@@ -10,7 +10,7 @@
 
 angular.module('pomApp').controller('TasksCreateCtrl', TasksCreateCtrl);
 
-function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams, databaseService, flashService) {
+function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams,utilsService, databaseService, flashService) {
 
   var vm = this;
   var collaborateursId = [];
@@ -21,6 +21,13 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams, databaseServic
   vm.createTask = createTask;
   vm.showCollaboratorPicker = showCollaboratorPicker;
   vm.showCancelDialog = showCancelDialog;
+  
+  function _incrementCodeProject(lastCode){
+    var begin = lastCode.substring(0,5);
+    var code = parseInt(lastCode.substring(5,8)) + 1;
+    var newCode = begin + utilsService.addZero(code,3);
+    return newCode;
+  };
 
   function createTask() {
 
@@ -29,9 +36,25 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams, databaseServic
 
         if(!vm.task.startDate) vm.task.startDate = new Date();
         if(!vm.task.endDate) vm.task.endDate = new Date();
+        //var code;
+        if(data.taches.length > 0){
+          var maxCode, newCode;
+          for (var i = data.taches.length - 1; i >= 0; i--) {
+            if(data.taches[i].code){
+              var numCode = data.taches[i].code.substring(10,13);
+              if(maxCode < numCode)
+                maxCode = numCode;
+            } else
+                vm.code = data.code + '.T001';
+          }
+          newCode = maxCode + 1;
+          vm.code = data.code + '.T' + utilsService.addZero(newCode,3);
+        } else
+          vm.code = data.code + '.T001';
 
         var task = {
           "libelle" : vm.task.name,
+          "code" : vm.code,
           "date_debut" : vm.task.startDate,
           "description" : vm.task.description,
           "date_fin_theorique" : vm.task.endDate,
