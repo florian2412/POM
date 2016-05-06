@@ -38,19 +38,20 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams,utilsService, d
         if(!vm.task.endDate) vm.task.endDate = new Date();
         //var code;
         if(data.taches.length > 0){
-          var maxCode, newCode;
+          var maxCode = 0, newCode;
           for (var i = data.taches.length - 1; i >= 0; i--) {
             if(data.taches[i].code){
-              var numCode = data.taches[i].code.substring(10,13);
+              var numCode = parseInt(data.taches[i].code.substring(10,13));
+              console.log("NUM CODE " + numCode);
               if(maxCode < numCode)
                 maxCode = numCode;
             } else
-                vm.code = data.code + '.T001';
+                maxCode = 0;
           }
           newCode = maxCode + 1;
-          vm.code = data.code + '.T' + utilsService.addZero(newCode,3);
+          vm.code = data.code + 'T' + utilsService.addZero(newCode,3);
         } else
-          vm.code = data.code + '.T001';
+          vm.code = data.code + 'T001';
 
         var task = {
           "libelle" : vm.task.name,
