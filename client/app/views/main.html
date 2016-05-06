@@ -44,16 +44,19 @@
                     <p>Avancement théorique du projet ({{ project.advancement }}% du budget)</p>
                     <md-progress-linear md-mode="determinate" value="{{ project.advancement }}"></md-progress-linear>
 
+                    <div class="progressBarClass" id="progressLineBudgetProject"></div>
+
                     <br>
 
                     <!-- Par rapport à la durée (date)-->
                     <p>Avancement théorique du projet ({{ project.timeAdvancement }}% de la durée théorique)</p>
                     <md-progress-linear md-mode="determinate" value="{{ project.timeAdvancement }}"></md-progress-linear>
 
+                    <div class="progressBarClass" id="progressLineDateProject"></div>
 
                     <br>
 
-                    <div id="progressLineBudgetProject"></div>
+
 
                     <br>
 
@@ -97,6 +100,8 @@
 
                     <p>Avancement théorique de la tâche ({{ task.advancement }}% du budget)</p>
                     <md-progress-linear md-mode="determinate" value="{{ task.advancement }}"></md-progress-linear>
+
+                    <div class="progressBarClass" id="progressLineBudgetTask"></div>
 
                     <!-- Par rapport à la durée (date)-->
                     <!--<p>Avancement théorique de la tâche ({{ task.advancement }}% du budget)</p>

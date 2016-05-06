@@ -76,8 +76,7 @@ function Service(utilsService) {
 
 
     else if (project.statut === 'En cours') {
-
-
+      
       project.passedDuration = utilsService.calculTaskPassedDuration(project);
       project.timeAdvancement = Math.round((project.passedDuration * 100) / project.duration);
       project.leftDuration = project.duration - project.passedDuration;

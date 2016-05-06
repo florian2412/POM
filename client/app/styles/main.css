@@ -82,3 +82,7 @@ md-toolbar .md-toolbar-tools h2
     margin-bottom: 30px;
   }
 }
+
+.progressBarClass {
+  position: relative;
+}

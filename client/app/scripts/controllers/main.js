@@ -66,10 +66,60 @@ angular.module('pomApp')
           sumNowCostProject += projectTasks[j].nowCost;
         }
         vm.projects[i] = statisticsService.projectStats(vm.projects[i], vm.saveBudgets, sumNowCostProject);
+
+        // Projects
+        //showProgressBars();
       }
       vm.tasks = tasksCollaborator;
     }
 
+
+    function showProgressBars() {
+      var barConfig = {
+          strokeWidth: 4,
+          easing: 'easeInOut',
+          duration: 1500,
+          color: '#FFEA82',
+          trailColor: '#eee',
+          trailWidth: 1,
+          svgStyle: {width: '100%', height: '100%'},
+          text: {
+            style: {
+              // Text color.
+              // Default: same as stroke color (options.color)
+              color: '#999',
+              position: 'absolute',
+              right: '0',
+              top: '30px',
+              padding: 0,
+              margin: 0,
+              transform: null
+            },
+            autoStyleContainer: false
+          },
+          from: {color: '#4caf50'},
+          to: {color: '#ED6A5A'},
+          step: (state, bar) => {
+            bar.setText(Math.round(bar.value() * 100) + ' %');
+            if(bar.value() > 1)
+              bar.path.setAttribute('stroke', '#ED6A5A');
+          }
+      };
+
+      // Projects
+      var barBudgetProject = new ProgressBar.Line('#progressLineBudgetProject', barConfig);
+      var barDateProject = new ProgressBar.Line('#progressLineDateProject', barConfig);
+
+      // Tasks
+      //var barBudgetTask = new ProgressBar.Line('#progressLineBudgetTask', barConfig);
+
+      barBudgetProject.animate(1);
+      barDateProject.animate(1);
+
+      //barBudgetTask.animate(1);
+
+
+    }
 
 
     // Au chargement de la page
@@ -91,33 +141,9 @@ angular.module('pomApp')
         populatePage();
 
 
+        //showProgressBars();
 
-        /*var bar = new ProgressBar.Line('#progressLineBudgetProject', {
-          strokeWidth: 4,
-          easing: 'easeInOut',
-          duration: 1400,
-          color: '#FFEA82',
-          trailColor: '#eee',
-          trailWidth: 1,
-          svgStyle: {width: '100%', height: '100%'},
-          text: {
-            style: {
-              // Text color.
-              // Default: same as stroke color (options.color)
-              color: '#999',
-              position: 'absolute',
-              right: '0',
-              top: '30px',
-              padding: 0,
-              margin: 0,
-              transform: null
-            },
-            autoStyleContainer: false
-          },
-          from: {color: '#FFEA82'},
-          to: {color: '#ED6A5A'}
-        });
-*/
+
 
 
       });
