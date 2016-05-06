@@ -20,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="project in projectsListVm.projects" ng-switch on="project.statut">
+        <tr ng-repeat="project in projectsListVm.projects" ng-switch on="project.statut" ng-dblClick="projectsListVm.projectsDetails($event, project._id)">
           
           <td><a ui-sref=".details.info({id:project._id})"> <b>{{ project.code }}</b> </a></td>
           <td><a ui-sref=".details.info({id:project._id})"> <b>{{ project.nom }}</b> </a></td>

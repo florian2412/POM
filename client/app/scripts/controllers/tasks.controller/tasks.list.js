@@ -13,13 +13,17 @@
 
 angular.module('pomApp').controller('TasksListCtrl', TasksListCtrl);
 
-function TasksListCtrl($scope, databaseService, $stateParams, utilsService) {
+function TasksListCtrl($scope, $state, databaseService, $stateParams, utilsService) {
 
   var vm = this;
 
   vm.showAllTasks = showAllTasks;
   vm.deleteTask = deleteTask;
+  vm.tasksDetails = tasksDetails;
 
+  function tasksDetails(event,id){
+    $state.go('projects.details.tasks.details',{"idtask":id});
+  }
 
   function showAllTasks(){
     databaseService.getObjectById('projects',$stateParams.id)

@@ -10,12 +10,17 @@
 
 angular.module('pomApp').controller('ProjectsListCtrl', ProjectsListCtrl);
 
-function ProjectsListCtrl($scope, databaseService, utilsService, flashService, localStorageService) {
+function ProjectsListCtrl($scope,$state, databaseService, utilsService, flashService, localStorageService) {
   var vm = this;
   
   vm.showAllProjects = showAllProjects;
   vm.deleteProject = deleteProject;
   vm.archiveProject = archiveProject;
+  vm.projectsDetails = projectsDetails;
+
+  function projectsDetails(event,id){
+    $state.go('projects.details.info',{"id":id});
+  }
 
   function showAllProjects(){
     var currentUser = localStorageService.get('currentUser');

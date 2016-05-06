@@ -15,7 +15,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr ng-repeat="task in tasksListVm.tasks" ng-switch on="task.statut">
+      <tr ng-repeat="task in tasksListVm.tasks" ng-switch on="task.statut" ng-dblClick="tasksListVm.tasksDetails($event, task._id)">
 
         <td><a ui-sref="projects.details.tasks.details({idtask:task._id})"> {{ task.code }} </a></td>
         <td><a ui-sref="projects.details.tasks.details({idtask:task._id})"> {{ task.libelle }} </a></td>
