@@ -76,14 +76,20 @@ function Service(utilsService) {
 
 
     else if (project.statut === 'En cours') {
+
+
+      project.passedDuration = utilsService.calculTaskPassedDuration(project);
+      project.timeAdvancement = Math.round((project.passedDuration * 100) / project.duration);
+      project.leftDuration = project.duration - project.passedDuration;
+
       // Calcul de l'avancement du projet en pourcentage du budget et en pourcentage de date
       var indexBudgetLineProject = utilsService.arrayObjectIndexOf(saveBudgets, project.ligne_budgetaire.id, '_id');
       var budgetLine = 0;
       if(indexBudgetLineProject > -1)
         budgetLine = saveBudgets[indexBudgetLineProject];
+
       project.advancement = Math.round((sumNowCostProject * 100) / budgetLine.montant);
-      project.passedDuration = utilsService.calculTaskPassedDuration(project);
-      project.timeAdvancement = Math.round((project.passedDuration * 100) / project.duration);
+
     }
 
 
