@@ -89,12 +89,7 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
 
           var index = utilsService.arrayObjectIndexOf(data,lastID,"_id");
           var lastProjectCode = data[index].code;
-          
-          if(lastProjectCode){
-            vm.code = _incrementCodeProject(lastProjectCode);
-          }
-          else
-            vm.code = year+'P001';
+          vm.code = ((lastProjectCode) ? _incrementCodeProject(lastProjectCode) : year+'P001');          
           
         } else
           vm.code = year+'P001';

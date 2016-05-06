@@ -36,13 +36,12 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams,utilsService, d
 
         if(!vm.task.startDate) vm.task.startDate = new Date();
         if(!vm.task.endDate) vm.task.endDate = new Date();
-        //var code;
+
         if(data.taches.length > 0){
           var maxCode = 0, newCode;
           for (var i = data.taches.length - 1; i >= 0; i--) {
             if(data.taches[i].code){
-              var numCode = parseInt(data.taches[i].code.substring(10,13));
-              console.log("NUM CODE " + numCode);
+              var numCode = parseInt(data.taches[i].code.substring(9,12));
               if(maxCode < numCode)
                 maxCode = numCode;
             } else

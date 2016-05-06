@@ -10,7 +10,7 @@
 
 angular.module('pomApp').controller('BudgetsListCtrl', BudgetsListCtrl);
 
-function BudgetsListCtrl($scope, databaseService, flashService) {
+function BudgetsListCtrl($scope, databaseService, flashService, utilsService) {
 
   var vm = this;
 
@@ -21,15 +21,8 @@ function BudgetsListCtrl($scope, databaseService, flashService) {
     databaseService.deleteObject('budgets', idBudget)
       .success(function (data) {
         if(data.success){
-          var index = -1;
-          var comArr = eval( vm.budgets );
-          for( var i = 0; i < comArr.length; i++ ) {
-            if( comArr[i]._id === idBudget ) {
-              index = i;
-              break;
-            }
-          }
-          vm.budgets.splice( index, 1 );
+          var i = utilsService.arrayObjectIndexOf(vm.budgets, idBudget, '_id');
+          vm.budgets.splice( i, 1 );
           flashService.success("Succés ! ", data.message, "bottom-right", true, 4);
         }
         else flashService.error("Erreur ! ", data.message, "bottom-right", true, 4);
