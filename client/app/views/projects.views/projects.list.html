@@ -12,6 +12,7 @@
         <tr>
           <th>Code</th>
           <th>Nom</th>
+          <th>Chef de projet</th>
           <th>Date début</th>
           <th>Statut</th>
           <th>Dernière modification</th>
@@ -20,10 +21,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="project in projectsListVm.projects" ng-switch on="project.statut" ng-dblClick="projectsListVm.projectsDetails($event, project._id)">
+        <tr ng-repeat="project in projectsListVm.projects" ng-switch on="project.statut" ng-dblClick="projectsListVm.redirectProjectsDetails($event, project._id)">
           
           <td><a ui-sref=".details.info({id:project._id})"> <b>{{ project.code }}</b> </a></td>
           <td><a ui-sref=".details.info({id:project._id})"> <b>{{ project.nom }}</b> </a></td>
+          <td>{{ project.chef_projet.prenom }} {{ project.chef_projet.nom }}</td>
           <td>{{ project.date_debut | date:"dd/MM/yyyy" }}</td>
           <td ng-switch-when="Initial"><i class="material-icons" style="color:blue;font-size:1.5em;">fiber_new</i></td>
           <td ng-switch-when="En cours"><i class="fa fa-cog fa-spin fa-fw margin-bottom" style="color:orange;font-size:1.5em;"></i></td>

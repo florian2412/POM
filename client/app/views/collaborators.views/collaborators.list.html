@@ -11,6 +11,7 @@
           <tr>
             <th>Prénom / Nom</th>
             <th>Pseudo</th>
+            <th>Fontion</th>
             <th>Manager</th>
             <th>Rôle</th>
             <th>Supprimer</th>
@@ -22,6 +23,7 @@
           <td><a ui-sref=".details({id:collaborator._id})"> {{ collaborator.prenom }} {{ collaborator.nom }} </a></td>
 
           <td>{{ collaborator.pseudo }}</td>
+          <td>{{ collaborator.fonction }}</td>
           <td><a ui-sref=".details({id:collaborator.manager.id})"> {{ collaborator.manager.prenom + ' ' +collaborator.manager.nom}} </a></td>
           <td>{{ collaborator.role }}</td>
           <td><a ng-click="collaboratorsListVm.deleteCollaborator(collaborator._id)"><span class="fa fa-trash-o fa-lg" style="color: red;"></span> </a></td>

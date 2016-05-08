@@ -34,6 +34,7 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
         utilsService.convertDateStringsToDates(data);
         vm.project = data;
         vm.minDateProject =  new Date(data.date_debut);
+        vm.numberOfCollaborators = collList.length;
 
         //durée du projet
         var date1 = new Date(data.date_debut);

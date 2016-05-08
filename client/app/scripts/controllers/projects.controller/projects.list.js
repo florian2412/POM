@@ -17,37 +17,52 @@ function ProjectsListCtrl($scope,$state, databaseService, utilsService, flashSer
   vm.showAllProjects = showAllProjects;
   vm.deleteProject = deleteProject;
   vm.archiveProject = archiveProject;
-  vm.projectsDetails = projectsDetails;
+  vm.redirectProjectsDetails = redirectProjectsDetails;
 
-  function projectsDetails(event,id){
+  function redirectProjectsDetails(event,id){
     $state.go('projects.details.info',{"id":id});
   }
 
   function showAllProjects(){
     var currentUser = localStorageService.get('currentUser');
     
-    if(currentUser.role === 'admin'){
-      databaseService.getAllObjects('projects').success(function (data) {vm.projects = data;});
-    }
-    else {
-      databaseService.getCollaboratorProjects(currentUser._id)
-        .success(function(data){ vm.projects = data; });
-    }
+    databaseService.getAllObjects('collaborators').success(function(allCollaborators){
+      
+      if(currentUser.role === 'admin'){
+        databaseService.getAllObjects('projects').success(function (data) {
+          associateChefProjet(data,allCollaborators);
+          vm.projects = data;
+        });
+      }
+      else {
+        databaseService.getCollaboratorProjects(currentUser._id)
+          .success(function(data){ 
+            associateChefProjet(data,allCollaborators);
+            vm.projects = data;
+        });
+      }
+    });
   };
+
+  function associateChefProjet(data,allCollaborators){
+    for (var i = data.length - 1; i >= 0; i--) {
+      var cp = utilsService.getElementById(data[i].chef_projet, allCollaborators);
+      data[i].chef_projet = { "nom" : cp.nom, "prenom" : cp.prenom, "id": cp._id };
+    }
+  }
 
   function archiveProject(id){
     for (var i = vm.projects.length - 1; i >= 0; i--) {
       if(vm.projects[i]._id == id)
-        vm.projects[i].statut = "Terminé(e)";
+        vm.projects[i].statut = "Archivé";
       }
+    // Vérifier si toutes les tâches sont terminées avant d'archiver un projet
 
     /*databaseService.updateObject('projects', idProject, data)
       .success(function (data) {
         flashService.Success("Le projet " + $scope.project.nom + " a bien été mis à jour !", "", "bottom-right", true, 4);
         $state.go("projects");
-      })
-      .error(function (err) {
-        console.log(err);
+      });
     });*/
   }
 

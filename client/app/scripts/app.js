@@ -109,7 +109,8 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       views: {
         '@': {
           templateUrl: 'views/projects.views/projects.details.html',
-          controller: 'ProjectsDetailsCtrl'
+          controller: 'ProjectsDetailsCtrl',
+          controllerAs: 'projectsDetailsVm'
         }
       }
     })

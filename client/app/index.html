@@ -108,14 +108,14 @@
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
             <ul class="nav navbar-nav">
               <!-- <li ng-show="!isAuthenticated"><img src="images/slogan.png" alt="Slogan"></li> -->
-              <li data-match-route="/$"><a ui-sref="/" nra-auth="['admin', 'collaborateur', 'manager']">Accueil</a></li>
-              <li data-match-route="/projects" ><a ui-sref="projects" nra-auth="['admin', 'collaborateur', 'manager']">Projets</a></li>
-              <li data-match-route="/collaborators" ><a ui-sref="collaborators" nra-auth="['admin','manager']" >Collaborateurs</a></li>
-              <li data-match-route="/budgets"><a ui-sref="budgets" nra-auth="['admin']">Lignes budgétaire</a></li>
-              <li data-match-route="/statistics"><a ui-sref="statistics" nra-auth="['admin', 'collaborateur', 'manager']" >Statistiques</a></li>
+              <li data-match-route="/$"><a ui-sref="/" nra-auth="['admin', 'collaborateur', 'manager']"><span class="fa fa-home fa-lg"></span> Accueil</a></li>
+              <li data-match-route="/projects" ><a ui-sref="projects" nra-auth="['admin', 'collaborateur', 'manager']"><span class="fa fa-briefcase"></span> Projets</a></li>
+              <li data-match-route="/collaborators" ><a ui-sref="collaborators" nra-auth="['admin','manager']" ><span class="fa fa-users"></span> Collaborateurs</a></li>
+              <li data-match-route="/budgets"><a ui-sref="budgets" nra-auth="['admin']"><span class="fa fa-euro" ></span> Lignes budgétaire</a></li>
+              <li data-match-route="/statistics"><a ui-sref="statistics" nra-auth="['admin', 'collaborateur', 'manager']" ><span class="fa fa-bar-chart"></span> Statistiques</a></li>
              <!--  <li data-match-route="/settings"><a ui-sref="settings" nra-auth="['admin', 'collaborateur', 'manager']" >Préférences</a></li> -->
-              <li data-match-route="/about"><a ui-sref="about" nra-auth="['admin', 'collaborateur', 'manager']" >A propos</a></li>
-              <li data-match-route="/help"><a ui-sref="help" nra-auth="['admin', 'collaborateur', 'manager']" >Aide</a></li>
+              <li data-match-route="/about"><a ui-sref="about" nra-auth="['admin', 'collaborateur', 'manager']" ><span class="fa fa-info-circle" ></span> A propos</a></li>
+              <li data-match-route="/help"><a ui-sref="help" nra-auth="['admin', 'collaborateur', 'manager']" ><span class="fa fa-question-circle" aria-hidden="true"></span> Aide</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li data-match-route="/account"><a ui-sref="account" ng-show="isAuthenticated"><strong>{{userFirstname}} {{userLastname}}</strong></a></li>

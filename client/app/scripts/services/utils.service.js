@@ -12,7 +12,7 @@
  */
 angular.module('pomApp').factory('utilsService', Service);
 
-function Service() {
+function Service($filter) {
 
   var service = {};
 
@@ -25,6 +25,7 @@ function Service() {
   service.calculTaskPassedDuration = calculTaskPassedDuration;
   service.calculTaskDuration = calculTaskDuration;
   service.addZero = addZero;
+  service.getElementById = getElementById;
 
   return service;
 
@@ -123,5 +124,8 @@ function Service() {
     return str.length < max ? addZero("0" + str, max) : str;
   }
 
+  function getElementById(id, list){
+    return $filter('filter')(list, function (d) {return d._id === id;})[0]
+  }
 }
 

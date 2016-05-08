@@ -19,12 +19,20 @@ table > tbody > tr > td
   padding-right: 15px;
 }
 
+table > tbody > tr > td:hover
+{
+   cursor: pointer;
+}
 a:hover{
   cursor: pointer;
 }
 
 /*md-content {
   margin-bottom: 50px;
+}*/
+/*md-sidenav, md-backdrop {
+  position: fixed !important;
+  bottom: 0;
 }*/
 
 /* Font color white */
