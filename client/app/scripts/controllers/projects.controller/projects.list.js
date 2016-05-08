@@ -11,6 +11,7 @@
 angular.module('pomApp').controller('ProjectsListCtrl', ProjectsListCtrl);
 
 function ProjectsListCtrl($scope,$state, databaseService, utilsService, flashService, localStorageService) {
+  
   var vm = this;
   
   vm.showAllProjects = showAllProjects;
@@ -29,7 +30,7 @@ function ProjectsListCtrl($scope,$state, databaseService, utilsService, flashSer
       databaseService.getAllObjects('projects').success(function (data) {vm.projects = data;});
     }
     else {
-      databaseService.getProjectsCollaborator(currentUser._id)
+      databaseService.getCollaboratorProjects(currentUser._id)
         .success(function(data){ vm.projects = data; });
     }
   };
