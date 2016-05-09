@@ -3,6 +3,11 @@
   <md-toolbar layout="row" layout-align="center center">
     <div class="md-toolbar-tools">
       <h2 class="md-flex">Liste des projets</h2>
+      <span flex></span>
+      <md-button class="md-raised" aria-label="Nouveau" nra-auth="['manager','admin']" type="submit" ui-sref=".create">
+          Nouveau
+          <md-icon><i class="material-icons">add_circle_outline</i></md-icon>
+      </md-button>
     </div>
   </md-toolbar>
 
@@ -54,21 +59,23 @@
 
         <td title="'Dernière modification'" filter="{date_derniere_modif: 'text'}" sortable="'date_derniere_modif'" >{{ row.date_derniere_modif | date:"dd/MM/yyyy 'à' HH:mm:ss" }}</td>
 
-        <td>
-          <a ng-click="projectsListVm.archiveProject(row._id)"><span class="fa fa-archive fa-lg" style="color: gray; margin-right: 10px"></span></a>
-          <a ng-click="projectsListVm.deleteProject(row._id)"><span class="fa fa-trash-o fa-lg" style="color: red;"></a>
+        <td ng-click="projectsListVm.archiveProject(row._id)">
+          <span class="fa fa-archive fa-lg" style="color: gray;"></span>
+        </td>
+        <td ng-click="projectsListVm.deleteProject(row._id)">
+          <span class="fa fa-trash-o fa-lg" style="color: red;">
         </td>
 
       </tr>
     </table>
 
 
-    <div layout="row" layout-align="center">
+   <!--  <div layout="row" layout-align="center">
       <md-input-container class="md-block">
           <md-button nra-auth="['manager','admin']" class="md-raised md-primary" type="submit" ui-sref=".create">Créer un nouveau projet</md-button>
       </md-input-container>
     </div>
-
+ -->
   </md-card-content>
 </md-card>
 <br>
