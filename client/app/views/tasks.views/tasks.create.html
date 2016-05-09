@@ -10,7 +10,7 @@
       <div flex="50" flex-xs="100" layout="row" layout-align="center">
         <div flex="70"  flex-xs="100">
           
-          <md-input-container class="md-block">
+          <md-input-container class="md-block" flex="100" >
             <label>Nom de la tâche</label>
             <input ng-model="tasksCreateVm.task.name" maxlength="100" name="nom" required>
             <div ng-messages="createTaskForm.nom.$error">
@@ -40,42 +40,27 @@
       </div>
     </div>
       <!-- Colonne 2 -->
-    <div flex="50" flex-xs="100" layout="row" layout-align="center" >
-      <div flex="70" flex-xs="100">
+    <div flex="50" flex-xs="100" layout layout-align="center" >
+      <div flex>
         
-       <!--  <md-input-container class="md-block" flex-gt-sm="">
-          <label>Statut</label>
-          <md-select ng-model="tasksCreateVm.task.statut" name="statut" required>
-            <md-option ng-repeat="statut in tasksCreateVm.statuts" value="{{statut}}">{{statut}}</md-option>
-          </md-select>
-          <div ng-messages="createTaskForm.statut.$error">
-            <div ng-message="required">Ce champ est obligatoire.</div>
-          </div>
-        </md-input-container>
-
-        <br>
- -->
-        <md-input-container class="md-block" flex-xs="100">
+        <md-input-container class="md-block" flex="100" flex-xs="100">
           <label>Description</label>
           <textarea ng-model="tasksCreateVm.task.description" name="description" maxlength="250" md-maxlength="250" rows="10"></textarea>
           <div ng-messages="createTaskForm.description.$error">
             <div ng-message="required">Ce champ est obligatoire.</div>
           </div>
         </md-input-container>
-
-        <div layout-align="center" layout>
-          <div flex="70" flex-xs="100">
+   
+        <div flex="100" flex-xs="100" layout-align="center" layout>
+          <div>
             <md-input-container class="md-block">
-              <div layout="row" flex>
-                <md-button class="md-raised" ng-click="tasksCreateVm.showCollaboratorPicker($event)">
-                  Choisir les collaborateurs
-                </md-button>
-              </div>
+              <md-button class="md-raised" ng-click="tasksCreateVm.showCollaboratorPicker($event)">
+                Choisir les collaborateurs
+              </md-button>
             </md-input-container>
           </div>
         </div>
-      
-
+    
       </div>
     </div>
     

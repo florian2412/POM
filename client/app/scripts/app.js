@@ -9,7 +9,8 @@
  * Main module of the application.
  */
 
-var pomApp = angular.module('pomApp', ['ui.router', 'ngMaterial', 'ngMessages', 'ngRoleAuth', 'ngSanitize', 'ngPassword', 'LocalStorageModule', 'mgcrea.ngStrap', 'chart.js', 'ngImgCrop']);
+var pomApp = angular.module('pomApp', ['ui.router', 'ngMaterial', 'ngMessages', 'ngRoleAuth', 'ngSanitize', 'ngPassword', 
+                                        'LocalStorageModule', 'mgcrea.ngStrap', 'chart.js', 'ngImgCrop', 'ngTable']);
 
 function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $mdThemingProvider) {
   $mdThemingProvider.theme('default').primaryPalette('green').accentPalette('blue');
