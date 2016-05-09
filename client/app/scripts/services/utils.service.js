@@ -20,12 +20,9 @@ function Service($filter) {
   service.arrayObjectIndexOf = arrayObjectIndexOf;
   service.dateDiff = dateDiff;
   service.capitalize = capitalize;
-  /*service.calculProjectDuration = calculProjectDuration;
-  service.calculProjectLeftDuration = calculProjectLeftDuration;
-  service.calculTaskPassedDuration = calculTaskPassedDuration;
-  service.calculTaskDuration = calculTaskDuration;*/
   service.addZero = addZero;
   service.getElementById = getElementById;
+  service.sumArrayValues = sumArrayValues;
 
   return service;
 
@@ -74,51 +71,6 @@ function Service($filter) {
   function capitalize(word){
     return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
   }
-/*
-  // Retourne la durée totale théorique d'une tache
-  function calculTaskDuration(task) {
-    var firstDate = new Date(task.date_debut);
-    var endDate = new Date(task.date_fin_theorique);
-    return dateDiff(firstDate, endDate);
-  };
-*/
-  // Retourne la durée restante théorique d'une tache
-  /*function calculTaskLeftDuration(task) {
-   var firstDate = new Date();
-   var endDate = new Date(task.date_fin_theorique);
-   return dateDiff(firstDate, endDate);
-   };*/
-/*
-  // Retourne la durée déjà passée théorique d'une tache
-  function calculTaskPassedDuration(task) {
-    var firstDate = new Date(task.date_debut);
-    var endDate = new Date();
-
-    // -2 car on enlève la date du jour et le +1 que ajoute au retour de la fonction dateDiff
-    var diff = dateDiff(firstDate, endDate) - 2;
-
-    // Si la tache a commencé avant aujourd'hui
-    if(diff > 0)
-      return diff;
-    // Si la tache commence aujourd'hui
-    else
-      return diff + 1;
-  };
-
-  // Retourne la durée totale théorique d'un projet
-  function calculProjectDuration(project) {
-    var firstDate = new Date(project.date_debut);
-    var endDate = new Date(project.date_fin_theorique);
-    return dateDiff(firstDate, endDate);
-  };
-
-  // Retourne la durée restante théorique d'un projet
-  function calculProjectLeftDuration(project) {
-    var firstDate = new Date();
-    var endDate = new Date(project.date_fin_theorique);
-    return dateDiff(firstDate, endDate);
-  };
-  */
 
   function addZero(str, max) {
     str = str.toString();
@@ -128,5 +80,14 @@ function Service($filter) {
   function getElementById(id, list){
     return $filter('filter')(list, function (d) {return d._id === id;})[0]
   }
+
+  function sumArrayValues(array) {
+    var count = 0;
+    for (var i = array.length; i--;) {
+      count += array[i];
+    }
+    return count;
+  }
+
 }
 

@@ -12,16 +12,18 @@ angular.module('pomApp')
 
     $scope.user = localStorageService.get('currentUser');
     var vm = this;
+    vm.updateChartProject = updateChartProject;
 
     function populatePage() {
       buildProjectsStatusChart();
 
-      // TODO
-      // Cout de chaque taches par rapport a cout total du projet
-      // Faire un graph ou on voit la répartition des taches, des couts par rapport à la ligne budgétaire du projet avec une valeur de plus, représentant le budget restant
+    }
 
-      // Pour UN SEUL projet pour le moment, le projet 0, affichage des détails des couts des taches
-      buildTasksCostChart();
+    function updateChartProject() {
+      var project = JSON.parse(vm.project);
+
+      buildTasksCostChart(project._id);
+      buildTasksCostProjectBudgetChart(project._id);
 
     }
 
@@ -44,9 +46,17 @@ angular.module('pomApp')
       chartsService.buildPieChart(idChart, titleChart, pointFormatChart, dataChart);
     }
 
+    function searchProjectInProjects(projectId) {
+      var indexProject = utilsService.arrayObjectIndexOf(vm.saveProjects, projectId, '_id');
+      if(indexProject > -1)
+        return vm.saveProjects[indexProject];
+      else
+        return -1;
+    }
 
-    function buildTasksCostChart() {
-      var project = vm.saveProjects[0];
+    function buildTasksCostChart(projectId) {
+      var project = searchProjectInProjects(projectId);
+
       var tasks = project.taches;
       var tasksCost = [];
       var tasksName = [];
@@ -60,11 +70,43 @@ angular.module('pomApp')
 
       var idChart = 'piechart-project';
       var titleChart = 'Répartition des coûts des tâches sur le projet';
-      var pointFormatChart = 'Coût de la tâche :<b>{point.y} €</b> <br> Soit :<b>{point.percentage:.1f}%</b>';
+      var pointFormatChart = 'Coût :<b>{point.y} €</b> <br> Soit :<b>{point.percentage:.1f}%</b>';
 
       chartsService.buildPieChart(idChart, titleChart, pointFormatChart, dataChart);
     }
 
+
+    function buildTasksCostProjectBudgetChart(projectId) {
+      var project = searchProjectInProjects(projectId);
+
+      var tasks = project.taches;
+      var tasksCost = [];
+      var tasksName = [];
+
+      for (var i = 0; i < tasks.length; i++) {
+        tasksCost.push(statisticsService.calculTaskTotalCost(tasks[i], vm.saveCollaborators));
+        tasksName.push(tasks[i].libelle);
+      }
+
+      // Calcul du budget restant d'un projet selon sa ligne budgétaire
+      var tasksTotalCost = utilsService.sumArrayValues(tasksCost);
+      var indexProjectBudget = utilsService.arrayObjectIndexOf(vm.saveBudgets, project.ligne_budgetaire.id, '_id');
+      var projectBudget = 0;
+      if(indexProjectBudget > -1)
+        projectBudget = vm.saveBudgets[indexProjectBudget];
+      var leftBudget = projectBudget.montant - tasksTotalCost;
+
+      tasksCost.push(leftBudget);
+      tasksName.push('Budget restant sur le projet');
+
+      var dataChart = chartsService.calculDataChart(tasksCost, tasksName);
+
+      var idChart = 'piechart-project2';
+      var titleChart = 'Répartition des coûts des tâches par rapport au budget du projet';
+      var pointFormatChart = 'Coût :<b>{point.y} €</b> <br> Soit :<b>{point.percentage:.1f}%</b>';
+
+      chartsService.buildPieChart(idChart, titleChart, pointFormatChart, dataChart);
+    }
 
     // Au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
