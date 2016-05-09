@@ -1,5 +1,5 @@
 <div layout="row" flex  layout-align="center">
-    <h4>Détails du projet</h4>
+  <h4>Détails du projet</h4>
 </div>
 <br>
 <div flex layout>
@@ -23,13 +23,13 @@
 
       <div layout layout-align="center center">
         <div flex="45">
-          <label>Date de début</label>
-          <md-datepicker ng-model="projectsDetailsVm.project.date_debut" md-min-date="projectsDetailsVm.minDateProject" ng-value="projectsDetailsVm.project.date_debut"></md-datepicker>
+          <label>Date de début théorique</label>
+          <md-datepicker ng-model="projectsDetailsVm.project.date_debut" md-min-date="projectsDetailsVm.minDateProject" ng-value="projectsDetailsVm.project.date_debut" ng-disabled="true"></md-datepicker>
         </div>
         <div flex="10"></div>
         <div flex="45">
           <label>Date de fin <b>théorique</b></label>
-          <md-datepicker ng-model="projectsDetailsVm.project.date_fin_theorique" md-min-date="projectsDetailsVm.project.date_debut"  ng-value="projectsDetailsVm.project.date_fin_theorique"></md-datepicker>
+          <md-datepicker ng-model="projectsDetailsVm.project.date_fin_theorique" md-min-date="projectsDetailsVm.project.date_debut"  ng-value="projectsDetailsVm.project.date_fin_theorique" ng-disabled="true"></md-datepicker>
         </div>
       </div>
 
@@ -50,7 +50,7 @@
         <div flex="45">
           <md-input-container class="md-block">
             <label>Ligne budgétaire</label>
-            <md-select ng-model="projectsDetailsVm.selectedBudget" >
+            <md-select ng-model="projectsDetailsVm.selectedBudget" ng-disabled="true">
               <md-option ng-repeat="budget in projectsDetailsVm.budgets" ng-value="budget" >
                 {{ budget.libelle }} - {{ budget.montant }} €
               </md-option>
@@ -60,20 +60,30 @@
       </div>
 
       <br>
-      
+
       <div layout layout-align="center center">
         <div flex="45">
-          <label>Date de fin <b>réelle</b></label>
-          <md-datepicker ng-model="projectsDetailsVm.project.date_fin_reelle" md-min-date="projectsDetailsVm.project.date_debut" md-placeholder="Entrer date"></md-datepicker>
+
+          <label>Date de fin <b>réelle</b></label><br>
+          <md-datepicker ng-model="projectsDetailsVm.project.date_fin_reelle" md-min-date="projectsDetailsVm.project.date_debut" md-placeholder="Entrer date" ng-value="projectsDetailsVm.project.date_fin_reelle" ></md-datepicker>
         </div>
         <div flex="10"></div>
         <div flex="45">
-          <md-input-container class="md-block">
-              <md-button class="md-raised" ng-click="projectsDetailsVm.showCollaboratorPicker($event)">
-                Voir/Choisir les collaborateurs
-              </md-button>
-          </md-input-container>
+          <!--<label>Date de début <b>réelle</b></label>
+           <md-datepicker ng-model="projectsDetailsVm.project.date_debut_reelle" md-min-date="projectsDetailsVm.project.date_debut_reelle" md-placeholder="Entrer date" ng-value="projectsDetailsVm.project.date_debut_reelle"></md-datepicker>-->
         </div>
+      </div>
+
+      <br>
+
+      <div layout layout-align="center center">
+        <md-input-container class="md-block">
+          <div layout="row" flex>
+            <md-button class="md-raised" ng-click="projectsDetailsVm.showCollaboratorPicker($event)">
+              Choisir les collaborateurs
+            </md-button>
+          </div>
+        </md-input-container>
       </div>
 
       <br>
