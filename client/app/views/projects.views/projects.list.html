@@ -1,5 +1,5 @@
 <md-card ng-cloak>
-  
+
   <md-toolbar layout="row" layout-align="center center">
     <div class="md-toolbar-tools">
       <h2 class="md-flex">Liste des projets</h2>
@@ -22,7 +22,7 @@
       </thead>
       <tbody>
         <tr ng-repeat="project in projectsListVm.projects" ng-switch on="project.statut" ng-dblClick="projectsListVm.redirectProjectsDetails($event, project._id)">
-          
+
           <td><a ui-sref=".details.info({id:project._id})"> <b>{{ project.code }}</b> </a></td>
           <td><a ui-sref=".details.info({id:project._id})"> <b>{{ project.nom }}</b> </a></td>
           <td>{{ project.chef_projet.prenom }} {{ project.chef_projet.nom }}</td>
@@ -44,12 +44,12 @@
     </table> -->
 
     <table ng-table="projectsListVm.tableParams" show-filter="true" class="table table-striped table-hover">
-      <tr ng-repeat="row in $data" ng-dblClick="projectsListVm.redirectProjectsDetails($event, project._id)">
+      <tr ng-repeat="row in $data" ng-dblClick="projectsListVm.redirectProjectsDetails($event, row._id)">
         <td title="'Code'" filter="{code: 'text'}" sortable="'code'"><a ui-sref=".details.info({id:row._id})"> <b>{{ row.code }}</b> </a></td>
-        <td title="'Nom'" filter="{nom: 'text'}" sortable="'nom'"><a ui-sref=".details.info({id:project._id})"> <b>{{ row.nom }}</b> </a></td>
+        <td title="'Nom'" filter="{nom: 'text'}" sortable="'nom'"><a ui-sref=".details.info({id:row._id})"> <b>{{ row.nom }}</b> </a></td>
         <td title="'Chef de projet'" sortable="'chef_projet.identite'">{{row.chef_projet.identite}}</td>
         <td title="'Date début'" filter="{date_debut: 'text'}" sortable="'date_debut'">{{row.date_debut | date:"dd/MM/yyyy" }}</td>
-        
+
         <td title="'Statut'" sortable="'statut.statut'"> <md-tooltip md-direction="left">{{row.statut.statut}}</md-tooltip><span class="{{row.statut.class}}" style="color:{{row.statut.color}};font-size:1.5em;"></span></td>
 
         <td title="'Dernière modification'" filter="{date_derniere_modif: 'text'}" sortable="'date_derniere_modif'" >{{ row.date_derniere_modif | date:"dd/MM/yyyy 'à' HH:mm:ss" }}</td>
@@ -58,7 +58,7 @@
           <a ng-click="projectsListVm.archiveProject(row._id)"><span class="fa fa-archive fa-lg" style="color: gray; margin-right: 10px"></span></a>
           <a ng-click="projectsListVm.deleteProject(row._id)"><span class="fa fa-trash-o fa-lg" style="color: red;"></a>
         </td>
-      
+
       </tr>
     </table>
 

@@ -123,7 +123,7 @@ function MainCtrl($scope, $rootScope, $location, $timeout, localStorageService, 
   // Au chargement de la page
   $scope.$on('$viewContentLoaded', function() {
 
-    //  databaseService.getAllObjects('projects').success(function (data){ vm.saveProjects = data.data;})
+    //  databaseService.getAllObjects('projects').success(function (data){ vm.saveProjects = data;})
     //  .error(function (err) { console.log(err); });
 
     databaseService.getAllObjects('collaborators').success(function(data){ vm.saveCollaborators = data;})
