@@ -12,10 +12,8 @@ angular.module('pomApp')
 
     $scope.user = localStorageService.get('currentUser');
     var idCurrentUser = localStorageService.get('currentUser')._id;
-    console.log(idCurrentUser);
 
     var vm = this;
-
 
     function buildProjectsStatusGraph() {
       /**********************************************************************************************************
@@ -129,8 +127,6 @@ angular.module('pomApp')
                   }
 
                   var nb = countProjects(numberProjectsByStatuts);
-                  console.log(nb[0]);
-                  console.log(nb[1]);
 
                   var newData = [];
                   for (var k = 0; k < nb[0].length; k++) {
@@ -181,14 +177,65 @@ angular.module('pomApp')
       var project = vm.saveProjects[0];
       var tasks = project.taches;
       var tasksCost = [];
+      var tasksName = [];
 
 
       for (var i = 0; i < tasks.length; i++) {
         tasksCost.push(calculTaskTotalCost(tasks[i]));
+        tasksName.push(tasks[i].libelle);
       }
 
       console.log('tasksCost');
       console.log(tasksCost);
+      console.log('tasksName');
+      console.log(tasksName);
+
+      var graphData = [];
+
+      for (var j = 0; j < tasksCost.length; j++) {
+        var dataJson = {
+          'y': tasksCost[j],
+          'name': tasksName[j]
+        };
+        graphData.push(dataJson);
+      }
+
+      $(function () {
+        $(document).ready(function () {
+          // Build the chart
+          $('#piechart-project').highcharts({
+            chart: {
+              plotBackgroundColor: null,
+              plotBorderWidth: null,
+              plotShadow: true,
+              type: 'pie'
+            },
+            title: {
+              text: 'Répartition des coûts des tâches sur le projet'
+            },
+            tooltip: {
+              pointFormat: 'Coût de la tâche :<b>{point.y} €</b> <br> Soit :<b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+              pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                  enabled: false
+                },
+                showInLegend: true
+              }
+            },
+            series: [{
+              colorByPoint: true,
+              data: graphData
+            }]
+          })
+        })
+      });
+
+
+
     }
 
 
