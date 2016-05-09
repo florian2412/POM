@@ -8,282 +8,65 @@
  * Controller of the pomApp
  */
 angular.module('pomApp')
-  .controller('StatisticsCtrl', function ($scope, $rootScope, $location, $timeout, localStorageService, databaseService, utilsService) {
+  .controller('StatisticsCtrl', function ($scope, $rootScope, $location, $timeout, localStorageService, databaseService, utilsService, chartsService, statisticsService) {
 
     $scope.user = localStorageService.get('currentUser');
-    var idCurrentUser = localStorageService.get('currentUser')._id;
-
     var vm = this;
 
-    function buildProjectsStatusGraph() {
-      /**********************************************************************************************************
-       Pie chart of all projects
-       *********************************************************************************************************/
-      getData(function (newData) {
-        $(function () {
-          $(document).ready(function () {
-
-            // Build the chart
-            $('#piechart').highcharts({
-              chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: true,
-                type: 'pie'
-              },
-              title: {
-                text: 'Compte rendu des projets'
-              },
-              tooltip: {
-                pointFormat: 'Nombre de projets :<b>{point.y}</b> <br> Soit :<b>{point.percentage:.1f}%</b>'
-              },
-              plotOptions: {
-                pie: {
-                  allowPointSelect: true,
-                  cursor: 'pointer',
-                  dataLabels: {
-                    enabled: false
-                  },
-                  showInLegend: true
-                }
-              },
-              series: [{
-                colorByPoint: true,
-                data: newData
-              }]
-            })
-          })
-        });
-      });
-    }
-
-    function buildBarGraph() {
-      /**********************************************************************************************************
-       Bar chart
-       *********************************************************************************************************/
-      databaseService.getAllObjects('projects')
-        .success(function (data) {
-          $(function () {
-            $('#barchart').highcharts({
-              chart: {
-                type: 'column'
-              },
-              title: {
-                text: 'Durée passée par projet / Coût de chaque projet'
-              },
-              xAxis: {
-                categories: {series:data}
-              },
-              yAxis: [{
-                min: 0,
-                title: {
-                  text: 'Employees'
-                }
-              }, {
-                title: {
-                  text: 'Profit (millions)'
-                },
-                opposite: true
-              }],
-              legend: {
-                shadow: false
-              },
-              tooltip: {
-                shared: true
-              },
-              plotOptions: {
-                column: {
-                  grouping: false,
-                  shadow: false,
-                  borderWidth: 0
-                }
-              },
-              series: [{
-                data : (function () {
-                  var libelle = [];
-                  var projects = data;
-                  for (var i = 0; i < projects.length; i++)
-                    libelle.push(projects[i].nom);
-                  //console.log(statuts);
-
-                  /* Récupération des intitulés des statuts ainsi que du nombre de projets par statut*/
-
-                  var numberProjectsByStatuts = libelle;
-
-                  function countProjects(numberProjectsByStatuts) {
-                    var a = [], b = [], prev;
-
-                    numberProjectsByStatuts.sort();
-                    for (var j = 0; j < numberProjectsByStatuts.length; j++) {
-                      if (numberProjectsByStatuts[j] !== prev) {
-                        a.push(numberProjectsByStatuts[j]);
-                        b.push(1);
-                      } else {
-                        b[b.length - 1]++;
-                      }
-                      prev = numberProjectsByStatuts[j];
-                    }
-                    return [a, b];
-                  }
-
-                  var nb = countProjects(numberProjectsByStatuts);
-
-                  var newData = [];
-                  for (var k = 0; k < nb[0].length; k++) {
-                    var dataJson = {
-                      'y': nb[1][k],
-                      'name': nb[0][k]
-                    };
-
-                    newData.push(dataJson);
-                  }
-
-                  return newData;
-                }())
-              }]
-            });
-          });
-        });
-    }
-
-
-    // Retourne le cout total d'une tache par rapport à la durée et aux collaborateurs affecté
-    function calculTaskTotalCost(task) {
-      var taskTotalCost = 0;
-      var currentTaskDuration = utilsService.calculProjectDuration(task);
-      for (var l = 0; l < task.collaborateurs.length; l++) {
-        var currentCollaboratorId = task.collaborateurs[l];
-        var indexCurrentCollaborator = utilsService.arrayObjectIndexOf(vm.saveCollaborators, currentCollaboratorId, '_id');
-        var currentCollaborator = -1;
-        if (indexCurrentCollaborator > -1)
-          currentCollaborator = vm.saveCollaborators[indexCurrentCollaborator];
-        taskTotalCost += currentCollaborator.cout_horaire * 7 * currentTaskDuration;
-      }
-      return taskTotalCost;
-    }
-
     function populatePage() {
+      buildProjectsStatusChart();
 
-      buildProjectsStatusGraph();
-//      buildBarGraph();
+      // TODO
+      // Cout de chaque taches par rapport a cout total du projet
+      // Faire un graph ou on voit la répartition des taches, des couts par rapport à la ligne budgétaire du projet avec une valeur de plus, représentant le budget restant
 
-      // TODO Cout de chaque taches par rapport a cout total du projet
-      // Récupérer le cout de chaque tache
-      // Faire la somme
-      // 1. Faire un graph ou on voit la répartition par tâches, des couts (en gros, on pourra voir quelles sont les taches les plus couteuses et les moins couteuse
-      // 2. Faire un graph ou on voit la répartition des taches, des couts par rapport à la ligne budgétaire du projet avec une valeur de plus, représentant le budget restant
-
-
-      var project = vm.saveProjects[0];
-      var tasks = project.taches;
-      var tasksCost = [];
-      var tasksName = [];
-
-
-      for (var i = 0; i < tasks.length; i++) {
-        tasksCost.push(calculTaskTotalCost(tasks[i]));
-        tasksName.push(tasks[i].libelle);
-      }
-
-      console.log('tasksCost');
-      console.log(tasksCost);
-      console.log('tasksName');
-      console.log(tasksName);
-
-      var graphData = [];
-
-      for (var j = 0; j < tasksCost.length; j++) {
-        var dataJson = {
-          'y': tasksCost[j],
-          'name': tasksName[j]
-        };
-        graphData.push(dataJson);
-      }
-
-      $(function () {
-        $(document).ready(function () {
-          // Build the chart
-          $('#piechart-project').highcharts({
-            chart: {
-              plotBackgroundColor: null,
-              plotBorderWidth: null,
-              plotShadow: true,
-              type: 'pie'
-            },
-            title: {
-              text: 'Répartition des coûts des tâches sur le projet'
-            },
-            tooltip: {
-              pointFormat: 'Coût de la tâche :<b>{point.y} €</b> <br> Soit :<b>{point.percentage:.1f}%</b>'
-            },
-            plotOptions: {
-              pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                  enabled: false
-                },
-                showInLegend: true
-              }
-            },
-            series: [{
-              colorByPoint: true,
-              data: graphData
-            }]
-          })
-        })
-      });
-
-
+      // Pour UN SEUL projet pour le moment, le projet 0, affichage des détails des couts des taches
+      buildTasksCostChart();
 
     }
 
-
-
-    function getData(callback) {
+    /**********************************************************************************************************
+     Pie chart of all projects
+     *********************************************************************************************************/
+    function buildProjectsStatusChart() {
       var statuts = [];
       var projects = vm.saveProjects;
       for (var i = 0; i < projects.length; i++)
         statuts.push(projects[i].statut);
 
-      /* Récupération des intitulés des statuts ainsi que du nombre de projets par statut*/
-      var numberProjectsByStatuts = statuts;
+      var nbProjectsAndStatus = statisticsService.countProjectsByStatusFromStatus(statuts);
 
-      function countProjects(numberProjectsByStatuts) {
-        var a = [], b = [], prev;
+      var dataChart = chartsService.calculDataChart(nbProjectsAndStatus[1], nbProjectsAndStatus[0]);
+      var idChart = 'piechart';
+      var titleChart = 'Compte rendu des projets';
+      var pointFormatChart = 'Nombre de projets :<b>{point.y}</b> <br> Soit :<b>{point.percentage:.1f}%</b>';
 
-        numberProjectsByStatuts.sort();
-        for (var j = 0; j < numberProjectsByStatuts.length; j++) {
-          if (numberProjectsByStatuts[j] !== prev) {
-            a.push(numberProjectsByStatuts[j]);
-            b.push(1);
-          } else {
-            b[b.length - 1]++;
-          }
-          prev = numberProjectsByStatuts[j];
-        }
-        return [a, b];
-      }
-
-      var nb = countProjects(numberProjectsByStatuts);
-      console.log(nb[0]);
-      console.log(nb[1]);
-
-      var newData = [];
-      for (var k = 0; k < nb[0].length; k++) {
-        var dataJson = {
-          'y': nb[1][k],
-          'name': nb[0][k]
-        };
-
-        newData.push(dataJson);
-      }
-      callback(newData);
+      chartsService.buildPieChart(idChart, titleChart, pointFormatChart, dataChart);
     }
 
 
+    function buildTasksCostChart() {
+      var project = vm.saveProjects[0];
+      var tasks = project.taches;
+      var tasksCost = [];
+      var tasksName = [];
 
-// Au chargement de la page
+      for (var i = 0; i < tasks.length; i++) {
+        tasksCost.push(statisticsService.calculTaskTotalCost(tasks[i], vm.saveCollaborators));
+        tasksName.push(tasks[i].libelle);
+      }
+
+      var dataChart = chartsService.calculDataChart(tasksCost, tasksName);
+
+      var idChart = 'piechart-project';
+      var titleChart = 'Répartition des coûts des tâches sur le projet';
+      var pointFormatChart = 'Coût de la tâche :<b>{point.y} €</b> <br> Soit :<b>{point.percentage:.1f}%</b>';
+
+      chartsService.buildPieChart(idChart, titleChart, pointFormatChart, dataChart);
+    }
+
+
+    // Au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
 
       // On récupère tout ce dont on a besoin de la BDD et on stocke dans des variables
@@ -296,14 +79,105 @@ angular.module('pomApp')
       databaseService.getAllObjects('budgets').success(function(data){ vm.saveBudgets = data.data; })
         .error(function(err){ console.log(err); });
 
-      /*databaseService.getCollaboratorProjects(idCurrentUser).success(function(data){ vm.projects = data; })
-       .error(function(err){ console.log(err); });*/
-
       $timeout(function() {
         populatePage();
       }, 1000);
 
     });
+
+
+
+
+    /**********************************************************************************************************
+     Bar chart
+     *********************************************************************************************************/
+    /*
+     function buildBarChart() {
+     databaseService.getAllObjects('projects')
+     .success(function (data) {
+     $(function () {
+     $('#barchart').highcharts({
+     chart: {
+     type: 'column'
+     },
+     title: {
+     text: 'Durée passée par projet / Coût de chaque projet'
+     },
+     xAxis: {
+     categories: {series:data}
+     },
+     yAxis: [{
+     min: 0,
+     title: {
+     text: 'Employees'
+     }
+     }, {
+     title: {
+     text: 'Profit (millions)'
+     },
+     opposite: true
+     }],
+     legend: {
+     shadow: false
+     },
+     tooltip: {
+     shared: true
+     },
+     plotOptions: {
+     column: {
+     grouping: false,
+     shadow: false,
+     borderWidth: 0
+     }
+     },
+     series: [{
+     data : (function () {
+     var libelle = [];
+     var projects = data;
+     for (var i = 0; i < projects.length; i++)
+     libelle.push(projects[i].nom);
+     //console.log(statuts);
+
+     // Récupération des intitulés des statuts ainsi que du nombre de projets par statut
+
+     var numberProjectsByStatuts = libelle;
+
+     function countProjects(numberProjectsByStatuts) {
+     var a = [], b = [], prev;
+
+     numberProjectsByStatuts.sort();
+     for (var j = 0; j < numberProjectsByStatuts.length; j++) {
+     if (numberProjectsByStatuts[j] !== prev) {
+     a.push(numberProjectsByStatuts[j]);
+     b.push(1);
+     } else {
+     b[b.length - 1]++;
+     }
+     prev = numberProjectsByStatuts[j];
+     }
+     return [a, b];
+     }
+
+     var nb = countProjects(numberProjectsByStatuts);
+
+     var newData = [];
+     for (var k = 0; k < nb[0].length; k++) {
+     var dataJson = {
+     'y': nb[1][k],
+     'name': nb[0][k]
+     };
+
+     newData.push(dataJson);
+     }
+
+     return newData;
+     }())
+     }]
+     });
+     });
+     });
+     }
+     */
 
   });
 

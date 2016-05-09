@@ -20,10 +20,10 @@ function Service($filter) {
   service.arrayObjectIndexOf = arrayObjectIndexOf;
   service.dateDiff = dateDiff;
   service.capitalize = capitalize;
-  service.calculProjectDuration = calculProjectDuration;
+  /*service.calculProjectDuration = calculProjectDuration;
   service.calculProjectLeftDuration = calculProjectLeftDuration;
   service.calculTaskPassedDuration = calculTaskPassedDuration;
-  service.calculTaskDuration = calculTaskDuration;
+  service.calculTaskDuration = calculTaskDuration;*/
   service.addZero = addZero;
   service.getElementById = getElementById;
 
@@ -74,21 +74,21 @@ function Service($filter) {
   function capitalize(word){
     return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
   }
-
+/*
   // Retourne la durée totale théorique d'une tache
   function calculTaskDuration(task) {
     var firstDate = new Date(task.date_debut);
     var endDate = new Date(task.date_fin_theorique);
     return dateDiff(firstDate, endDate);
   };
-
+*/
   // Retourne la durée restante théorique d'une tache
   /*function calculTaskLeftDuration(task) {
    var firstDate = new Date();
    var endDate = new Date(task.date_fin_theorique);
    return dateDiff(firstDate, endDate);
    };*/
-
+/*
   // Retourne la durée déjà passée théorique d'une tache
   function calculTaskPassedDuration(task) {
     var firstDate = new Date(task.date_debut);
@@ -118,6 +118,7 @@ function Service($filter) {
     var endDate = new Date(project.date_fin_theorique);
     return dateDiff(firstDate, endDate);
   };
+  */
 
   function addZero(str, max) {
     str = str.toString();

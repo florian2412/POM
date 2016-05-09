@@ -15,12 +15,18 @@ function Service(utilsService) {
 
   service.projectStats = projectStats;
   service.taskStats = taskStats;
+  service.countProjectsByStatusFromStatus = countProjectsByStatusFromStatus;
+  service.calculTaskTotalCost = calculTaskTotalCost;
+  service.calculTaskDuration = calculTaskDuration;
+  service.calculTaskPassedDuration = calculTaskPassedDuration;
+  service.calculProjectDuration = calculProjectDuration;
+  service.calculProjectLeftDuration = calculProjectLeftDuration;
 
   return service;
 
   function taskStats(task, currentTask, saveCollaborators, totalCost) {
 
-    task.duration = utilsService.calculTaskDuration(task);
+    task.duration = calculTaskDuration(task);
 
     if (task.statut === 'Initial') {
       task.leftDuration = task.duration; // OK
@@ -29,7 +35,7 @@ function Service(utilsService) {
       task.passedDuration = 0; // OK
     }
     else if (task.statut === 'En cours') {
-      task.passedDuration = utilsService.calculTaskPassedDuration(task);
+      task.passedDuration = calculTaskPassedDuration(task);
       task.leftDuration = task.duration - task.passedDuration;
       task.totalCost = totalCost;
 
@@ -76,8 +82,8 @@ function Service(utilsService) {
 
 
     else if (project.statut === 'En cours') {
-      
-      project.passedDuration = utilsService.calculTaskPassedDuration(project);
+
+      project.passedDuration = calculTaskPassedDuration(project);
       project.timeAdvancement = Math.round((project.passedDuration * 100) / project.duration);
       project.leftDuration = project.duration - project.passedDuration;
 
@@ -103,6 +109,83 @@ function Service(utilsService) {
     }
 
     return project;
+  };
+
+
+
+  function countProjectsByStatusFromStatus(numberProjectsByStatuts) {
+    var a = [], b = [], prev;
+
+    numberProjectsByStatuts.sort();
+    for (var j = 0; j < numberProjectsByStatuts.length; j++) {
+      if (numberProjectsByStatuts[j] !== prev) {
+        a.push(numberProjectsByStatuts[j]);
+        b.push(1);
+      } else {
+        b[b.length - 1]++;
+      }
+      prev = numberProjectsByStatuts[j];
+    }
+    return [a, b];
+  }
+
+  // Retourne le cout total d'une tache par rapport à la durée et aux collaborateurs affecté
+  function calculTaskTotalCost(task, saveCollaborators) {
+    var taskTotalCost = 0;
+    var currentTaskDuration = calculProjectDuration(task);
+    for (var l = 0; l < task.collaborateurs.length; l++) {
+      var currentCollaboratorId = task.collaborateurs[l];
+      var indexCurrentCollaborator = utilsService.arrayObjectIndexOf(saveCollaborators, currentCollaboratorId, '_id');
+      var currentCollaborator = -1;
+      if (indexCurrentCollaborator > -1)
+        currentCollaborator = saveCollaborators[indexCurrentCollaborator];
+      taskTotalCost += currentCollaborator.cout_horaire * 7 * currentTaskDuration;
+    }
+    return taskTotalCost;
+  }
+
+  // Retourne la durée totale théorique d'une tache
+  function calculTaskDuration(task) {
+    var firstDate = new Date(task.date_debut);
+    var endDate = new Date(task.date_fin_theorique);
+    return utilsService.dateDiff(firstDate, endDate);
+  };
+
+  // Retourne la durée restante théorique d'une tache
+  /*function calculTaskLeftDuration(task) {
+   var firstDate = new Date();
+   var endDate = new Date(task.date_fin_theorique);
+   return utilsService.dateDiff(firstDate, endDate);
+   };*/
+
+  // Retourne la durée déjà passée théorique d'une tache
+  function calculTaskPassedDuration(task) {
+    var firstDate = new Date(task.date_debut);
+    var endDate = new Date();
+
+    // -2 car on enlève la date du jour et le +1 que ajoute au retour de la fonction dateDiff
+    var diff = utilsService.dateDiff(firstDate, endDate) - 2;
+
+    // Si la tache a commencé avant aujourd'hui
+    if(diff > 0)
+      return diff;
+    // Si la tache commence aujourd'hui
+    else
+      return diff + 1;
+  };
+
+  // Retourne la durée totale théorique d'un projet
+  function calculProjectDuration(project) {
+    var firstDate = new Date(project.date_debut);
+    var endDate = new Date(project.date_fin_theorique);
+    return utilsService.dateDiff(firstDate, endDate);
+  };
+
+  // Retourne la durée restante théorique d'un projet
+  function calculProjectLeftDuration(project) {
+    var firstDate = new Date();
+    var endDate = new Date(project.date_fin_theorique);
+    return utilsService.dateDiff(firstDate, endDate);
   };
 
 }
