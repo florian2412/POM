@@ -12,8 +12,6 @@
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
     <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.css" />
-    <link rel="stylesheet" href="bower_components/ng-img-crop/compile/minified/ng-img-crop.css" />
     <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.min.css" />
     <!-- endbower -->
     <!-- endbuild -->
@@ -22,8 +20,11 @@
     <link rel="stylesheet" href="styles/angular.strap.css">
     <link rel="stylesheet" href="styles/bootstrap.min.css">
     <link rel="stylesheet" href="styles/main.css">
-    <!-- <link rel="stylesheet" type="text/css" href="ng-img-crop.css">
- -->
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/styles/main.css">
+
+
     <!-- endbuild -->
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -42,13 +43,9 @@
     <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/Chart.js/Chart.js"></script>
-    <script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
-    <script src="bower_components/flow.js/dist/flow.js"></script>
-    <script src="bower_components/ng-flow/dist/ng-flow.js"></script>
-    <script src="bower_components/ng-img-crop/compile/minified/ng-img-crop.js"></script>
     <script src="bower_components/progressbar.js/dist/progressbar.js"></script>
     <script src="bower_components/ng-table/dist/ng-table.min.js"></script>
+    <script src="bower_components/ng-letter-avatar/ngletteravatar.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -83,6 +80,9 @@
     <script src="scripts/services/statistics.service.js"></script>
 
     <script src="scripts/directives/ng-role-auth.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
 
     <!-- endbower -->
     <!-- endbuild -->
@@ -120,7 +120,7 @@
               <li data-match-route="/help"><a ui-sref="help" nra-auth="['admin', 'collaborateur', 'manager']" ><span class="fa fa-question-circle" aria-hidden="true"></span> Aide</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li data-match-route="/account"><a ui-sref="account" ng-show="isAuthenticated"><strong>{{userFirstname}} {{userLastname}}</strong></a></li>
+              <li data-match-route="/account"><a ui-sref="account" ng-show="isAuthenticated"><ng-letter-avatar dynamic="true" data="{{userFirstname}}" shape="round" height="20px" width="20px" fontSize="10px"></ng-letter-avatar><strong> {{userFirstname}} {{userLastname}}</strong></a></li>
               <li data-match-route="/login"><a ui-sref="login" ng-show="!isAuthenticated">Se connecter <span class="fa fa-sign-in"></span></a></li>
               <li data-match-route="/login"><a ui-sref="login" ng-show="isAuthenticated">Se déconnecter <span style="color:red;" class="fa fa-power-off"></span></a></li>
             </ul>

@@ -6,21 +6,6 @@
       </div>
     </md-toolbar>
     <md-card-content>
-
-
-      <!--<p>Bonjour <strong>{{user.prenom}}</strong>,<br>Voici l'état de vos projets : </p>
-      <canvas id="doughnut" class="chart chart-doughnut" chart-data="doughnutData"
-              chart-labels="doughnutLabels" chart-legend="true"
-              chart-click="onClick" chart-colours = "colours">
-      </canvas>-->
-
-<!--      <div>Sélectionner une image : <input type="file" id="fileInput" /></div>
-      <div class="cropArea">
-        <img-crop image="myImage" result-image="myCroppedImage"></img-crop>
-      </div>
-      <div>Aperçu de votre avatar :</div>
-      <div class="cropPicture"><img ng-src="{{myCroppedImage}}"/></div>
--->
       <md-content flex layout layout-align="center">
         <div layout-gt-sm flex flex-get-sm="80" flex-gt-md="100">
           <paper flex flex-gt-sm="20">
@@ -33,20 +18,13 @@
           </paper>
           <paper flex>
             <p>Voici l'état de vos projets : </p>
-            <canvas id="doughnut" class="chart chart-doughnut" chart-data="donghnutData"
-                    chart-labels="doughnutLabels" chart-legend="true"
-                    chart-click="onClick">
-            </canvas>
+            <div id="piechart" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
           </paper>
         </div>
       </md-content>
-
-
       <div layout="row" layout-align="center">
         <md-button nra-auth="['admin', 'manager', 'collaborateur']" class="md-raised md-primary" >Sauvegarder</md-button>
       </div>
-
-
     </md-card-content>
   </div>
 </md-card>

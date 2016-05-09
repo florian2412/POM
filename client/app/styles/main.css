@@ -27,6 +27,9 @@ a:hover{
   cursor: pointer;
 }
 
+canvas:hover{
+  cursor: pointer;
+}
 /*md-content {
   margin-bottom: 50px;
 }*/
@@ -67,10 +70,11 @@ md-toolbar .md-toolbar-tools h2
   height:350px;
 }
 
+
 .cropPicture {
-  background : #E4E4E4;
-  width : 50px;
-  height : 50px;
+  border-radius: 25%;
+  width:50px;
+  height:50px;
 }
 
 /* Responsive: Portrait tablets and up */
