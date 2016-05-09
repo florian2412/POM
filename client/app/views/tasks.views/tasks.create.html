@@ -1,5 +1,5 @@
 <!-- <div flex  layout> -->
-<form name="createTaskForm"> 
+<form name="createTaskForm">
   <div layout="row" flex  layout-align="center">
     <h4>Création d'une tâche</h4>
   </div>
@@ -9,8 +9,9 @@
       <!-- Colonne 1 -->
       <div flex="50" flex-xs="100" layout="row" layout-align="center">
         <div flex="70"  flex-xs="100">
-          
+
           <md-input-container class="md-block" flex="100" >
+
             <label>Nom de la tâche</label>
             <input ng-model="tasksCreateVm.task.name" maxlength="100" name="nom" required>
             <div ng-messages="createTaskForm.nom.$error">
@@ -18,7 +19,7 @@
               <div ng-message="maxlength">Le nom de la tâche ne doit pas dépasser 100 caractères.</div>
             </div>
           </md-input-container>
-       
+
           <div flex layout="row" layout-xs="column" >
             <div flex="45" flex-xs="100"><label>Date de début</label></div>
             <div flex="10"></div>
@@ -37,36 +38,35 @@
             </div>
           </div>
 
-      </div>
-    </div>
-      <!-- Colonne 2 -->
-    <div flex="50" flex-xs="100" layout layout-align="center" >
-      <div flex>
-        
-        <md-input-container class="md-block" flex="100" flex-xs="100">
-          <label>Description</label>
-          <textarea ng-model="tasksCreateVm.task.description" name="description" maxlength="250" md-maxlength="250" rows="10"></textarea>
-          <div ng-messages="createTaskForm.description.$error">
-            <div ng-message="required">Ce champ est obligatoire.</div>
-          </div>
-        </md-input-container>
-   
-        <div flex="100" flex-xs="100" layout-align="center" layout>
-          <div>
-            <md-input-container class="md-block">
-              <md-button class="md-raised" ng-click="tasksCreateVm.showCollaboratorPicker($event)">
-                Choisir les collaborateurs
-              </md-button>
-            </md-input-container>
-          </div>
         </div>
-    
       </div>
+      <!-- Colonne 2 -->
+
+      <div flex="50" flex-xs="100" layout="row" layout-align="center" >
+        <div flex="70" flex-xs="100">
+
+          <md-input-container class="md-block" flex-xs="100">
+
+            <label>Description</label>
+            <textarea ng-model="tasksCreateVm.task.description" name="description" maxlength="250" md-maxlength="250" rows="10"></textarea>
+          </md-input-container>
+
+          <div flex="100" flex-xs="100" layout-align="center" layout>
+            <div>
+              <md-input-container class="md-block">
+                <md-button class="md-raised" ng-click="tasksCreateVm.showCollaboratorPicker($event)">
+                  Choisir les collaborateurs
+                </md-button>
+              </md-input-container>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
-    
   </div>
-  </div>
-  
+
   <div flex layout layout-align="center center">
     <div>
       <md-input-container class="md-block">
@@ -76,4 +76,4 @@
     </div>
   </div>
 
-</form> 
+</form>

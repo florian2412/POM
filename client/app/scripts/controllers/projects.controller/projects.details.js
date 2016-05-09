@@ -16,10 +16,31 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
   var collaborateursId = [];
   var vm = this;
 
+  vm.isDisabled = false;
   vm.getProjectById = getProjectById;
   vm.updateProject =  updateProject;
   vm.showCancelDialog = showCancelDialog;
   vm.showCollaboratorPicker = showCollaboratorPicker;
+  vm.closeProject = closeProject;
+
+  function closeProject() {
+    var idProject = vm.project._id;
+    var data;
+
+    data = {
+      "statut" : 'Terminé(e)',
+      "date_fin_reelle" : new Date()
+    };
+
+    databaseService.updateObject('projects', idProject, data)
+      .success(function (data) {
+        flashService.success("Le projet " + vm.project.nom + " a bien été cloturé !", "", "bottom-right", true, 4);
+        $state.go("projects");
+      })
+      .error(function (err) {
+        console.log(err);
+      });
+  };
 
 
   function getProjectById(id) {
@@ -32,6 +53,7 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
         }
 
         utilsService.convertDateStringsToDates(data);
+
         vm.project = data;
         vm.minDateProject =  new Date(data.date_debut);
         vm.numberOfCollaborators = collList.length;
@@ -69,22 +91,17 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
 
     var data;
 
-    // TODO Changer le status de 'Initial' à 'En cours' lorsqu'on affecte une date de début réelle
-
-
     data = {
       "nom" : vm.project.nom,
       "statut" : vm.project.statut,
       "date_debut" : vm.project.date_debut,
       "date_fin_theorique" : vm.project.date_fin_theorique,
-      "date_fin_reelle" : vm.project.date_fin_reelle,
+      //"date_fin_reelle" : vm.project.date_fin_reelle,
       "ligne_budgetaire" : ligne_budgetaire,
       "date_derniere_modif" : new Date(),
       "collaborateurs": collaborateursId,
       "date_debut_reelle" : vm.project.date_debut_reelle
     };
-
-
 
 
     databaseService.updateObject('projects', idProject, data)
@@ -119,8 +136,10 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
     databaseService.getAllObjects('collaborators').success(function (data) { vm.collaborators = data;});
 
     databaseService.getSettings('statuts').success(function(data){
-      data.splice(data.indexOf("Archivé"),1);
+      //data.splice(data.indexOf("Archivé"),1);
       data.splice(data.indexOf("Initial"),1);
+      data.splice(data.indexOf("Terminé(e)"),1);
+      data.splice(data.indexOf("Archivé(e)"),1);
       vm.statuts = data;
     });
 

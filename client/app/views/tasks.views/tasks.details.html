@@ -50,9 +50,9 @@
             </div>
           </md-input-container>
         </div>
-        
+
         <div flex="10"></div>
-        
+
         <div flex="45">
           <div layout layout-align="center">
             <div>
@@ -63,17 +63,14 @@
         </div>
 
       </div>
-      
+
       <br>
-      
+
       <div layout layout-align="center">
         <div flex="100">
           <md-input-container class="md-block" flex-xs="100">
             <label>Description</label>
             <textarea ng-model="tasksDetailsVm.task.description" name="description" maxlength="250" md-maxlength="250" rows="10"></textarea>
-            <div ng-messages="tasksDetailsForm.description.$error">
-              <div ng-message="required">Ce champ est obligatoire.</div>
-            </div>
           </md-input-container>
         </div>
       </div>
