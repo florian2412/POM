@@ -112,7 +112,8 @@ angular.module('pomApp')
     $scope.$on('$viewContentLoaded', function() {
 
       // On récupère tout ce dont on a besoin de la BDD et on stocke dans des variables
-      databaseService.getAllObjects('projects').success(function (data){ vm.saveProjects = data;})
+      databaseService.getAllObjects('projects').success(function (data){ vm.saveProjects = data;
+        vm.zeroProject = ((data.length === 0) ? true : false );})
         .error(function(err) { console.log(err); });
 
       databaseService.getAllObjects('collaborators').success(function(data){ vm.saveCollaborators = data;})

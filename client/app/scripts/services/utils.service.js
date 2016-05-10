@@ -19,10 +19,12 @@ function Service($filter) {
   service.convertDateStringsToDates = convertDateStringsToDates;
   service.arrayObjectIndexOf = arrayObjectIndexOf;
   service.dateDiff = dateDiff;
+  service.dateDiffWorkingDates = dateDiffWorkingDates;
   service.capitalize = capitalize;
   service.addZero = addZero;
   service.getElementById = getElementById;
   service.sumArrayValues = sumArrayValues;
+  service.filterOnlyWeekDays = filterOnlyWeekDays;
 
   return service;
 
@@ -67,6 +69,20 @@ function Service($filter) {
     else
       return diffDays + 1;
   }
+  
+  function dateDiffWorkingDates(start,end){
+    if(start.getTime() == end.getTime()) return 1;
+
+    var count = 0;
+    var curDate = start;
+    while (curDate <= end) {
+        var dayOfWeek = curDate.getDay();
+        if(!((dayOfWeek == 6) || (dayOfWeek == 0)))
+           count++;
+        curDate.setDate(curDate.getDate() + 1);
+    }
+    return count + 1;
+  }
 
   function capitalize(word){
     return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
@@ -87,6 +103,11 @@ function Service($filter) {
       count += array[i];
     }
     return count;
+  }
+
+  function filterOnlyWeekDays(date){
+    var day = date.getDay();
+    return (!(day === 0 || day === 6 ));
   }
 
 }

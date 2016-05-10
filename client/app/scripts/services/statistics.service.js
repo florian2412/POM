@@ -148,7 +148,7 @@ function Service(utilsService) {
   function calculTaskDuration(task) {
     var firstDate = new Date(task.date_debut);
     var endDate = new Date(task.date_fin_theorique);
-    return utilsService.dateDiff(firstDate, endDate);
+    return utilsService.dateDiffWorkingDates(firstDate,endDate);
   };
 
   // Retourne la durée restante théorique d'une tache
@@ -178,14 +178,15 @@ function Service(utilsService) {
   function calculProjectDuration(project) {
     var firstDate = new Date(project.date_debut);
     var endDate = new Date(project.date_fin_theorique);
-    return utilsService.dateDiff(firstDate, endDate);
+
+    return utilsService.dateDiffWorkingDates(firstDate,endDate);
   };
 
   // Retourne la durée restante théorique d'un projet
   function calculProjectLeftDuration(project) {
     var firstDate = new Date();
     var endDate = new Date(project.date_fin_theorique);
-    return utilsService.dateDiff(firstDate, endDate);
+    return utilsService.dateDiffWorkingDates(firstDate,endDate);
   };
 
 }

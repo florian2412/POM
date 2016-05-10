@@ -18,6 +18,7 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
     vm.createProject = createProject;
     vm.showCancelDialog = showCancelDialog;
     vm.showCollaboratorPicker = showCollaboratorPicker;
+    vm.filterOnlyWeekDays = utilsService.filterOnlyWeekDays;
     
     function createProject() {
       
@@ -58,7 +59,7 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
     // Lancement au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
       vm.currentUser = localStorageService.get('currentUser');
-
+      
       databaseService.getAllObjects('budgets').success(function (data){ vm.budgets = data.data; })
         .error(function (err) { console.log(err); });
 
@@ -145,7 +146,6 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
     $scope.selection = collaborateursId;
     $scope.hide = function() { $mdDialog.hide($scope.selection); };
     $scope.userRole = $rootScope.userRole;
-
 
     $scope.selectCollaborator = function (collaborator) {
       if(!collaborator.checked) {

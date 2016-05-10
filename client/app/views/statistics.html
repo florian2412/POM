@@ -6,39 +6,48 @@
       </div>
     </md-toolbar>
     <md-card-content>
-      <p>Bonjour <strong>{{user.prenom}}</strong>,<br>Voici l'état des projets : </p>
+     <!--  <p>Bonjour <strong>{{user.prenom}}</strong>,<br>Voici l'état des projets : </p>
+ -->
+      <h4 ng-show="statisticsVm.zeroProject">Vous n'avez aucun projet.</h3>
 
-      <div id="piechart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+      <div ng-show="!statisticsVm.zeroProject">
+        <div id="piechart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
 
-      <div layout layout-align="center">
-        <div flex="45">
-          <md-input-container class="md-block">
+        <div layout layout-align="center">
+          <div flex="45">
+            <md-input-container class="md-block">
 
-            <label>Choisir un projet</label>
-            <md-select ng-model="statisticsVm.project">
-              <md-option ng-repeat="project in statisticsVm.saveProjects" value="{{project}}">{{project.nom}}</md-option>
-            </md-select>
+              <label>Choisir un projet</label>
+              <md-select ng-model="statisticsVm.project">
+                <md-option ng-repeat="project in statisticsVm.saveProjects" value="{{project}}">{{project.nom}}</md-option>
+              </md-select>
 
-          </md-input-container>
+            </md-input-container>
+          </div>
+          <div flex="10"></div>
+          <div flex="45">
+            <div layout layout-align="center">
+              <md-button class="md-raised md-primary" type="submit" ng-click="statisticsVm.updateChartProject()">Actualiser le graphique</md-button>
+            </div>
+          </div>
+
         </div>
-        <div flex="10"></div>
-        <div flex="45">
-          <div layout layout-align="center">
-            <md-button class="md-raised md-primary" type="submit" ng-click="statisticsVm.updateChartProject()">Actualiser le graphique</md-button>
+
+
+        <label><b>Statistiques prévisionelles</b></label>
+        <div layout layout-align="center" layout-xs="column">
+          <div flex="50" flex-xs="100">
+            <div id="piechart-project"></div>
+          </div>
+          <div flex="50" flex-xs="100">
+            <div id="piechart-project2"></div>
           </div>
         </div>
-
+       <!--  <div id="barchart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+   -->
       </div>
-
-
-      <label><b>Statistiques prévisionelles</b></label>
-      <div id="piechart-project" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
-
-
-      <div id="piechart-project2" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
-
-     <!--  <div id="barchart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
- -->
     </md-card-content>
   </div>
 </md-card>
+<br>
+<br>

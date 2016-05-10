@@ -16,7 +16,7 @@
             <div layout-align="center" layout>
               <md-input-container class="md-block" flex="80" flex-xs="100">
                 <label>Nom du projet</label>
-                <input ng-model="projectCreateVm.project.name" maxlength="20" name="nom" required>
+                <input ng-model="projectCreateVm.project.name" maxlength="30" name="nom" required>
                 <div ng-messages="createProjectForm.nom.$error">
                   <div ng-message="required">Ce champ est obligatoire.</div>
                 </div>
@@ -28,7 +28,7 @@
                 <div flex="45"><label>Date de début <b>théorique</b></label></div>
                 <div flex="10"></div>
                 <div flex="45">
-                  <md-datepicker ng-model="projectCreateVm.project.startDate" md-placeholder="Entrer date" md-min-date="projectCreateVm.minDate" name="dateDebut"/> </md-datepicker>
+                  <md-datepicker ng-model="projectCreateVm.project.startDate" md-placeholder="Entrer date" md-min-date="projectCreateVm.minDate"  md-date-filter="projectCreateVm.filterOnlyWeekDays" name="dateDebut"/> </md-datepicker>
                 </div>
               </div>
             </div>
@@ -40,7 +40,7 @@
                 <div flex="45"><label>Date de fin <b>théorique</b></label></div>
                 <div flex="10"></div>
                 <div flex="45">
-                  <md-datepicker ng-model="projectCreateVm.project.endDate" md-placeholder="Entrer date" md-min-date="projectCreateVm.project.startDate" name="dateFinTheorique"></md-datepicker>
+                  <md-datepicker ng-model="projectCreateVm.project.endDate" md-placeholder="Entrer date" md-min-date="projectCreateVm.project.startDate" name="dateFinTheorique" md-date-filter="projectCreateVm.filterOnlyWeekDays"></md-datepicker>
                 </div>
               </div>
             </div>
@@ -52,21 +52,6 @@
         <div flex="50" flex-xs="100" layout="row" layout-align="center">
 
           <div layout="column" layout-align="center" flex >
-
-          <!--   <div layout-align="center" layout>
-              <md-input-container class="md-block" flex="80" flex-xs="100">
-                <label>Statut</label>
-                <md-select ng-model="projectCreateVm.project.statut" name="statut" required>
-                  <md-option ng-repeat="statut in projectCreateVm.statuts" value="{{statut}}">
-                    {{statut}}
-                  </md-option>
-                </md-select>
-                <div ng-messages="createProjectForm.statut.$error">
-                  <div ng-message="required">Ce champ est obligatoire.</div>
-                </div>
-              </md-input-container>
-            </div> -->
-
 
             <div layout-align="center" layout>
               <md-input-container class="md-block" flex="80" flex-xs="100">

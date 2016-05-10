@@ -21,6 +21,8 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams,utilsService, d
   vm.createTask = createTask;
   vm.showCollaboratorPicker = showCollaboratorPicker;
   vm.showCancelDialog = showCancelDialog;
+  vm.filterOnlyWeekDays = utilsService.filterOnlyWeekDays;
+    
   
   function _incrementCodeProject(lastCode){
     var begin = lastCode.substring(0,5);
