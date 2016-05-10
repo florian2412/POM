@@ -25,9 +25,9 @@ function MainCtrl($scope, $rootScope, $location, $timeout, localStorageService, 
     for (var i = 0; i < vm.projects.length; i++) {
 
       // On calcule la durée du projet
-      vm.projects[i].duration = statisticsService.calculProjectDuration(vm.projects[i]);
+      vm.projects[i].duration = statisticsService.getDuration(vm.projects[i]);
 
-      vm.projects[i].leftDuration = statisticsService.calculProjectLeftDuration(vm.projects[i]);
+      vm.projects[i].leftDuration = statisticsService.getLeftDuration(vm.projects[i]);
 
       // On récupère les taches du projet courant
       var projectTasks = vm.projects[i].taches;
@@ -41,7 +41,7 @@ function MainCtrl($scope, $rootScope, $location, $timeout, localStorageService, 
 
         // On calcul le cout total de la tâche
         var totalCost = 0;
-        var currentTaskDuration = statisticsService.calculProjectDuration(projectTasks[j]);
+        var currentTaskDuration = statisticsService.getDuration(projectTasks[j]);
 
         for(var l = 0; l < currentTask.collaborateurs.length; l++) {
           var currentCollaboratorId = currentTask.collaborateurs[l];

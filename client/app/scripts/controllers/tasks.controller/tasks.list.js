@@ -22,7 +22,7 @@ function TasksListCtrl($scope, $state, databaseService, $stateParams, utilsServi
   vm.redirectTasksDetails = redirectTasksDetails;
   vm.isFiltersEnabled = false;
 
-  var statuts = {"initial": { "color": "blue", "class": "fa fa-plus", "statut": "Initial" },
+  var statuts = {"initial": { "color": "blue", "class": "fa fa-info", "statut": "Initial" },
                "en_cours": { "color": "orange", "class": "fa fa-cog fa-spin fa-fw margin-bottom", "statut":"En cours" },
                "termine": { "color": "green", "class": "fa fa-check-circle","statut": "Terminé(e)" },
                "annule": { "color": "red", "class": "fa fa-times-circle", "statut": "Annulé(e)" },

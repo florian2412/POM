@@ -73,9 +73,14 @@ function Service($filter) {
   function dateDiffWorkingDates(start,end){
     if(start.getTime() == end.getTime()) return 1;
 
+    var curDate, endDate;
     var count = 0;
-    var curDate = start;
-    while (curDate <= end) {
+
+    if(start.getTime() > end.getTime()){
+      curDate = end; endDate = start;
+    } else { curDate = start; endDate = end; }
+    
+    while (curDate <= endDate) {
         var dayOfWeek = curDate.getDay();
         if(!((dayOfWeek == 6) || (dayOfWeek == 0)))
            count++;

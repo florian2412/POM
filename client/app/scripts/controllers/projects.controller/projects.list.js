@@ -20,8 +20,8 @@ function ProjectsListCtrl($scope,$state, NgTableParams, databaseService, utilsSe
   vm.redirectProjectsDetails = redirectProjectsDetails;
   vm.isFiltersEnabled = false;
 
-  var statuts = {"initial": { "color": "blue", "class": "fa fa-plus", "statut": "Initial" },
-                 "en_cours": { "color": "orange", "class": "fa fa-cog fa-spin fa-fw margin-bottom", "statut":"En cours" },
+  var statuts = {"initial": { "color": "blue", "class": "fa fa-info", "statut": "Initial" },
+                 "en_cours": { "color": "orange", "class": "fa fa-cog fa-spin fa-fw", "statut":"En cours" },
                  "termine": { "color": "green", "class": "fa fa-check-circle","statut": "Terminé(e)" },
                  "annule": { "color": "red", "class": "fa fa-times-circle", "statut": "Annulé(e)" },
                  "archive": { "color": "gray", "class": "fa fa-file-archive-o", "statut": "Archivé" }

@@ -59,6 +59,7 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
     // Lancement au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
       vm.currentUser = localStorageService.get('currentUser');
+      vm.numberOfCollaborators = 0;
       
       databaseService.getAllObjects('budgets').success(function (data){ vm.budgets = data.data; })
         .error(function (err) { console.log(err); });
