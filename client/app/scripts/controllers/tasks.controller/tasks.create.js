@@ -93,7 +93,8 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams,utilsService, d
 
         var projectCollaborators = [];
         collaboratorsIds = data.collaborateurs;
-
+        vm.minDate = new Date(data.date_debut);
+        
         for (var i=0; i < collaboratorsIds.length; i++) {
 
           databaseService.getObjectById('collaborators',collaboratorsIds[i])

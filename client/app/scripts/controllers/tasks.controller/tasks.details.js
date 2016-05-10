@@ -19,6 +19,9 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
   vm.updateTask = updateTask;
   vm.showCancelDialog = showCancelDialog;
   vm.showCollaboratorPicker = showCollaboratorPicker;
+  vm.filterOnlyWeekDays = utilsService.filterOnlyWeekDays;
+  vm.changedValue = changedValue;
+
 
   function updateTask() {
 
@@ -90,6 +93,10 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
     };  
   }
 
+  function changedValue(selected){
+    vm.isDateReelleEnable = (selected === "Terminé(e)") ? true : false;
+  }
+
   $scope.$on('$viewContentLoaded', function() {
 
     databaseService.getObjectById('projects', $stateParams.id)
@@ -109,13 +116,13 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
         }
         vm.collaborators = currentProjectCollaborators;
         vm.currentProject = data;
-        vm.minDateTask =  new Date(data.date_debut); 
+        vm.minDate =  new Date(task.date_debut); 
         vm.currentIndexTask = indexTaskToDisplay;
         vm.task = task;
         collaborateursId = task.collaborateurs;
                 
         //calcul du cout
-        vm.task_cost = utilsService.dateDiff(new Date(task.date_debut),new Date(task.date_fin_theorique));
+        vm.task_cost = utilsService.dateDiffWorkingDates(new Date(task.date_debut),new Date(task.date_fin_theorique));
         utilsService.convertDateStringsToDates(task);
       })
       .error(function (err) {

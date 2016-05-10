@@ -27,12 +27,12 @@
       <div layout layout-align="center">
         <div flex="45">
           <label>Date de début </label>
-          <md-datepicker ng-model="tasksDetailsVm.task.date_debut" md-min-date="tasksDetailsVm.minDateTask" ng-value="tasksDetailsVm.task.date_debut" ng-disabled="true"></md-datepicker>
+          <md-datepicker ng-model="tasksDetailsVm.task.date_debut" ng-value="tasksDetailsVm.task.date_debut" ng-disabled="true"></md-datepicker>
         </div>
         <div flex="10"></div>
         <div flex="45">
           <label>Date de fin <b>théorique</b></label>
-          <md-datepicker ng-model="tasksDetailsVm.task.date_fin_theorique" md-min-date="tasksDetailsVm.task.date_debut"  ng-value="tasksDetailsVm.task.date_fin_theorique" ng-disabled="true"></md-datepicker>
+          <md-datepicker ng-model="tasksDetailsVm.task.date_fin_theorique" ng-value="tasksDetailsVm.task.date_fin_theorique" ng-disabled="true"></md-datepicker>
         </div>
       </div>
 
@@ -42,8 +42,8 @@
         <div flex="45">
           <md-input-container class="md-block">
             <label>Statut</label>
-            <md-select ng-model="tasksDetailsVm.task.statut" name="statut">
-              <md-option ng-repeat="statut in tasksDetailsVm.statuts" value="{{statut}}">{{statut}}</md-option>
+            <md-select ng-model="tasksDetailsVm.task.statut" name="statut" ng-change="tasksDetailsVm.changedValue(tasksDetailsVm.task.statut)">
+              <md-option ng-repeat="statut in tasksDetailsVm.statuts" value="{{statut}}">{{ statut }}</md-option>
             </md-select>
             <div ng-messages="tasksDetailsForm.statut.$error">
               <div ng-message="required">Ce champ est obligatoire.</div>
@@ -57,7 +57,7 @@
           <div layout layout-align="center">
             <div>
               <label>Date de fin <b>réelle</b></label>
-              <md-datepicker ng-model="tasksDetailsVm.task.date_fin_reelle" md-min-date="tasksDetailsVm.task.date_debut" md-placeholder="Entrer date"></md-datepicker>
+              <md-datepicker ng-model="tasksDetailsVm.task.date_fin_reelle"  md-min-date="tasksDetailsVm.minDate" ng-disabled="!tasksDetailsVm.isDateReelleEnable" md-date-filter="tasksDetailsVm.filterOnlyWeekDays"></md-datepicker>
             </div>
           </div>
         </div>
