@@ -1,22 +1,21 @@
 <md-content flex layout ng-cloak class="md-whiteframe-z2" layout-padding>
   <div layout="column">
-  
+
     <div flex layout-align="start start">
-   		<div>
-			<md-button ng-click="openMenu('projectSideNav')" class="md-fab md-primary" >
-				<md-tooltip>Menu</md-tooltip>
-				<md-icon><i class="material-icons" style="color: white">menu</i></md-icon>
-			</md-button>
-      	</div>
-	    <div>
-	  		<h4><b>{{ projectsDetailsVm.project.code }} </b></h4>
-	  		<p> Date début : <b>{{ projectsDetailsVm.project.date_debut | date:"dd/MM/yyyy" }}</b></p>
-	  		<p> Date fin estimée: <b>{{ projectsDetailsVm.project.date_fin_theorique | date:"dd/MM/yyyy"  }}</b></p>
-	  		<p> Collaborateurs : <b>{{ projectsDetailsVm.numberOfCollaborators }} </b></p>
-	  	</div>
+      <div>
+        <md-button ng-click="openMenu('projectSideNav')" class="md-fab md-primary" >
+          <md-tooltip>Menu</md-tooltip>
+          <md-icon><i class="material-icons" style="color: white">menu</i></md-icon>
+        </md-button>
+      </div>
+      <div>
+        <h4><b>{{ projectsDetailsVm.project.code }} </b></h4>
+        <p> Date début : <b>{{ projectsDetailsVm.project.date_debut | date:"dd/MM/yyyy" }}</b></p>
+        <p> Date fin estimée: <b>{{ projectsDetailsVm.project.date_fin_theorique | date:"dd/MM/yyyy"  }}</b></p>
+        <p> Collaborateurs : <b>{{ projectsDetailsVm.numberOfCollaborators }} </b></p>
+      </div>
     </div>
-  	
-  	
+
   </div>
 
   <ui-view flex></ui-view>

@@ -11,8 +11,7 @@ var schemaProject = mongoose.Schema({
     nom: String,
     code: String,
     chef_projet: mongoose.Schema.ObjectId,
-    date_debut: { type: Date }, // Théorique
-    date_debut_reelle: { type: Date },
+    date_debut: { type: Date },
     date_fin_theorique: { type: Date },
     date_fin_reelle: { type: Date },
     statut : String, // En cours, Terminé, Annulé, Supprimé, Initial
