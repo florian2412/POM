@@ -20,6 +20,7 @@ function TasksListCtrl($scope, $state, databaseService, $stateParams, utilsServi
   vm.showAllTasks = showAllTasks;
   vm.deleteTask = deleteTask;
   vm.redirectTasksDetails = redirectTasksDetails;
+  vm.isFiltersEnabled = false;
 
   var statuts = {"initial": { "color": "blue", "class": "fa fa-plus", "statut": "Initial" },
                "en_cours": { "color": "orange", "class": "fa fa-cog fa-spin fa-fw margin-bottom", "statut":"En cours" },
@@ -52,13 +53,7 @@ function TasksListCtrl($scope, $state, databaseService, $stateParams, utilsServi
           }
         }
 
-        vm.tableParams = new NgTableParams({
-            page: 1, // show first page
-            count: 10 // count per page
-          }, {
-            filterDelay: 0,
-            data: data.taches
-          });
+        vm.tableParams = new NgTableParams({ page: 1, count: 10 }, { filterDelay: 0, data: data.taches });
 
       })
       .error(function (err) {
@@ -79,8 +74,8 @@ function TasksListCtrl($scope, $state, databaseService, $stateParams, utilsServi
           databaseService.updateObject('projects',$stateParams.id,data).success(function (data) {});
 
           vm.tableParams.reload().then(function(data) {
-              if (data.length === 0 && self.tableParams.total() > 0) {
-              vm.tableParams.page(self.tableParams.page() - 1);
+              if (data.length === 0 && vm.tableParams.total() > 0) {
+              vm.tableParams.page(vm.tableParams.page() - 1);
               vm.tableParams.reload();
             }
           });

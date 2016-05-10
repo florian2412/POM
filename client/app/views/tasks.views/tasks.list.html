@@ -1,6 +1,21 @@
-<div layout="row" flex  layout-align="center">
-    <h4>Liste des tâches</h4>
+<div layout="row" flex>
+
+  <div flex="90" layout layout-align="center" >
+    <div>
+      <h4>Liste des tâches</h4>
+    </div>
+  </div>
+
+  <div flex="10">
+  <div style="padding-top:12px">
+    <md-checkbox ng-model="tasksListVm.isFiltersEnabled">
+      Filtre
+    </md-checkbox>
+  </div>
 </div>
+
+</div>
+<br>
 <div layout layout-align="center" >
    <!--  <table flex="70" class="table table-striped table-hover">
       <thead>
@@ -34,14 +49,14 @@
     <br>
 
 <div>
-    <table ng-table="tasksListVm.tableParams" show-filter="true" class="table table-striped table-hover">
+    <table ng-table="tasksListVm.tableParams" show-filter="tasksListVm.isFiltersEnabled" class="table table-striped table-hover">
       <tr ng-repeat="row in $data" ng-dblClick="tasksListVm.redirectTasksDetails($event, row._id)">
-        <td title="'Code'" filter="{code: 'text'}" sortable="'code'"><a ui-sref="projects.details.tasks.details({idtask:row._id})"> <b>{{ row.code }}</b> </a></td>
-        <td title="'Libelle'" filter="{libelle: 'text'}" sortable="'libelle'"><a ui-sref="projects.details.tasks.details({idtask:row._id})"> <b>{{ row.libelle }}</b> </a></td>
+        <td title="'Code'" filter="{code: 'text'}" sortable="'code'"><a ui-sref=".details({idtask:row._id})"> <b>{{ row.code }}</b> </a></td>
+        <td title="'Libelle'" filter="{libelle: 'text'}" sortable="'libelle'"><a ui-sref=".details({idtask:row._id})"> <b>{{ row.libelle }}</b> </a></td>
       
         <td title="'Date début'" filter="{date_debut: 'text'}" sortable="'date_debut'">{{row.date_debut | date:"dd/MM/yyyy" }}</td>
         
-        <td title="'Statut'" sortable="'statut.statut'"> <md-tooltip md-direction="left">{{row.statut.statut}}</md-tooltip><span class="{{row.statut.class}}" style="color:{{row.statut.color}};font-size:1.5em;"></span></td>
+        <td title="'Statut'" sortable="'statut.statut'"><span class="{{row.statut.class}}" style="color:{{row.statut.color}};font-size:1.5em;"><md-tooltip md-direction="left">{{row.statut.statut}}</md-tooltip></span></td>
 
         <td title="'Dernière modification'" filter="{date_derniere_modif: 'text'}" sortable="'date_derniere_modif'" >{{ row.date_derniere_modif | date:"dd/MM/yyyy 'à' HH:mm:ss" }}</td>
 
@@ -52,6 +67,11 @@
       </tr>
     </table>
 
+    <div layout="row" layout-align="center">
+      <md-input-container class="md-block">
+          <md-button nra-auth="['manager','admin']" class="md-raised md-primary" type="submit" ui-sref=".create">Créer une nouvelle tâche</md-button>
+      </md-input-container>
+    </div>
 
   </div>
 </div>

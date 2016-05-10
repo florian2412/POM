@@ -4,10 +4,15 @@
     <div class="md-toolbar-tools">
       <h2 class="md-flex">Liste des projets</h2>
       <span flex></span>
-      <md-button class="md-raised" aria-label="Nouveau" nra-auth="['manager','admin']" type="submit" ui-sref=".create">
+     <!--  <md-button class="md-raised" aria-label="Nouveau" nra-auth="['manager','admin']" type="submit" ui-sref=".create">
           Nouveau
           <md-icon><i class="material-icons">add_circle_outline</i></md-icon>
-      </md-button>
+      </md-button> -->
+      <div style="padding-top:12px;color:white">
+          <md-checkbox ng-model="projectsListVm.isFiltersEnabled">
+            Filtre
+          </md-checkbox>
+      </div>
     </div>
   </md-toolbar>
 
@@ -48,14 +53,14 @@
       </tbody>
     </table> -->
 
-    <table ng-table="projectsListVm.tableParams" show-filter="true" class="table table-striped table-hover">
+    <table ng-table="projectsListVm.tableParams" show-filter="projectsListVm.isFiltersEnabled" class="table table-striped table-hover">
       <tr ng-repeat="row in $data" ng-dblClick="projectsListVm.redirectProjectsDetails($event, row._id)">
         <td title="'Code'" filter="{code: 'text'}" sortable="'code'"><a ui-sref=".details.info({id:row._id})"> <b>{{ row.code }}</b> </a></td>
         <td title="'Nom'" filter="{nom: 'text'}" sortable="'nom'"><a ui-sref=".details.info({id:row._id})"> <b>{{ row.nom }}</b> </a></td>
         <td title="'Chef de projet'" sortable="'chef_projet.identite'">{{row.chef_projet.identite}}</td>
         <td title="'Date début'" filter="{date_debut: 'text'}" sortable="'date_debut'">{{row.date_debut | date:"dd/MM/yyyy" }}</td>
 
-        <td title="'Statut'" sortable="'statut.statut'"> <md-tooltip md-direction="left">{{row.statut.statut}}</md-tooltip><span class="{{row.statut.class}}" style="color:{{row.statut.color}};font-size:1.5em;"></span></td>
+        <td title="'Statut'" sortable="'statut.statut'"> <span class="{{row.statut.class}}" style="color:{{row.statut.color}};font-size:1.5em;"><md-tooltip md-direction="left">{{row.statut.statut}}</md-tooltip></span></td>
 
         <td title="'Dernière modification'" filter="{date_derniere_modif: 'text'}" sortable="'date_derniere_modif'" >{{ row.date_derniere_modif | date:"dd/MM/yyyy 'à' HH:mm:ss" }}</td>
 
@@ -70,12 +75,12 @@
     </table>
 
 
-   <!--  <div layout="row" layout-align="center">
+    <div layout="row" layout-align="center">
       <md-input-container class="md-block">
           <md-button nra-auth="['manager','admin']" class="md-raised md-primary" type="submit" ui-sref=".create">Créer un nouveau projet</md-button>
       </md-input-container>
     </div>
- -->
+
   </md-card-content>
 </md-card>
 <br>

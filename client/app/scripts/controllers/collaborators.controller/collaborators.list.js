@@ -10,12 +10,18 @@
 
 angular.module('pomApp').controller('CollaboratorsListCtrl', CollaboratorsListCtrl);
 
-function CollaboratorsListCtrl($scope, $filter, databaseService, utilsService) {
+function CollaboratorsListCtrl($scope, $filter, $state, databaseService, utilsService, NgTableParams) {
     var vm = this;
    
     vm.showAllCollaborators = showAllCollaborators;
     vm.deleteCollaborator = deleteCollaborator;
-    
+    vm.redirectCollaboratorsDetails = redirectCollaboratorsDetails;
+    vm.isFiltersEnabled = false;
+
+    function redirectCollaboratorsDetails(event,id){
+      $state.go('collaborators.details',{"id":id});
+    }
+
     function showAllCollaborators() {
       databaseService.getAllObjects('collaborators')
         .success(function (data) { 
@@ -27,6 +33,15 @@ function CollaboratorsListCtrl($scope, $filter, databaseService, utilsService) {
             }
           }
           vm.collaborators = data;
+         
+          vm.tableParams = new NgTableParams({
+              page: 1, // show first page
+              count: 10 // count per page
+            }, {
+              filterDelay: 0,
+              data: data
+            });
+
         });
     };
     
@@ -39,8 +54,15 @@ function CollaboratorsListCtrl($scope, $filter, databaseService, utilsService) {
         .success(function (data) {
           var i = utilsService.arrayObjectIndexOf(vm.collaborators,id,'_id');
 
-          if(i>-1)
+          if(i>-1){
             vm.collaborators.splice( i, 1 );
+            vm.tableParams.reload().then(function(data) {
+              if (data.length === 0 && vm.tableParams.total() > 0) {
+              vm.tableParams.page(vm.tableParams.page() - 1);
+              vm.tableParams.reload();
+            }
+          });
+          }
         });
     };
 

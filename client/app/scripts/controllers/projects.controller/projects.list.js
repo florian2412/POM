@@ -18,13 +18,14 @@ function ProjectsListCtrl($scope,$state, NgTableParams, databaseService, utilsSe
   vm.deleteProject = deleteProject;
   vm.archiveProject = archiveProject;
   vm.redirectProjectsDetails = redirectProjectsDetails;
-  
+  vm.isFiltersEnabled = false;
+
   var statuts = {"initial": { "color": "blue", "class": "fa fa-plus", "statut": "Initial" },
                  "en_cours": { "color": "orange", "class": "fa fa-cog fa-spin fa-fw margin-bottom", "statut":"En cours" },
                  "termine": { "color": "green", "class": "fa fa-check-circle","statut": "Terminé(e)" },
                  "annule": { "color": "red", "class": "fa fa-times-circle", "statut": "Annulé(e)" },
                  "archive": { "color": "gray", "class": "fa fa-file-archive-o", "statut": "Archivé" }
-               };
+                };
   
 
   function redirectProjectsDetails(event,id){
@@ -41,13 +42,7 @@ function ProjectsListCtrl($scope,$state, NgTableParams, databaseService, utilsSe
           associateChefProjet(data,allCollaborators);
           vm.projects = data;
 
-          vm.tableParams = new NgTableParams({
-            page: 1, // show first page
-            count: 10 // count per page
-          }, {
-            filterDelay: 0,
-            data: data
-          });
+          vm.tableParams = new NgTableParams({ page: 1, count: 10 }, { filterDelay: 0, data: data });
 
         });
       }
@@ -96,8 +91,8 @@ function ProjectsListCtrl($scope,$state, NgTableParams, databaseService, utilsSe
       if(vm.projects[i]._id == id){
         vm.projects[i].statut = statuts.archive;
         vm.tableParams.reload().then(function(data) {
-            if (data.length === 0 && self.tableParams.total() > 0) {
-            vm.tableParams.page(self.tableParams.page() - 1);
+            if (data.length === 0 && vm.tableParams.total() > 0) {
+            vm.tableParams.page(vm.tableParams.page() - 1);
             vm.tableParams.reload();
           }
         });
@@ -123,8 +118,8 @@ function ProjectsListCtrl($scope,$state, NgTableParams, databaseService, utilsSe
           flashService.success("Succés ! ", "Suppression du projet réussie.", 'bottom-right', true, 4);
           
           vm.tableParams.reload().then(function(data) {
-              if (data.length === 0 && self.tableParams.total() > 0) {
-              vm.tableParams.page(self.tableParams.page() - 1);
+              if (data.length === 0 && vm.tableParams.total() > 0) {
+              vm.tableParams.page(vm.tableParams.page() - 1);
               vm.tableParams.reload();
             }
           });

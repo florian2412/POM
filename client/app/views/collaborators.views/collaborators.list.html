@@ -3,10 +3,16 @@
     <md-toolbar layout="row">
       <div class="md-toolbar-tools">
         <h2 class="md-flex">Liste des collaborateurs</h2>
+        <span flex></span>
+        <div style="padding-top:10px;color:white">
+          <md-checkbox ng-model="collaboratorsListVm.isFiltersEnabled">
+            Filtre
+          </md-checkbox>
+        </div>
       </div>
     </md-toolbar>
     <md-card-content>
-      <table class="table table-striped table-hover">
+     <!--  <table class="table table-striped table-hover">
         <thead>
           <tr>
             <th>Prénom / Nom</th>
@@ -30,7 +36,28 @@
         </tr>
         </tbody>
       </table>
+ -->
 
+    <table ng-table="collaboratorsListVm.tableParams" show-filter="collaboratorsListVm.isFiltersEnabled" class="table table-striped table-hover">
+      <tr ng-repeat="row in $data" ng-dblClick="collaboratorsListVm.redirectCollaboratorsDetails($event, row._id)">
+        <td title="'Nom'" filter="{nom: 'text'}" sortable="'nom'"><a ui-sref=".details({id:row._id})"> <b>{{ row.nom }}</b> </a></td>
+        
+        <td title="'Prenom'" filter="{prenom: 'text'}" sortable="'prenom'"><a ui-sref=".details({id:row._id})"> <b>{{ row.prenom }}</b> </a></td>
+      
+        <td title="'Pseudo'" filter="{pseudo: 'text'}" sortable="'pseudo'">{{row.pseudo}}</td>
+        
+        <td title="'Fonction'" filter="{fonction: 'text'}" sortable="'fonction'">{{row.fonction}}</td>
+        
+        <td title="'Rôle'" filter="{role: 'text'}" sortable="'role'">{{row.role}}</td>
+        
+        <td title="'Manager'" filter="{manager: 'text'}" sortable="'manager.'"><a ui-sref=".details({id:collaborator.manager.id})">{{row.manager.prenom}} {{row.manager.nom}}</a></td>
+      
+        <td ng-click="collaboratorsListVm.deleteCollaborator(row._id)">
+          <span class="fa fa-trash-o fa-lg" style="color: red;">
+        </td>
+      
+      </tr>
+    </table>
       <div layout="row" layout-align="center">
         <md-button nra-auth="['admin', 'manager']" class="md-raised md-primary" type="submit" ui-sref=".create">Créer un nouveau collaborateur</md-button>
       </div>
