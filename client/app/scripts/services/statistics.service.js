@@ -110,7 +110,6 @@ function Service(utilsService) {
     return project;
   };
 
-
   function countProjectsByStatusFromStatus(numberProjectsByStatuts) {
     var a = [], b = [], prev;
 
