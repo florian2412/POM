@@ -4,8 +4,20 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-  height: auto;
 }
+
+md-sidenav {
+  position: fixed;
+  height: 100%;
+}
+
+md-backdrop.md-sidenav-backdrop{
+  height: auto;
+  display: block;
+  position: fixed !important;
+ /* overflow: hidden;*/
+}
+
 
 table > thead > tr > th,
 table > tbody > tr > td

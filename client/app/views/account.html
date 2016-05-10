@@ -6,25 +6,31 @@
       </div>
     </md-toolbar>
     <md-card-content>
-      <md-content flex layout layout-align="center">
-        <div layout-gt-sm flex flex-get-sm="80" flex-gt-md="100">
-          <paper flex flex-gt-sm="20">
-            <p><img style="width:100px" src="http://takeyourchance.fr/img/Icon-user.png"/></p>
-            <p >Bonjour <strong>{{user.nom}} {{user.prenom}}</strong></p>
-            <p><strong>{{user.fonction}}</strong></p>
-            <p><strong>{{user.role}}</strong></p>
-            <p><strong>{{user.email}}</strong></p>
-            <md-button ng-click="showUpdatePassword($event)">Changer de mot de passe</md-button>
-          </paper>
-          <paper flex>
-            <p>Voici l'état de vos projets : </p>
-            <div id="piechart" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
-          </paper>
+      <md-content>
+        <div flex layout layout-align="start">
+          
+          <div flex="10">
+            <img style="width:100px" src="http://takeyourchance.fr/img/Icon-user.png"/>
+          </div>
+
+          <div flex="5"></div>
+
+          <div flex="85">
+            <p>Identité : <strong>{{user.nom}} {{user.prenom}}</strong></p>
+            <p>Fonction : <strong>{{user.fonction}}</strong></p>
+            <p>Rôle : <strong>{{user.role}}</strong></p>
+            <p>Email : <strong>{{user.email}}</strong></p>
+            <md-divider flex></md-divider>
+            <md-button class="md-raised md-primary" ng-click="showUpdatePassword($event)">Changer de mot de passe</md-button>
+          </div>
+          <!--   <paper flex>
+              <p>Voici l'état de vos projets : </p>
+              <div id="piechart" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+            </paper> -->
+          
         </div>
       </md-content>
-      <div layout="row" layout-align="center">
-        <md-button nra-auth="['admin', 'manager', 'collaborateur']" class="md-raised md-primary" >Sauvegarder</md-button>
-      </div>
+    
     </md-card-content>
   </div>
 </md-card>
