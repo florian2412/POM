@@ -62,6 +62,12 @@ function Service(utilsService) {
             showInLegend: true
           }
         },
+        credits: {
+          enabled: false
+        },
+        exporting: {
+          enabled: false 
+        },
         series: [{
           colorByPoint: true,
           data: data
