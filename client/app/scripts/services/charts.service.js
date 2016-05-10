@@ -71,7 +71,7 @@ function Service(utilsService) {
   }
 
   // Constuit un bar grah
-  function buildBarChartTasksDuration(id, title, pointFormat, legend, data) {
+  function buildBarChartTasksDuration(id, title, pointFormat, legend, theoricData, realData) {
     $(document).ready(function () {
       $('#' + id).highcharts({
         chart: {
@@ -94,7 +94,8 @@ function Service(utilsService) {
           formatter: function () {
             return '<b>' + this.x + '</b><br/>' +
               this.series.name + ': ' + this.y + '<br/>';
-          }
+          },
+          pointFormat: pointFormat
         },
         plotOptions: {
           column: {
@@ -104,18 +105,21 @@ function Service(utilsService) {
         series: [{
           name: 'Durée théorique',
           // Durée théorique de chaques tâches de 0 à n
-          data: [1, 2, 3, 4],
+          data: theoricData,
+          //data: [1, 2, 3, 4],
           stack: 'Théorique'
         }, {
           name: 'Durée réelle',
           // Durée réelle de chaques tâches de 0 à n
-          data: [3, 4, 4, 2],
+          data: realData,
+          //data: [3, 4, 4, 2],
           stack: 'Réelle'
         }]
       });
     });
   }
 
+  // USELESS FOR THE MOMENT
   function buildColumnRangeChartTasksDuration(id, title, pointFormat, legend, data) {
     $(document).ready(function () {
         $('#' + id).highcharts({

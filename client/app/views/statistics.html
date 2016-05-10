@@ -6,12 +6,14 @@
       </div>
     </md-toolbar>
     <md-card-content>
-     <!--  <p>Bonjour <strong>{{user.prenom}}</strong>,<br>Voici l'état des projets : </p>
- -->
+      <!--  <p>Bonjour <strong>{{user.prenom}}</strong>,<br>Voici l'état des projets : </p>
+  -->
       <h4 ng-show="statisticsVm.zeroProject">Vous n'avez aucun projet.</h4>
 
       <div ng-show="!statisticsVm.zeroProject">
         <div id="piechart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
+        <br>
 
         <div layout layout-align="center">
           <div flex="45">
@@ -33,9 +35,6 @@
 
         </div>
 
-
-
-        <label><b>Statistiques prévisionelles</b></label>
         <div layout layout-align="center" layout-xs="column">
           <div flex="50" flex-xs="100">
             <div id="piechart-project"></div>
@@ -44,13 +43,18 @@
             <div id="piechart-project2"></div>
           </div>
         </div>
-       <!--  <div id="barchart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
-   -->
+
       </div>
 
-      <div id="barchart-project" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+      <br><br>
 
-      <div id="columnrangechart-project" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+      <div layout layout-align="center" layout-xs="column">
+        <div flex>
+          <div id="barchart-project"></div>
+        </div>
+      </div>
+
+      <!--<div id="columnrangechart-project"></div>-->
 
       <!--  <div id="barchart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>-->
 

@@ -20,6 +20,7 @@ function Service(utilsService) {
   service.getSpentTime = getSpentTime;
   service.getDuration = getDuration;
   service.getLeftDuration = getLeftDuration;
+  service.getTotalRealTime = getTotalRealTime;
 
   return service;
 
@@ -155,6 +156,13 @@ function Service(utilsService) {
     // Si la tache commence aujourd'hui
     else
       return diff + 1;
+  };
+
+  // Retourne la durée déjà passée théorique
+  function getTotalRealTime(object) {
+    var start = new Date(object.date_debut);
+    var end = new Date(object.date_fin_reelle);
+    return utilsService.dateDiffWorkingDates(start,end);
   };
 
   // Retourne la durée totale théorique

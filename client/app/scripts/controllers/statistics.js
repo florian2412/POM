@@ -16,7 +16,6 @@ angular.module('pomApp')
 
     function populatePage() {
       buildProjectsStatusChart();
-
     }
 
     function updateChartProject() {
@@ -26,7 +25,7 @@ angular.module('pomApp')
       buildTasksCostProjectBudgetChart(project._id);
 
       buildTasksDurationBarChart(project._id);
-      buildTasksDurationColumnRangeChart(project._id);
+      //buildTasksDurationColumnRangeChart(project._id);
 
     }
 
@@ -113,25 +112,35 @@ angular.module('pomApp')
 
     function buildTasksDurationBarChart(projectId) {
       var project = searchProjectInProjects(projectId);
+      console.log('projet sélectionné : ');
+      console.log(project);
+
       var tasks = project.taches;
 
-      var tasksCost = [];
+      console.log('tasks projet sélectionné : ');
+      console.log(tasks);
+
+      var tasksTheoricDuration = [];
+      var tasksRealDuration = [];
+
       var tasksName = [];
 
       for (var i = 0; i < tasks.length; i++) {
-        tasksCost.push(statisticsService.calculTaskTotalCost(tasks[i], vm.saveCollaborators));
-        tasksName.push(tasks[i].libelle);
+        if (tasks[i].statut === 'Terminé(e)') {
+          tasksTheoricDuration.push(statisticsService.getDuration(tasks[i]));
+          tasksRealDuration.push(statisticsService.getTotalRealTime(tasks[i]));
+          tasksName.push(tasks[i].libelle);
+        }
       }
 
-      var dataChart = chartsService.calculDataChart(tasksCost, tasksName);
+      if(tasksName.length != 0) {
+        var idChart = 'barchart-project';
+        var titleChart = 'Comparaison entre la durée théorique et réelle de chaque tâche du projet';
+        var pointFormatChart = 'Coût :<b>{point.y} €</b> <br> Soit :<b>{point.percentage:.1f}%</b>';
+        chartsService.buildBarChartTasksDuration(idChart, titleChart, pointFormatChart, tasksName, tasksTheoricDuration, tasksRealDuration);
+      } else {
 
-      console.log(dataChart);
-
-      var idChart = 'barchart-project';
-      var titleChart = 'Bar charts test';
-      var pointFormatChart = 'Coût :<b>{point.y} €</b> <br> Soit :<b>{point.percentage:.1f}%</b>';
-
-      chartsService.buildBarChartTasksDuration(idChart, titleChart, pointFormatChart, tasksName, dataChart);
+      }
     }
 
     function buildTasksDurationColumnRangeChart(projectId) {
@@ -158,62 +167,62 @@ angular.module('pomApp')
        */
       // NE MARCHE PAS !!!
       /*
-      $(document).ready(function () {
-        $('#columnrangechart-project').highcharts({
-          chart: {
-            type: 'columnrange',
-            inverted: true
-          },
-          title: {
-            text: 'bla'
-          },
-          subtitle: {
-            text: 'Observed in Vik i Sogn, Norway'
-          },
-          xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-          },
-          yAxis: {
-            title: {
-              text: 'Temperature ( °C )'
-            }
-          },
-          tooltip: {
-            valueSuffix: '°C'
-          },
-          plotOptions: {
-            columnrange: {
-              dataLabels: {
-                enabled: true,
-                formatter: function () {
-                  return this.y + '°C';
-                }
-              }
-            }
-          },
-          legend: {
-            enabled: false
-          },
-          series: [{
-            name: 'Temperatures',
-            data: [
-              [-9.7, 9.4],
-              [-8.7, 6.5],
-              [-3.5, 9.4],
-              [-1.4, 19.9],
-              [0.0, 22.6],
-              [2.9, 29.5],
-              [9.2, 30.7],
-              [7.3, 26.5],
-              [4.4, 18.0],
-              [-3.1, 11.4],
-              [-5.2, 10.4],
-              [-13.5, 9.8]
-            ]
-          }]
-        });
-      });
-      */
+       $(document).ready(function () {
+       $('#columnrangechart-project').highcharts({
+       chart: {
+       type: 'columnrange',
+       inverted: true
+       },
+       title: {
+       text: 'bla'
+       },
+       subtitle: {
+       text: 'Observed in Vik i Sogn, Norway'
+       },
+       xAxis: {
+       categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+       },
+       yAxis: {
+       title: {
+       text: 'Temperature ( °C )'
+       }
+       },
+       tooltip: {
+       valueSuffix: '°C'
+       },
+       plotOptions: {
+       columnrange: {
+       dataLabels: {
+       enabled: true,
+       formatter: function () {
+       return this.y + '°C';
+       }
+       }
+       }
+       },
+       legend: {
+       enabled: false
+       },
+       series: [{
+       name: 'Temperatures',
+       data: [
+       [-9.7, 9.4],
+       [-8.7, 6.5],
+       [-3.5, 9.4],
+       [-1.4, 19.9],
+       [0.0, 22.6],
+       [2.9, 29.5],
+       [9.2, 30.7],
+       [7.3, 26.5],
+       [4.4, 18.0],
+       [-3.1, 11.4],
+       [-5.2, 10.4],
+       [-13.5, 9.8]
+       ]
+       }]
+       });
+       });
+       */
     }
 
     // Au chargement de la page
@@ -221,7 +230,7 @@ angular.module('pomApp')
 
       // On récupère tout ce dont on a besoin de la BDD et on stocke dans des variables
       databaseService.getAllObjects('projects').success(function (data){ vm.saveProjects = data;
-        vm.zeroProject = ((data.length === 0) ? true : false );})
+          vm.zeroProject = ((data.length === 0) ? true : false );})
         .error(function(err) { console.log(err); });
 
       databaseService.getAllObjects('collaborators').success(function(data){ vm.saveCollaborators = data;})
