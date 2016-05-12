@@ -7,27 +7,20 @@
     </md-toolbar>
     <md-card-content>
       <md-content>
-        <div flex layout layout-align="start">
-
-          <div flex="10">
-            <img style="width:100px" src="http://takeyourchance.fr/img/Icon-user.png"/>
+        <div flex layout layout-align="center">
+          <div flex = "10">
+            <img ng-src="{{user.role == 'admin' && '../images/admin.png' || user.role == 'manager' && '../images/manager.png' || '../images/collaborateur.png'}}"/>
           </div>
-
-          <div flex="5"></div>
-
-          <div flex="85">
-            <p>Identité : <strong>{{user.nom}} {{user.prenom}}</strong></p>
-            <p>Fonction : <strong>{{user.fonction}}</strong></p>
-            <p>Rôle : <strong>{{user.role}}</strong></p>
-            <p>Email : <strong>{{user.email}}</strong></p>
-            <md-divider flex></md-divider>
-            <md-button class="md-raised md-primary" ng-click="showUpdatePassword($event)">Changer de mot de passe</md-button>
+          <div flex = "5"></div>
+          <div flex = "85">
+            <paper flex flex-gt-sm="20">
+              <p>Identité :<strong> {{user.prenom}} {{user.nom}}</strong></p>
+              <p>Rôle :<strong> {{user.role}}</strong></p>
+              <p>Fonction :<strong> {{user.fonction}}</strong></p>
+              <p>Email : <strong> {{user.email}}</strong></p>
+              <md-button class="md-raised md-primary" ng-click="showUpdatePassword($event)">Changer de mot de passe</md-button>
+            </paper>
           </div>
-          <!--   <paper flex>
-              <p>Voici l'état de vos projets : </p>
-              <div id="piechart" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
-            </paper> -->
-
         </div>
       </md-content>
     </md-card-content>

@@ -12,6 +12,7 @@ angular.module('pomApp')
 
     $scope.showUpdatePassword = showUpdatePassword;
     $scope.user = localStorageService.get('currentUser');
+    
 
     var idCurrentUser = localStorageService.get('currentUser')._id;
 
