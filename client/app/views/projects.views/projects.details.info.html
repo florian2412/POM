@@ -34,7 +34,7 @@
       </div>
 
       <br>
-      <br>
+
       <div layout layout-align="center center">
         <div flex="45">
           <md-input-container class="md-block">
@@ -49,6 +49,17 @@
 
         <div flex="45">
           <md-input-container class="md-block">
+            <md-button class="md-raised" ng-click="projectsDetailsVm.closeProject()">Terminer le projet</md-button>
+          </md-input-container>
+        </div>
+      </div>
+
+      <br>
+
+
+      <div layout layout-align="center center">
+        <div flex="45">
+          <md-input-container class="md-block">
             <label>Ligne budgétaire</label>
             <md-select ng-model="projectsDetailsVm.selectedBudget" ng-disabled="true">
               <md-option ng-repeat="budget in projectsDetailsVm.budgets" ng-value="budget" >
@@ -57,12 +68,19 @@
             </md-select>
           </md-input-container>
         </div>
+
+        <div flex="10"></div>
+
+        <div flex="45">
+          <md-input-container class="md-block">
+            <md-button class="md-raised" ng-click="projectsDetailsVm.showCollaboratorPicker($event)">Choisir les collaborateurs</md-button>
+          </md-input-container>
+        </div>
       </div>
 
       <br>
-      <br>
 
-      <!-- ajouter une description -->
+      <!-- Ajouter une description -->
       <div layout layout-align="center">
         <div flex="100">
           <md-input-container class="md-block" flex-xs="100">
@@ -71,28 +89,6 @@
           </md-input-container>
         </div>
       </div>
-
-      <div layout layout-align="center center">
-        <md-input-container class="md-block">
-          <div layout="row" flex>
-            <md-button class="md-raised" ng-click="projectsDetailsVm.showCollaboratorPicker($event)">
-              Choisir les collaborateurs
-            </md-button>
-          </div>
-        </md-input-container>
-      </div>
-
-      <br>
-
-      <div layout layout-align="center center">
-        <md-input-container class="md-block">
-          <div layout="row" flex>
-            <md-button class="md-raised md-primary" ng-click="projectsDetailsVm.closeProject()">Cloturer le projet</md-button>
-          </div>
-        </md-input-container>
-      </div>
-
-      <br>
 
       <div layout layout-align="center center">
         <div>

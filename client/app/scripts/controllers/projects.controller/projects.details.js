@@ -16,7 +16,6 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
   var collaborateursId = [];
   var vm = this;
 
-  vm.isDisabled = false;
   vm.getProjectById = getProjectById;
   vm.updateProject =  updateProject;
   vm.showCancelDialog = showCancelDialog;
@@ -24,22 +23,35 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
   vm.closeProject = closeProject;
 
   function closeProject() {
-    var idProject = vm.project._id;
-    var data;
+    var projectTasks = vm.project.taches;
+    var isValid = true;
+    for(var i = 0; i < projectTasks.length; i++) {
+      if(projectTasks[i].statut === 'En cours' || projectTasks[i].statut === 'Initial')
+        isValid = false;
+    }
 
-    data = {
-      "statut" : 'Terminé(e)',
-      "date_fin_reelle" : new Date()
-    };
+    if(isValid) {
+      var idProject = vm.project._id;
+      var data;
 
-    databaseService.updateObject('projects', idProject, data)
-      .success(function (data) {
-        flashService.success("Le projet " + vm.project.nom + " a bien été cloturé !", "", "bottom-right", true, 4);
-        $state.go("projects");
-      })
-      .error(function (err) {
-        console.log(err);
-      });
+      data = {
+        "statut": 'Terminé(e)',
+        "date_fin_reelle": new Date()
+      };
+
+      databaseService.updateObject('projects', idProject, data)
+        .success(function (data) {
+          flashService.success("Le projet " + vm.project.nom + " a bien été cloturé !", "", "bottom-right", true, 4);
+          $state.go("projects");
+        })
+        .error(function (err) {
+          console.log(err);
+        });
+    }
+    else {
+      showFinishTasksDialog();
+    }
+
   };
 
 
@@ -113,6 +125,18 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
       });
   };
 
+  function showFinishTasksDialog() {
+var alert = $mdDialog.alert()
+      .parent(angular.element(document.querySelector('#popupContainer')))
+      .clickOutsideToClose(true)
+      .title('Alerte')
+      .textContent('Vous devez finaliser toutes les tâches associées au projet avant de pouvoir le terminer.')
+      .ariaLabel('Vérification dss tâches')
+      .ok('Ok');
+
+    $mdDialog.show(alert);
+  };
+
   function showCancelDialog() {
     var confirm = $mdDialog.confirm()
       .title('Alerte')
@@ -148,16 +172,16 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
 
   function showCollaboratorPicker(ev) {
     $mdDialog.show({
-        controller: _CollaboratorPickerController,
-        templateUrl: 'views/shared/collaborators.picker.html',
-        parent: angular.element(document.body),
-        targetEvent: ev,
-        clickOutsideToClose:true,
-        fullscreen: false,
-        locals: {
-          collaborators: vm.collaborators
-        }
-      })
+      controller: _CollaboratorPickerController,
+      templateUrl: 'views/shared/collaborators.picker.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose:true,
+      fullscreen: false,
+      locals: {
+        collaborators: vm.collaborators
+      }
+    })
       .then(function(count) {
         console.log(count);
         //vm.numberOfCollaborators = count.length;

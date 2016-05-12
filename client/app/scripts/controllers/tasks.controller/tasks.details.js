@@ -22,7 +22,6 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
   vm.filterOnlyWeekDays = utilsService.filterOnlyWeekDays;
   vm.changedValue = changedValue;
 
-
   function updateTask() {
 
     var updatedTask = vm.currentProject.taches[vm.currentIndexTask];
@@ -140,7 +139,10 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
       });
 
 
-    databaseService.getSettings('statuts').success(function(data){ vm.statuts = data; })
+    databaseService.getSettings('statuts').success(function(data){
+      data.splice(data.indexOf("Archivé(e)"),1);
+      vm.statuts = data;
+    })
       .error(function(err){ console.log(err); });
 
   });
