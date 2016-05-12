@@ -29,18 +29,13 @@ function CollaboratorsListCtrl($scope, $filter, $state, databaseService, utilsSe
             if(data[i].manager && data[i].role != "admin"){
               var id = data[i].manager;
               var m = _getManager(id, data);
-              data[i].manager = {"id" : id, "prenom" : m.prenom , "nom" : m.nom };
+              if(m)
+                data[i].manager = {"id" : id, "prenom" : m.prenom , "nom" : m.nom };
             }
           }
           vm.collaborators = data;
          
-          vm.tableParams = new NgTableParams({
-              page: 1, // show first page
-              count: 10 // count per page
-            }, {
-              filterDelay: 0,
-              data: data
-            });
+          vm.tableParams = new NgTableParams({ page: 1, count: 10 }, { filterDelay: 0, data: data });
 
         });
     };

@@ -13,7 +13,7 @@
 
 angular.module('pomApp').controller('TasksListCtrl', TasksListCtrl);
 
-function TasksListCtrl($scope, $state, databaseService, $stateParams, utilsService,NgTableParams) {
+function TasksListCtrl($scope, $state, databaseService, flashService, $stateParams, utilsService, NgTableParams) {
 
   var vm = this;
 

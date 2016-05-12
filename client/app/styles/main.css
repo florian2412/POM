@@ -31,24 +31,10 @@ table > tbody > tr > td
   padding-right: 15px;
 }
 
-table > tbody > tr > td:hover
+table > tbody > tr > td:hover, a:hover, canvas:hover, md-grid-tile.md-grid-tile-footer
 {
    cursor: pointer;
 }
-a:hover{
-  cursor: pointer;
-}
-
-canvas:hover{
-  cursor: pointer;
-}
-/*md-content {
-  margin-bottom: 50px;
-}*/
-/*md-sidenav, md-backdrop {
-  position: fixed !important;
-  bottom: 0;
-}*/
 
 /* Font color white */
 .md-button.md-raised.md-primary > span,
@@ -75,20 +61,6 @@ md-toolbar .md-toolbar-tools h2
   vertical-align: middle;
 }
 
-.cropArea {
-  background: #E4E4E4;
-  overflow: hidden;
-  width:500px;
-  height:350px;
-}
-
-
-.cropPicture {
-  border-radius: 25%;
-  width:50px;
-  height:50px;
-}
-
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
@@ -110,3 +82,33 @@ md-toolbar .md-toolbar-tools h2
 .progressBarClass {
   position: relative;
 }
+
+.white-text {
+  color: #FFFFFF;
+}
+
+.red-tile {
+  background-color: #E57373;
+}
+
+.blue-tile {
+  background-color: #4FC3F7;
+}
+
+.green-tile {
+  background-color: #AED581;
+}
+
+.orange-tile {
+  background-color: #FFB74D;
+}
+
+.tile-effect { 
+    transition: all .2s ease-in-out; 
+}
+
+.tile-effect:hover {
+    transform: scale(1.03); 
+}
+
+

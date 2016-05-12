@@ -9,12 +9,113 @@
  */
 angular.module('pomApp').controller('MainCtrl',MainCtrl);
 
-function MainCtrl($scope, $rootScope, $location, $timeout, localStorageService, databaseService, utilsService, statisticsService) {
+function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, databaseService, utilsService, statisticsService,NgTableParams) {
 
   var vm = this;
+  vm.showTasks = showTasks;
+  vm.redirectTasksDetails = redirectTasksDetails;
 
   var currentUser = localStorageService.get('currentUser');
   var idCurrentUser = localStorageService.get('currentUser')._id;
+
+  var statuts = {"initial": { "color": "blue", "class": "fa fa-info", "statut": "Initial" },
+               "en_cours": { "color": "orange", "class": "fa fa-cog fa-spin fa-fw margin-bottom", "statut":"En cours" },
+               "termine": { "color": "green", "class": "fa fa-check-circle","statut": "Terminé(e)" },
+               "annule": { "color": "red", "class": "fa fa-times-circle", "statut": "Annulé(e)" },
+               "archive": { "color": "gray", "class": "fa fa-file-archive-o", "statut": "Archivé" }
+             };
+
+  function redirectTasksDetails(event,taskId, projectId){
+    $state.go('projects.details.tasks.details',{"idtask":taskId, "id":projectId});
+  }
+
+  function allTasksDetails(projects){
+   
+    var urgent_tasks = [], completed_tasks = [], upcoming_tasks = [], new_tasks = [], canceled_tasks = [];
+    var allUserTasks = [];
+
+    for (var i = projects.length - 1; i >= 0; i--) {
+      // console.log(projects[i].statut);
+      if(projects[i].statut === "En cours"){
+        console.log(projects[i].nom);
+        var tasks = projects[i].taches;
+
+        for (var j = tasks.length - 1; j >= 0; j--) {
+        
+          if(tasks[j].collaborateurs.indexOf(idCurrentUser) > -1)
+          {
+            allUserTasks.push(tasks[j]);
+        
+            var diffUrgentTasks = utilsService.dateDiffWorkingDates(new Date(),new Date(tasks[j].date_fin_theorique));
+            var diffUpcomingTasks = utilsService.dateDiffWorkingDates(new Date(),new Date(tasks[j].date_debut));
+            switch (tasks[j].statut){
+              case "Initial":
+              {
+                new_tasks.push(tasks[j]);
+                if(diffUpcomingTasks > 0 && diffUpcomingTasks < 7)
+                  upcoming_tasks.push(tasks[j]);
+                break;
+              }
+              case "En cours":
+              {
+                if (diffUrgentTasks <= 3){
+                  urgent_tasks.push(tasks[j]);
+                }
+                break;
+              }
+              case "Terminé(e)":
+              {
+                completed_tasks.push(tasks[j]);
+                break;
+              }
+              case "Annulé(e)":
+              {
+                canceled_tasks.push(tasks[j]);
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+    vm.allTasks = allUserTasks;
+    vm.urgentTasks = urgent_tasks;
+    vm.upcomingTasks = upcoming_tasks;
+    vm.completedTasks = completed_tasks;
+    vm.canceledTasks = canceled_tasks;
+    vm.newTasks = new_tasks;
+
+    vm.nbNewTasks = new_tasks.length;
+    vm.nbUrgentTasks = urgent_tasks.length;
+    vm.nbUpcomingTasks = upcoming_tasks.length;
+    vm.nbCompletedTasks = completed_tasks.length;
+    vm.nbCanceledTasks = canceled_tasks.length;
+    vm.nbTotalTasks = allUserTasks.length;
+  
+  }
+
+  //vm.isFiltersEnabled = false;
+
+
+  function showTasks(tasks){
+    for (var i = tasks.length - 1; i >= 0; i--) {
+      switch (tasks[i].statut)
+        {
+          case 'Initial': tasks[i].statut = statuts.initial;
+          break;
+          case 'En cours': tasks[i].statut = statuts.en_cours;
+          break;
+          case 'Terminé(e)': tasks[i].statut = statuts.termine;
+          break;
+          case 'Annulé(e)': tasks[i].statut = statuts.annule;
+          break;
+          case 'Archivé': tasks[i].statut = statuts.archive;
+          break;
+        }
+      }
+    vm.tableParams = new NgTableParams({ page: 1, count: 10 }, { filterDelay: 0, data: tasks });
+  }
+
 
   function populatePage () {
 
@@ -132,12 +233,13 @@ function MainCtrl($scope, $rootScope, $location, $timeout, localStorageService, 
     databaseService.getAllObjects('budgets').success(function(data){ vm.saveBudgets = data.data; })
       .error(function(err){ console.log(err); });
 
-    databaseService.getCollaboratorProjects(idCurrentUser).success(function(data){ vm.projects = data; })
+    databaseService.getCollaboratorProjects(idCurrentUser).success(function(data){ vm.projects = data;})
       .error(function(err){ console.log(err); });
 
     $timeout(function() {
       populatePage();
-
+      allTasksDetails(vm.projects);
+      showTasks(vm.allTasks);
       //showProgressBars();
     });
 
