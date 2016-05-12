@@ -67,6 +67,8 @@
                     
                     <td title="'Statut'" sortable="'statut.statut'"><span class="{{row.statut.class}}" style="color:{{row.statut.color}};font-size:1.5em;"><md-tooltip md-direction="left">{{row.statut.statut}}</md-tooltip></span></td>
 
+                    <td title="'Catégorie'" filter="{categorie: 'text'}" sortable="'categorie.name'"><kbd style="background-color:{{row.categorie.color}}">{{ row.categorie.name }}</kbd></td>
+
                     <td title="'Dernière modification'" filter="{date_derniere_modif: 'text'}" sortable="'date_derniere_modif'" >{{ row.date_derniere_modif | date:"dd/MM/yyyy 'à' HH:mm:ss" }}</td>
                   
                   </tr>

@@ -25,6 +25,8 @@ function Service($filter) {
   service.getElementById = getElementById;
   service.sumArrayValues = sumArrayValues;
   service.filterOnlyWeekDays = filterOnlyWeekDays;
+  service.statusColors = statusColors;
+  service.categoriesColors = categoriesColors;
 
   return service;
 
@@ -116,5 +118,21 @@ function Service($filter) {
     return (!(day === 0 || day === 6 ));
   }
 
+  function statusColors(){
+    return {"initial": { "color": "blue", "class": "fa fa-info", "statut": "Initial" },
+                 "en_cours": { "color": "orange", "class": "fa fa-cog fa-spin fa-fw margin-bottom", "statut":"En cours" },
+                 "termine": { "color": "green", "class": "fa fa-check-circle","statut": "Terminé(e)" },
+                 "annule": { "color": "red", "class": "fa fa-times-circle", "statut": "Annulé(e)" },
+                 "archive": { "color": "gray", "class": "fa fa-file-archive-o", "statut": "Archivé" }
+    };
+  }
+
+  function categoriesColors(){
+    return {  "etude" : { "color" : "#EF5350", "name" : "Etude de projet" },
+              "spec" : { "color" : "#FFA726", "name" : "Spécification" },
+              "dev" : { "color" : "#29B6F6", "name" : "Développement" },
+              "rec" : { "color" : "#FDD835", "name" : "Recette" },
+              "mep" : { "color" : "#66BB6A", "name" : "Mise en production" }};
+  }
 }
 

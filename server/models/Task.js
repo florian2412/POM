@@ -10,6 +10,7 @@ var schemaTask = mongoose.Schema({
     libelle: String,
     code: String,
     description: String,
+    categorie: String,
     date_debut: Date,
     date_fin_theorique: Date,
     date_fin_reelle: Date,

@@ -20,14 +20,6 @@ function ProjectsListCtrl($scope,$state, NgTableParams, databaseService, utilsSe
   vm.redirectProjectsDetails = redirectProjectsDetails;
   vm.isFiltersEnabled = false;
 
-  var statuts = {"initial": { "color": "blue", "class": "fa fa-info", "statut": "Initial" },
-                 "en_cours": { "color": "orange", "class": "fa fa-cog fa-spin fa-fw", "statut":"En cours" },
-                 "termine": { "color": "green", "class": "fa fa-check-circle","statut": "Terminé(e)" },
-                 "annule": { "color": "red", "class": "fa fa-times-circle", "statut": "Annulé(e)" },
-                 "archive": { "color": "gray", "class": "fa fa-file-archive-o", "statut": "Archivé" }
-                };
-  
-
   function redirectProjectsDetails(event,id){
     $state.go('projects.details.info',{"id":id});
   }
@@ -72,15 +64,15 @@ function ProjectsListCtrl($scope,$state, NgTableParams, databaseService, utilsSe
 
       switch (data[i].statut)
       {
-        case 'Initial': data[i].statut = statuts.initial;
+        case 'Initial': data[i].statut = utilsService.statusColors().initial;
         break;
-        case 'En cours': data[i].statut = statuts.en_cours;
+        case 'En cours': data[i].statut = utilsService.statusColors().en_cours;
         break;
-        case 'Terminé(e)': data[i].statut = statuts.termine;
+        case 'Terminé(e)': data[i].statut = utilsService.statusColors().termine;
         break;
-        case 'Annulé(e)': data[i].statut = statuts.annule;
+        case 'Annulé(e)': data[i].statut = utilsService.statusColors().annule;
         break;
-        case 'Archivé': data[i].statut = statuts.archive;
+        case 'Archivé': data[i].statut = utilsService.statusColors().archive;
         break;
       }
     }
@@ -89,7 +81,7 @@ function ProjectsListCtrl($scope,$state, NgTableParams, databaseService, utilsSe
   function archiveProject(id){
     for (var i = vm.projects.length - 1; i >= 0; i--) {
       if(vm.projects[i]._id == id){
-        vm.projects[i].statut = statuts.archive;
+        vm.projects[i].statut = utilsService.statusColors().archive;
         vm.tableParams.reload().then(function(data) {
             if (data.length === 0 && vm.tableParams.total() > 0) {
             vm.tableParams.page(vm.tableParams.page() - 1);

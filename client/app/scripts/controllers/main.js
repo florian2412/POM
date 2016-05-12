@@ -18,13 +18,6 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
   var currentUser = localStorageService.get('currentUser');
   var idCurrentUser = localStorageService.get('currentUser')._id;
 
-  var statuts = {"initial": { "color": "blue", "class": "fa fa-info", "statut": "Initial" },
-               "en_cours": { "color": "orange", "class": "fa fa-cog fa-spin fa-fw margin-bottom", "statut":"En cours" },
-               "termine": { "color": "green", "class": "fa fa-check-circle","statut": "Terminé(e)" },
-               "annule": { "color": "red", "class": "fa fa-times-circle", "statut": "Annulé(e)" },
-               "archive": { "color": "gray", "class": "fa fa-file-archive-o", "statut": "Archivé" }
-             };
-
   function redirectTasksDetails(event,taskId, projectId){
     $state.go('projects.details.tasks.details',{"idtask":taskId, "id":projectId});
   }
@@ -35,7 +28,7 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
     var allUserTasks = [];
 
     for (var i = projects.length - 1; i >= 0; i--) {
-      // console.log(projects[i].statut);
+
       if(projects[i].statut === "En cours"){
         console.log(projects[i].nom);
         var tasks = projects[i].taches;
@@ -48,16 +41,31 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
         
             var diffUrgentTasks = utilsService.dateDiffWorkingDates(new Date(),new Date(tasks[j].date_fin_theorique));
             var diffUpcomingTasks = utilsService.dateDiffWorkingDates(new Date(),new Date(tasks[j].date_debut));
+            switch (tasks[j].categorie)
+            {
+              case 'Etude de projet': tasks[j].categorie = utilsService.categoriesColors().etude;
+              break;
+              case 'Spécification': tasks[j].categorie = utilsService.categoriesColors().spec;
+              break;
+              case 'Développement': tasks[j].categorie = utilsService.categoriesColors().dev;
+              break;
+              case 'Recette': tasks[j].categorie = utilsService.categoriesColors().rec;
+              break;
+              case 'Mise en production': tasks[j].categorie = utilsService.categoriesColors().mep;
+              break;
+            }
             switch (tasks[j].statut){
               case "Initial":
               {
                 new_tasks.push(tasks[j]);
+                tasks[j].statut = utilsService.statusColors().initial;
                 if(diffUpcomingTasks > 0 && diffUpcomingTasks < 7)
                   upcoming_tasks.push(tasks[j]);
                 break;
               }
               case "En cours":
               {
+                tasks[j].statut = utilsService.statusColors().en_cours;
                 if (diffUrgentTasks <= 3){
                   urgent_tasks.push(tasks[j]);
                 }
@@ -65,11 +73,13 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
               }
               case "Terminé(e)":
               {
+                tasks[j].statut = utilsService.statusColors().termine;
                 completed_tasks.push(tasks[j]);
                 break;
               }
               case "Annulé(e)":
               {
+                tasks[j].statut = utilsService.statusColors().annule;
                 canceled_tasks.push(tasks[j]);
                 break;
               }
@@ -94,25 +104,7 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
   
   }
 
-  //vm.isFiltersEnabled = false;
-
-
   function showTasks(tasks){
-    for (var i = tasks.length - 1; i >= 0; i--) {
-      switch (tasks[i].statut)
-        {
-          case 'Initial': tasks[i].statut = statuts.initial;
-          break;
-          case 'En cours': tasks[i].statut = statuts.en_cours;
-          break;
-          case 'Terminé(e)': tasks[i].statut = statuts.termine;
-          break;
-          case 'Annulé(e)': tasks[i].statut = statuts.annule;
-          break;
-          case 'Archivé': tasks[i].statut = statuts.archive;
-          break;
-        }
-      }
     vm.tableParams = new NgTableParams({ page: 1, count: 10 }, { filterDelay: 0, data: tasks });
   }
 

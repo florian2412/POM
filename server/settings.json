@@ -4,5 +4,6 @@
 	"fonctions" : [ "Développeur", "Architecte", "Directeur", 
 					 "Chef(fe) de projet technique","Analyste-Programmeur", "Consultant(e)",
 					 "Administrateur réseaux", "Leader Technique", "Administrateur Base de données",
-					 "Webmaster", "Expert BI", "Chef(fe) de projet fonctionnel", "Expert ProLog"  ]
+					 "Webmaster", "Expert BI", "Chef(fe) de projet fonctionnel", "Expert ProLog"  ],
+	"categories" : ["Etude de projet", "Spécification", "Développement", "Recette", "Mise en production"]
 }

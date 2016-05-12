@@ -22,33 +22,38 @@ function TasksListCtrl($scope, $state, databaseService, flashService, $statePara
   vm.redirectTasksDetails = redirectTasksDetails;
   vm.isFiltersEnabled = false;
 
-  var statuts = {"initial": { "color": "blue", "class": "fa fa-info", "statut": "Initial" },
-               "en_cours": { "color": "orange", "class": "fa fa-cog fa-spin fa-fw margin-bottom", "statut":"En cours" },
-               "termine": { "color": "green", "class": "fa fa-check-circle","statut": "Terminé(e)" },
-               "annule": { "color": "red", "class": "fa fa-times-circle", "statut": "Annulé(e)" },
-               "archive": { "color": "gray", "class": "fa fa-file-archive-o", "statut": "Archivé" }
-             };
-
-  function redirectTasksDetails(event,id){
-    $state.go('projects.details.tasks.details',{"idtask":id});
-  }
+  function redirectTasksDetails(event,id){ $state.go('projects.details.tasks.details',{"idtask":id}); }
 
   function showAllTasks(){
+    
     databaseService.getObjectById('projects', $stateParams.id)
       .success(function (data) {
         vm.tasks = data.taches;
         for (var i = data.taches.length - 1; i >= 0; i--) {
+          switch (data.taches[i].categorie)
+          {
+            case 'Etude de projet': data.taches[i].categorie = utilsService.categoriesColors().etude;
+            break;
+            case 'Spécification': data.taches[i].categorie = utilsService.categoriesColors().spec;
+            break;
+            case 'Développement': data.taches[i].categorie = utilsService.categoriesColors().dev;
+            break;
+            case 'Recette': data.taches[i].categorie = utilsService.categoriesColors().rec;
+            break;
+            case 'Mise en production': data.taches[i].categorie = utilsService.categoriesColors().mep;
+            break;
+          }
           switch (data.taches[i].statut)
           {
-            case 'Initial': data.taches[i].statut = statuts.initial;
+            case 'Initial': data.taches[i].statut = utilsService.statusColors().initial;
             break;
-            case 'En cours': data.taches[i].statut = statuts.en_cours;
+            case 'En cours': data.taches[i].statut = utilsService.statusColors().en_cours;
             break;
-            case 'Terminé(e)': data.taches[i].statut = statuts.termine;
+            case 'Terminé(e)': data.taches[i].statut = utilsService.statusColors().termine;
             break;
-            case 'Annulé(e)': data.taches[i].statut = statuts.annule;
+            case 'Annulé(e)': data.taches[i].statut = utilsService.statusColors().annule;
             break;
-            case 'Archivé': data.taches[i].statut = statuts.archive;
+            case 'Archivé': data.taches[i].statut = utilsService.statusColors().archive;
             break;
           }
         }
@@ -89,6 +94,7 @@ function TasksListCtrl($scope, $state, databaseService, flashService, $statePara
 
   // Permet de lancer au chargement de la page : récupère tous les projets
   $scope.$on('$viewContentLoaded', function() {
+
     vm.showAllTasks();
   });
 
