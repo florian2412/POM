@@ -231,6 +231,12 @@ function appRun($rootScope, $state, $location, $http,$mdSidenav, $mdDialog, auth
         },function(err){ console.log("erreur get version : " + err);}
       );
   }
+
+  Highcharts.setOptions({
+    global: {
+      useUTC: false
+    }
+  });
 }
 pomApp.config(appConfig);
 pomApp.run(appRun);

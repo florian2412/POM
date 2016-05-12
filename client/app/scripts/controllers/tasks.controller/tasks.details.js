@@ -11,7 +11,7 @@
 angular.module('pomApp').controller('TasksDetailsCtrl', TasksDetailsCtrl);
 
 function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, databaseService,  flashService, utilsService) {
-    
+
   var vm = this;
   var collaborateursId = [];
   var currentProjectCollaborators = [];
@@ -31,9 +31,19 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
     updatedTask.description = vm.task.description;
     updatedTask.date_debut = vm.task.date_debut;
     updatedTask.date_fin_theorique = vm.task.date_fin_theorique;
-    updatedTask.date_fin_reelle = vm.task.date_fin_reelle;
     updatedTask.collaborateurs = collaborateursId;
     updatedTask.date_derniere_modif = new Date();
+
+    if(updatedTask.statut === 'Terminé(e)') {
+      updatedTask.date_fin_reelle = new Date(vm.task.date_fin_reelle);
+
+    }
+
+    console.log("vm.task.date_fin_reelle");
+    console.log(vm.task.date_fin_reelle);
+
+    console.log("vm.currentProject");
+    console.log(vm.currentProject);
 
     databaseService.updateObject('projects', $stateParams.id, vm.currentProject)
       .success(function (data) {
@@ -69,8 +79,8 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
       clickOutsideToClose:true,
       fullscreen: false,
       locals: {
-         collaborators: vm.collaborators 
-       },
+        collaborators: vm.collaborators
+      },
     });
   };
 
@@ -80,7 +90,7 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
     $scope.selection = collaborateursId;
     $scope.hide = function() { $mdDialog.hide($scope.selection); };
     $scope.userRole = $rootScope.userRole;
-    
+
     $scope.selectCollaborator = function (collaborator) {
       if(collaborateursId.indexOf(collaborator._id) < 0) {
         collaborateursId.push(collaborator._id);
@@ -90,7 +100,7 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
         var indexCol =  collaborateursId.indexOf(collaborator._id);
         if (indexCol > -1) { collaborateursId.splice(indexCol, 1); }
       }
-    };  
+    };
   }
 
   function changedValue(selected){
@@ -101,7 +111,7 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
 
     databaseService.getObjectById('projects', $stateParams.id)
       .success(function (data) {
-        
+
         var currentProjectColl = data.collaborateurs;
         var tasks = data.taches;
         var indexTaskToDisplay = utilsService.arrayObjectIndexOf(tasks, $stateParams.idtask, "_id");
@@ -116,11 +126,11 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
         }
         vm.collaborators = currentProjectCollaborators;
         vm.currentProject = data;
-        vm.minDate =  new Date(task.date_debut); 
+        vm.minDate =  new Date(task.date_debut);
         vm.currentIndexTask = indexTaskToDisplay;
         vm.task = task;
         collaborateursId = task.collaborateurs;
-                
+
         //calcul du cout
         vm.task_cost = utilsService.dateDiffWorkingDates(new Date(task.date_debut),new Date(task.date_fin_theorique));
         utilsService.convertDateStringsToDates(task);

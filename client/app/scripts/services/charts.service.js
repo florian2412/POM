@@ -17,7 +17,8 @@ function Service(utilsService) {
   service.buildPieChart = buildPieChart;
   //service.buildBarChart = buildBarChart;
   service.buildBarChartTasksDuration = buildBarChartTasksDuration;
-  service.buildColumnRangeChartTasksDuration = buildColumnRangeChartTasksDuration;
+  //service.buildColumnRangeChartTasksDuration = buildColumnRangeChartTasksDuration;
+  service.buildAreaSplineChartTasksDuration = buildAreaSplineChartTasksDuration;
 
   return service;
 
@@ -66,7 +67,7 @@ function Service(utilsService) {
           enabled: false
         },
         exporting: {
-          enabled: false 
+          enabled: false
         },
         series: [{
           colorByPoint: true,
@@ -118,12 +119,74 @@ function Service(utilsService) {
           // Durée réelle de chaques tâches de 0 à n
           data: realData,
           stack: 'Réelle'
+        }],
+        credits: {
+          enabled: false
+        },
+        exporting: {
+          enabled: false
+        }
+      });
+    });
+  }
+
+  function buildAreaSplineChartTasksDuration(id, title, dataName, dataTheoricDuration, dataRealDuration) {
+    $(document).ready(function () {
+      $('#' + id).highcharts({
+        chart: {
+          type: 'areaspline'
+        },
+        title: {
+          text: title
+        },
+        legend: {
+          layout: 'vertical',
+          align: 'left',
+          verticalAlign: 'top',
+          x: 150,
+          y: 100,
+          floating: true,
+          borderWidth: 1,
+          backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+        },
+        xAxis: {
+          categories: dataName,
+        },
+        yAxis: {
+          title: {
+            text: 'Durées (en jours)'
+          }
+        },
+        tooltip: {
+          shared: true,
+          valueSuffix: ' jour'
+        },
+        credits: {
+          enabled: false
+        },
+        exporting: {
+          enabled: false
+        },
+        plotOptions: {
+          areaspline: {
+            fillOpacity: 0.5
+          }
+        },
+        series: [{
+          name: 'Théorique',
+          //data: [3, 4, 3, 5]
+          data: dataTheoricDuration
+        }, {
+          name: 'Réelle',
+          //data: [1, 3, 4, 3]
+          data: dataRealDuration
         }]
       });
     });
   }
 
 
+  /*
   function buildColumnRangeChartTasksDuration(id, title, subtitle, legend, data) {
     $(document).ready(function () {
       $('#' + id).highcharts({
@@ -144,24 +207,7 @@ function Service(utilsService) {
           title: {
             text: 'Temps (en jours)'
           },
-          type: 'datetime',
-          dateTimeLabelFormats: { // don't display the dummy year
-            month: '%e. %b',
-            year: '%b'
-          },
-        },
-        /*tooltip: {
-         valueSuffix: '°C'
-         },*/
-        plotOptions: {
-          columnrange: {
-            dataLabels: {
-              enabled: true,
-              formatter: function () {
-                return this.y;
-              }
-            }
-          }
+          type: 'datetime'
         },
         legend: {
           enabled: false
@@ -173,6 +219,7 @@ function Service(utilsService) {
       });
     });
   }
+*/
 
 }
 

@@ -69,10 +69,9 @@ function Service($filter) {
     else
       return diffDays + 1;
   }
-  
+
   function dateDiffWorkingDates(start,end){
-    // if(start.getTime() == end.getTime()) return 1;
-    if(dateDiff(start,end) === 1) return 1;
+    if(dateDiff(start, end) === 1) return 1;
 
     var curDate, endDate;
     var count = 0, n = 1;
@@ -81,12 +80,12 @@ function Service($filter) {
       curDate = end; endDate = start;
       n = -1;
     } else { curDate = start; endDate = end; }
-    
+
     while (curDate <= endDate) {
-        var dayOfWeek = curDate.getDay();
-        if(!((dayOfWeek == 6) || (dayOfWeek == 0)))
-           count++;
-        curDate.setDate(curDate.getDate() + 1);
+      var dayOfWeek = curDate.getDay();
+      if(!((dayOfWeek == 6) || (dayOfWeek == 0)))
+        count++;
+      curDate.setDate(curDate.getDate() + 1);
     }
     return (count + 1)*n;
   }

@@ -11,9 +11,22 @@
       <h4 ng-show="statisticsVm.zeroProject">Vous n'avez aucun projet.</h4>
 
       <div ng-show="!statisticsVm.zeroProject">
-        <div id="piechart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+        <div layout layout-align="center" layout-xs="column">
+          <div flex>
+            <div id="piechart"></div>
+          </div>
+        </div>
+        <div layout layout-align="center" layout-xs="column">
+          <div flex>
+            <div id="barchart-projects"></div>
+          </div>
+        </div>
+
 
         <br>
+        <hr>
+
+        <h3>Graphiques projet</h3>
 
         <div layout layout-align="center">
           <div flex="45">
@@ -29,7 +42,7 @@
           <div flex="10"></div>
           <div flex="45">
             <div layout layout-align="center">
-              <md-button class="md-raised md-primary" type="submit" ng-click="statisticsVm.updateChartProject()">Voir les statistiques</md-button>
+              <md-button class="md-raised md-primary" type="submit" ng-click="statisticsVm.updateChartProject()">Voir les statistiques sur le projet</md-button>
             </div>
           </div>
 
@@ -54,11 +67,15 @@
         </div>
       </div>
 
+
+
+      <!--
       <div layout layout-align="center" layout-xs="column">
         <div flex>
-          <div id="columnrangechart-project"></div>
+          <div id="areachart-project"></div>
         </div>
       </div>
+      -->
 
       <!--  <div id="barchart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>-->
 

@@ -16,6 +16,7 @@ angular.module('pomApp')
 
     function populatePage() {
       buildProjectsStatusChart();
+      buildProjectsDurationBarChart();
     }
 
     function updateChartProject() {
@@ -25,9 +26,9 @@ angular.module('pomApp')
       buildTasksCostProjectBudgetChart(project._id);
 
       buildTasksDurationBarChart(project._id);
-      buildTasksDurationColumnRangeChart(project._id);
+      //buildTasksDurationColumnRangeChart(project._id);
 
-
+      //buildAreaSplineChartTasksDuration(project._id);
 
 
 
@@ -138,50 +139,85 @@ angular.module('pomApp')
       }
 
       var idChart = 'barchart-project';
-      var titleChart = 'Comparaison entre la durée théorique et réelle de chaque tâche du projet';
+      var titleChart = 'Comparaison entre la durée théorique et réelle de chaque tâche terminée du projet';
       var pointFormatChart = 'Durée :<b>{point.y} €</b> <br> Soit :<b>{point.percentage:.1f}%</b>';
 
-      if(tasksName.length != 0) {
-
-        chartsService.buildBarChartTasksDuration(idChart, titleChart, pointFormatChart, tasksName, tasksTheoricDuration, tasksRealDuration);
-      } else {
-        chartsService.buildBarChartTasksDuration(idChart, titleChart, pointFormatChart, tasksName, tasksTheoricDuration, tasksRealDuration);
-      }
+      chartsService.buildBarChartTasksDuration(idChart, titleChart, pointFormatChart, tasksName, tasksTheoricDuration, tasksRealDuration);
     }
 
-    function buildTasksDurationColumnRangeChart(projectId) {
-      var project = searchProjectInProjects(projectId);
-      var tasks = project.taches;
+    function buildProjectsDurationBarChart(projectId) {
+      var projects = vm.saveProjects;
 
-      var tasksName = [];
-      var dataChart = [];
+      var projectTheoricDuration = [];
+      var projectRealDuration = [];
+      var projectsName = [];
 
-      for (var i = 0; i < tasks.length; i++) {
-        dataChart.push([new Date(tasks[i].date_debut), new Date(tasks[i].date_fin_theorique)]);
-
-        dataChart.push([new Date(tasks[i].date_debut), new Date(tasks[i].date_fin_reelle)]);
-
-
-        tasksName.push('Durée de <b>' + tasks[i].libelle + '</b> théorique');
-        tasksName.push('Durée réelle');
+      for (var i = 0; i < projects.length; i++) {
+        if (projects[i].statut === 'Terminé(e)') {
+          projectTheoricDuration.push(statisticsService.getDuration(projects[i]));
+          projectRealDuration.push(statisticsService.getTotalRealTime(projects[i]));
+          projectsName.push(projects[i].nom);
+        }
       }
 
-      console.log('dataChart');
-      console.log(dataChart);
+      var idChart = 'barchart-projects';
+      var titleChart = 'Comparaison entre la durée théorique et réelle de chaque projet terminé';
+      var pointFormatChart = 'Durée :<b>{point.y} €</b> <br> Soit :<b>{point.percentage:.1f}%</b>';
 
-      var data = [
-        [-9.7, 9.4],
-        [-8.7, 6.5],
-        [-9.7, 9.4],
-        [-8.7, 6.5]
-      ];
-
-      var idChart = 'columnrangechart-project';
-      var titleChart = 'Durée théorique et réelle des tâches dans le temps';
-      var subtitleChart = 'Durée théorique et réelle des tâches dans le temps';
-
-      chartsService.buildColumnRangeChartTasksDuration(idChart, titleChart, subtitleChart, tasksName, dataChart);
+      chartsService.buildBarChartTasksDuration(idChart, titleChart, pointFormatChart, projectsName, projectTheoricDuration, projectRealDuration);
     }
+
+    /*
+     function buildAreaSplineChartTasksDuration(projectId) {
+     var project = searchProjectInProjects(projectId);
+     console.log('projet sélectionné : ');
+     console.log(project);
+
+     var tasks = project.taches;
+
+     console.log('tasks projet sélectionné : ');
+     console.log(tasks);
+
+     var tasksTheoricDuration = [];
+     var tasksRealDuration = [];
+
+     var tasksName = [];
+
+     for (var i = 0; i < tasks.length; i++) {
+     //if (tasks[i].statut === 'Terminé(e)') {
+     tasksTheoricDuration.push(statisticsService.getDuration(tasks[i]));
+     tasksRealDuration.push(statisticsService.getTotalRealTime(tasks[i]));
+     tasksName.push(tasks[i].libelle);
+     //}
+     }
+
+     var idChart = 'areachart-project';
+     var titleChart = 'Comparaison entre la durée théorique et réelle de chaque tâche du projet';
+
+     chartsService.buildAreaSplineChartTasksDuration(idChart, titleChart, tasksName, tasksTheoricDuration, tasksRealDuration);
+     }
+     */
+
+    /*
+     function buildTasksDurationColumnRangeChart(projectId) {
+     var project = searchProjectInProjects(projectId);
+     var tasks = project.taches;
+
+     var tasksName = [];
+     var dataChart = [];
+
+     for (var i = 0; i < tasks.length; i++) {
+     dataChart.push([new Date(tasks[i].date_debut), new Date(tasks[i].date_fin_theorique)]);
+     tasksName.push('Durée de <b>' + tasks[i].libelle + '</b> théorique');
+     }
+
+     var idChart = 'columnrangechart-project';
+     var titleChart = 'Durée théorique des tâches dans le temps';
+     var subtitleChart = 'Durée théorique des tâches dans le temps';
+
+     chartsService.buildColumnRangeChartTasksDuration(idChart, titleChart, subtitleChart, tasksName, dataChart);
+     }
+     */
 
     // Au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
