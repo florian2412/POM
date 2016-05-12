@@ -76,27 +76,20 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
     function generateProjectCode(year, callback){
       databaseService.getAllObjects('projects').success(function(data){ 
 
-        var dateMax = null, lastID;
+        var dateMax = null, lastID, allIds = [];
 
         for (var i = data.length - 1; i >= 0; i--) { 
           var d = new Date(data[i].date_debut).getFullYear();
           if(d == year){
-            if (dateMax < new Date(data[i].date_debut)){
-              dateMax = new Date(data[i].date_debut);
-              lastID = data[i]._id;
-            }
+            allIds.push({ "id" : data[i]._id , "code" : data[i].code });           
           } 
         }
-        
-        if(dateMax && lastID){
+        // Trie du tableau du plus grand au plus petit
+        allIds.sort(function(a, b) { return a.code - b.code; });
+        var lastProject = allIds[0];
 
-          var index = utilsService.arrayObjectIndexOf(data,lastID,"_id");
-          var lastProjectCode = data[index].code;
-          vm.code = ((lastProjectCode) ? _incrementCodeProject(lastProjectCode) : year+'P001');          
-          
-        } else
-          vm.code = year+'P001';
-
+        vm.code = ((lastProject) ? _incrementCodeProject(lastProject.code) :  year+'P001' );
+       
         callback(vm.code);
       });
               
