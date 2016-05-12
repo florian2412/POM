@@ -84,7 +84,7 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
     vm.completedTasks = completed_tasks;
     vm.canceledTasks = canceled_tasks;
     vm.newTasks = new_tasks;
-
+  
     vm.nbNewTasks = new_tasks.length;
     vm.nbUrgentTasks = urgent_tasks.length;
     vm.nbUpcomingTasks = upcoming_tasks.length;

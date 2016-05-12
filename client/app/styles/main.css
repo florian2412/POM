@@ -31,7 +31,7 @@ table > tbody > tr > td
   padding-right: 15px;
 }
 
-table > tbody > tr > td:hover, a:hover, canvas:hover, md-grid-tile.md-grid-tile-footer
+table > tbody > tr > td:hover, a:hover, canvas:hover
 {
    cursor: pointer;
 }
@@ -103,6 +103,10 @@ md-toolbar .md-toolbar-tools h2
   background-color: #FFB74D;
 }
 
+.gray-tile {
+  background-color: #BDBDBD;
+}
+
 .tile-effect { 
     transition: all .2s ease-in-out; 
 }
@@ -112,3 +116,5 @@ md-toolbar .md-toolbar-tools h2
 }
 
 
+.no-deco { text-decoration: none; }
+.tile-content { padding-bottom: 40px ;}
