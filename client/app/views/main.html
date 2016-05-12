@@ -12,45 +12,45 @@
               md-row-height-gt-md="1:1" md-row-height="2:2"
               md-gutter="12px" md-gutter-gt-sm="30px" >
               
-              <md-grid-tile md-whiteframe="2" class="red-tile tile-effect" >
+              <md-grid-tile md-whiteframe="2" class="red-tile tile-effect" ng-click="mainVm.showTasks(mainVm.urgentTasks)">
                 <h2 class="white-text tile-content"> {{mainVm.nbUrgentTasks}} </h2>  
                 <md-grid-tile-footer>
-                  <a style="text-decoration: none" ng-click="mainVm.showTasks(mainVm.urgentTasks)"><h3 class="white-text">Tâches prioritaires</h3></a>
+                  <h3 class="white-text">Tâches prioritaires</h3>
                 </md-grid-tile-footer>
               </md-grid-tile>
 
-              <md-grid-tile md-whiteframe="2" class="blue-tile tile-effect">
+              <md-grid-tile md-whiteframe="2" class="blue-tile tile-effect"  ng-click="mainVm.showTasks(mainVm.upcomingTasks)">
                 <h2 class="white-text tile-content"> {{mainVm.nbUpcomingTasks}} </h2>
                 <md-grid-tile-footer>
-                  <a style="text-decoration: none"  ng-click="mainVm.showTasks(mainVm.upcomingTasks)"><h3 class="white-text">Tâches à venir</h3></a>
+                  <h3 class="white-text">Tâches à venir</h3>
                 </md-grid-tile-footer>
               </md-grid-tile>
 
-              <md-grid-tile md-whiteframe="2" class="orange-tile tile-effect" >
+              <md-grid-tile md-whiteframe="2" class="orange-tile tile-effect" ng-click="mainVm.showTasks(mainVm.newTasks)">
                 <h2 class="white-text tile-content"> {{mainVm.nbNewTasks}} </h2>
                 <md-grid-tile-footer>
-                  <a style="text-decoration: none" ng-click="mainVm.showTasks(mainVm.newTasks)"><h3 class="white-text">Nouvelles tâches</h3></a>
+                 <h3 class="white-text">Nouvelles tâches</h3>
                 </md-grid-tile-footer>
               </md-grid-tile>
             
-              <md-grid-tile md-whiteframe="2" class="green-tile tile-effect" >
+              <md-grid-tile md-whiteframe="2" class="green-tile tile-effect" ng-click="mainVm.showTasks(mainVm.completedTasks)">
                 <h2 class="white-text tile-content"> {{mainVm.nbCompletedTasks}} </h2>  
                 <md-grid-tile-footer>
-                  <a style="text-decoration: none" ng-click="mainVm.showTasks(mainVm.completedTasks)"><h3 class="white-text">Tâches terminées</h3></a>
+                  <h3 class="white-text">Tâches terminées</h3>
                 </md-grid-tile-footer>
               </md-grid-tile>
        
-              <md-grid-tile md-whiteframe="2" class="gray-tile tile-effect" >
+              <md-grid-tile md-whiteframe="2" class="gray-tile tile-effect" ng-click="mainVm.showTasks(mainVm.canceledTasks)">
                 <h2 class="tile-content"> {{mainVm.nbCanceledTasks}} </h2>
                 <md-grid-tile-footer>
-                  <a style="text-decoration: none" ng-click="mainVm.showTasks(mainVm.canceledTasks)"><h3 class="white-text">Tâches annulées</h3></a>
+                  <h3 class="white-text">Tâches annulées</h3>
                 </md-grid-tile-footer>
               </md-grid-tile>
 
-              <md-grid-tile md-whiteframe="2" class="tile-effect" >
+              <md-grid-tile md-whiteframe="2" class="tile-effect" ng-click="mainVm.showTasks(mainVm.allTasks)">
                 <h2 class="tile-content"> {{mainVm.allTasks.length}} </h2>
                 <md-grid-tile-footer>
-                  <a style="text-decoration: none" ng-click="mainVm.showTasks(mainVm.allTasks)"><h3 class="white-text">Toutes mes tâches</h3></a>
+                  <h3 class="white-text">Toutes mes tâches</h3>
                 </md-grid-tile-footer>
               </md-grid-tile>
 

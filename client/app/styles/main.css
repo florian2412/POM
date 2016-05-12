@@ -31,7 +31,7 @@ table > tbody > tr > td
   padding-right: 15px;
 }
 
-table > tbody > tr > td:hover, a:hover, canvas:hover
+table > tbody > tr > td:hover, a:hover, canvas:hover, md-grid-tile:hover
 {
    cursor: pointer;
 }
