@@ -241,10 +241,7 @@ angular.module('pomApp')
       $timeout(function() {
         $('#statisticsCard').show();
         $scope.loading = false;
-        //vm.isLoadingDone = true;
         populatePage();
-
-
       }, 1000);
 
     });

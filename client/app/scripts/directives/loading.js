@@ -11,7 +11,7 @@ angular.module('pomApp')
     return {
       template: '<div>' +
       '<div ng-show="loading" class="loading-container">' +
-      //'<img ng-src="../images/loader.gif"/>' +
+      '<img ng-src="../images/loader.gif"/>' +
       '</div>' +
       '<div ng-hide="loading" ng-transclude>' +
       '</div>' +
@@ -21,11 +21,6 @@ angular.module('pomApp')
       replace: true,
       scope:{
         loading: "=loading"
-      },
-      compile: function compile(element, attrs, transclude){
-        var spinner = new Spinner().spin();
-        var loadingContainer = element.find(".loading-container")[0];
-        loadingContainer.appendChild(spinner.el);
       }
     };
   });
