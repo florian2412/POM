@@ -46,9 +46,20 @@
         <div flex="70" flex-xs="100">
 
           <md-input-container class="md-block" flex-xs="100">
-
             <label>Description</label>
             <textarea ng-model="tasksCreateVm.task.description" name="description" maxlength="250" md-maxlength="250" rows="10"></textarea>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex="100">
+            <label>Catégorie</label>
+            <md-select ng-model="tasksCreateVm.task.categorie" name="categories" required>
+              <md-option ng-repeat="categorie in tasksCreateVm.categories" value="{{categorie}}">
+                {{ categorie }}
+              </md-option>
+            </md-select>
+            <div ng-messages="createTaskForm.categories.$error">
+              <div ng-message="required">Ce champ est obligatoire.</div>
+            </div>
           </md-input-container>
 
           <div flex="100" flex-xs="100" layout-align="center" layout>

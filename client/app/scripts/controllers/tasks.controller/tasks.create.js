@@ -16,8 +16,6 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams,utilsService, d
   var collaborateursId = [];
   var collaboratorsIds = [];
 
-  //vm.minDate = new Date();
-
   vm.createTask = createTask;
   vm.showCollaboratorPicker = showCollaboratorPicker;
   vm.showCancelDialog = showCancelDialog;
@@ -57,6 +55,7 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams,utilsService, d
         var task = {
           "libelle" : vm.task.name,
           "code" : vm.code,
+          "categorie" : vm.task.categorie,
           "date_debut" : vm.task.startDate,
           "description" : vm.task.description,
           "date_fin_theorique" : vm.task.endDate,
@@ -85,8 +84,9 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams,utilsService, d
   // Lancement au chargement de la page
   $scope.$on('$viewContentLoaded', function() {
 
-    databaseService.getSettings('statuts').success(function(data){ vm.statuts = data; })
-      .error(function(err){ console.log(err); });
+    databaseService.getSettings('statuts').success(function(data){ vm.statuts = data; });
+
+    databaseService.getSettings('categories').success(function(data){ vm.categories = data; });
 
     databaseService.getObjectById('projects',$stateParams.id)
       .success(function (data) {
