@@ -1,103 +1,103 @@
-<md-card>
-  <div layout="column" role="main">
-    <md-toolbar layout="row" layout-align="center center">
-      <div class="md-toolbar-tools">
-        <h2 class="md-flex">Statistiques</h2>
-      </div>
-    </md-toolbar>
-    <md-card-content>
-      <!--  <p>Bonjour <strong>{{user.prenom}}</strong>,<br>Voici l'état des projets : </p>
-  -->
-      <h4 ng-show="statisticsVm.zeroProject">Vous n'avez aucun projet.</h4>
+<div loading="loading"></div>
+<!--<div ng-show="statisticsVm.isLoadingDone"></div>-->
+<md-card id="statisticsCard">
+  <div>
+    <div layout="column" role="main">
 
-      <div ng-show="!statisticsVm.zeroProject">
-
-        <div layout layout-align="center" layout-xs="column">
-          <div flex="50" flex-xs="100">
-            <div id="piechart"></div>
-          </div>
-          <div flex="50" flex-xs="100">
-            <div id="barchartstatus-projects"></div>
-          </div>
+      <md-toolbar layout="row" layout-align="center center">
+        <div class="md-toolbar-tools">
+          <h2 class="md-flex">Statistiques</h2>
         </div>
+      </md-toolbar>
 
-        <br>
-        <hr>
+      <md-card-content>
 
-        <div layout layout-align="center" layout-xs="column">
-          <div flex>
-            <div id="barchart-projects"></div>
-          </div>
-        </div>
+        <h4 ng-show="statisticsVm.zeroProject">Vous n'avez aucun projet.</h4>
 
-        <br>
-        <hr>
+        <div>
 
-        <div layout layout-align="center" layout-xs="column">
-          <div flex>
-            <div id="barchartstatustasks-projects"></div>
-          </div>
-        </div>
+          <div ng-show="!statisticsVm.zeroProject">
 
-        <br>
-        <hr>
-        <br>
-
-        <h3>Graphiques projet</h3>
-
-        <div layout layout-align="center">
-          <div flex="45">
-            <md-input-container class="md-block">
-
-              <label>Choisir un projet</label>
-              <md-select ng-model="statisticsVm.project">
-                <md-option ng-repeat="project in statisticsVm.saveProjects" value="{{project}}">{{project.nom}}</md-option>
-              </md-select>
-
-            </md-input-container>
-          </div>
-          <div flex="10"></div>
-          <div flex="45">
-            <div layout layout-align="center">
-              <md-button class="md-raised md-primary" type="submit" ng-click="statisticsVm.updateChartProject()">Voir les statistiques sur le projet</md-button>
+            <div layout layout-align="center" layout-xs="column">
+              <div flex="50" flex-xs="100">
+                <div id="piechart"></div>
+              </div>
+              <div flex="50" flex-xs="100">
+                <div id="barchartstatus-projects"></div>
+              </div>
             </div>
+
+            <br>
+            <hr>
+
+            <div layout layout-align="center" layout-xs="column">
+              <div flex>
+                <div id="barchart-projects"></div>
+              </div>
+            </div>
+
+            <br>
+            <hr>
+
+            <div layout layout-align="center" layout-xs="column">
+              <div flex>
+                <div id="barchartstatustasks-projects"></div>
+              </div>
+            </div>
+
+            <br>
+            <hr>
+            <br>
+
+            <h3>Graphiques projet</h3>
+
+            <div layout layout-align="center">
+              <div flex="45">
+                <md-input-container class="md-block">
+
+                  <label>Choisir un projet</label>
+                  <md-select ng-model="statisticsVm.project">
+                    <md-option ng-repeat="project in statisticsVm.saveProjects" value="{{project}}">{{project.nom}}</md-option>
+                  </md-select>
+
+                </md-input-container>
+              </div>
+              <div flex="10"></div>
+              <div flex="45">
+                <div layout layout-align="center">
+                  <md-button class="md-raised md-primary" type="submit" ng-click="statisticsVm.updateChartProject()">Voir les statistiques sur le projet</md-button>
+                </div>
+              </div>
+
+            </div>
+
+            <div layout layout-align="center" layout-xs="column">
+              <div flex="50" flex-xs="100">
+                <div id="piechart-project"></div>
+              </div>
+              <div flex="50" flex-xs="100">
+                <div id="piechart-project2"></div>
+              </div>
+            </div>
+
           </div>
 
         </div>
+
+        <br><br>
 
         <div layout layout-align="center" layout-xs="column">
-          <div flex="50" flex-xs="100">
-            <div id="piechart-project"></div>
-          </div>
-          <div flex="50" flex-xs="100">
-            <div id="piechart-project2"></div>
+          <div flex>
+            <div id="barchart-project"></div>
           </div>
         </div>
 
-      </div>
-
-      <br><br>
-
-      <div layout layout-align="center" layout-xs="column">
-        <div flex>
-          <div id="barchart-project"></div>
-        </div>
-      </div>
-
-
-
-      <!--
-      <div layout layout-align="center" layout-xs="column">
-        <div flex>
-          <div id="areachart-project"></div>
-        </div>
-      </div>
-      -->
-
-      <!--  <div id="barchart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>-->
-
-    </md-card-content>
+      </md-card-content>
+    </div>
   </div>
 </md-card>
+
+
 <br>
 <br>
+

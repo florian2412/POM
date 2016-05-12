@@ -10,8 +10,12 @@
 angular.module('pomApp')
   .controller('StatisticsCtrl', function ($scope, $rootScope, $location, $timeout, localStorageService, databaseService, utilsService, chartsService, statisticsService) {
 
+    $scope.loading = true;
+
+    $('#statisticsCard').hide();
     $scope.user = localStorageService.get('currentUser');
     var vm = this;
+    vm.isLoadingDone = false;
     vm.updateChartProject = updateChartProject;
 
     function populatePage() {
@@ -209,21 +213,38 @@ angular.module('pomApp')
     $scope.$on('$viewContentLoaded', function() {
 
       // On récupère tout ce dont on a besoin de la BDD et on stocke dans des variables
-      databaseService.getAllObjects('projects').success(function (data){ vm.saveProjects = data;
-        vm.zeroProject = ((data.length === 0) ? true : false );})
+      databaseService.getAllObjects('projects')
+        .success(function (data){
+          vm.saveProjects = data;
+          vm.zeroProject = ((data.length === 0) ? true : false);
+        })
         .error(function(err) { console.log(err); });
 
-      databaseService.getAllObjects('collaborators').success(function(data){ vm.saveCollaborators = data;})
+      databaseService.getAllObjects('collaborators')
+        .success(function(data){
+          vm.saveCollaborators = data;
+        })
         .error(function(err) { console.log(err); });
 
-      databaseService.getAllObjects('budgets').success(function(data){ vm.saveBudgets = data.data; })
+      databaseService.getAllObjects('budgets')
+        .success(function(data){
+          vm.saveBudgets = data.data;
+        })
         .error(function(err){ console.log(err); });
 
-      databaseService.getSettings('statuts').success(function(data){ vm.saveStatus = data; })
-      .error(function(err){ console.log(err); });
+      databaseService.getSettings('statuts')
+        .success(function(data) {
+          vm.saveStatus = data;
+        })
+        .error(function(err){ console.log(err); });
 
       $timeout(function() {
+        $('#statisticsCard').show();
+        $scope.loading = false;
+        //vm.isLoadingDone = true;
         populatePage();
+
+
       }, 1000);
 
     });

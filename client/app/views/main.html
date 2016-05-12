@@ -11,9 +11,9 @@
               md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6"
               md-row-height-gt-md="1:1" md-row-height="2:2"
               md-gutter="12px" md-gutter-gt-sm="30px" >
-              
+
               <md-grid-tile md-whiteframe="2" class="red-tile tile-effect" ng-click="mainVm.showTasks(mainVm.urgentTasks)">
-                <h2 class="white-text tile-content"> {{mainVm.nbUrgentTasks}} </h2>  
+                <h2 class="white-text tile-content"> {{mainVm.nbUrgentTasks}} </h2>
                 <md-grid-tile-footer>
                   <h3 class="white-text">Tâches prioritaires</h3>
                 </md-grid-tile-footer>
@@ -29,17 +29,17 @@
               <md-grid-tile md-whiteframe="2" class="orange-tile tile-effect" ng-click="mainVm.showTasks(mainVm.newTasks)">
                 <h2 class="white-text tile-content"> {{mainVm.nbNewTasks}} </h2>
                 <md-grid-tile-footer>
-                 <h3 class="white-text">Nouvelles tâches</h3>
+                  <h3 class="white-text">Nouvelles tâches</h3>
                 </md-grid-tile-footer>
               </md-grid-tile>
-            
+
               <md-grid-tile md-whiteframe="2" class="green-tile tile-effect" ng-click="mainVm.showTasks(mainVm.completedTasks)">
-                <h2 class="white-text tile-content"> {{mainVm.nbCompletedTasks}} </h2>  
+                <h2 class="white-text tile-content"> {{mainVm.nbCompletedTasks}} </h2>
                 <md-grid-tile-footer>
                   <h3 class="white-text">Tâches terminées</h3>
                 </md-grid-tile-footer>
               </md-grid-tile>
-       
+
               <md-grid-tile md-whiteframe="2" class="gray-tile tile-effect" ng-click="mainVm.showTasks(mainVm.canceledTasks)">
                 <h2 class="tile-content"> {{mainVm.nbCanceledTasks}} </h2>
                 <md-grid-tile-footer>
@@ -62,15 +62,15 @@
                   <tr ng-repeat="row in $data" ng-dblClick="mainVm.redirectTasksDetails($event, row._id, row.projet_id)">
                     <td title="'Code'" filter="{code: 'text'}" sortable="'code'"><a ui-sref="projects.details.tasks.details({idtask:row._id, id: row.projet_id})"> <b>{{ row.code }}</b> </a></td>
                     <td title="'Libelle'" filter="{libelle: 'text'}" sortable="'libelle'"><a ui-sref="projects.details.tasks.details({idtask:row._id, id: row.projet_id})"> <b>{{ row.libelle }}</b> </a></td>
-                  
+
                     <td title="'Date début'" filter="{date_debut: 'text'}" sortable="'date_debut'">{{row.date_debut | date:"dd/MM/yyyy" }}</td>
-                    
+
                     <td title="'Statut'" sortable="'statut.statut'"><span class="{{row.statut.class}}" style="color:{{row.statut.color}};font-size:1.5em;"><md-tooltip md-direction="left">{{row.statut.statut}}</md-tooltip></span></td>
 
                     <td title="'Catégorie'" filter="{categorie: 'text'}" sortable="'categorie.name'"><kbd style="background-color:{{row.categorie.color}}">{{ row.categorie.name }}</kbd></td>
 
                     <td title="'Dernière modification'" filter="{date_derniere_modif: 'text'}" sortable="'date_derniere_modif'" >{{ row.date_derniere_modif | date:"dd/MM/yyyy 'à' HH:mm:ss" }}</td>
-                  
+
                   </tr>
                 </table>
               </div>
