@@ -94,6 +94,7 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams,utilsService, d
         var projectCollaborators = [];
         collaboratorsIds = data.collaborateurs;
         vm.minDate = new Date(data.date_debut);
+        vm.maxDate = new Date(data.date_fin_theorique);
         
         for (var i=0; i < collaboratorsIds.length; i++) {
 
