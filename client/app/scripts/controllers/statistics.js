@@ -17,6 +17,8 @@ angular.module('pomApp')
     function populatePage() {
       buildProjectsStatusChart();
       buildProjectsDurationBarChart();
+      buildProjectsByStatusBarChart();
+      buildBarChartTasksByProjects();
     }
 
     function updateChartProject() {
@@ -24,13 +26,7 @@ angular.module('pomApp')
 
       buildTasksCostChart(project._id);
       buildTasksCostProjectBudgetChart(project._id);
-
       buildTasksDurationBarChart(project._id);
-      //buildTasksDurationColumnRangeChart(project._id);
-
-      //buildAreaSplineChartTasksDuration(project._id);
-
-
 
     }
 
@@ -38,19 +34,71 @@ angular.module('pomApp')
      Pie chart of all projects
      *********************************************************************************************************/
     function buildProjectsStatusChart() {
-      var statuts = [];
-      var projects = vm.saveProjects;
-      for (var i = 0; i < projects.length; i++)
-        statuts.push(projects[i].statut);
-
-      var nbProjectsAndStatus = statisticsService.countProjectsByStatusFromStatus(statuts);
-
+      var nbProjectsAndStatus = initDataProjectsStatus();
       var dataChart = chartsService.calculDataChart(nbProjectsAndStatus[1], nbProjectsAndStatus[0]);
       var idChart = 'piechart';
       var titleChart = 'Compte rendu des projets';
       var pointFormatChart = 'Nombre de projets :<b>{point.y}</b> <br> Soit :<b>{point.percentage:.1f}%</b>';
-
       chartsService.buildPieChart(idChart, titleChart, pointFormatChart, dataChart);
+    }
+
+    function buildProjectsByStatusBarChart() {
+      var nbProjectsAndStatus = initDataProjectsStatus();
+      var idChart = 'barchartstatus-projects';
+      var titleChart = 'Nombre de projets en fonction du status';
+      var pointFormatChart = 'Nombre de projets :<b>{point.y}</b> <br> Soit :<b>{point.percentage:.1f}%</b>';
+      chartsService.buildBarChartProjectsByStatus(idChart, titleChart, pointFormatChart, nbProjectsAndStatus[0], nbProjectsAndStatus[1]);
+    }
+
+    function initDataProjectsStatus() {
+      var statuts = [];
+      var projects = vm.saveProjects;
+      for (var i = 0; i < projects.length; i++)
+        statuts.push(projects[i].statut);
+      return statisticsService.countObjectsByStatusFromStatus(statuts);
+    }
+
+    function buildBarChartTasksByProjects() {
+      var projects = vm.saveProjects;
+      var status = vm.saveStatus;
+
+      // Contiendra 2 listes --> La première (nbProjectsAndStatus[0]) correspond aux status des taches, la deuxième (nbProjectsAndStatus[1]) au nombre de tache par statuts
+      var nbProjectsAndStatus = [];
+      var projectsName = [];
+      var saveTasksProjects = [];
+      var data = [];
+
+      for (var i = 0; i < projects.length; i++) {
+        projectsName.push(projects[i].nom);
+        var projectTasks = projects[i].taches;
+        var tasksStatus = [];
+        for(var j = 0; j < projectTasks.length; j++) {
+          tasksStatus.push(projectTasks[j].statut);
+        }
+        saveTasksProjects.push(tasksStatus);
+        nbProjectsAndStatus[i] = statisticsService.countObjectsByStatusFromStatus(tasksStatus);
+      }
+
+      for (var k = 0; k < status.length; k++) {
+        var dataNewData = [];
+        for (var l = 0; l < nbProjectsAndStatus.length; l++) {
+          var dataProject = nbProjectsAndStatus[l];
+          var index = dataProject[0].indexOf(status[k]);
+          if(index > -1)
+            dataNewData.push(dataProject[1][index]);
+          else
+            dataNewData.push(0);
+        }
+        var newData = {
+          'name': status[k],
+          'data': dataNewData
+        };
+        data.push(newData);
+      }
+
+      var idChart = 'barchartstatustasks-projects';
+      var titleChart = 'Statut des tâches par projet';
+      chartsService.buildBarChartTasksByProjects(idChart, titleChart, projectsName, data)
     }
 
     function searchProjectInProjects(projectId) {
@@ -63,7 +111,6 @@ angular.module('pomApp')
 
     function buildTasksCostChart(projectId) {
       var project = searchProjectInProjects(projectId);
-
       var tasks = project.taches;
       var tasksCost = [];
       var tasksName = [];
@@ -85,7 +132,6 @@ angular.module('pomApp')
 
     function buildTasksCostProjectBudgetChart(projectId) {
       var project = searchProjectInProjects(projectId);
-
       var tasks = project.taches;
       var tasksCost = [];
       var tasksName = [];
@@ -117,17 +163,9 @@ angular.module('pomApp')
 
     function buildTasksDurationBarChart(projectId) {
       var project = searchProjectInProjects(projectId);
-      console.log('projet sélectionné : ');
-      console.log(project);
-
       var tasks = project.taches;
-
-      console.log('tasks projet sélectionné : ');
-      console.log(tasks);
-
       var tasksTheoricDuration = [];
       var tasksRealDuration = [];
-
       var tasksName = [];
 
       for (var i = 0; i < tasks.length; i++) {
@@ -147,7 +185,6 @@ angular.module('pomApp')
 
     function buildProjectsDurationBarChart(projectId) {
       var projects = vm.saveProjects;
-
       var projectTheoricDuration = [];
       var projectRealDuration = [];
       var projectsName = [];
@@ -167,64 +204,13 @@ angular.module('pomApp')
       chartsService.buildBarChartTasksDuration(idChart, titleChart, pointFormatChart, projectsName, projectTheoricDuration, projectRealDuration);
     }
 
-    /*
-     function buildAreaSplineChartTasksDuration(projectId) {
-     var project = searchProjectInProjects(projectId);
-     console.log('projet sélectionné : ');
-     console.log(project);
-
-     var tasks = project.taches;
-
-     console.log('tasks projet sélectionné : ');
-     console.log(tasks);
-
-     var tasksTheoricDuration = [];
-     var tasksRealDuration = [];
-
-     var tasksName = [];
-
-     for (var i = 0; i < tasks.length; i++) {
-     //if (tasks[i].statut === 'Terminé(e)') {
-     tasksTheoricDuration.push(statisticsService.getDuration(tasks[i]));
-     tasksRealDuration.push(statisticsService.getTotalRealTime(tasks[i]));
-     tasksName.push(tasks[i].libelle);
-     //}
-     }
-
-     var idChart = 'areachart-project';
-     var titleChart = 'Comparaison entre la durée théorique et réelle de chaque tâche du projet';
-
-     chartsService.buildAreaSplineChartTasksDuration(idChart, titleChart, tasksName, tasksTheoricDuration, tasksRealDuration);
-     }
-     */
-
-    /*
-     function buildTasksDurationColumnRangeChart(projectId) {
-     var project = searchProjectInProjects(projectId);
-     var tasks = project.taches;
-
-     var tasksName = [];
-     var dataChart = [];
-
-     for (var i = 0; i < tasks.length; i++) {
-     dataChart.push([new Date(tasks[i].date_debut), new Date(tasks[i].date_fin_theorique)]);
-     tasksName.push('Durée de <b>' + tasks[i].libelle + '</b> théorique');
-     }
-
-     var idChart = 'columnrangechart-project';
-     var titleChart = 'Durée théorique des tâches dans le temps';
-     var subtitleChart = 'Durée théorique des tâches dans le temps';
-
-     chartsService.buildColumnRangeChartTasksDuration(idChart, titleChart, subtitleChart, tasksName, dataChart);
-     }
-     */
 
     // Au chargement de la page
     $scope.$on('$viewContentLoaded', function() {
 
       // On récupère tout ce dont on a besoin de la BDD et on stocke dans des variables
       databaseService.getAllObjects('projects').success(function (data){ vm.saveProjects = data;
-          vm.zeroProject = ((data.length === 0) ? true : false );})
+        vm.zeroProject = ((data.length === 0) ? true : false );})
         .error(function(err) { console.log(err); });
 
       databaseService.getAllObjects('collaborators').success(function(data){ vm.saveCollaborators = data;})
@@ -233,105 +219,14 @@ angular.module('pomApp')
       databaseService.getAllObjects('budgets').success(function(data){ vm.saveBudgets = data.data; })
         .error(function(err){ console.log(err); });
 
+      databaseService.getSettings('statuts').success(function(data){ vm.saveStatus = data; })
+      .error(function(err){ console.log(err); });
+
       $timeout(function() {
         populatePage();
       }, 1000);
 
     });
-
-
-
-
-    /**********************************************************************************************************
-     Bar chart
-     *********************************************************************************************************/
-    /*
-     function buildBarChart() {
-     databaseService.getAllObjects('projects')
-     .success(function (data) {
-     $(function () {
-     $('#barchart').highcharts({
-     chart: {
-     type: 'column'
-     },
-     title: {
-     text: 'Durée passée par projet / Coût de chaque projet'
-     },
-     xAxis: {
-     categories: {series:data}
-     },
-     yAxis: [{
-     min: 0,
-     title: {
-     text: 'Employees'
-     }
-     }, {
-     title: {
-     text: 'Profit (millions)'
-     },
-     opposite: true
-     }],
-     legend: {
-     shadow: false
-     },
-     tooltip: {
-     shared: true
-     },
-     plotOptions: {
-     column: {
-     grouping: false,
-     shadow: false,
-     borderWidth: 0
-     }
-     },
-     series: [{
-     data : (function () {
-     var libelle = [];
-     var projects = data;
-     for (var i = 0; i < projects.length; i++)
-     libelle.push(projects[i].nom);
-     //console.log(statuts);
-
-     // Récupération des intitulés des statuts ainsi que du nombre de projets par statut
-
-     var numberProjectsByStatuts = libelle;
-
-     function countProjects(numberProjectsByStatuts) {
-     var a = [], b = [], prev;
-
-     numberProjectsByStatuts.sort();
-     for (var j = 0; j < numberProjectsByStatuts.length; j++) {
-     if (numberProjectsByStatuts[j] !== prev) {
-     a.push(numberProjectsByStatuts[j]);
-     b.push(1);
-     } else {
-     b[b.length - 1]++;
-     }
-     prev = numberProjectsByStatuts[j];
-     }
-     return [a, b];
-     }
-
-     var nb = countProjects(numberProjectsByStatuts);
-
-     var newData = [];
-     for (var k = 0; k < nb[0].length; k++) {
-     var dataJson = {
-     'y': nb[1][k],
-     'name': nb[0][k]
-     };
-
-     newData.push(dataJson);
-     }
-
-     return newData;
-     }())
-     }]
-     });
-     });
-     });
-     }
-     */
 
   });
 

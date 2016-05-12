@@ -11,20 +11,37 @@
       <h4 ng-show="statisticsVm.zeroProject">Vous n'avez aucun projet.</h4>
 
       <div ng-show="!statisticsVm.zeroProject">
+
         <div layout layout-align="center" layout-xs="column">
-          <div flex>
+          <div flex="50" flex-xs="100">
             <div id="piechart"></div>
           </div>
+          <div flex="50" flex-xs="100">
+            <div id="barchartstatus-projects"></div>
+          </div>
         </div>
+
+        <br>
+        <hr>
+
         <div layout layout-align="center" layout-xs="column">
           <div flex>
             <div id="barchart-projects"></div>
           </div>
         </div>
 
+        <br>
+        <hr>
+
+        <div layout layout-align="center" layout-xs="column">
+          <div flex>
+            <div id="barchartstatustasks-projects"></div>
+          </div>
+        </div>
 
         <br>
         <hr>
+        <br>
 
         <h3>Graphiques projet</h3>
 

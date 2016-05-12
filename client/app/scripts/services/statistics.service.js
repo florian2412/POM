@@ -15,17 +15,16 @@ function Service(utilsService) {
 
   service.projectStats = projectStats;
   service.taskStats = taskStats;
-  service.countProjectsByStatusFromStatus = countProjectsByStatusFromStatus;
   service.calculTaskTotalCost = calculTaskTotalCost;
   service.getSpentTime = getSpentTime;
   service.getDuration = getDuration;
   service.getLeftDuration = getLeftDuration;
   service.getTotalRealTime = getTotalRealTime;
+  service.countObjectsByStatusFromStatus = countObjectsByStatusFromStatus;
 
   return service;
 
   function taskStats(task, currentTask, saveCollaborators, totalCost) {
-
     task.duration = getDuration(task);
 
     if (task.statut === 'Initial') {
@@ -72,7 +71,7 @@ function Service(utilsService) {
     }
 
     return task;
-  };
+  }
 
 
   function projectStats(project, saveBudgets, sumNowCostProject) {
@@ -80,9 +79,7 @@ function Service(utilsService) {
       console.log('Statut projet : Initial')
     }
 
-
     else if (project.statut === 'En cours') {
-
       project.passedDuration = getSpentTime(project);
       project.timeAdvancement = Math.round((project.passedDuration * 100) / project.duration);
       project.leftDuration = project.duration - project.passedDuration;
@@ -108,20 +105,20 @@ function Service(utilsService) {
     }
 
     return project;
-  };
+  }
 
-  function countProjectsByStatusFromStatus(numberProjectsByStatuts) {
+  function countObjectsByStatusFromStatus(numberObjectsByStatuts) {
     var a = [], b = [], prev;
 
-    numberProjectsByStatuts.sort();
-    for (var j = 0; j < numberProjectsByStatuts.length; j++) {
-      if (numberProjectsByStatuts[j] !== prev) {
-        a.push(numberProjectsByStatuts[j]);
+    numberObjectsByStatuts.sort();
+    for (var j = 0; j < numberObjectsByStatuts.length; j++) {
+      if (numberObjectsByStatuts[j] !== prev) {
+        a.push(numberObjectsByStatuts[j]);
         b.push(1);
       } else {
         b[b.length - 1]++;
       }
-      prev = numberProjectsByStatuts[j];
+      prev = numberObjectsByStatuts[j];
     }
     return [a, b];
   }
@@ -155,21 +152,21 @@ function Service(utilsService) {
     // Si la tache commence aujourd'hui
     else
       return diff + 1;
-  };
+  }
 
   // Retourne la durée déjà passée théorique
   function getTotalRealTime(object) {
     var start = new Date(object.date_debut);
     var end = new Date(object.date_fin_reelle);
     return utilsService.dateDiffWorkingDates(start,end);
-  };
+  }
 
   // Retourne la durée totale théorique
   function getDuration(object) {
     var start = new Date(object.date_debut);
     var end = new Date(object.date_fin_theorique);
     return utilsService.dateDiffWorkingDates(start,end);
-  };
+  }
 
   // Retourne la durée restante théorique
   function getLeftDuration(object) {
@@ -177,6 +174,6 @@ function Service(utilsService) {
     var end = new Date(object.date_fin_theorique);
 
     return utilsService.dateDiffWorkingDates(start, end);
-  };
+  }
 
 }

@@ -215,8 +215,6 @@ function appRun($rootScope, $state, $location, $http,$mdSidenav, $mdDialog, auth
   // Fire when state changes
   $rootScope.$on('$stateChangeStart', function(event, toState) {
     $rootScope.title = toState.title;
-    $rootScope.closeMenu('projectSideNav');
-   // $mdSidenav('projectSideNav').close();
     $mdDialog.hide();
   });
 

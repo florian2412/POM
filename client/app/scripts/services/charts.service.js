@@ -15,13 +15,11 @@ function Service(utilsService) {
 
   service.calculDataChart = calculDataChart;
   service.buildPieChart = buildPieChart;
-  //service.buildBarChart = buildBarChart;
   service.buildBarChartTasksDuration = buildBarChartTasksDuration;
-  //service.buildColumnRangeChartTasksDuration = buildColumnRangeChartTasksDuration;
-  service.buildAreaSplineChartTasksDuration = buildAreaSplineChartTasksDuration;
+  service.buildBarChartProjectsByStatus = buildBarChartProjectsByStatus;
+  service.buildBarChartTasksByProjects = buildBarChartTasksByProjects;
 
   return service;
-
 
   // Génère le bon format de donnée pour les graphs en fonction des données values et names en entrées
   function calculDataChart(values, names) {
@@ -130,96 +128,82 @@ function Service(utilsService) {
     });
   }
 
-  function buildAreaSplineChartTasksDuration(id, title, dataName, dataTheoricDuration, dataRealDuration) {
+  function buildBarChartProjectsByStatus(id, title, pointFormat, legend, data) {
     $(document).ready(function () {
       $('#' + id).highcharts({
         chart: {
-          type: 'areaspline'
+          type: 'column'
         },
         title: {
           text: title
-        },
-        legend: {
-          layout: 'vertical',
-          align: 'left',
-          verticalAlign: 'top',
-          x: 150,
-          y: 100,
-          floating: true,
-          borderWidth: 1,
-          backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
-        },
-        xAxis: {
-          categories: dataName,
-        },
-        yAxis: {
-          title: {
-            text: 'Durées (en jours)'
-          }
-        },
-        tooltip: {
-          shared: true,
-          valueSuffix: ' jour'
-        },
-        credits: {
-          enabled: false
-        },
-        exporting: {
-          enabled: false
-        },
-        plotOptions: {
-          areaspline: {
-            fillOpacity: 0.5
-          }
-        },
-        series: [{
-          name: 'Théorique',
-          //data: [3, 4, 3, 5]
-          data: dataTheoricDuration
-        }, {
-          name: 'Réelle',
-          //data: [1, 3, 4, 3]
-          data: dataRealDuration
-        }]
-      });
-    });
-  }
-
-
-  /*
-  function buildColumnRangeChartTasksDuration(id, title, subtitle, legend, data) {
-    $(document).ready(function () {
-      $('#' + id).highcharts({
-        chart: {
-          type: 'columnrange',
-          inverted: true
-        },
-        title: {
-          text: title
-        },
-        subtitle: {
-          text: subtitle
         },
         xAxis: {
           categories: legend
         },
         yAxis: {
+          allowDecimals: false,
+          min: 0,
           title: {
-            text: 'Temps (en jours)'
-          },
-          type: 'datetime'
+            text: 'Nombre de projets'
+          }
         },
-        legend: {
-          enabled: false
+        tooltip: {
+          formatter: function () {
+            return '<b>' + this.x + '</b><br/>' +
+              this.series.name + ': ' + this.y + '<br/>';
+          }
+        },
+        plotOptions: {
+          column: {
+            stacking: 'normal'
+          }
         },
         series: [{
-          name: 'Dates (début, fin)',
-          data: data
-        }]
+          name: 'Nombre de projets',
+          data: data,
+          stack: 'Théorique'
+        }],
+        credits: {
+          enabled: false
+        },
+        exporting: {
+          enabled: false
+        }
       });
     });
   }
-*/
+
+  function buildBarChartTasksByProjects(id, title, legend, data) {
+    $(document).ready(function () {
+      $('#' + id).highcharts({
+        chart: {
+          type: 'bar'
+        },
+        title: {
+          text: title
+        },
+        xAxis: {
+          categories: legend
+        },
+        yAxis: {
+          min: 0,
+          title: {
+            text: 'Nombre'
+          },
+          tickInterval: 1
+        },
+        legend: {
+          reversed: true
+        },
+        plotOptions: {
+          series: {
+            stacking: 'normal'
+          }
+        },
+        series: data
+      });
+    });
+  }
 
 }
 
