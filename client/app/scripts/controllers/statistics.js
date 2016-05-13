@@ -23,6 +23,7 @@ angular.module('pomApp')
       buildProjectsDurationBarChart();
       buildProjectsByStatusBarChart();
       buildBarChartTasksByProjects();
+
     }
 
     function updateChartProject() {
@@ -31,6 +32,7 @@ angular.module('pomApp')
       buildTasksCostChart(project._id);
       buildTasksCostProjectBudgetChart(project._id);
       buildTasksDurationBarChart(project._id);
+      buildTasksCategoriesProject(project._id);
 
     }
 
@@ -59,7 +61,15 @@ angular.module('pomApp')
       var projects = vm.saveProjects;
       for (var i = 0; i < projects.length; i++)
         statuts.push(projects[i].statut);
-      return statisticsService.countObjectsByStatusFromStatus(statuts);
+      return statisticsService.countObjectsByTermFromNbTerm(statuts);
+    }
+
+    function initDataTasksCategorie(project) {
+      var categories = [];
+      var tasks = project.taches;
+      for (var i = 0; i < tasks.length; i++)
+        categories.push(tasks[i].categorie);
+      return statisticsService.countObjectsByTermFromNbTerm(categories);
     }
 
     function buildBarChartTasksByProjects() {
@@ -80,7 +90,7 @@ angular.module('pomApp')
           tasksStatus.push(projectTasks[j].statut);
         }
         saveTasksProjects.push(tasksStatus);
-        nbProjectsAndStatus[i] = statisticsService.countObjectsByStatusFromStatus(tasksStatus);
+        nbProjectsAndStatus[i] = statisticsService.countObjectsByTermFromNbTerm(tasksStatus);
       }
 
       for (var k = 0; k < status.length; k++) {
@@ -204,8 +214,17 @@ angular.module('pomApp')
       var idChart = 'barchart-projects';
       var titleChart = 'Comparaison entre la durée théorique et réelle de chaque projet terminé';
       var pointFormatChart = 'Durée :<b>{point.y} €</b> <br> Soit :<b>{point.percentage:.1f}%</b>';
-
       chartsService.buildBarChartTasksDuration(idChart, titleChart, pointFormatChart, projectsName, projectTheoricDuration, projectRealDuration);
+    }
+
+    function buildTasksCategoriesProject(projectId) {
+      var project = searchProjectInProjects(projectId);
+      var nbTasksAndCategories = initDataTasksCategorie(project);
+      var dataChart = chartsService.calculDataChart(nbTasksAndCategories[1], nbTasksAndCategories[0]);
+      var idChart = 'piecharttaskscat-project';
+      var titleChart = 'Classement des tâches par catégories';
+      var pointFormatChart = 'Nombre de tâches :<b>{point.y}</b> <br> Soit :<b>{point.percentage:.1f}%</b>';
+      chartsService.buildPieChart(idChart, titleChart, pointFormatChart, dataChart);
     }
 
 

@@ -20,7 +20,7 @@ function Service(utilsService) {
   service.getDuration = getDuration;
   service.getLeftDuration = getLeftDuration;
   service.getTotalRealTime = getTotalRealTime;
-  service.countObjectsByStatusFromStatus = countObjectsByStatusFromStatus;
+  service.countObjectsByTermFromNbTerm = countObjectsByTermFromNbTerm;
 
   return service;
 
@@ -107,18 +107,18 @@ function Service(utilsService) {
     return project;
   }
 
-  function countObjectsByStatusFromStatus(numberObjectsByStatuts) {
+  function countObjectsByTermFromNbTerm(numberObjectsByTerm) {
     var a = [], b = [], prev;
 
-    numberObjectsByStatuts.sort();
-    for (var j = 0; j < numberObjectsByStatuts.length; j++) {
-      if (numberObjectsByStatuts[j] !== prev) {
-        a.push(numberObjectsByStatuts[j]);
+    numberObjectsByTerm.sort();
+    for (var j = 0; j < numberObjectsByTerm.length; j++) {
+      if (numberObjectsByTerm[j] !== prev) {
+        a.push(numberObjectsByTerm[j]);
         b.push(1);
       } else {
         b[b.length - 1]++;
       }
-      prev = numberObjectsByStatuts[j];
+      prev = numberObjectsByTerm[j];
     }
     return [a, b];
   }
