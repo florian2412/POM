@@ -200,7 +200,13 @@ function Service(utilsService) {
             stacking: 'normal'
           }
         },
-        series: data
+        series: data,
+        credits: {
+          enabled: false
+        },
+        exporting: {
+          enabled: false
+        }
       });
     });
   }
