@@ -43,7 +43,9 @@
           <md-input-container class="md-block">
             <label>Statut</label>
             <md-select ng-model="tasksDetailsVm.task.statut" name="statut" ng-change="tasksDetailsVm.changedValue(tasksDetailsVm.task.statut)">
-              <md-option ng-repeat="statut in tasksDetailsVm.statuts" value="{{statut}}">{{ statut }}</md-option>
+              <md-option ng-repeat="statut in tasksDetailsVm.statuts" value="{{statut.statut}}" >
+                {{ statut.statut }}
+              </md-option>
             </md-select>
             <div ng-messages="tasksDetailsForm.statut.$error">
               <div ng-message="required">Ce champ est obligatoire.</div>

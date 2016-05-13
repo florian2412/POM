@@ -141,10 +141,26 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
 
     databaseService.getSettings('statuts').success(function(data){
       data.splice(data.indexOf("Archivé(e)"),1);
+      for (var i = data.length - 1; i >= 0; i--) {
+       
+        switch (data[i]){
+          case "Initial":
+            data[i] = utilsService.statusColors().initial;      
+            break;
+          case "En cours":
+            data[i] = utilsService.statusColors().en_cours;
+            break;
+          case "Terminé(e)":
+            data[i] = utilsService.statusColors().termine;
+            break;
+          case "Annulé(e)":
+            data[i] = utilsService.statusColors().annule;
+            break;
+        }
+      }
       vm.statuts = data;
-    })
-      .error(function(err){ console.log(err); });
 
+    });
   });
 
 };
