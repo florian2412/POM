@@ -21,6 +21,7 @@ function Service(utilsService) {
   service.getLeftDuration = getLeftDuration;
   service.getTotalRealTime = getTotalRealTime;
   service.countObjectsByTermFromNbTerm = countObjectsByTermFromNbTerm;
+  service.calculateBudgetConsumption = calculateBudgetConsumption;
 
   return service;
 
@@ -174,6 +175,30 @@ function Service(utilsService) {
     var end = new Date(object.date_fin_theorique);
 
     return utilsService.dateDiffWorkingDates(start, end);
+  }
+
+  function calculateBudgetConsumption(budget, projects, collaborators){
+    var allProjects = [];
+    var tasksCost = [];
+    var tasksTotalCost;
+    var budgetConsumption, result;
+
+    for (var i = projects.length - 1; i >= 0; i--) {
+      if(budget._id === projects[i].ligne_budgetaire.id)
+      {
+        if(projects[i].taches.length > 0){
+          for (var j  = 0; j < projects[i].taches.length; j ++) { 
+              tasksCost.push(calculTaskTotalCost(projects[i].taches[j], collaborators));
+          }
+        }
+
+        tasksTotalCost = utilsService.sumArrayValues(tasksCost);
+        budgetConsumption = budget.montant - tasksTotalCost;
+        result = 1 - (budgetConsumption / budget.montant);
+      }
+
+    }
+    return result;
   }
 
 }

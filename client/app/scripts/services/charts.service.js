@@ -40,6 +40,7 @@ function Service(utilsService) {
       // Build the chart
       $('#' + id).highcharts({
         chart: {
+          backgroundColor: "#E0F7FA",
           plotBackgroundColor: null,
           plotBorderWidth: null,
           plotShadow: true,
@@ -80,6 +81,7 @@ function Service(utilsService) {
     $(document).ready(function () {
       $('#' + id).highcharts({
         chart: {
+          backgroundColor: "#FFF3E0",
           type: 'column'
         },
         title: {
@@ -132,6 +134,7 @@ function Service(utilsService) {
     $(document).ready(function () {
       $('#' + id).highcharts({
         chart: {
+          backgroundColor: "#F1F8E9",
           type: 'column'
         },
         title: {

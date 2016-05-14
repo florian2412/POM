@@ -79,26 +79,45 @@ function ProjectsListCtrl($scope,$state, NgTableParams, databaseService, utilsSe
   }
 
   function archiveProject(id){
-    for (var i = vm.projects.length - 1; i >= 0; i--) {
-      if(vm.projects[i]._id == id){
-        vm.projects[i].statut = utilsService.statusColors().archive;
-        vm.tableParams.reload().then(function(data) {
-            if (data.length === 0 && vm.tableParams.total() > 0) {
-            vm.tableParams.page(vm.tableParams.page() - 1);
-            vm.tableParams.reload();
-          }
-        });
-        flashService.success("Succès ! ", "Le projet " +  vm.projects[i].nom + " a été archivé.", "bottom-right", true, 4);
-      }
-    }
-    // Vérifier si toutes les tâches sont terminées avant d'archiver un projet
+    var projectToArchive = utilsService.getElementById(id, vm.projects);
+    var allTasksAreDone = false;
+    var nbProgressTask = 0;
 
-    /*databaseService.updateObject('projects', idProject, data)
-      .success(function (data) {
-        flashService.Success("Le projet " + $scope.project.nom + " a bien été mis à jour !", "", "bottom-right", true, 4);
-        $state.go("projects");
-      });
-    });*/
+    if(projectToArchive){
+      if(projectToArchive.taches.length > 0){
+        for (var i = projectToArchive.taches.length - 1; i >= 0; i--) {
+          if(projectToArchive.taches[i].statut === "En cours" || projectToArchive.taches[i].statut === "Initial" ){
+            nbProgressTask ++;
+          }
+        }
+        if(nbProgressTask > 0){
+          allTasksAreDone = false;
+          flashService.error("Erreur ! ", "Il y a " +  nbProgressTask + " tâches à l'état En cours ou Initial sur ce projet.", "bottom-right", true, 4);
+        } else allTasksAreDone = true;
+      }
+      else
+        allTasksAreDone = true;
+    }
+
+    if(allTasksAreDone) {
+      var cp = projectToArchive.chef_projet;
+
+      projectToArchive.statut = "Archivé";
+      projectToArchive.chef_projet = projectToArchive.chef_projet.id;
+
+      databaseService.updateObject('projects', projectToArchive._id, projectToArchive)
+        .success(function (data) {
+          flashService.success("Le projet " + projectToArchive.nom + " a bien été mis à jour !", "", "bottom-right", true, 4); 
+          projectToArchive.statut = utilsService.statusColors().archive;
+          projectToArchive.chef_projet = cp;
+          vm.tableParams.reload().then(function(data) {
+            if (data.length === 0 && vm.tableParams.total() > 0) {
+              vm.tableParams.page(vm.tableParams.page() - 1);
+              vm.tableParams.reload();
+            }
+          }); 
+      });    
+    }   
   }
 
   function deleteProject(id) {

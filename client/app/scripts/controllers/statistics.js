@@ -15,7 +15,7 @@ angular.module('pomApp')
     $('#statisticsCard').hide();
     $scope.user = localStorageService.get('currentUser');
     var vm = this;
-    vm.isLoadingDone = false;
+
     vm.updateChartProject = updateChartProject;
 
     function populatePage() {
@@ -51,7 +51,7 @@ angular.module('pomApp')
     function buildProjectsByStatusBarChart() {
       var nbProjectsAndStatus = initDataProjectsStatus();
       var idChart = 'barchartstatus-projects';
-      var titleChart = 'Nombre de projets en fonction du status';
+      var titleChart = 'Nombre de projets en fonction du statut';
       var pointFormatChart = 'Nombre de projets :<b>{point.y}</b> <br> Soit :<b>{point.percentage:.1f}%</b>';
       chartsService.buildBarChartProjectsByStatus(idChart, titleChart, pointFormatChart, nbProjectsAndStatus[0], nbProjectsAndStatus[1]);
     }
@@ -137,7 +137,7 @@ angular.module('pomApp')
       var dataChart = chartsService.calculDataChart(tasksCost, tasksName);
 
       var idChart = 'piechart-project';
-      var titleChart = 'Répartition des coûts des tâches sur le projet';
+      var titleChart = 'Répartition des coûts des tâches du projet';
       var pointFormatChart = 'Coût :<b>{point.y} €</b> <br> Soit :<b>{point.percentage:.1f}%</b>';
 
       chartsService.buildPieChart(idChart, titleChart, pointFormatChart, dataChart);
@@ -222,7 +222,7 @@ angular.module('pomApp')
       var nbTasksAndCategories = initDataTasksCategorie(project);
       var dataChart = chartsService.calculDataChart(nbTasksAndCategories[1], nbTasksAndCategories[0]);
       var idChart = 'piecharttaskscat-project';
-      var titleChart = 'Classement des tâches par catégories';
+      var titleChart = 'Répartition des tâches par catégories';
       var pointFormatChart = 'Nombre de tâches :<b>{point.y}</b> <br> Soit :<b>{point.percentage:.1f}%</b>';
       chartsService.buildPieChart(idChart, titleChart, pointFormatChart, dataChart);
     }

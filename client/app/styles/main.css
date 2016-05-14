@@ -36,6 +36,10 @@ table > tbody > tr > td:hover, a:hover, canvas:hover, md-grid-tile:hover
    cursor: pointer;
 }
 
+table > tbody > tr> td.vert-align{
+  vertical-align: middle;
+}
+
 /* Font color white */
 .md-button.md-raised.md-primary > span,
 .md-button.md-raised.md-primary,

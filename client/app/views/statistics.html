@@ -1,120 +1,124 @@
-<div loading="loading"></div>
-<div ng-cloak id="statisticsCard">
-  <md-content class="md-whiteframe-z2 move-up">
-    <md-tabs md-dynamic-height md-border-bottom>
+<md-card>
+  <md-toolbar layout="row" layout-align="center center">
+    <div class="md-toolbar-tools">
+      <h2 class="md-flex">Statistiques</h2>
+    </div>
+  </md-toolbar>
+  <md-card-content>
 
-      <md-tab>
-        <md-tab-label>Statistiques projets</md-tab-label>
-        <md-tab-body>
-          <md-content layout-padding>
-            <!-- Premier onglet -->
+    <div style="text-align: center">
+      <div loading="loading"></div>
+    </div>
+  
+    <div ng-cloak id="statisticsCard">
+      <md-content>
+        <md-tabs md-dynamic-height md-border-bottom>
 
-            <h4 ng-show="statisticsVm.zeroProject">Vous n'avez aucun projet.</h4>
+          <md-tab>
+            <md-tab-label>Projets</md-tab-label>
+            <md-tab-body>
+              <md-content layout-padding>
+                <!-- Premier onglet -->
+                <br><br>
+                <h4 ng-show="statisticsVm.zeroProject">Vous n'avez aucun projet.</h4>
 
-            <div>
+                  <div ng-show="!statisticsVm.zeroProject">
 
-              <div ng-show="!statisticsVm.zeroProject">
+                    <div layout layout-align="center" layout-xs="column" >
+                      <div flex="47" flex-xs="100">
+                        <div md-whiteframe="1" id="piechart"></div>
+                      </div>
+                      <div flex="5"></div>
+                      <div flex="47" flex-xs="100">
+                        <div md-whiteframe="1" id="barchartstatus-projects"></div>
+                      </div>
+                    </div>
 
-                <div layout layout-align="center" layout-xs="column">
-                  <div flex="50" flex-xs="100">
-                    <div id="piechart"></div>
+                    <br>
+                    <hr>
+
+                    <div layout layout-align="center" layout-xs="column">
+                      <div flex>
+                        <div  md-whiteframe="1" id="barchart-projects"></div>
+                      </div>
+                    </div>
+
+                    <br>
+                    <hr>
+
+                    <div layout layout-align="center" layout-xs="column">
+                      <div flex>
+                        <div  md-whiteframe="1" id="barchartstatustasks-projects"></div>
+                      </div>
+                    </div>
                   </div>
-                  <div flex="50" flex-xs="100">
-                    <div id="barchartstatus-projects"></div>
-                  </div>
-                </div>
-
-                <br>
-                <hr>
-
-                <div layout layout-align="center" layout-xs="column">
-                  <div flex>
-                    <div id="barchart-projects"></div>
-                  </div>
-                </div>
-
-                <br>
-                <hr>
-
-                <div layout layout-align="center" layout-xs="column">
-                  <div flex>
-                    <div id="barchartstatustasks-projects"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </md-content>
-        </md-tab-body>
-      </md-tab>
+    
+              </md-content>
+            </md-tab-body>
+          </md-tab>
 
 
-      <md-tab>
-        <md-tab-label>Statistiques tâches<span class="badge" style="background-color:red">{{mainVm.numberProjects}}</span></md-tab-label>
-        <md-tab-body>
-          <md-content layout-padding>
-            <!-- Deuxième onglet -->
+          <md-tab>
+            <md-tab-label>Tâches</md-tab-label>
+            <md-tab-body>
+              <md-content layout-padding>
+                <!-- Deuxième onglet -->
 
-            <div>
-
-              <div layout layout-align="center">
-                <div flex="45">
-                  <md-input-container class="md-block">
-
-                    <label>Choisir un projet</label>
-                    <md-select ng-model="statisticsVm.project">
-                      <md-option ng-repeat="project in statisticsVm.saveProjects" value="{{project}}">{{project.nom}}</md-option>
-                    </md-select>
-
-                  </md-input-container>
-                </div>
-                <div flex="10"></div>
-                <div flex="45">
                   <div layout layout-align="center">
-                    <md-button class="md-raised md-primary" type="submit" ng-click="statisticsVm.updateChartProject()">Voir les statistiques sur le projet</md-button>
+                    <div flex="40">
+                      <md-input-container class="md-block">
+                        <label>Choisir un projet</label>
+                        <md-select ng-model="statisticsVm.project">
+                          <md-option ng-repeat="project in statisticsVm.saveProjects" value="{{project}}">{{project.nom}}</md-option>
+                        </md-select>
+                      </md-input-container>
+                    </div>
+                    <div flex="5"></div>
+                    <div>
+                      <md-button class="md-raised md-primary" type="submit" ng-click="statisticsVm.updateChartProject()">Valider</md-button>
+                    </div>
                   </div>
-                </div>
 
-              </div>
+                  
 
-              <div layout layout-align="center" layout-xs="column">
-                <div flex="50" flex-xs="100">
-                  <div id="piechart-project"></div>
-                </div>
-                <div flex="50" flex-xs="100">
-                  <div id="piechart-project2"></div>
-                </div>
-              </div>
+                  <div layout layout-align="center" layout-xs="column">
+                    <div flex="47" flex-xs="100">
+                      <div  md-whiteframe="1" id="piechart-project"></div>
+                    </div>
+                    <div flex="5"></div>
+                    <div flex="47" flex-xs="100">
+                      <div  md-whiteframe="1" id="piechart-project2"></div>
+                    </div>
+                  </div>
 
-              <hr>
-              <br>
-              
-              <div layout layout-align="center" layout-xs="column">
-                <div flex>
-                  <div id="piecharttaskscat-project"></div>
-                </div>
-              </div>
+                  <hr>
+                  <br>
+                  
+                  <div layout layout-align="center" layout-xs="column">
+                    <div flex>
+                      <div  md-whiteframe="1" id="piecharttaskscat-project"></div>
+                    </div>
+                  </div>
 
-              <hr>
-              <br>
+                  <hr>
+                  <br>
 
-              <div layout layout-align="center" layout-xs="column">
-                <div flex>
-                  <div id="barchart-project"></div>
-                </div>
-              </div>
-
-
-
-            </div>
-
-          </md-content>
-        </md-tab-body>
-      </md-tab>
+                  <div layout layout-align="center" layout-xs="column">
+                    <div flex>
+                      <div md-whiteframe="1" id="barchart-project"></div>
+                    </div>
+                  </div>
+                
+              </md-content>
+            </md-tab-body>
+          </md-tab>
 
 
-    </md-tabs>
-  </md-content>
-</div>
+        </md-tabs>
+      </md-content>
+    </div>
+  </md-card-content>
+</md-card>
 
 <br>
 <br>

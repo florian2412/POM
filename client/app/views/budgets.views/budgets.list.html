@@ -13,16 +13,23 @@
           <th>Libellé</th>
           <th>Budget</th>
           <th>Description</th>
+          <th>Progression</th>
           <th>Supprimer</th>
 
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="budget in budgetsListVm.budgets">
-          <td><a> {{ budget.libelle }} </a></td>
-          <td> {{ budget.montant }} € </td>
-          <td> {{ budget.description }} </td>
-          <td><a ng-click="budgetsListVm.deleteBudget(budget._id)"><span class="fa fa-trash-o fa-lg" style="color: red;"></span> </a></td>
+          <td class="vert-align"><a> {{ budget.libelle }} </a></td>
+          <td class="vert-align"> {{ budget.montant }} € </td>
+          <td class="vert-align"> {{ budget.description }} </td>
+          <td class="vert-align"> 
+            {{ budget.percentage | number:0 }}%
+            <div class="progress">
+              <div class="progress-bar" style="width: {{ budget.percentage | number:0 }}%;"></div>
+            </div>
+          </td>
+          <td class="vert-align"><a ng-click="budgetsListVm.deleteBudget(budget._id)"><span class="fa fa-trash-o fa-lg" style="color: red;"></span> </a></td>
         </tr>
         </tbody>
       </table>
@@ -33,6 +40,7 @@
       </div>
 
       <br>
+
     </md-card-content>
   </div>
 </md-card>
