@@ -33,8 +33,9 @@ function CollaboratorsListCtrl($scope, $filter, $state, databaseService, utilsSe
                 data[i].manager = {"id" : id, "prenom" : m.prenom , "nom" : m.nom };
             }
           }
-          vm.collaborators = data;
          
+          vm.collaborators = data;
+          
           vm.tableParams = new NgTableParams({ page: 1, count: 10 }, { filterDelay: 0, data: data });
 
         });

@@ -2,7 +2,7 @@
   <div layout="column" role="main">
     <md-toolbar layout="row">
       <div class="md-toolbar-tools">
-        <h2 class="md-flex">Liste des collaborateurs</h2>
+        <h2 class="md-flex">Liste des collaborateurs : {{ collaboratorsListVm.collaborators.length }} membres</h2>
         <span flex></span>
         <div style="padding-top:10px;color:white">
           <md-checkbox ng-model="collaboratorsListVm.isFiltersEnabled">
@@ -12,34 +12,11 @@
       </div>
     </md-toolbar>
     <md-card-content>
-     <!--  <table class="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th>Prénom / Nom</th>
-            <th>Pseudo</th>
-            <th>Fontion</th>
-            <th>Manager</th>
-            <th>Rôle</th>
-            <th>Supprimer</th>
-          </tr>
-        </thead>
-
-        <tbody>
-        <tr ng-repeat="collaborator in collaboratorsListVm.collaborators">
-          <td><a ui-sref=".details({id:collaborator._id})"> {{ collaborator.prenom }} {{ collaborator.nom }} </a></td>
-
-          <td>{{ collaborator.pseudo }}</td>
-          <td>{{ collaborator.fonction }}</td>
-          <td><a ui-sref=".details({id:collaborator.manager.id})"> {{ collaborator.manager.prenom + ' ' +collaborator.manager.nom}} </a></td>
-          <td>{{ collaborator.role }}</td>
-          <td><a ng-click="collaboratorsListVm.deleteCollaborator(collaborator._id)"><span class="fa fa-trash-o fa-lg" style="color: red;"></span> </a></td>
-        </tr>
-        </tbody>
-      </table>
- -->
-
     <table ng-table="collaboratorsListVm.tableParams" show-filter="collaboratorsListVm.isFiltersEnabled" class="table table-striped table-hover">
       <tr ng-repeat="row in $data" ng-dblClick="collaboratorsListVm.redirectCollaboratorsDetails($event, row._id)">
+        <td>
+          <ng-letter-avatar dynamic="true" data="{{ row.prenom  }}" shape="round" fontSize="7" height="10" width="10"></ng-letter-avatar>
+        </td>
         <td title="'Nom'" filter="{nom: 'text'}" sortable="'nom'"><a ui-sref=".details({id:row._id})"> <b>{{ row.nom }}</b> </a></td>
         
         <td title="'Prenom'" filter="{prenom: 'text'}" sortable="'prenom'"><a ui-sref=".details({id:row._id})"> <b>{{ row.prenom }}</b> </a></td>
