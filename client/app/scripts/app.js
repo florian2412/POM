@@ -79,7 +79,7 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       title : 'Aide',
       templateUrl: 'views/help.html',
       authorized: ["collaborateur", "admin", "manager"],
-      /*controller: 'HelpCtrl',*/
+      controller: 'HelpCtrl',
       controllerAs: 'helpVm'
     })
     .state('budgets', {

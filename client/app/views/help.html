@@ -6,7 +6,148 @@
       </div>
     </md-toolbar>
     <md-card-content>
-		<p> Documentation de l'outil </p>
+    	<div layout layout-padding>
+    		<div flex="30">
+    			
+
+				<div class="panel-group" role="tablist" aria-multiselectable="true" bs-collapse>
+				  
+				  	<div class="panel panel-default">
+				    	<div class="panel-heading" role="tab">
+				      		<h4 class="panel-title">
+				        		<a bs-collapse-toggle>Compte</a>
+				      		</h4>
+				    	</div>
+				    	<div class="panel-collapse" role="tabpanel" bs-collapse-target>
+				      		<div class="panel-body" style="margin:0; padding:0;">
+							    <md-list ng-cloak>
+				  					<md-list-item ng-click="helpVm.setContent('compte.general')">
+				    					Généralités
+				  					</md-list-item>
+				  					<md-list-item ng-click="helpVm.setContent('compte.connexion')">
+				    					Connexion
+				  					</md-list-item>
+			  					</md-list>
+				      		</div>
+				    	</div>
+				  	</div>
+
+				  	<div class="panel panel-default">
+				    	<div class="panel-heading" role="tab">
+				      		<h4 class="panel-title">
+				        		<a bs-collapse-toggle>Projet</a>
+				      		</h4>
+				    	</div>
+				    	<div class="panel-collapse" role="tabpanel" bs-collapse-target>
+				      		<div class="panel-body" style="margin:0; padding:0;">
+							    <md-list ng-cloak>
+				  					<md-list-item ng-click="helpVm.setContent('projet.general')">
+				    					Généralités
+				  					</md-list-item>
+				  					<md-list-item ng-click="helpVm.setContent('projet.tache')">
+				    					Les tâches
+				  					</md-list-item>
+			  					</md-list>
+				      		</div>
+				    	</div>
+				  	</div>
+
+					<div class="panel panel-default">
+				    	<div class="panel-heading" role="tab">
+				      		<h4 class="panel-title">
+				        		<a bs-collapse-toggle>Collaborateur</a>
+				      		</h4>
+				    	</div>
+				    	<div class="panel-collapse" role="tabpanel" bs-collapse-target>
+				      		<div class="panel-body" style="margin:0; padding:0;">
+							    <md-list ng-cloak>
+				  					<md-list-item ng-click="helpVm.setContent('collaborateur.general')">
+				    					Généralités
+				  					</md-list-item>
+				  					
+			  					</md-list>
+				      		</div>
+				    	</div>
+				  	</div>
+
+
+					<div class="panel panel-default">
+				    	<div class="panel-heading" role="tab">
+				      		<h4 class="panel-title">
+				        		<a bs-collapse-toggle>Ligne budgetaire</a>
+				      		</h4>
+				    	</div>
+				    	<div class="panel-collapse" role="tabpanel" bs-collapse-target>
+				      		<div class="panel-body" style="margin:0; padding:0;">
+							    <md-list ng-cloak>
+				  					<md-list-item ng-click="helpVm.setContent('budget.general')">
+				    					Généralités
+				  					</md-list-item>
+			  					</md-list>
+				      		</div>
+				    	</div>
+				  	</div>
+
+
+					<div class="panel panel-default">
+				    	<div class="panel-heading" role="tab">
+				      		<h4 class="panel-title">
+				        		<a bs-collapse-toggle>Statistiques</a>
+				      		</h4>
+				    	</div>
+				    	<div class="panel-collapse" role="tabpanel" bs-collapse-target>
+				      		<div class="panel-body" style="margin:0; padding:0;">
+							    <md-list ng-cloak>
+				  					<md-list-item ng-click="helpVm.setContent('statistique.general')">
+				    					Généralités
+				  					</md-list-item>
+				  					<md-list-item ng-click="helpVm.setContent('statistique.projet')">
+				    					Projet
+				  					</md-list-item>
+			  					</md-list>
+				      		</div>
+				    	</div>
+				  	</div>
+
+				  	<div class="panel panel-default">
+				    	<div class="panel-heading" role="tab">
+				      		<h4 class="panel-title">
+				        		<a bs-collapse-toggle>API</a>
+				      		</h4>
+				    	</div>
+				    	<div class="panel-collapse" role="tabpanel" bs-collapse-target>
+				      		<div class="panel-body" style="margin:0; padding:0;">
+							    <md-list ng-cloak>
+				  					<md-list-item ng-click="helpVm.setContent('api.general')">
+				    					Généralités
+				  					</md-list-item>
+				  					<md-list-item ng-click="helpVm.setContent('api.projet')">
+				    					Projet
+				  					</md-list-item>
+				  					<md-list-item ng-click="helpVm.setContent('api.collaborateur')">
+				    					Collaborateur
+				  					</md-list-item>
+				  					<md-list-item ng-click="helpVm.setContent('api.budget')">
+				    					Budget
+				  					</md-list-item>
+				  					<md-list-item ng-click="helpVm.setContent('api.parametre')">
+				    					Paramètre
+				  					</md-list-item>
+			  					</md-list>
+				      		</div>
+				    	</div>
+				  	</div>
+
+				</div>
+    		</div>
+    		
+
+    		<div flex="70">
+    			<div ng-include ="helpVm.page"></div>
+    			<!-- <div ng-show="helpVm.s" ng-include ="'views/help.views/profil.manager.html'"></div> -->
+    		</div>
+
+		</div>
  	</md-card-content>
   </div>
 </md-card>
