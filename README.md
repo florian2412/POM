@@ -1,25 +1,25 @@
 # POM
-Plan, Organize & Manage
+###### Plan, Organize & Manage
 
 Les instructions d'installations ont été vérifiés pour Window.
 Nous ne pouvons pas vous garantir que les mêmes manipulations fonctionneront correctement
 sous un système UNIX.
  
-#Pré requis :
+# Pré requis :
 	- NodeJS
 	- MongoDB avec une instance du service démarrée
 	- Git (Optionnel : Si vous voulez récupérer les sources via Github)
 
-#Installation :
-	Dans client :
+# Installation :
+	###### Dans client :
 		npm install (peut prendre du temps)
 		bower install
 
-	Dans server :
+	###### Dans server :
 		npm install (peut prendre du temps)
 		
-#Lancement du serveur (API) :
-	Dans server :
+# Lancement du serveur (API) :
+	###### Dans server :
 		npm start
 		
 	Si toutes les commande précédentes se sont bien passées, 
@@ -38,8 +38,8 @@ sous un système UNIX.
 		Connection successful at http://localhost:27017/dbPOM
 
 	
-#Lancement du client :
-	Dans client :
+# Lancement du client :
+	###### Dans client :
 		grunt serve
 		
 	Comme pour le serveur, si tout s'est bien passé, l'application POM est lancé 
@@ -77,4 +77,4 @@ sous un système UNIX.
 	Running "watch" task
 	Waiting...
 		
-Vous pouvez maintenant utiliser l'application POM dans votre navigateur par défaut.
+###### Vous pouvez maintenant utiliser l'application POM dans votre navigateur par défaut.
