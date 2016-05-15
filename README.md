@@ -1,32 +1,15 @@
 # POM
 Plan, Organize & Manage
 
-
-## Pré requis
-
-Git
-Node.js
-MongoDb
-
-## Installation
-
-Dans le répertoire client :
-    npm install (avec sudo si besoin)
-    bower install
-
-Dans le répertoire serveur :
-    npm install (avec sudo si besoin)
-
-## Lancement du serveur et de POM
-
-Linux
- Lancer le fichier install.sh, l'application se lance dans votre navigateur par défaut
-
-
+Les instructions d'installations ont été vérifié pour Windows, 
+nous ne pouvons pas vous garantir que les même manipulation fonctionneront correctement
+sous un système UNIX.
  
 #Pré requis :
+	Git
 	NodeJS installé
 	MongoDB installé avec une instance du service démarrée
+	Optionnel : Git (Si vous voulez récupérer les sources via Github)
 
 #Installation :
 	Dans client :
