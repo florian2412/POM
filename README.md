@@ -9,7 +9,7 @@ sous un système UNIX.
 	- MongoDB avec une instance du service démarrée
 	- Git (Optionnel : Si vous voulez récupérer les sources via Github)
 
-## Afin de simplifier l'installation et le lancement de l'application, vous pouvez lancer le fichier install.sh et toutes les commandes ci-dessous deviennent inutile.
+###### Afin de simplifier l'installation et le lancement de l'application, vous pouvez lancer le fichier install.sh et ne pas suivre les instructions ci-dessous.
 	
 # Installation :
 ###### Dans client :
