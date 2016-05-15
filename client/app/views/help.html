@@ -8,10 +8,10 @@
     <md-card-content>
     	<div layout layout-padding>
     		<div flex="30">
-    			
+
 
 				<div class="panel-group" role="tablist" aria-multiselectable="true" bs-collapse>
-				  
+
 				  	<div class="panel panel-default">
 				    	<div class="panel-heading" role="tab">
 				      		<h4 class="panel-title">
@@ -64,7 +64,7 @@
 				  					<md-list-item ng-click="helpVm.setContent('collaborateur.general')">
 				    					Généralités
 				  					</md-list-item>
-				  					
+
 			  					</md-list>
 				      		</div>
 				    	</div>
@@ -102,8 +102,11 @@
 				    					Généralités
 				  					</md-list-item>
 				  					<md-list-item ng-click="helpVm.setContent('statistique.projet')">
-				    					Projet
+				    					Onglet Projets
 				  					</md-list-item>
+                    <md-list-item ng-click="helpVm.setContent('statistique.tache')">
+                      Onglet Tâches
+                    </md-list-item>
 			  					</md-list>
 				      		</div>
 				    	</div>
@@ -140,7 +143,7 @@
 
 				</div>
     		</div>
-    		
+
 
     		<div flex="70">
     			<div ng-include ="helpVm.page"></div>
