@@ -3,6 +3,8 @@
 Les instructions d'installations ont été vérifiés pour Window.
 Nous ne pouvons pas vous garantir que les mêmes manipulations fonctionneront correctement
 sous un système UNIX.
+
+Afin de simplifier l'installation et le lancement de l'application, vous pouvez lancer le fichier install.sh et toutes les commandes ci-dessous deviennent inutile.
  
 # Pré requis :
 	- NodeJS
