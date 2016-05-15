@@ -26,15 +26,15 @@ Si toutes les commande précédentes se sont bien passées, vous êtes normaleme
 L'API est également lancée en local et écoute sur le port 3000.
 	
 Dans la console, vous devriez voir :
-	```
-	$ npm start
+```
+$ npm start
 
-	> pom-api@0.0.1 start C:\Users\FlorianXPS\Desktop\Projet TDA\TEST INSTALLATION\POM\server
-	> node ./app.js
+> pom-api@0.0.1 start C:\Users\FlorianXPS\Desktop\Projet TDA\TEST INSTALLATION\POM\server
+> node ./app.js
 
-	Server listening at http://localhost:3000/
-	Connection successful at http://localhost:27017/dbPOM
-	```
+Server listening at http://localhost:3000/
+Connection successful at http://localhost:27017/dbPOM
+```
 	
 # Lancement du client :
 ###### Dans client :
