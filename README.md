@@ -21,7 +21,7 @@ sous un système UNIX.
 ###### Dans server :
 	npm start
 		
-Si toutes les commande précédentes se sont bien passées, vous êtes normalement connecté en local à la base de donnée MongoDB sur le port 27017.
+Si toutes les commande précédentes se sont bien passées, vous êtes normalement connecté en local à la base de données MongoDB sur le port 27017.
 
 L'API est également lancée en local et écoute sur le port 3000.
 	
