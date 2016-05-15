@@ -40,39 +40,40 @@ Connection successful at http://localhost:27017/dbPOM
 ###### Dans client :
 	grunt serve
 		
-	Comme pour le serveur, si tout s'est bien passé, l'application POM est lancé 
-	sur le port 9000 en local sur votre ordinateur dans votre navigateur favori.
+Comme pour le serveur, si tout s'est bien passé, l'application POM est lancé sur le port 9000 en local sur votre ordinateur dans votre navigateur favori.
 	
-	Dans la console, vous devriez voir quelque chose de similaire : 
-	$ grunt serve
-	Running "serve" task
+Dans la console, vous devriez voir quelque chose de similaire : 
+```
+$ grunt serve
+Running "serve" task
 
-	Running "clean:server" (clean) task
-	>> 0 paths cleaned.
+Running "clean:server" (clean) task
+>> 0 paths cleaned.
 
-	Running "wiredep:app" (wiredep) task
+Running "wiredep:app" (wiredep) task
 
-	Running "concurrent:server" (concurrent) task
+Running "concurrent:server" (concurrent) task
 
-	Running "copy:styles" (copy) task
-	Copied 3 files
+Running "copy:styles" (copy) task
+Copied 3 files
 
-	Done, without errors.
+Done, without errors.
 
 
-	Execution Time (2016-05-15 12:46:44 UTC)
-	loading tasks               208ms  ████████████████████████ 69%
-	loading grunt-contrib-copy   60ms  ███████ 20%
-	copy:styles                  33ms  ████ 11%
-	Total 302ms
+Execution Time (2016-05-15 12:46:44 UTC)
+loading tasks               208ms  ████████████████████████ 69%
+loading grunt-contrib-copy   60ms  ███████ 20%
+copy:styles                  33ms  ████ 11%
+Total 302ms
 
-	Running "postcss:server" (postcss) task
-	>> 3 processed stylesheets created.
+Running "postcss:server" (postcss) task
+>> 3 processed stylesheets created.
 
-	Running "connect:livereload" (connect) task
-	Started connect web server on http://localhost:9000
+Running "connect:livereload" (connect) task
+Started connect web server on http://localhost:9000
 
-	Running "watch" task
-	Waiting...
+Running "watch" task
+Waiting...
+```
 		
 ###### Vous pouvez maintenant utiliser l'application POM dans votre navigateur par défaut.
