@@ -9,7 +9,6 @@ router.post('/', createProject);
 router.get('/:id', getProjectById);
 router.put('/:id', updateProject);
 router.delete('/:id', deleteProject);
-//router.get('/:id/tasks', getProjectsCollaborator);
 
 /* GET projects listing. */
 function getAllProjects(req, res, next) {
@@ -20,34 +19,6 @@ function getAllProjects(req, res, next) {
         
    	});
 };
-
-/* GET project collaborator tasks. */
-/*
-function getProjectsCollaboratorTasks(req, res, next) {
-    Project.find({
-            "collaborateurs":req.params.id
-        },
-        function (err, collaborators) {
-            if (err)
-                return next(err);
-            res.json(collaborators);
-        });
-};
-*/
-
-/* GET project collaborator tasks. */
-/*
-function getProjectsCollaboratorTasks(req, res, next) {
-    Project.find({
-            "collaborateurs":req.params.id
-        },
-        function (err, collaborators) {
-            if (err)
-                return next(err);
-            res.json(collaborators);
-        });
-};
-*/
 
 /* POST /projects */
 function createProject(req, res, next) {
@@ -84,19 +55,5 @@ function deleteProject(req, res, next) {
     res.json(post);
   });
 };
-
-/* GET collaborators tasks listing. */
-/*router.delete('/:id', function(req, res, next) {
-function getTasksCollaborator(req, res, next) {
-    Project.find({
-            "taches.collaborateurs":req.params.id
-        },
-        function (err, collaborators) {
-            if (err)
-                return next(err);
-            res.json(collaborators);
-        });
-};
-*/
 
 module.exports = router;

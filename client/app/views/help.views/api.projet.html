@@ -11,7 +11,26 @@ Récupère tous les projets en base
 
 <samp>GET : </samp><code>/projects/{id}</code>
 <br>
-Récupère le projet avec l'identifiant : id
+Récupère le projet en fonction de l'identifiant : id
+<br><br>
+
+<samp>POST : </samp><code>/projects</code>
+<br>
+<samp><b>Paramètre : </b>Modèle de donnée d'un Projet en JSON dans le <b>body</b> de la requête.</samp>
+<br>
+Insère un nouveau projet en base
+<br><br>
+
+<samp>PUT : </samp><code>/projects/{id}</code>
+<br>
+<samp><b>Paramètre : </b>Modèle de donnée d'un Projet (données du projet à mettre à jour) en JSON dans le <b>body</b> de la requête.</samp>
+<br>
+Met à jour totalement ou partiellement un projet en base en fonction de l'identifiant du projet : id
+<br><br>
+
+<samp>DELETE : </samp><code>/projects/{id}</code>
+<br>
+Supprime un projet en base en fonction de l'identifiant du projet : id
 <br><br>
 
 <b>Rappel d'utilisation : </b> <code>URL point d'entrée + URL méthode voulu</code>

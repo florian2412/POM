@@ -12,11 +12,14 @@ var from_    = "Mailgun Sandbox" + "<" + "postmaster@sandbox5f0051cc48324952845e
 const crypto = require('crypto');
 var mailgun  = require('mailgun-js')({apiKey: api_key, domain: d});
 
+// Méthode HTTP de base de l'API sur les collaborateurs
 router.get('/', getAllCollaborators);
 router.post('/', createCollaborator);
 router.get('/:id', getCollaborator);
 router.put('/:id', updateCollaborator);
 router.delete('/:id', deleteCollaborator);
+
+// Méthode HTTP d'authentification des collaborateurs
 router.post('/authenticate',authenticate);
 router.get('/role/:role', getRoleCollaborators);
 router.post('/resetPassword', sendNewPassword);
@@ -43,16 +46,6 @@ function getProjectsCollaborator(req, res, next) {
             res.json(collaborators);
         });
 };
-
-/* GET /collaborators/id */
-/*function getTasksCollaborator(req, res, next) {
- console.log("OUIII");
- Collaborator.findById(req.params.id, function (err, collaborators) {
- if (err)
- return next(err);
- res.json(collaborators);
- });
- };*/
 
 /* GET with query collaborators listing. */
 function getRoleCollaborators(req, res, next) {
