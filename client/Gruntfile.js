@@ -170,8 +170,8 @@ module.exports = function (grunt) {
       app: {
         src: ['<%= pom.app %>/index.html'],
         ignorePath:  /\.\.\//
-      },      
-    }, 
+      }
+    },
 
     // Renames files for browser caching purposes
     filerev: {
