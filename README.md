@@ -22,10 +22,11 @@ sous un système UNIX.
 	npm start
 		
 Si toutes les commande précédentes se sont bien passées, vous êtes normalement connecté en local à la base de donnée MongoDB sur le port 27017.
+
 L'API est également lancée en local et écoute sur le port 3000.
 	
 Dans la console, vous devriez voir :
-	'''
+	```
 	$ npm start
 
 	> pom-api@0.0.1 start C:\Users\FlorianXPS\Desktop\Projet TDA\TEST INSTALLATION\POM\server
@@ -33,7 +34,7 @@ Dans la console, vous devriez voir :
 
 	Server listening at http://localhost:3000/
 	Connection successful at http://localhost:27017/dbPOM
-	'''
+	```
 	
 # Lancement du client :
 ###### Dans client :
