@@ -4,14 +4,28 @@ Les instructions d'installations ont été vérifiés pour Window.
 Nous ne pouvons pas vous garantir que les mêmes manipulations fonctionneront correctement
 sous un système UNIX.
  
-# Pré requis :
+## Pré requis :
 	- NodeJS
 	- MongoDB avec une instance du service démarrée
 	- Git (Optionnel : Si vous voulez récupérer les sources via Github)
 
-###### Afin de simplifier l'installation et le lancement de l'application, vous pouvez lancer le fichier install.sh et ne pas suivre les instructions ci-dessous.
+# 1. Installation et lancement simplifié de POM
+
+## Installation :	
+- Lancer le fichier setup.bat pour installer POM et tous ses composants
+
+## Lancement du serveur (API) et du client (POM) :
+- Lancer le fichier launch.bat
+
+##### Vous pouvez maintenant accéder à l'application via l'URL suivante : [POM](http://localhost:9000)
+
+## Mise à jour des commosants de POM
+- Lancer le fichier update.bat
 	
-# Installation :
+	
+# 2. Installation et lancement manuel de POM
+	
+## Installation :
 ###### Dans client :
 	npm install (peut prendre du temps)
 	bower install
@@ -19,7 +33,7 @@ sous un système UNIX.
 ###### Dans server :
 	npm install (peut prendre du temps)
 		
-# Lancement du serveur (API) :
+## Lancement du serveur (API) :
 ###### Dans server :
 	npm start
 		
@@ -38,7 +52,7 @@ Server listening at http://localhost:3000/
 Connection successful at http://localhost:27017/dbPOM
 ```
 	
-# Lancement du client :
+## Lancement du client :
 ###### Dans client :
 	grunt serve
 		
@@ -78,4 +92,4 @@ Running "watch" task
 Waiting...
 ```
 		
-###### Vous pouvez maintenant utiliser l'application POM dans votre navigateur par défaut.
+###### Vous pouvez maintenant utiliser l'application [POM](http://localhost:9000) dans votre navigateur par défaut.
