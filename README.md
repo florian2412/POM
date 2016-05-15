@@ -1,5 +1,5 @@
 # POM
-###### Plan, Organize & Manage
+## Plan, Organize & Manage
 
 Les instructions d'installations ont été vérifiés pour Window.
 Nous ne pouvons pas vous garantir que les mêmes manipulations fonctionneront correctement
@@ -19,8 +19,8 @@ sous un système UNIX.
 	npm install (peut prendre du temps)
 		
 # Lancement du serveur (API) :
-	###### Dans server :
-		npm start
+###### Dans server :
+	npm start
 		
 	Si toutes les commande précédentes se sont bien passées, 
 	vous êtes normalement connecté en local à la base de donnée MongoDB 
@@ -39,8 +39,8 @@ sous un système UNIX.
 
 	
 # Lancement du client :
-	###### Dans client :
-		grunt serve
+###### Dans client :
+	grunt serve
 		
 	Comme pour le serveur, si tout s'est bien passé, l'application POM est lancé 
 	sur le port 9000 en local sur votre ordinateur dans votre navigateur favori.
