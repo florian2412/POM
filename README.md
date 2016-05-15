@@ -11,12 +11,12 @@ sous un système UNIX.
 	- Git (Optionnel : Si vous voulez récupérer les sources via Github)
 
 # Installation :
-	###### Dans client :
-		npm install (peut prendre du temps)
-		bower install
+###### Dans client :
+	npm install (peut prendre du temps)
+	bower install
 
-	###### Dans server :
-		npm install (peut prendre du temps)
+###### Dans server :
+	npm install (peut prendre du temps)
 		
 # Lancement du serveur (API) :
 	###### Dans server :
