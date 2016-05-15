@@ -3,14 +3,14 @@
 Les instructions d'installations ont été vérifiés pour Window.
 Nous ne pouvons pas vous garantir que les mêmes manipulations fonctionneront correctement
 sous un système UNIX.
-
-Afin de simplifier l'installation et le lancement de l'application, vous pouvez lancer le fichier install.sh et toutes les commandes ci-dessous deviennent inutile.
  
 # Pré requis :
 	- NodeJS
 	- MongoDB avec une instance du service démarrée
 	- Git (Optionnel : Si vous voulez récupérer les sources via Github)
 
+## Afin de simplifier l'installation et le lancement de l'application, vous pouvez lancer le fichier install.sh et toutes les commandes ci-dessous deviennent inutile.
+	
 # Installation :
 ###### Dans client :
 	npm install (peut prendre du temps)
