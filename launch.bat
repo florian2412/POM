@@ -5,5 +5,3 @@ cd server/ && npm start&
 
 echo '## Lancement du client POM en local sur le port 9000 ##'
 cd client/ && grunt serve&
-
-cd ../
