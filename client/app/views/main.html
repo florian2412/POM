@@ -56,9 +56,20 @@
 
             </md-grid-list>
             <br>
+
             <div layout flex layout-align="center">
               <div md-whiteframe="2" layout-padding>
-                <table ng-table="mainVm.tableParams" show-filter="false" class="table table-striped table-hover">
+
+                <md-toolbar layout="row" layout-align="center center" style="background-color:whitesmoke;">
+                  <span flex></span>
+                  <div style="padding-top:12px;color:black">
+                    <md-checkbox ng-model="mainVm.isFiltersEnabled">
+                      Filtre
+                    </md-checkbox>
+                  </div>
+                </md-toolbar>
+
+                <table ng-table="mainVm.tableParams" show-filter="mainVm.isFiltersEnabled" class="table table-striped table-hover">
                   <tr ng-repeat="row in $data" ng-dblClick="mainVm.redirectTasksDetails($event, row._id, row.projet_id)">
                     <td title="'Code'" filter="{code: 'text'}" sortable="'code'"><a ui-sref="projects.details.tasks.details({idtask:row._id, id: row.projet_id})"> <b>{{ row.code }}</b> </a></td>
                     <td title="'Libelle'" filter="{libelle: 'text'}" sortable="'libelle'"><a ui-sref="projects.details.tasks.details({idtask:row._id, id: row.projet_id})"> <b>{{ row.libelle }}</b> </a></td>
@@ -75,17 +86,28 @@
                 </table>
               </div>
             </div>
+
           </md-content>
         </md-tab-body>
       </md-tab>
 
-      <md-tab>
+      <md-tab >
         <md-tab-label>Tous mes projets  <span class="badge" style="background-color:red">{{mainVm.numberProjects}}</span></md-tab-label>
         <md-tab-body>
           <md-content class="md-padding" layout>
 
             <div layout flex layout-align="center">
               <div md-whiteframe="2" layout-padding>
+
+                <md-toolbar layout="row" layout-align="center center" style="background-color:whitesmoke; ">
+                  <span flex></span>
+                  <div style="padding-top:12px;color:black">
+                    <md-checkbox ng-model="mainVm.isFiltersEnabled">
+                      Filtre
+                    </md-checkbox>
+                  </div>
+                </md-toolbar>
+
                 <table ng-table="mainVm.tableProjectsParams" show-filter="mainVm.isFiltersEnabled" class="table table-striped table-hover">
                   <tr ng-repeat="row in $data" ng-dblClick="mainVm.redirectProjectsDetails($event, row._id)">
 
@@ -131,6 +153,16 @@
 
             <div layout flex layout-align="center">
               <div md-whiteframe="2" layout-padding>
+
+                <md-toolbar layout="row" layout-align="center center" style="background-color:whitesmoke; ">
+                    <span flex></span>
+                    <div style="padding-top:12px;color:black">
+                      <md-checkbox ng-model="mainVm.isFiltersEnabled">
+                        Filtre
+                      </md-checkbox>
+                    </div>
+                </md-toolbar>
+
                 <table ng-table="mainVm.tableTasksParams" show-filter="mainVm.isFiltersEnabled" class="table table-striped table-hover">
                   <tr ng-repeat="row in $data" ng-dblClick="mainVm.redirectTasksDetails($event, row._id)">
 

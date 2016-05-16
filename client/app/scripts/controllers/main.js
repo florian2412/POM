@@ -15,6 +15,7 @@ function MainCtrl($scope, $state, $timeout, localStorageService, databaseService
   vm.showTasks = showTasks;
   vm.redirectTasksDetails = redirectTasksDetails;
   vm.redirectProjectsDetails = redirectProjectsDetails;
+  vm.isFiltersEnabled = false;
 
   var currentUser = localStorageService.get('currentUser');
   var idCurrentUser = localStorageService.get('currentUser')._id;

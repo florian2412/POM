@@ -55,7 +55,7 @@ function ProjectsListCtrl($scope,$state, NgTableParams, databaseService, utilsSe
         });
       }
     });
-  };
+  }
 
   function archiveProject(id){
     var projectToArchive = utilsService.getElementById(id, vm.projects);
@@ -120,12 +120,12 @@ function ProjectsListCtrl($scope,$state, NgTableParams, databaseService, utilsSe
       .error(function(err) {
         console.log(err);
       });
-  };
+  }
 
   // Affiche la liste des projets au chargement de la page
   $scope.$on('$viewContentLoaded', function() {
     vm.showAllProjects();
   });
 
-};
+}
 
