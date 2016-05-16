@@ -9,7 +9,7 @@
  */
 angular.module('pomApp').controller('MainCtrl',MainCtrl);
 
-function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, databaseService, utilsService, statisticsService, NgTableParams) {
+function MainCtrl($scope, $state, $timeout, localStorageService, databaseService, utilsService, statisticsService, NgTableParams) {
 
   var vm = this;
   vm.showTasks = showTasks;
@@ -19,8 +19,12 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
   var currentUser = localStorageService.get('currentUser');
   var idCurrentUser = localStorageService.get('currentUser')._id;
 
-  function redirectTasksDetails(event,taskId, projectId){
+  function redirectTasksDetails(taskId, projectId){
     $state.go('projects.details.tasks.details',{"idtask":taskId, "id":projectId});
+  }
+
+  function redirectProjectsDetails(id){
+    $state.go('projects.details.info',{"id":id});
   }
 
   function allTasksDetails(projects){
@@ -188,11 +192,7 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
     }
   }
 
-  function redirectProjectsDetails(event,id){
-    $state.go('projects.details.info',{"id":id});
-  }
-
-// Au chargement de la page
+  // Au chargement de la page
   $scope.$on('$viewContentLoaded', function() {
 
     databaseService.getAllObjects('collaborators').success(function(data){ vm.saveCollaborators = data;})
@@ -218,4 +218,4 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
 
   });
 
-};
+}

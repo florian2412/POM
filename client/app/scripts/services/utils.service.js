@@ -159,8 +159,8 @@ function Service($filter) {
   }
 
   function returnValidDate(date) {
-    if ( Object.prototype.toString.call(d) === "[object Date]" ) {
-      if ( isNaN( d.getTime() ) ) {  // d.valueOf() could also work
+    if ( Object.prototype.toString.call(date) === "[object Date]" ) {
+      if ( isNaN( date.getTime() ) ) {  // d.valueOf() could also work
         return new Date();
       }
       else {
