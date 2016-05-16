@@ -118,7 +118,8 @@
               <li data-match-route="/help"><a ui-sref="help" nra-auth="['admin', 'collaborateur', 'manager']" ><span class="fa fa-question-circle" aria-hidden="true"></span> Aide</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li data-match-route="/account"><a ui-sref="account" ng-show="isAuthenticated"><ng-letter-avatar dynamic="true" data="{{userFirstname}}" shape="round" height="20" width="20" fontSize="15"></ng-letter-avatar><strong> {{userFirstname}} {{userLastname}}</strong></a></li>
+              <li data-match-route="/account"><a ui-sref="account" ng-show="isAuthenticated">
+                <ng-letter-avatar dynamic="true" data="{{userFirstname}}" shape="round" height="20" width="20" fontSize="15"></ng-letter-avatar><strong> {{userFirstname}} {{userLastname}}</strong></a></li>
               <li data-match-route="/login"><a ui-sref="login" ng-show="!isAuthenticated">Se connecter <span class="fa fa-sign-in"></span></a></li>
               <li data-match-route="/login"><a ui-sref="login" ng-show="isAuthenticated">Se déconnecter <span style="color:red;" class="fa fa-power-off"></span></a></li>
             </ul>

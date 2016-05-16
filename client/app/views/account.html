@@ -8,17 +8,46 @@
     <md-card-content>
       <md-content>
         <div flex layout layout-align="center">
-          <div flex = "10">
-            <img ng-src="{{user.role == 'admin' && '../images/admin.png' || user.role == 'manager' && '../images/manager.png' || '../images/collaborateur.png'}}"/>
+          <div flex="20" layout layout-align="center">
+            <div>
+              <img ng-src="{{accountVm.user.role == 'admin' && '../images/admin.png' || accountVm.user.role == 'manager' && '../images/manager.png' || '../images/collaborateur.png'}}"/>
+            </div>
           </div>
-          <div flex = "5"></div>
-          <div flex = "85">
-            <paper flex flex-gt-sm="20">
-              <p>Identité :<strong> {{user.prenom}} {{user.nom}}</strong></p>
-              <p>Rôle :<strong> {{user.role}}</strong></p>
-              <p>Fonction :<strong> {{user.fonction}}</strong></p>
-              <p>Email : <strong> {{user.email}}</strong></p>
-              <md-button class="md-raised md-primary" ng-click="showUpdatePassword($event)">Changer de mot de passe</md-button>
+          <div flex = "80" layout-padding id="profileCard">
+            <paper>
+              <div layout flex="40">
+                <div flex="100"><h3><strong> {{accountVm.user.prenom}} {{accountVm.user.nom}}</strong></h3></div>
+              </div>
+              <div layout flex="40">
+                <div flex="50">Pseudo</div>
+                <div flex="50"><strong> {{accountVm.user.pseudo}}</strong></div>
+              </div>
+              <div layout flex="40">
+                <div flex="50">Rôle</div>
+                <div flex="50"><strong> {{accountVm.user.role}}</strong></div>
+              </div>
+              <div layout flex="40">
+                <div flex="50">Fonction</div>
+                <div flex="50"><strong> {{accountVm.user.fonction}} </strong></div>
+              </div>
+              <div layout flex="40">
+                <div flex="50">Email</div>
+                <div flex="50"><strong> {{accountVm.user.email}} </strong></div>
+              </div>
+              <div layout flex="40">
+                <div flex="50">Coût horaire</div>
+                <div flex="50"><strong> {{accountVm.user.cout_horaire}}€ </strong></div>
+              </div>
+              <div layout flex="40">
+                <div flex="50">Manager</div>
+                <div flex="50"><strong> {{accountVm.user.manager.prenom + ' ' + accountVm.user.manager.nom}} </strong></div>
+              </div>
+              <div layout flex="40">
+                <div flex="50">Date de création compte</div>
+                <div flex="50"><strong> {{accountVm.user.date_creation | date:"dd/MM/yyyy" }} </strong></div>
+              </div>
+              <br>
+              <md-button class="md-raised md-primary" ng-click="accountVm.showUpdatePassword($event)">Changer de mot de passe</md-button>
             </paper>
           </div>
         </div>

@@ -145,8 +145,8 @@
 
                     <h3> <a ui-sref="projects.details.tasks.details({id:task.projet_id, idtask:task._id})"> {{ task.libelle }} </a></h3>
 
-                    <p>Statut de la tâche : <b> {{ task.statut }}</b></p>
-
+                    <p>Statut de la tâche : <b> {{ task.statut.statut }}</b>  <span class="{{task.statut.class}}" style="color:{{task.statut.color}};font-size:1.5em;"></span></p>
+                   
                     <p>Durée de la tâche : <b> {{ task.duration }}</b></p>
 
                     <p>Durée théorique <b>restante</b> de la tâche : <b> {{ task.leftDuration }} </b></p>
@@ -181,3 +181,4 @@
     </md-tabs>
   </md-content>
 </div>
+<br><br>

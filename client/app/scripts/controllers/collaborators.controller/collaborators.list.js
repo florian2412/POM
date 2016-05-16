@@ -10,7 +10,7 @@
 
 angular.module('pomApp').controller('CollaboratorsListCtrl', CollaboratorsListCtrl);
 
-function CollaboratorsListCtrl($scope, $filter, $state, databaseService, utilsService, NgTableParams) {
+function CollaboratorsListCtrl($scope, $filter, $state, databaseService, localStorageService, utilsService, NgTableParams) {
     var vm = this;
    
     vm.showAllCollaborators = showAllCollaborators;
@@ -23,27 +23,39 @@ function CollaboratorsListCtrl($scope, $filter, $state, databaseService, utilsSe
     }
 
     function showAllCollaborators() {
+      var currentUser = localStorageService.get('currentUser');
+
       databaseService.getAllObjects('collaborators')
         .success(function (data) { 
+          var managerCollaborators = [];
+          
+         /* if(currentUser.role === 'admin'){
+            vm.collaborators = data;
+          }
+          else
+          {
+            for (var i = data.length - 1; i >= 0; i--) {
+              if(data[i].manager == currentUser._id){
+                managerCollaborators.push(data[i]);
+              }
+            }
+            vm.collaborators = managerCollaborators;
+          }
+          */
           for (var i = data.length - 1; i >= 0; i--) {
             if(data[i].manager && data[i].role != "admin"){
               var id = data[i].manager;
-              var m = _getManager(id, data);
+              var m = utilsService.getElementById(id, data);
               if(m)
                 data[i].manager = {"id" : id, "prenom" : m.prenom , "nom" : m.nom };
             }
           }
-         
           vm.collaborators = data;
-          
-          vm.tableParams = new NgTableParams({ page: 1, count: 10 }, { filterDelay: 0, data: data });
+          vm.tableParams = new NgTableParams({ page: 1, count: 10 }, { filterDelay: 0, data: vm.collaborators });
 
         });
     };
-    
-    function _getManager(id, all){
-      return $filter('filter')(all, function (d) {return d._id === id;})[0];
-    };
+
 
     function deleteCollaborator(id) {
       databaseService.deleteObject('collaborators', id)
