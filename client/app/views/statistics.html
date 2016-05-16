@@ -22,36 +22,38 @@
                 <br><br>
                 <h4 ng-show="statisticsVm.zeroProject">Vous n'avez aucun projet.</h4>
 
-                  <div ng-show="!statisticsVm.zeroProject">
+                <div ng-show="!statisticsVm.zeroProject">
 
-                    <div layout layout-align="center" layout-xs="column" >
-                      <div flex="47" flex-xs="100">
-                        <div md-whiteframe="1" id="piechart"></div>
-                      </div>
-                      <div flex="5"></div>
-                      <div flex="47" flex-xs="100">
-                        <div md-whiteframe="1" id="barchartstatus-projects"></div>
-                      </div>
+                  <div layout layout-align="center" layout-xs="column" >
+                    <div flex="47" flex-xs="100">
+                      <div md-whiteframe="1" id="piechart"></div>
                     </div>
-
-                    <br>
-                    <hr>
-
-                    <div layout layout-align="center" layout-xs="column">
-                      <div flex>
-                        <div  md-whiteframe="1" id="barchart-projects"></div>
-                      </div>
-                    </div>
-
-                    <br>
-                    <hr>
-
-                    <div layout layout-align="center" layout-xs="column">
-                      <div flex>
-                        <div  md-whiteframe="1" id="barchartstatustasks-projects"></div>
-                      </div>
+                    <div flex="5"></div>
+                    <div flex="47" flex-xs="100">
+                      <div md-whiteframe="1" id="barchartstatus-projects"></div>
                     </div>
                   </div>
+
+                  <br>
+                  <br>
+
+                  <div layout layout-align="center" layout-xs="column" ng-show="!statisticsVm.zeroFinishedProject">
+                    <div flex>
+                      <div  md-whiteframe="1" id="barchart-projects"></div>
+                    </div>
+                  </div>
+
+                  <h5 ng-show="statisticsVm.zeroFinishedProject">Vous n'avez aucun projet terminé.</h5>
+
+                  <br>
+                  <br>
+
+                  <div layout layout-align="center" layout-xs="column">
+                    <div flex>
+                      <div  md-whiteframe="1" id="barchartstatustasks-projects"></div>
+                    </div>
+                  </div>
+                </div>
 
               </md-content>
             </md-tab-body>
@@ -63,6 +65,10 @@
             <md-tab-body>
               <md-content layout-padding>
                 <!-- Deuxième onglet -->
+
+                <h4 ng-show="statisticsVm.zeroTasks">Vous n'avez aucune tâche affectée au projet.</h4>
+
+                <div ng-show="!statisticsVm.zeroTasks">
 
                   <div layout layout-align="center">
                     <div flex="40">
@@ -79,6 +85,19 @@
                     </div>
                   </div>
 
+                  <div layout layout-align="center" layout-xs="column" >
+                    <div flex="47" flex-xs="100">
+                      <div md-whiteframe="1" id="piechartstatus-tasksproject"></div>
+                    </div>
+                    <div flex="5"></div>
+                    <div flex="47" flex-xs="100">
+                      <div md-whiteframe="1" id="barchartstatus-tasksproject"></div>
+                    </div>
+                  </div>
+
+                  <br>
+                  <br>
+
                   <div layout layout-align="center" layout-xs="column">
                     <div flex="47" flex-xs="100">
                       <div  md-whiteframe="1" id="piechart-project"></div>
@@ -89,7 +108,7 @@
                     </div>
                   </div>
 
-                  <hr>
+                  <br>
                   <br>
 
                   <div layout layout-align="center" layout-xs="column">
@@ -98,7 +117,7 @@
                     </div>
                   </div>
 
-                  <hr>
+                  <br>
                   <br>
 
                   <div layout layout-align="center" layout-xs="column">
@@ -107,6 +126,9 @@
                     </div>
                   </div>
 
+                  <!--<h5 ng-show="statisticsVm.zeroFinishedTasks">Vous n'avez aucune tâche terminée sur ce projet.</h5>-->
+
+                </div>
               </md-content>
             </md-tab-body>
           </md-tab>

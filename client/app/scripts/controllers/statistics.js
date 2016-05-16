@@ -20,8 +20,8 @@ angular.module('pomApp')
 
     function populatePage() {
       buildProjectsStatusChart();
-      buildProjectsDurationBarChart();
       buildProjectsByStatusBarChart();
+      buildProjectsDurationBarChart();
       buildBarChartTasksByProjects();
 
     }
@@ -29,11 +29,18 @@ angular.module('pomApp')
     function updateChartProject() {
       var project = JSON.parse(vm.project);
 
+      vm.zeroTasks = true;
+
+      // On regarde si on a bien des tâche affecté sur le projet sinon, on cache les grahiques
+      if(project.taches.length > 0)
+        vm.zeroTasks = false;
+
       buildTasksCostChart(project._id);
       buildTasksCostProjectBudgetChart(project._id);
       buildTasksDurationBarChart(project._id);
       buildTasksCategoriesProject(project._id);
-
+      buildTasksStatusChart(project._id);
+      buildTasksByStatusBarChart(project._id);
     }
 
     /**********************************************************************************************************
@@ -56,11 +63,38 @@ angular.module('pomApp')
       chartsService.buildBarChartProjectsByStatus(idChart, titleChart, pointFormatChart, nbProjectsAndStatus[0], nbProjectsAndStatus[1]);
     }
 
+    function buildTasksStatusChart(projectId) {
+      var project = searchProjectInProjects(projectId);
+      var nbProjectsAndStatus = initDataTasksStatus(project);
+      var dataChart = chartsService.calculDataChart(nbProjectsAndStatus[1], nbProjectsAndStatus[0]);
+      var idChart = 'piechartstatus-tasksproject';
+      var titleChart = 'Compte rendu des tâches';
+      var pointFormatChart = 'Nombre de tâches :<b>{point.y}</b> <br> Soit :<b>{point.percentage:.1f}%</b>';
+      chartsService.buildPieChart(idChart, titleChart, pointFormatChart, dataChart);
+    }
+
+    function buildTasksByStatusBarChart(projectId) {
+      var project = searchProjectInProjects(projectId);
+      var nbProjectsAndStatus = initDataTasksStatus(project);
+      var idChart = 'barchartstatus-tasksproject';
+      var titleChart = 'Nombre de tâches en fonction du statut';
+      var pointFormatChart = 'Nombre de tâches :<b>{point.y}</b> <br> Soit :<b>{point.percentage:.1f}%</b>';
+      chartsService.buildBarChartProjectsByStatus(idChart, titleChart, pointFormatChart, nbProjectsAndStatus[0], nbProjectsAndStatus[1]);
+    }
+
     function initDataProjectsStatus() {
       var statuts = [];
       var projects = vm.saveProjects;
       for (var i = 0; i < projects.length; i++)
         statuts.push(projects[i].statut);
+      return statisticsService.countObjectsByTermFromNbTerm(statuts);
+    }
+
+    function initDataTasksStatus(project) {
+      var statuts = [];
+      var tasks = project.taches;
+      for (var i = 0; i < tasks.length; i++)
+        statuts.push(tasks[i].statut);
       return statisticsService.countObjectsByTermFromNbTerm(statuts);
     }
 
@@ -235,7 +269,16 @@ angular.module('pomApp')
       databaseService.getAllObjects('projects')
         .success(function (data){
           vm.saveProjects = data;
-          vm.zeroProject = ((data.length === 0) ? true : false);
+
+          vm.zeroProject = (data.length === 0);
+
+          if(!vm.zeroProject) {
+            vm.zeroFinishedProject = true;
+            for (var i = 0; i < vm.saveProjects.length; i++) {
+              if(vm.saveProjects[i].statut === 'Terminé(e)')
+                vm.zeroFinishedProject = false;
+            }
+          }
         })
         .error(function(err) { console.log(err); });
 
@@ -261,6 +304,7 @@ angular.module('pomApp')
         $('#statisticsCard').show();
         $scope.loading = false;
         populatePage();
+
       }, 1000);
 
     });

@@ -249,7 +249,6 @@ function Service(utilsService) {
         budgetConsumption = budget.montant - tasksTotalCost;
         result = 1 - (budgetConsumption / budget.montant);
       }
-
     }
     return result;
   }
