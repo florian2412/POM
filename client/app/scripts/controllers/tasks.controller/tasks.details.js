@@ -34,8 +34,7 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
     updatedTask.date_derniere_modif = new Date();
 
     if(updatedTask.statut === 'Terminé(e)') {
-      updatedTask.date_fin_reelle = new Date(vm.task.date_fin_reelle);
-
+      updatedTask.date_fin_reelle = utilsService.returnValidDate(vm.task.date_fin_reelle);
     }
 
     console.log("vm.task.date_fin_reelle");
@@ -45,14 +44,13 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
     console.log(vm.currentProject);
 
     databaseService.updateObject('projects', $stateParams.id, vm.currentProject)
-      .success(function (data) {
+      .success(function () {
         flashService.success("La tâche " + vm.task.libelle + " a été mise à jour.", "", "bottom-right", true, 4);
         $state.go("projects.details.tasks");
       });
-  };
+  }
 
   function showCancelDialog(event) {
-
     var confirm = $mdDialog.confirm()
       .title('Alerte')
       .textContent('Etes-vous sûr d\'annuler la modification de la tâche ?')
@@ -64,9 +62,8 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
     $mdDialog.show(confirm).then(function() {
       $state.go("projects.details.tasks");
     }, function() {
-
     });
-  };
+  }
 
   function showCollaboratorPicker(ev) {
 
@@ -79,9 +76,9 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
       fullscreen: false,
       locals: {
         collaborators: vm.collaborators
-      },
+      }
     });
-  };
+  }
 
   function _CollaboratorPickerController($rootScope, $scope, $mdDialog, collaborators) {
 
@@ -103,7 +100,7 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
   }
 
   function changedValue(selected){
-    vm.isDateReelleEnable = (selected === "Terminé(e)") ? true : false;
+    vm.isDateReelleEnable = (selected === "Terminé(e)");
   }
 
   $scope.$on('$viewContentLoaded', function() {
@@ -142,10 +139,10 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
     databaseService.getSettings('statuts').success(function(data){
       data.splice(data.indexOf("Archivé(e)"),1);
       for (var i = data.length - 1; i >= 0; i--) {
-       
+
         switch (data[i]){
           case "Initial":
-            data[i] = utilsService.statusColors().initial;      
+            data[i] = utilsService.statusColors().initial;
             break;
           case "En cours":
             data[i] = utilsService.statusColors().en_cours;
@@ -163,4 +160,4 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
     });
   });
 
-};
+}

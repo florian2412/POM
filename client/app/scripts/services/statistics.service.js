@@ -194,6 +194,7 @@ function Service(utilsService) {
     return taskTotalCost;
   }
 
+  // TODO Check if this function is right
   // Retourne la durée déjà passée théorique
   function getSpentTime(object) {
     var start = new Date(object.date_debut);
@@ -208,6 +209,12 @@ function Service(utilsService) {
     // Si la tache commence aujourd'hui
     else
       return diff + 1;
+  }
+
+  function getSpentTime(object) {
+    var start = new Date(object.date_debut);
+    var end = new Date();
+    return utilsService.dateDiffWorkingDates(start, end);
   }
 
   // Retourne la durée déjà passée théorique
@@ -226,11 +233,11 @@ function Service(utilsService) {
 
   // Retourne la durée restante théorique
   /*function getLeftDuration(object) {
-    var start = new Date();
-    var end = new Date(object.date_fin_theorique);
+   var start = new Date();
+   var end = new Date(object.date_fin_theorique);
 
-    return utilsService.dateDiffWorkingDates(start, end);
-  }*/
+   return utilsService.dateDiffWorkingDates(start, end);
+   }*/
 
   function calculateBudgetConsumption(budget, projects, collaborators){
     var tasksCost = [];

@@ -29,50 +29,22 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
     var allUserTasks = [];
 
     for (var i = projects.length - 1; i >= 0; i--) {
-
       if(projects[i].statut === "En cours"){
-        console.log(projects[i].nom);
         var tasks = projects[i].taches;
 
         for (var j = tasks.length - 1; j >= 0; j--) {
 
-          if(tasks[j].collaborateurs.indexOf(idCurrentUser) > -1)
-          {
+          if(tasks[j].collaborateurs.indexOf(idCurrentUser) > -1) {
+            // On garde dans allUserTasks toutes le taches que l'on rencontre
             allUserTasks.push(tasks[j]);
 
-            var diffUrgentTasks = utilsService.dateDiffWorkingDates(new Date(),new Date(tasks[j].date_fin_theorique));
-            var diffUpcomingTasks = utilsService.dateDiffWorkingDates(new Date(),new Date(tasks[j].date_debut));
-
+            // On set les style des catagories des taches en fonction des categorie
             tasks[j].categorie = setTaskCategorie(tasks[j].categorie);
 
-            switch (tasks[j].statut){
-              case "Initial":
-              {
-                new_tasks.push(tasks[j]);
-                if(diffUpcomingTasks > 0 && diffUpcomingTasks < 7)
-                  upcoming_tasks.push(tasks[j]);
-                break;
-              }
-              case "En cours":
-              {
-                if (diffUrgentTasks <= 3){
-                  urgent_tasks.push(tasks[j]);
-                }
-                break;
-              }
-              case "Terminé(e)":
-              {
-                completed_tasks.push(tasks[j]);
-                break;
-              }
-              case "Annulé(e)":
-              {
-                canceled_tasks.push(tasks[j]);
-                break;
-              }
-            }
+            // On met la tache courante dans la bonne liste de tâches
+            putTaskInRightList(tasks[j], new_tasks, upcoming_tasks, urgent_tasks, completed_tasks, canceled_tasks);
 
-            // On met cette méthode après le switch car sinon le switch ne fonctionnera pas correctement
+            // On met cette méthode après "putTaskInRightList" pour mieux découper le code
             tasks[j].statut = setTaskStatus(tasks[j].statut);
           }
         }
@@ -116,10 +88,8 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
     }
   }
 
-  function setTaskStatus(taskStatus) {
-    console.log('taskStatus');
-    console.log(taskStatus);
-    switch (taskStatus) {
+  function setTaskStatus(status) {
+    switch (status) {
       case "Initial":
         return utilsService.statusColors().initial;
         break;
@@ -132,8 +102,35 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
       case "Annulé(e)":
         return utilsService.statusColors().annule;
         break;
+      case 'Archivé':
+        return utilsService.statusColors().archive;
+        break;
       default:
-        return taskStatus;
+        return status;
+        break;
+    }
+  }
+
+  function putTaskInRightList(task, new_tasks, upcoming_tasks, urgent_tasks, completed_tasks, canceled_tasks) {
+    var diffUrgentTasks = utilsService.dateDiffWorkingDates(new Date(),new Date(task.date_fin_theorique));
+    var diffUpcomingTasks = utilsService.dateDiffWorkingDates(new Date(),new Date(task.date_debut));
+
+    switch (task.statut){
+      case "Initial":{
+        new_tasks.push(task);
+        if(diffUpcomingTasks > 0 && diffUpcomingTasks < 7)
+          upcoming_tasks.push(task);
+        break;
+      }
+      case "En cours":
+        if (diffUrgentTasks <= 3)
+          urgent_tasks.push(task);
+        break;
+      case "Terminé(e)":
+        completed_tasks.push(task);
+        break;
+      case "Annulé(e)":
+        canceled_tasks.push(task);
         break;
     }
   }
@@ -161,7 +158,6 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
         var indexCurrentUserInTask = projectTasks[j].collaborateurs.indexOf(idCurrentUser);
         // Si > -1 alors le current user est assigné à la tâche
         if (indexCurrentUserInTask > -1) {
-          //projectTasks[j].categorie = setTaskCategorie(projectTasks[j].categorie);
           projectTasks[j].statut = setTaskStatus(projectTasks[j].statut);
           collaboratorTasks.push(projectTasks[j]);
         }
@@ -181,9 +177,9 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
       var sumTotalCostProject = 0;
 
       for (var j = 0; j < projectTasks.length; j++) {
-        // On calcul le cout total de la tâche et la durée théorique
         // On calcule la durée du projet
         projectTasks[j].duration = statisticsService.getDuration(projectTasks[j]);
+        // On calcul le cout total de la tâche et la durée théorique
         projectTasks[j].totalCost = statisticsService.calculTaskTotalCost(projectTasks[j], vm.saveCollaborators);
         projectTasks[j] = statisticsService.taskStats(projectTasks[j], vm.saveCollaborators);
         sumTotalCostProject += projectTasks[j].totalCost;
