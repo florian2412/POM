@@ -133,7 +133,8 @@ function Service(utilsService) {
       }
       case "Terminé(e)":
       {
-        project.passedDuration = getTotalRealTime(project);
+        //project.passedDuration = getTotalRealTime(project);
+        project.passedDuration = project.duration;
         project.realDuration = getTotalRealTime(project);
         project.leftDuration = 0;
         project.timeAdvancement = Math.round((project.realDuration * 100) / project.duration);
@@ -196,7 +197,7 @@ function Service(utilsService) {
 
   // TODO Check if this function is right
   // Retourne la durée déjà passée théorique
-  function getSpentTime(object) {
+  function getSpentTime2(object) {
     var start = new Date(object.date_debut);
     var end = new Date();
 
@@ -230,14 +231,6 @@ function Service(utilsService) {
     var end = new Date(object.date_fin_theorique);
     return utilsService.dateDiffWorkingDates(start,end);
   }
-
-  // Retourne la durée restante théorique
-  /*function getLeftDuration(object) {
-   var start = new Date();
-   var end = new Date(object.date_fin_theorique);
-
-   return utilsService.dateDiffWorkingDates(start, end);
-   }*/
 
   function calculateBudgetConsumption(budget, projects, collaborators){
     var tasksCost = [];

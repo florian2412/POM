@@ -98,9 +98,11 @@
                     <!-- Toutes les informations de durée et de budget que l'on connait -->
                     <td title="'Nb collaborateurs affecté'" sortable="'realDuration'"><b>{{row.collaborateurs.length}}</b></td>
                     <td title="'Durée théorique totale'" sortable="'duration'"><b>{{row.duration}}</b> jours</td>
-                    <td title="'Durée réelle totale'" sortable="'realDuration'"><b>{{row.realDuration}}</b> jours</td>
-                    <!--<td title="'Durée passée'" sortable="'passedDuration'"><b>{{row.passedDuration}}</b> jours</td>-->
                     <td title="'Durée théorique restante'" sortable="'leftDuration'"><b>{{row.leftDuration}}</b> jours</td>
+
+                    <td title="'Durée théorique passée'" sortable="'passedDuration'"><b>{{row.passedDuration}}</b> jours</td>
+
+                    <td title="'Durée réelle totale'" sortable="'realDuration'"><b>{{row.realDuration}}</b> jours</td>
 
                     <td title="'Pourcentage temps utilisé'">{{ row.timeAdvancement | number:0 }}%
                       <div class="progress">
@@ -138,8 +140,11 @@
 
                     <td title="'Nb collaborateurs affecté'" sortable="'realDuration'"><b>{{row.collaborateurs.length}}</b></td>
                     <td title="'Durée théorique totale'" sortable="'duration'"><b>{{row.duration}}</b> jours</td>
-                    <td title="'Durée réelle totale'" sortable="'realDuration'"><b>{{row.realDuration}}</b> jours</td>
                     <td title="'Durée théorique restante'" sortable="'leftDuration'"><b>{{row.leftDuration}}</b> jours</td>
+
+                    <td title="'Durée théorique passée'" sortable="'passedDuration'"><b>{{row.passedDuration}}</b> jours</td>
+
+                    <td title="'Durée réelle totale'" sortable="'realDuration'"><b>{{row.realDuration}}</b> jours</td>
 
                     <td title="'Pourcentage temps utilisé'">{{ row.timeAdvancement | number:0 }}%
                       <div class="progress">
