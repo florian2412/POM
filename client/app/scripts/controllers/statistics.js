@@ -23,7 +23,6 @@ angular.module('pomApp')
       buildProjectsByStatusBarChart();
       buildProjectsDurationBarChart();
       buildBarChartTasksByProjects();
-
     }
 
     function updateChartProject() {
