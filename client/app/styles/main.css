@@ -185,3 +185,12 @@ md-toolbar .md-toolbar-tools h2
   box-shadow:-6px 0px 5px -5px #999;
   padding-left: 20px;
 }
+
+.navbar-default .navbar-nav > li > a > #accueil { color: #00A896; }
+.navbar-default .navbar-nav > li > a > #projets { color: #003056; }
+.navbar-default .navbar-nav > li > a > #collaborateurs { color: #97A822; }
+.navbar-default .navbar-nav > li > a > #budgets { color: #4CA950; }
+.navbar-default .navbar-nav > li > a > #statistiques { color: #E24301; }
+.navbar-default .navbar-nav > li > a > #a_propos { color: #FF893D; }
+.navbar-default .navbar-nav > li > a > #aide { color: gray; }
+
