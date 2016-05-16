@@ -126,7 +126,7 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
   };
 
   function showFinishTasksDialog() {
-var alert = $mdDialog.alert()
+    var alert = $mdDialog.alert()
       .parent(angular.element(document.querySelector('#popupContainer')))
       .clickOutsideToClose(true)
       .title('Alerte')

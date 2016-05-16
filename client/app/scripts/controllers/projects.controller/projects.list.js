@@ -11,9 +11,9 @@
 angular.module('pomApp').controller('ProjectsListCtrl', ProjectsListCtrl);
 
 function ProjectsListCtrl($scope,$state, NgTableParams, databaseService, utilsService, flashService, localStorageService) {
-  
+
   var vm = this;
-  
+
   vm.showAllProjects = showAllProjects;
   vm.deleteProject = deleteProject;
   vm.archiveProject = archiveProject;
@@ -26,12 +26,12 @@ function ProjectsListCtrl($scope,$state, NgTableParams, databaseService, utilsSe
 
   function showAllProjects(){
     var currentUser = localStorageService.get('currentUser');
-    
+
     databaseService.getAllObjects('collaborators').success(function(allCollaborators){
-      
+
       if(currentUser.role === 'admin'){
         databaseService.getAllObjects('projects').success(function (data) {
-          associateChefProjet(data,allCollaborators);
+          utilsService.associateChefProjet(data,allCollaborators);
           vm.projects = data;
 
           vm.tableParams = new NgTableParams({ page: 1, count: 10 }, { filterDelay: 0, data: data });
@@ -40,10 +40,10 @@ function ProjectsListCtrl($scope,$state, NgTableParams, databaseService, utilsSe
       }
       else {
         databaseService.getCollaboratorProjects(currentUser._id)
-          .success(function(data){ 
-            associateChefProjet(data,allCollaborators);
+          .success(function(data){
+            utilsService.associateChefProjet(data,allCollaborators);
             vm.projects = data;
-            
+
             vm.tableParams = new NgTableParams({
               page: 1, // show first page
               count: 10 // count per page
@@ -56,27 +56,6 @@ function ProjectsListCtrl($scope,$state, NgTableParams, databaseService, utilsSe
       }
     });
   };
-
-  function associateChefProjet(data,allCollaborators){
-    for (var i = data.length - 1; i >= 0; i--) {
-      var cp = utilsService.getElementById(data[i].chef_projet, allCollaborators);
-      data[i].chef_projet = { "identite": cp.prenom + ' ' + cp.nom, "nom" : cp.nom, "prenom" : cp.prenom, "id": cp._id };
-
-      switch (data[i].statut)
-      {
-        case 'Initial': data[i].statut = utilsService.statusColors().initial;
-        break;
-        case 'En cours': data[i].statut = utilsService.statusColors().en_cours;
-        break;
-        case 'Terminé(e)': data[i].statut = utilsService.statusColors().termine;
-        break;
-        case 'Annulé(e)': data[i].statut = utilsService.statusColors().annule;
-        break;
-        case 'Archivé': data[i].statut = utilsService.statusColors().archive;
-        break;
-      }
-    }
-  }
 
   function archiveProject(id){
     var projectToArchive = utilsService.getElementById(id, vm.projects);
@@ -107,7 +86,7 @@ function ProjectsListCtrl($scope,$state, NgTableParams, databaseService, utilsSe
 
       databaseService.updateObject('projects', projectToArchive._id, projectToArchive)
         .success(function (data) {
-          flashService.success("Le projet " + projectToArchive.nom + " a bien été mis à jour !", "", "bottom-right", true, 4); 
+          flashService.success("Le projet " + projectToArchive.nom + " a bien été mis à jour !", "", "bottom-right", true, 4);
           projectToArchive.statut = utilsService.statusColors().archive;
           projectToArchive.chef_projet = cp;
           vm.tableParams.reload().then(function(data) {
@@ -115,9 +94,9 @@ function ProjectsListCtrl($scope,$state, NgTableParams, databaseService, utilsSe
               vm.tableParams.page(vm.tableParams.page() - 1);
               vm.tableParams.reload();
             }
-          }); 
-      });    
-    }   
+          });
+      });
+    }
   }
 
   function deleteProject(id) {
@@ -127,14 +106,14 @@ function ProjectsListCtrl($scope,$state, NgTableParams, databaseService, utilsSe
         if(i > -1){
           vm.projects.splice( i, 1 );
           flashService.success("Succés ! ", "Suppression du projet réussie.", 'bottom-right', true, 4);
-          
+
           vm.tableParams.reload().then(function(data) {
               if (data.length === 0 && vm.tableParams.total() > 0) {
               vm.tableParams.page(vm.tableParams.page() - 1);
               vm.tableParams.reload();
             }
           });
-     
+
         }
         else flashService.error("Erreur ! ", "Impossible de supprimer le projet.",'bottom-right', true,4);
       })

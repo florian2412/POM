@@ -27,6 +27,7 @@ function Service($filter) {
   service.filterOnlyWeekDays = filterOnlyWeekDays;
   service.statusColors = statusColors;
   service.categoriesColors = categoriesColors;
+  service.associateChefProjet = associateChefProjet;
 
   return service;
 
@@ -133,6 +134,27 @@ function Service($filter) {
               "dev" : { "color" : "#29B6F6", "name" : "Développement" },
               "rec" : { "color" : "#FDD835", "name" : "Recette" },
               "mep" : { "color" : "#66BB6A", "name" : "Mise en production" }};
+  }
+
+  function associateChefProjet(data, allCollaborators){
+    for (var i = data.length - 1; i >= 0; i--) {
+      var cp = getElementById(data[i].chef_projet, allCollaborators);
+      data[i].chef_projet = { "identite": cp.prenom + ' ' + cp.nom, "nom" : cp.nom, "prenom" : cp.prenom, "id": cp._id };
+
+      switch (data[i].statut)
+      {
+        case 'Initial': data[i].statut = statusColors().initial;
+          break;
+        case 'En cours': data[i].statut = statusColors().en_cours;
+          break;
+        case 'Terminé(e)': data[i].statut = statusColors().termine;
+          break;
+        case 'Annulé(e)': data[i].statut = statusColors().annule;
+          break;
+        case 'Archivé': data[i].statut = statusColors().archive;
+          break;
+      }
+    }
   }
 }
 

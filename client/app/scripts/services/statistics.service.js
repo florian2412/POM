@@ -18,93 +18,130 @@ function Service(utilsService) {
   service.calculTaskTotalCost = calculTaskTotalCost;
   service.getSpentTime = getSpentTime;
   service.getDuration = getDuration;
-  service.getLeftDuration = getLeftDuration;
   service.getTotalRealTime = getTotalRealTime;
   service.countObjectsByTermFromNbTerm = countObjectsByTermFromNbTerm;
   service.calculateBudgetConsumption = calculateBudgetConsumption;
 
   return service;
 
-  function taskStats(task, currentTask, saveCollaborators, totalCost) {
-    task.duration = getDuration(task);
+  function taskStats(task, saveCollaborators) {
+    switch (task.statut) {
+      case "Initial":
+      {
+        task.leftDuration = task.duration; // OK
+        //task.nowCost = 0; // OK
+        task.passedDuration = 0; // OK
+        task.advancement = 0;
 
-    if (task.statut === 'Initial') {
-      task.leftDuration = task.duration; // OK
-      task.nowCost = 0; // OK
-      task.totalCost = 0;
-      task.passedDuration = 0; // OK
-    }
-    else if (task.statut === 'En cours') {
-      task.passedDuration = getSpentTime(task);
-      task.leftDuration = task.duration - task.passedDuration;
-      task.totalCost = totalCost;
-
-      var nowCost = 0;
-      // Calcul du cout de la tâche à l'insant t = now
-      for(var l = 0; l < currentTask.collaborateurs.length; l++) {
-        var currentCollaboratorId = currentTask.collaborateurs[l];
-        var indexCurrentCollaborator = utilsService.arrayObjectIndexOf(saveCollaborators, currentCollaboratorId, '_id');
-        var currentCollaborator = -1;
-        if(indexCurrentCollaborator > -1)
-          currentCollaborator = saveCollaborators[indexCurrentCollaborator];
-        nowCost += currentCollaborator.cout_horaire * 7 * task.passedDuration;
+        break;
       }
+      case "En cours":
+      {
+        task.passedDuration = getSpentTime(task);
+        task.leftDuration = task.duration - task.passedDuration;
 
-      task.nowCost = nowCost;
+        var nowCost = 0;
+        // Calcul du cout de la tâche à l'insant t = now
+        for (var l = 0; l < task.collaborateurs.length; l++) {
+          var currentCollaboratorId = task.collaborateurs[l];
+          var indexCurrentCollaborator = utilsService.arrayObjectIndexOf(saveCollaborators, currentCollaboratorId, '_id');
+          var currentCollaborator = -1;
+          if (indexCurrentCollaborator > -1)
+            currentCollaborator = saveCollaborators[indexCurrentCollaborator];
+          nowCost += currentCollaborator.cout_horaire * 7 * task.passedDuration;
+        }
 
-      // On arrondi au chiffre inférieur
-      var advancement = Math.round((nowCost * 100) / totalCost);
+        task.nowCost = nowCost;
 
-      task.advancement = advancement;
+        // On arrondi au chiffre inférieur
+        task.advancement = Math.round((nowCost * 100) / task.totalCost);
 
-    }
-    else if (task.statut === 'Terminé(e)') {
-      task.leftDuration = 0; // OK
-      task.nowCost = 0; // OK
-      task.totalCost = totalCost;
-      task.passedDuration = task.duration; // OK
-    }
-    else if (task.statut === 'Annulé(e)') {
-      task.leftDuration = 0; // OK
-      task.nowCost = 0; // OK
-      task.totalCost = 0;
-      task.passedDuration = 0; // OK
+        break;
+      }
+      case "Terminé(e)":
+      {
+        task.leftDuration = 0; // OK
+        //task.nowCost = 0; // OK
+        task.passedDuration = task.duration; // OK
+        task.advancement = 100;
+
+        break;
+      }
+      case "Annulé(e)":
+      {
+        task.leftDuration = 0; // OK
+        //task.nowCost = 0; // OK
+        task.passedDuration = 0; // OK
+        task.advancement = 0;
+
+        break;
+      }
     }
 
     return task;
   }
 
+  //task.duration = getDuration(task);
 
-  function projectStats(project, saveBudgets, sumNowCostProject) {
-    if (project.statut === 'Initial') {
-      console.log('Statut projet : Initial')
+
+  function projectStats(project, saveBudgets, sumCostTasksProject) {
+    switch (project.statut){
+      case "Initial":
+      {
+        project.passedDuration = 0;
+        project.timeAdvancement = 0;
+        project.leftDuration = project.duration;
+        project.realDuration = 0;
+        project.advancement = 0;
+
+        break;
+      }
+      case "En cours":
+      {
+        project.passedDuration = getSpentTime(project);
+        project.timeAdvancement = Math.round((project.passedDuration * 100) / project.duration);
+        project.leftDuration = project.duration - project.passedDuration;
+
+        // Calcul de l'avancement du projet en pourcentage du budget
+        var indexBudgetLineProject = utilsService.arrayObjectIndexOf(saveBudgets, project.ligne_budgetaire.id, '_id');
+        var budgetLine = 0;
+        if(indexBudgetLineProject > -1)
+          budgetLine = saveBudgets[indexBudgetLineProject];
+
+        project.advancement = Math.round((sumCostTasksProject * 100) / budgetLine.montant);
+        project.realDuration = project.passedDuration;
+
+        break;
+      }
+      case "Terminé(e)":
+      {
+        project.passedDuration = getTotalRealTime(project);
+        project.leftDuration = 0;
+        project.realDuration = getTotalRealTime(project);
+        project.timeAdvancement = Math.round((project.realDuration * 100) / project.duration);
+
+        // Calcul de l'avancement du projet en pourcentage du budget
+        var indexBudgetLineProject = utilsService.arrayObjectIndexOf(saveBudgets, project.ligne_budgetaire.id, '_id');
+        var budgetLine = 0;
+        if(indexBudgetLineProject > -1)
+          budgetLine = saveBudgets[indexBudgetLineProject];
+
+        project.advancement = Math.round((sumCostTasksProject * 100) / budgetLine.montant);
+        //project.advancement = 116;
+
+        break;
+      }
+      case "Annulé(e)":
+      {
+        project.passedDuration = 0;
+        project.timeAdvancement = 0;
+        project.leftDuration = 0;
+        project.realDuration = 0;
+        project.advancement = 0;
+
+        break;
+      }
     }
-
-    else if (project.statut === 'En cours') {
-      project.passedDuration = getSpentTime(project);
-      project.timeAdvancement = Math.round((project.passedDuration * 100) / project.duration);
-      project.leftDuration = project.duration - project.passedDuration;
-
-      // Calcul de l'avancement du projet en pourcentage du budget et en pourcentage de date
-      var indexBudgetLineProject = utilsService.arrayObjectIndexOf(saveBudgets, project.ligne_budgetaire.id, '_id');
-      var budgetLine = 0;
-      if(indexBudgetLineProject > -1)
-        budgetLine = saveBudgets[indexBudgetLineProject];
-
-      project.advancement = Math.round((sumNowCostProject * 100) / budgetLine.montant);
-
-    }
-
-    else if (project.statut === 'Terminé(e)') {
-      console.log('Statut projet : Terminé(e)')
-    }
-    else if (project.statut === 'Annulé(e)') {
-      console.log('Statut projet : Annulé(e)')
-    }
-    else if (project.statut === 'Archivé') {
-      console.log('Statut projet : Archivé')
-    }
-
     return project;
   }
 
@@ -178,7 +215,6 @@ function Service(utilsService) {
   }
 
   function calculateBudgetConsumption(budget, projects, collaborators){
-    var allProjects = [];
     var tasksCost = [];
     var tasksTotalCost;
     var budgetConsumption, result;
@@ -187,11 +223,10 @@ function Service(utilsService) {
       if(budget._id === projects[i].ligne_budgetaire.id)
       {
         if(projects[i].taches.length > 0){
-          for (var j  = 0; j < projects[i].taches.length; j ++) { 
-              tasksCost.push(calculTaskTotalCost(projects[i].taches[j], collaborators));
+          for (var j  = 0; j < projects[i].taches.length; j ++) {
+            tasksCost.push(calculTaskTotalCost(projects[i].taches[j], collaborators));
           }
         }
-
         tasksTotalCost = utilsService.sumArrayValues(tasksCost);
         budgetConsumption = budget.montant - tasksTotalCost;
         result = 1 - (budgetConsumption / budget.montant);
