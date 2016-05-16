@@ -55,14 +55,14 @@ function Service($filter) {
         convertDateStringsToDates(value);
       }
     }
-  };
+  }
 
   function arrayObjectIndexOf(myArray, searchTerm, property) {
     for(var i = 0, len = myArray.length; i < len; i++) {
       if (myArray[i][property] === searchTerm) return i;
     }
     return -1;
-  };
+  }
 
   function dateDiff(date1, date2){
     var timeDiff = Math.abs(date2.getTime() - date1.getTime());

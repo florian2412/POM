@@ -28,10 +28,11 @@ function Service(utilsService) {
     switch (task.statut) {
       case "Initial":
       {
-        task.leftDuration = task.duration; // OK
-        //task.nowCost = 0; // OK
-        task.passedDuration = 0; // OK
+        task.leftDuration = task.duration;
+        task.passedDuration = 0;
         task.advancement = 0;
+        task.timeAdvancement = 0;
+        task.realDuration = 0;
 
         break;
       }
@@ -39,6 +40,8 @@ function Service(utilsService) {
       {
         task.passedDuration = getSpentTime(task);
         task.leftDuration = task.duration - task.passedDuration;
+        task.timeAdvancement = Math.round((task.passedDuration * 100) / task.duration);
+        task.realDuration = task.passedDuration;
 
         var nowCost = 0;
         // Calcul du cout de la tâche à l'insant t = now
@@ -60,19 +63,37 @@ function Service(utilsService) {
       }
       case "Terminé(e)":
       {
-        task.leftDuration = 0; // OK
-        //task.nowCost = 0; // OK
-        task.passedDuration = task.duration; // OK
-        task.advancement = 100;
+        task.leftDuration = 0;
+        task.realDuration = getTotalRealTime(task);
+        task.passedDuration = getTotalRealTime(task);
+        task.timeAdvancement = Math.round((task.realDuration * 100) / task.duration);
+
+
+        var nowCost = 0;
+        // Calcul du cout de la tâche à l'insant t = now
+        for (var l = 0; l < task.collaborateurs.length; l++) {
+          var currentCollaboratorId = task.collaborateurs[l];
+          var indexCurrentCollaborator = utilsService.arrayObjectIndexOf(saveCollaborators, currentCollaboratorId, '_id');
+          var currentCollaborator = -1;
+          if (indexCurrentCollaborator > -1)
+            currentCollaborator = saveCollaborators[indexCurrentCollaborator];
+          nowCost += currentCollaborator.cout_horaire * 7 * task.passedDuration;
+        }
+
+        task.nowCost = nowCost;
+        task.advancement = Math.round((nowCost * 100) / task.totalCost);
+        // Avancement par rapport au budget
+        //task.advancement = 100;
 
         break;
       }
       case "Annulé(e)":
       {
-        task.leftDuration = 0; // OK
-        //task.nowCost = 0; // OK
-        task.passedDuration = 0; // OK
+        task.leftDuration = 0;
+        task.passedDuration = 0;
         task.advancement = 0;
+        task.timeAdvancement = 0;
+        task.realDuration = 0;
 
         break;
       }
@@ -80,9 +101,6 @@ function Service(utilsService) {
 
     return task;
   }
-
-  //task.duration = getDuration(task);
-
 
   function projectStats(project, saveBudgets, sumCostTasksProject) {
     switch (project.statut){
@@ -116,8 +134,8 @@ function Service(utilsService) {
       case "Terminé(e)":
       {
         project.passedDuration = getTotalRealTime(project);
-        project.leftDuration = 0;
         project.realDuration = getTotalRealTime(project);
+        project.leftDuration = 0;
         project.timeAdvancement = Math.round((project.realDuration * 100) / project.duration);
 
         // Calcul de l'avancement du projet en pourcentage du budget
@@ -127,7 +145,6 @@ function Service(utilsService) {
           budgetLine = saveBudgets[indexBudgetLineProject];
 
         project.advancement = Math.round((sumCostTasksProject * 100) / budgetLine.montant);
-        //project.advancement = 116;
 
         break;
       }
@@ -146,8 +163,9 @@ function Service(utilsService) {
   }
 
   function countObjectsByTermFromNbTerm(numberObjectsByTerm) {
-    var a = [], b = [], prev;
-
+    var a = [];
+    var b = [];
+    var prev;
     numberObjectsByTerm.sort();
     for (var j = 0; j < numberObjectsByTerm.length; j++) {
       if (numberObjectsByTerm[j] !== prev) {
@@ -207,12 +225,12 @@ function Service(utilsService) {
   }
 
   // Retourne la durée restante théorique
-  function getLeftDuration(object) {
+  /*function getLeftDuration(object) {
     var start = new Date();
     var end = new Date(object.date_fin_theorique);
 
     return utilsService.dateDiffWorkingDates(start, end);
-  }
+  }*/
 
   function calculateBudgetConsumption(budget, projects, collaborators){
     var tasksCost = [];

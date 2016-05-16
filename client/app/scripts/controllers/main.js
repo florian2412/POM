@@ -118,6 +118,7 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
     vm.tableTasksParams = new NgTableParams({ page: 1, count: 10 }, { filterDelay: 0, data: tasks });
   }
 
+  // Récupère dans vm.collaboratorTasks, toutes les tâches auxquels le currentUser est affecté
   function allCollaboratorTasks() {
     var collaboratorTasks = [];
     for (var i = 0; i < vm.projects.length; i++) {
@@ -125,11 +126,12 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
       var projectTasks = vm.projects[i].taches;
       for (var j = 0; j < projectTasks.length; j++) {
         // On cherche l'index de l'id du user dans la listes des collaborateurs de la tache
-        var indexCurrentUser = vm.saveCollaborators.indexOf(idCurrentUser);
+        var indexCurrentUserInTask = projectTasks[j].collaborateurs.indexOf(idCurrentUser);
         // Si > -1 alors le current user est assigné à la tâche
-        if (indexCurrentUser > -1)
+        if (indexCurrentUserInTask > -1) {
+          //projectTasks[j] = statisticsService.taskStats(projectTasks[j], vm.saveCollaborators);
           collaboratorTasks.push(projectTasks[j]);
-
+        }
       }
     }
     vm.collaboratorTasks = collaboratorTasks;
@@ -137,7 +139,6 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
 
   function allProjectsDetails () {
     vm.numberProjects = vm.projects.length;
-    var tasksCollaborator = [];
     for (var i = 0; i < vm.projects.length; i++) {
       // On calcule la durée du projet
       vm.projects[i].duration = statisticsService.getDuration(vm.projects[i]);
@@ -147,15 +148,15 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
       var sumTotalCostProject = 0;
 
       for (var j = 0; j < projectTasks.length; j++) {
-        // On calcul le cout total de la tâche
+        // On calcul le cout total de la tâche et la durée théorique
+        // On calcule la durée du projet
+        projectTasks[j].duration = statisticsService.getDuration(projectTasks[j]);
         projectTasks[j].totalCost = statisticsService.calculTaskTotalCost(projectTasks[j], vm.saveCollaborators);
         projectTasks[j] = statisticsService.taskStats(projectTasks[j], vm.saveCollaborators);
-        tasksCollaborator.push(projectTasks[j]);
         sumTotalCostProject += projectTasks[j].totalCost;
       }
       vm.projects[i] = statisticsService.projectStats(vm.projects[i], vm.saveBudgets, sumTotalCostProject);
     }
-    vm.tasks = tasksCollaborator;
   }
 
   function redirectProjectsDetails(event,id){
@@ -178,12 +179,10 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
       allProjectsDetails();
       allTasksDetails(vm.projects);
       allCollaboratorTasks();
+
       showTasks(vm.allTasks);
       showProjects(vm.projects);
-
-      // TODO REGARDER SI CA MARCHE LE SHOW COLLABORATOR TASKS
       showCollaboratorTasks(vm.collaboratorTasks);
-
 
       utilsService.associateChefProjet(vm.projects, vm.saveCollaborators);
     });
