@@ -117,11 +117,18 @@
               <li data-match-route="/about"><a ui-sref="about" nra-auth="['admin', 'collaborateur', 'manager']" ><span class="fa fa-info-circle" ></span> A propos</a></li>
               <li data-match-route="/help"><a ui-sref="help" nra-auth="['admin', 'collaborateur', 'manager']" ><span class="fa fa-question-circle" aria-hidden="true"></span> Aide</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li data-match-route="/account"><a ui-sref="account" ng-show="isAuthenticated">
-                <ng-letter-avatar dynamic="true" data="{{userFirstname}}" shape="round" height="20" width="20" fontSize="15"></ng-letter-avatar><strong> {{userFirstname}} {{userLastname}}</strong></a></li>
+            <ul class="nav navbar-nav navbar-right">             
+              <li ng-show="isAuthenticated" data-match-route="/account" bs-dropdown aria-haspopup="true" aria-expanded="false">
+                <a>
+                  <ng-letter-avatar dynamic="true" data="{{userFirstname}}" shape="round" height="20" width="20" fontSize="15"></ng-letter-avatar><strong> {{userFirstname}} {{userLastname}}</strong>
+                </a>
+              </li>
+              <ul class="dropdown-menu" role="menu">
+                <li><a ui-sref="account"><i class="fa fa-user"></i>  Mon profil</a></li>
+                <li data-match-route="/login"><a ui-sref="login" ng-show="isAuthenticated"><span style="color:red;" class="fa fa-power-off"></span> Se déconnecter</a></li>
+              </ul>
               <li data-match-route="/login"><a ui-sref="login" ng-show="!isAuthenticated">Se connecter <span class="fa fa-sign-in"></span></a></li>
-              <li data-match-route="/login"><a ui-sref="login" ng-show="isAuthenticated">Se déconnecter <span style="color:red;" class="fa fa-power-off"></span></a></li>
+            <!--   <li data-match-route="/login"><a ui-sref="login" ng-show="isAuthenticated">Se déconnecter <span style="color:red;" class="fa fa-power-off"></span></a></li> -->
             </ul>
           </div>
         </div>
@@ -135,17 +142,22 @@
     </div>
 
     <!-- Footer content -->
-    <div class="footer navbar-fixed-bottom">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <b>M2 MIAGE Bordeaux - Projet Techniques de Développement Avancées - 2016</b>
+    <div class="footer">
+      <div layout >
+        <div flex="50" layout layout-align="center">
+          <div>
+            <b>M2 MIAGE Bordeaux - Projet Techniques de Développement Avancées - &copy; 2016</b>
           </div>
-          <div class="col-md-3">
-            Version API : <b>{{ apiVersion }}</b>
-          </div>
-          <div class="col-md-3">
-            Version client : <b>{{ appClientVersion }}</b>
+        </div>
+        <div flex="15" layout layout-align="center">
+          <div>Version API : <b>{{ apiVersion }}</b></div>
+        </div>
+        <div flex="15" layout layout-align="center">
+          <div>Version client : <b>{{ appClientVersion }}</b></div>
+        </div>
+        <div flex="20" layout layout-align="center">
+          <div>
+            <a href="https://github.com/florian2412/POM"><i class="fa fa-github" aria-hidden="true"></i> Projet POM</a>
           </div>
         </div>
       </div>
