@@ -11,26 +11,25 @@
 angular.module('pomApp').controller('ProjectsCreateCtrl', ProjectsCreateCtrl);
 
 function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashService, utilsService, localStorageService) {
-    var vm = this;
-    var collaborateursId = [];
+  var vm = this;
+  var collaborateursId = [];
 
-    //vm.minDate = new Date();
-    vm.createProject = createProject;
-    vm.showCancelDialog = showCancelDialog;
-    vm.showCollaboratorPicker = showCollaboratorPicker;
-    vm.filterOnlyWeekDays = utilsService.filterOnlyWeekDays;
-    
-    function createProject() {
-      
-      if(!vm.project.startDate) vm.project.startDate = new Date();
+  vm.minDate = new Date();
+  vm.createProject = createProject;
+  vm.showCancelDialog = showCancelDialog;
+  vm.showCollaboratorPicker = showCollaboratorPicker;
+  vm.filterOnlyWeekDays = utilsService.filterOnlyWeekDays;
 
-      if(!vm.project.endDate) vm.project.endDate = new Date();
+  function createProject() {
 
-      var budget = JSON.parse(vm.project.ligne_budgetaire);
-      collaborateursId.push(vm.currentUser._id);
-      
-      generateProjectCode(new Date(vm.project.startDate).getFullYear(), function(code){
-        var data = {
+    if(!vm.project.startDate) vm.project.startDate = new Date();
+    if(!vm.project.endDate) vm.project.endDate = new Date();
+
+    var budget = JSON.parse(vm.project.ligne_budgetaire);
+    collaborateursId.push(vm.currentUser._id);
+
+    generateProjectCode(new Date(vm.project.startDate).getFullYear(), function(code){
+      var data = {
         "nom" : vm.project.name,
         "code" : code,
         "statut" : "Initial", // statut initial par défaut à la création
@@ -38,104 +37,104 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
         "date_debut" : vm.project.startDate,
         "date_fin_theorique" : vm.project.endDate,
         "date_derniere_modif" : new Date(),
-        "collaborateurs": collaborateursId, 
-          "description" : vm.project.description,
+        "collaborateurs": collaborateursId,
+        "description" : vm.project.description,
         "ligne_budgetaire": {
-            "id": budget._id,
-            "montant_restant": budget.montant
-          }
-        }; 
+          "id": budget._id,
+          "montant_restant": budget.montant
+        }
+      };
 
-        databaseService.createObject('projects', data)
-          .success(function (data) {
-            flashService.success("Création du projet " + vm.project.name + " réussie.", "", "bottom-right", true, 4);
-            $state.go("projects");
-          })
-          .error(function (err) {
-            console.log(err);
-          });
-      });     
-    };
-
-    // Lancement au chargement de la page
-    $scope.$on('$viewContentLoaded', function() {
-      vm.currentUser = localStorageService.get('currentUser');
-      vm.numberOfCollaborators = 0;
-      
-      databaseService.getAllObjects('budgets').success(function (data){ vm.budgets = data.data; })
-        .error(function (err) { console.log(err); });
-
-      databaseService.getAllObjects('collaborators').success(function(data){ 
-          var curUserIndex = utilsService.arrayObjectIndexOf(data,vm.currentUser._id,"_id");
-          data.splice(curUserIndex,1);
-          vm.collaborators = data;
+      databaseService.createObject('projects', data)
+        .success(function () {
+          flashService.success("Création du projet " + vm.project.name + " réussie.", "", "bottom-right", true, 4);
+          $state.go("projects");
         })
-        .error(function (err) { console.log(err); });
+        .error(function (err) {
+          console.log(err);
+        });
+    });
+  }
+
+  // Lancement au chargement de la page
+  $scope.$on('$viewContentLoaded', function() {
+    vm.currentUser = localStorageService.get('currentUser');
+    vm.numberOfCollaborators = 0;
+
+    databaseService.getAllObjects('budgets').success(function (data){ vm.budgets = data.data; })
+      .error(function (err) { console.log(err); });
+
+    databaseService.getAllObjects('collaborators').success(function(data){
+      var curUserIndex = utilsService.arrayObjectIndexOf(data,vm.currentUser._id,"_id");
+      data.splice(curUserIndex,1);
+      vm.collaborators = data;
+    })
+      .error(function (err) { console.log(err); });
+  });
+
+  function generateProjectCode(year, callback){
+    databaseService.getAllObjects('projects').success(function(data){
+
+      var allIds = [];
+
+      for (var i = data.length - 1; i >= 0; i--) {
+        var d = new Date(data[i].date_debut).getFullYear();
+        if(d == year){
+          allIds.push({ "id" : data[i]._id , "code" : data[i].code });
+        }
+      }
+      // Trie du tableau du plus grand au plus petit
+      allIds.sort(function(a, b) { return a.code - b.code; });
+      var lastProject = allIds[0];
+
+      vm.code = ((lastProject) ? _incrementCodeProject(lastProject.code) :  year+'P001' );
+
+      callback(vm.code);
     });
 
-    function generateProjectCode(year, callback){
-      databaseService.getAllObjects('projects').success(function(data){ 
+  }
 
-        var dateMax = null, lastID, allIds = [];
+  function _incrementCodeProject(lastCode){
+    var begin = lastCode.substring(0,5);
+    var code = parseInt(lastCode.substring(5,8)) + 1;
+    var newCode = begin + utilsService.addZero(code,3);
+    return newCode;
+  }
 
-        for (var i = data.length - 1; i >= 0; i--) { 
-          var d = new Date(data[i].date_debut).getFullYear();
-          if(d == year){
-            allIds.push({ "id" : data[i]._id , "code" : data[i].code });           
-          } 
-        }
-        // Trie du tableau du plus grand au plus petit
-        allIds.sort(function(a, b) { return a.code - b.code; });
-        var lastProject = allIds[0];
+  function showCancelDialog(event) {
 
-        vm.code = ((lastProject) ? _incrementCodeProject(lastProject.code) :  year+'P001' );
-       
-        callback(vm.code);
-      });
-              
-    };
+    var confirm = $mdDialog.confirm()
+      .title('Alerte')
+      .textContent('Etes-vous sûr d\'annuler la création du projet ?')
+      .ariaLabel('Annulation')
+      .targetEvent(event)
+      .ok('Oui')
+      .cancel('Non');
 
-    function _incrementCodeProject(lastCode){
-      var begin = lastCode.substring(0,5);
-      var code = parseInt(lastCode.substring(5,8)) + 1;
-      var newCode = begin + utilsService.addZero(code,3);
-      return newCode;
-    };
+    $mdDialog.show(confirm).then(function() {
+      $state.go("projects");
+    }, function() { });
+  }
 
-    function showCancelDialog(event) {
+  function showCollaboratorPicker(ev) {
 
-      var confirm = $mdDialog.confirm()
-        .title('Alerte')
-        .textContent('Etes-vous sûr d\'annuler la création du projet ?')
-        .ariaLabel('Annulation')
-        .targetEvent(event)
-        .ok('Oui')
-        .cancel('Non');
-
-      $mdDialog.show(confirm).then(function() {
-        $state.go("projects");
-      }, function() { });
-    };
-
-    function showCollaboratorPicker(ev) {
-
-      $mdDialog.show({
-        controller: _CollaboratorPickerController,
-        templateUrl: 'views/shared/collaborators.picker.html',
-        parent: angular.element(document.body),
-        targetEvent: ev,
-        clickOutsideToClose:true,
-        fullscreen: false,
-        locals: {
-           collaborators: vm.collaborators 
-        },
-      })
+    $mdDialog.show({
+      controller: _CollaboratorPickerController,
+      templateUrl: 'views/shared/collaborators.picker.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose:true,
+      fullscreen: false,
+      locals: {
+        collaborators: vm.collaborators
+      }
+    })
       .then(function(count) {
         vm.numberOfCollaborators = count.length;
       });
-   };
+  }
 
-  function _CollaboratorPickerController($rootScope, $scope, $mdDialog, $state, collaborators) {
+  function _CollaboratorPickerController($rootScope, $scope, $mdDialog, collaborators) {
 
     $scope.collaborators = collaborators;
     $scope.selection = collaborateursId;
