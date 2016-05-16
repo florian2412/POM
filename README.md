@@ -1,6 +1,6 @@
 # POM - Plan, Organize & Manage
 
-Les instructions d'installations ont été vérifiés pour Window.
+Les instructions d'installations ont été vérifiés pour Windows.
 Nous ne pouvons pas vous garantir que les mêmes manipulations fonctionneront correctement
 sous un système UNIX.
  
@@ -19,7 +19,7 @@ sous un système UNIX.
 
 ##### Vous pouvez maintenant accéder à l'application via l'URL suivante : [POM](http://localhost:9000)
 
-## Mise à jour des commosants de POM
+## Mise à jour des composants de POM
 - Lancer le fichier update.bat
 	
 	

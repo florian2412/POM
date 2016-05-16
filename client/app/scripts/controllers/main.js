@@ -15,7 +15,6 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
   vm.showTasks = showTasks;
   vm.redirectTasksDetails = redirectTasksDetails;
   vm.redirectProjectsDetails = redirectProjectsDetails;
-  //vm.isFiltersEnabled = false;
 
   var currentUser = localStorageService.get('currentUser');
   var idCurrentUser = localStorageService.get('currentUser')._id;
@@ -43,31 +42,19 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
 
             var diffUrgentTasks = utilsService.dateDiffWorkingDates(new Date(),new Date(tasks[j].date_fin_theorique));
             var diffUpcomingTasks = utilsService.dateDiffWorkingDates(new Date(),new Date(tasks[j].date_debut));
-            switch (tasks[j].categorie)
-            {
-              case 'Etude de projet': tasks[j].categorie = utilsService.categoriesColors().etude;
-                break;
-              case 'Spécification': tasks[j].categorie = utilsService.categoriesColors().spec;
-                break;
-              case 'Développement': tasks[j].categorie = utilsService.categoriesColors().dev;
-                break;
-              case 'Recette': tasks[j].categorie = utilsService.categoriesColors().rec;
-                break;
-              case 'Mise en production': tasks[j].categorie = utilsService.categoriesColors().mep;
-                break;
-            }
+
+            tasks[j].categorie = setTaskCategorie(tasks[j].categorie);
+
             switch (tasks[j].statut){
               case "Initial":
               {
                 new_tasks.push(tasks[j]);
-                tasks[j].statut = utilsService.statusColors().initial;
                 if(diffUpcomingTasks > 0 && diffUpcomingTasks < 7)
                   upcoming_tasks.push(tasks[j]);
                 break;
               }
               case "En cours":
               {
-                tasks[j].statut = utilsService.statusColors().en_cours;
                 if (diffUrgentTasks <= 3){
                   urgent_tasks.push(tasks[j]);
                 }
@@ -75,17 +62,18 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
               }
               case "Terminé(e)":
               {
-                tasks[j].statut = utilsService.statusColors().termine;
                 completed_tasks.push(tasks[j]);
                 break;
               }
               case "Annulé(e)":
               {
-                tasks[j].statut = utilsService.statusColors().annule;
                 canceled_tasks.push(tasks[j]);
                 break;
               }
             }
+
+            // On met cette méthode après le switch car sinon le switch ne fonctionnera pas correctement
+            tasks[j].statut = setTaskStatus(tasks[j].statut);
           }
         }
       }
@@ -103,7 +91,51 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
     vm.nbCompletedTasks = completed_tasks.length;
     vm.nbCanceledTasks = canceled_tasks.length;
     vm.nbTotalTasks = allUserTasks.length;
+  }
 
+  function setTaskCategorie(taskCategorie) {
+    switch (taskCategorie) {
+      case 'Etude de projet':
+        return utilsService.categoriesColors().etude;
+        break;
+      case 'Spécification':
+        return utilsService.categoriesColors().spec;
+        break;
+      case 'Développement':
+        return utilsService.categoriesColors().dev;
+        break;
+      case 'Recette':
+        return utilsService.categoriesColors().rec;
+        break;
+      case 'Mise en production':
+        return utilsService.categoriesColors().mep;
+        break;
+      default:
+        return taskCategorie;
+        break;
+    }
+  }
+
+  function setTaskStatus(taskStatus) {
+    console.log('taskStatus');
+    console.log(taskStatus);
+    switch (taskStatus) {
+      case "Initial":
+        return utilsService.statusColors().initial;
+        break;
+      case "En cours":
+        return utilsService.statusColors().en_cours;
+        break;
+      case "Terminé(e)":
+        return utilsService.statusColors().termine;
+        break;
+      case "Annulé(e)":
+        return utilsService.statusColors().annule;
+        break;
+      default:
+        return taskStatus;
+        break;
+    }
   }
 
   function showTasks(tasks){
@@ -129,7 +161,8 @@ function MainCtrl($scope, $state, $rootScope, $timeout, localStorageService, dat
         var indexCurrentUserInTask = projectTasks[j].collaborateurs.indexOf(idCurrentUser);
         // Si > -1 alors le current user est assigné à la tâche
         if (indexCurrentUserInTask > -1) {
-          //projectTasks[j] = statisticsService.taskStats(projectTasks[j], vm.saveCollaborators);
+          //projectTasks[j].categorie = setTaskCategorie(projectTasks[j].categorie);
+          projectTasks[j].statut = setTaskStatus(projectTasks[j].statut);
           collaboratorTasks.push(projectTasks[j]);
         }
       }
