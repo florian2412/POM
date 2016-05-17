@@ -3,6 +3,13 @@
 
   angular.module('pomApp').factory('flashService', Service);
 
+  /**
+   * Service permettant d'afficher une petite boite de validation (Toast) lors de la création d'un projet par exemple
+   *
+   * @param $alert
+   * @returns {{}}
+   * @constructor
+   */
   function Service($alert) {
     var service = {};
 

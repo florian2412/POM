@@ -58,7 +58,7 @@ angular.module('pomApp')
       var nbProjectsAndStatus = initDataProjectsStatus();
       var idChart = 'barchartstatus-projects';
       var titleChart = 'Nombre de projets en fonction du statut';
-      var pointFormatChart = 'Nombre de projets :<b>{point.y}</b> <br> Soit :<b>{point.percentage:.1f}%</b>';
+      var pointFormatChart = 'Nombre de projets';
       chartsService.buildBarChartProjectsByStatus(idChart, titleChart, pointFormatChart, nbProjectsAndStatus[0], nbProjectsAndStatus[1]);
     }
 
@@ -77,7 +77,7 @@ angular.module('pomApp')
       var nbProjectsAndStatus = initDataTasksStatus(project);
       var idChart = 'barchartstatus-tasksproject';
       var titleChart = 'Nombre de tâches en fonction du statut';
-      var pointFormatChart = 'Nombre de tâches :<b>{point.y}</b> <br> Soit :<b>{point.percentage:.1f}%</b>';
+      var pointFormatChart = 'Nombre de tâches';
       chartsService.buildBarChartProjectsByStatus(idChart, titleChart, pointFormatChart, nbProjectsAndStatus[0], nbProjectsAndStatus[1]);
     }
 

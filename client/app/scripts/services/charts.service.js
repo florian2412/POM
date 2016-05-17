@@ -47,7 +47,7 @@ function Service() {
   }
 
   /**
-   * Constuit un pie grah selon un emplacement, un titre, un format pour le survol de la souris et les données (values, names)
+   * Constuit un pie chart selon un emplacement, un titre, un format pour le survol de la souris et les données (values, names)
    *
    * @param id
    * @param title
@@ -95,8 +95,9 @@ function Service() {
     })
   }
 
-  // Constuit un bar grah
   /**
+   * Constuit un bar chart selon un emplacement, un titre, un format pour le survol de la souris et les données
+   * Durée des tâches (théorique et réelle)
    *
    * @param id
    * @param title
@@ -158,7 +159,18 @@ function Service() {
     });
   }
 
-  function buildBarChartProjectsByStatus(id, title, pointFormat, legend, data) {
+  /**
+   * Constuit un column chart selon un emplacement, un titre, un format pour le survol de la souris et les données (values, names)
+   * Projets par statuts
+   *
+   * @param id
+   * @param title
+   * @param pointFormat
+   * @param yLegend
+   * @param xLegend
+   * @param data
+   */
+  function buildBarChartProjectsByStatus(id, title, yLegend, xLegend, data) {
     $(document).ready(function () {
       $('#' + id).highcharts({
         chart: {
@@ -169,13 +181,13 @@ function Service() {
           text: title
         },
         xAxis: {
-          categories: legend
+          categories: xLegend
         },
         yAxis: {
           allowDecimals: false,
           min: 0,
           title: {
-            text: 'Nombre de projets'
+            text: yLegend
           }
         },
         tooltip: {
@@ -190,7 +202,7 @@ function Service() {
           }
         },
         series: [{
-          name: 'Nombre de projets',
+          name: yLegend,
           data: data,
           stack: 'Théorique'
         }],
@@ -204,6 +216,15 @@ function Service() {
     });
   }
 
+  /**
+   * Constuit un bar grah selon un emplacement, un titre, un format pour le survol de la souris et les données (values, names)
+   * Tâches par projet
+   *
+   * @param id
+   * @param title
+   * @param legend
+   * @param data
+   */
   function buildBarChartTasksByProjects(id, title, legend, data) {
     $(document).ready(function () {
       $('#' + id).highcharts({

@@ -2,13 +2,20 @@
 
 /**
  * @ngdoc service
- * @name pomApp.utils
+ * @name pomApp.statistics
  * @description
  * # utils
- * Service in the pomApp for utils methods.
+ * Service in the pomApp for statstics methods.
  */
 angular.module('pomApp').factory('statisticsService', Service);
 
+/**
+ * Service permettant de générer diverse statistiques
+ *
+ * @param utilsService
+ * @returns {{}}
+ * @constructor
+ */
 function Service(utilsService) {
 
   var service = {};
@@ -24,6 +31,13 @@ function Service(utilsService) {
 
   return service;
 
+  /**
+   * Génère des données de temps et de budget sur une tâche
+   *
+   * @param task
+   * @param saveCollaborators
+   * @returns {*}
+   */
   function taskStats(task, saveCollaborators) {
     switch (task.statut) {
       case "Initial":
@@ -82,8 +96,6 @@ function Service(utilsService) {
 
         task.nowCost = nowCost;
         task.advancement = Math.round((nowCost * 100) / task.totalCost);
-        // Avancement par rapport au budget
-        //task.advancement = 100;
 
         break;
       }
@@ -98,10 +110,17 @@ function Service(utilsService) {
         break;
       }
     }
-
     return task;
   }
 
+  /**
+   * Génère des données de temps et de budget sur un projet
+   *
+   * @param project
+   * @param saveBudgets
+   * @param sumCostTasksProject
+   * @returns {*}
+   */
   function projectStats(project, saveBudgets, sumCostTasksProject) {
     switch (project.statut){
       case "Initial":
@@ -133,7 +152,6 @@ function Service(utilsService) {
       }
       case "Terminé(e)":
       {
-        //project.passedDuration = getTotalRealTime(project);
         project.passedDuration = project.duration;
         project.realDuration = getTotalRealTime(project);
         project.leftDuration = 0;
@@ -163,6 +181,12 @@ function Service(utilsService) {
     return project;
   }
 
+  /**
+   * Génère un format de données pour générer des graphiques
+   *
+   * @param numberObjectsByTerm
+   * @returns {*[]}
+   */
   function countObjectsByTermFromNbTerm(numberObjectsByTerm) {
     var a = [];
     var b = [];
@@ -180,7 +204,13 @@ function Service(utilsService) {
     return [a, b];
   }
 
-  // Retourne le cout total d'une tache par rapport à la durée et aux collaborateurs affecté
+  /**
+   * Retourne le cout total d'une tache par rapport à la durée et aux collaborateurs affecté
+   *
+   * @param task
+   * @param saveCollaborators
+   * @returns {number}
+   */
   function calculTaskTotalCost(task, saveCollaborators) {
     var taskTotalCost = 0;
     var currentTaskDuration = getDuration(task);
@@ -195,43 +225,50 @@ function Service(utilsService) {
     return taskTotalCost;
   }
 
-  // TODO Check if this function is right
-  // Retourne la durée déjà passée théorique
-  function getSpentTime2(object) {
-    var start = new Date(object.date_debut);
-    var end = new Date();
-
-    // -2 car on enlève la date du jour et le +1 que ajoute au retour de la fonction dateDiff
-    var diff = utilsService.dateDiffWorkingDates(start, end) - 2;
-
-    // Si la tache a commencé avant aujourd'hui
-    if(diff > 0)
-      return diff;
-    // Si la tache commence aujourd'hui
-    else
-      return diff + 1;
-  }
-
+  /**
+   * Retoure la durée théorique déjà passée d'un projet ou d'une tâche
+   *
+   * @param object
+   * @returns {*}
+   */
   function getSpentTime(object) {
     var start = new Date(object.date_debut);
     var end = new Date();
     return utilsService.dateDiffWorkingDates(start, end);
   }
 
-  // Retourne la durée déjà passée théorique
+  /**
+   * Retourne la durée total réelle d'un projet ou d'une tâche
+   *
+   * @param object
+   * @returns {*}
+   */
   function getTotalRealTime(object) {
     var start = new Date(object.date_debut);
     var end = new Date(object.date_fin_reelle);
     return utilsService.dateDiffWorkingDates(start,end);
   }
 
-  // Retourne la durée totale théorique
+  /**
+   * Retourne la durée totale théorique d'un projet ou d'une tâche
+   *
+   * @param object
+   * @returns {*}
+   */
   function getDuration(object) {
     var start = new Date(object.date_debut);
     var end = new Date(object.date_fin_theorique);
     return utilsService.dateDiffWorkingDates(start,end);
   }
 
+  /**
+   * Calcul le pourcentage d'une ligne budgétaire utilisé en fonction des projets qui y sont affectés
+   *
+   * @param budget
+   * @param projects
+   * @param collaborators
+   * @returns {*}
+   */
   function calculateBudgetConsumption(budget, projects, collaborators){
     var tasksCost = [];
     var tasksTotalCost;

@@ -12,6 +12,13 @@
  */
 angular.module('pomApp').factory('utilsService', Service);
 
+/**
+ * Service donnant accès à des méthodes utilitaires utilisées dans tout le projet
+ *
+ * @param $filter
+ * @returns {{}}
+ * @constructor
+ */
 function Service($filter) {
 
   var service = {};
@@ -32,6 +39,12 @@ function Service($filter) {
 
   return service;
 
+  /**
+   * Convertit des dates au format String en objet Date javascript
+   *
+   * @param input
+   * @returns {*}
+   */
   function convertDateStringsToDates(input) {
     var regexIso8601 = /^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/;
 
@@ -44,7 +57,6 @@ function Service($filter) {
       var value = input[key];
       var match;
       // Check for string properties which look like dates.
-      // TODO: Improve this regex to better match ISO 8601 date strings.
       if (typeof value === "string" && (match = value.match(regexIso8601))) {
         // Assume that Date.parse can parse ISO 8601 strings, or has been shimmed in older browsers to do so.
         var milliseconds = Date.parse(match[0]);
@@ -58,6 +70,14 @@ function Service($filter) {
     }
   }
 
+  /**
+   * Retourne l'index d'un objet contenu dans une liste selon une propriété de cet objet
+   *
+   * @param myArray
+   * @param searchTerm
+   * @param property
+   * @returns {number}
+   */
   function arrayObjectIndexOf(myArray, searchTerm, property) {
     for(var i = 0, len = myArray.length; i < len; i++) {
       if (myArray[i][property] === searchTerm) return i;
@@ -65,6 +85,13 @@ function Service($filter) {
     return -1;
   }
 
+  /**
+   * Calcul le nombre de jours de différence entre deux dates
+   *
+   * @param date1
+   * @param date2
+   * @returns {number}
+   */
   function dateDiff(date1, date2){
     var timeDiff = Math.abs(date2.getTime() - date1.getTime());
     var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
@@ -74,6 +101,13 @@ function Service($filter) {
       return diffDays + 1;
   }
 
+  /**
+   * Calcul le nombre de jours ouvrés entre deux date
+   *
+   * @param start
+   * @param end
+   * @returns {number}
+   */
   function dateDiffWorkingDates(start,end){
     if(dateDiff(start, end) === 1) return 1;
 
@@ -107,6 +141,12 @@ function Service($filter) {
     return $filter('filter')(list, function (d) {return d._id === id;})[0]
   }
 
+  /**
+   * Retourne la somme des valeurs d'un tableau
+   *
+   * @param array
+   * @returns {number}
+   */
   function sumArrayValues(array) {
     var count = 0;
     for (var i = array.length; i--;) {
@@ -115,11 +155,22 @@ function Service($filter) {
     return count;
   }
 
+  /**
+   * Permet de filrer les dates pour ne garder que les jours ouvrés
+   *
+   * @param date
+   * @returns {boolean}
+   */
   function filterOnlyWeekDays(date){
     var day = date.getDay();
     return (!(day === 0 || day === 6 ));
   }
 
+  /**
+   * Coloration en fonction d'un statut
+   *
+   * @returns {{initial: {color: string, class: string, statut: string}, en_cours: {color: string, class: string, statut: string}, termine: {color: string, class: string, statut: string}, annule: {color: string, class: string, statut: string}, archive: {color: string, class: string, statut: string}}}
+   */
   function statusColors(){
     return {"initial": { "color": "blue", "class": "fa fa-info", "statut": "Initial" },
       "en_cours": { "color": "orange", "class": "fa fa-cog fa-spin fa-fw margin-bottom", "statut":"En cours" },
@@ -129,6 +180,11 @@ function Service($filter) {
     };
   }
 
+  /**
+   * Coloration en fonction d'une catégorie
+   *
+   * @returns {{etude: {color: string, name: string}, spec: {color: string, name: string}, dev: {color: string, name: string}, rec: {color: string, name: string}, mep: {color: string, name: string}}}
+   */
   function categoriesColors(){
     return {  "etude" : { "color" : "#EF5350", "name" : "Etude de projet" },
       "spec" : { "color" : "#FFA726", "name" : "Spécification" },
@@ -137,6 +193,12 @@ function Service($filter) {
       "mep" : { "color" : "#66BB6A", "name" : "Mise en production" }};
   }
 
+  /**
+   * Récupère le chef de projet d'un collaborateur selon son id
+   *
+   * @param data
+   * @param allCollaborators
+   */
   function associateChefProjet(data, allCollaborators){
     for (var i = data.length - 1; i >= 0; i--) {
       var cp = getElementById(data[i].chef_projet, allCollaborators);
@@ -158,6 +220,12 @@ function Service($filter) {
     }
   }
 
+  /**
+   * Vérifie qu'une date javascript est valide, sinon retourne la date du jour
+   *
+   * @param date
+   * @returns {*}
+   */
   function returnValidDate(date) {
     if ( Object.prototype.toString.call(date) === "[object Date]" ) {
       if ( isNaN( date.getTime() ) ) {  // d.valueOf() could also work
