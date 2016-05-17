@@ -28,6 +28,10 @@ function MainCtrl($scope, $state, $timeout, localStorageService, databaseService
     $state.go('projects.details.info',{"id":id});
   }
 
+  /**
+   * Trie les tâches des projets en cours dans des listes pour le dashboard
+   * @param projects
+   */
   function allTasksDetails(projects){
 
     var urgent_tasks = [], completed_tasks = [], upcoming_tasks = [], new_tasks = [], canceled_tasks = [];
@@ -70,6 +74,11 @@ function MainCtrl($scope, $state, $timeout, localStorageService, databaseService
     vm.nbTotalTasks = allUserTasks.length;
   }
 
+  /**
+   * Associe une couleur à une tâche en fonction de sa catégorie
+   * @param taskCategorie
+   * @returns {*}
+   */
   function setTaskCategorie(taskCategorie) {
     switch (taskCategorie) {
       case 'Etude de projet':
@@ -93,6 +102,11 @@ function MainCtrl($scope, $state, $timeout, localStorageService, databaseService
     }
   }
 
+  /**
+   * Associe une couleur à une tâche en fonction de son statut
+   * @param status
+   * @returns {*}
+   */
   function setTaskStatus(status) {
     switch (status) {
       case "Initial":
@@ -115,6 +129,16 @@ function MainCtrl($scope, $state, $timeout, localStorageService, databaseService
         break;
     }
   }
+
+  /**
+   * Trie les tâches en fonction du statut de la tache et la met dans la liste voulu
+   * @param task
+   * @param new_tasks
+   * @param upcoming_tasks
+   * @param urgent_tasks
+   * @param completed_tasks
+   * @param canceled_tasks
+   */
 
   function putTaskInRightList(task, new_tasks, upcoming_tasks, urgent_tasks, completed_tasks, canceled_tasks) {
     var diffUrgentTasks = utilsService.dateDiffWorkingDates(new Date(),new Date(task.date_fin_theorique));
@@ -140,19 +164,33 @@ function MainCtrl($scope, $state, $timeout, localStorageService, databaseService
     }
   }
 
+  /**
+   * Injecte les taches dans la table dashboard
+   * @param tasks
+   */
   function showTasks(tasks){
     vm.tableParams = new NgTableParams({ page: 1, count: 10 }, { filterDelay: 0, data: tasks });
   }
 
+  /**
+   * Injecte les projets dans la table des projets
+   * @param projects
+   */
   function showProjects(projects){
     vm.tableProjectsParams = new NgTableParams({ page: 1, count: 10 }, { filterDelay: 0, data: projects});
   }
 
+  /**
+   * Injecte les taches dans la table des tâches
+   * @param tasks
+   */
   function showCollaboratorTasks(tasks) {
     vm.tableTasksParams = new NgTableParams({ page: 1, count: 10 }, { filterDelay: 0, data: tasks });
   }
 
-  // Récupère dans vm.collaboratorTasks, toutes les tâches auxquels le currentUser est affecté
+  /**
+   * Récupère dans vm.collaboratorTasks, toutes les tâches auxquels le currentUser est affecté
+   */
   function allCollaboratorTasks() {
     var collaboratorTasks = [];
     for (var i = 0; i < vm.projects.length; i++) {
@@ -171,6 +209,9 @@ function MainCtrl($scope, $state, $timeout, localStorageService, databaseService
     vm.collaboratorTasks = collaboratorTasks;
   }
 
+  /**
+   *
+   */
   function allProjectsDetails () {
     vm.numberProjects = vm.projects.length;
     for (var i = 0; i < vm.projects.length; i++) {
@@ -194,7 +235,9 @@ function MainCtrl($scope, $state, $timeout, localStorageService, databaseService
     console.log(vm.projects);
   }
 
-  // Au chargement de la page
+  /**
+   * Function qui se lance au chargement de la page
+   */
   $scope.$on('$viewContentLoaded', function() {
 
     databaseService.getAllObjects('collaborators').success(function(data){ vm.saveCollaborators = data;})
