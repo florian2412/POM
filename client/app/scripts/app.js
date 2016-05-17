@@ -13,7 +13,7 @@ var pomApp = angular.module('pomApp', ['ui.router', 'ngMaterial', 'ngMessages', 
                                         'LocalStorageModule', 'mgcrea.ngStrap', 'ngTable', 'ngLetterAvatar']);
 
 function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $mdThemingProvider) {
-  $mdThemingProvider.theme('default').primaryPalette('green').accentPalette('blue');
+  $mdThemingProvider.theme('default').primaryPalette('green',{'default':'500'}).accentPalette('blue');
   $mdDateLocaleProvider.formatDate = function(date) { return moment(date).format('DD/MM/YYYY');};
   $urlRouterProvider.otherwise('/');
   $stateProvider
@@ -230,11 +230,7 @@ function appRun($rootScope, $state, $location, $http,$mdSidenav, $mdDialog, auth
       );
   }
 
-  Highcharts.setOptions({
-    global: {
-      useUTC: false
-    }
-  });
+  Highcharts.setOptions({ global: { useUTC: false }});
 }
 pomApp.config(appConfig);
 pomApp.run(appRun);

@@ -13,35 +13,35 @@
               md-gutter="12px" md-gutter-gt-sm="30px" >
 
               <md-grid-tile md-whiteframe="2" class="red-tile tile-effect" ng-click="mainVm.showTasks(mainVm.urgentTasks)">
-                <h2 class="white-text tile-content"> {{mainVm.nbUrgentTasks}} </h2>
+                <h2 class="white-text tile-content"> {{mainVm.urgentTasks.length}} </h2>
                 <md-grid-tile-footer>
                   <h3 class="white-text">Tâches prioritaires</h3>
                 </md-grid-tile-footer>
               </md-grid-tile>
 
               <md-grid-tile md-whiteframe="2" class="blue-tile tile-effect"  ng-click="mainVm.showTasks(mainVm.upcomingTasks)">
-                <h2 class="white-text tile-content"> {{mainVm.nbUpcomingTasks}} </h2>
+                <h2 class="white-text tile-content"> {{mainVm.upcomingTasks.length}} </h2>
                 <md-grid-tile-footer>
                   <h3 class="white-text">Tâches à venir</h3>
                 </md-grid-tile-footer>
               </md-grid-tile>
 
               <md-grid-tile md-whiteframe="2" class="orange-tile tile-effect" ng-click="mainVm.showTasks(mainVm.newTasks)">
-                <h2 class="white-text tile-content"> {{mainVm.nbNewTasks}} </h2>
+                <h2 class="white-text tile-content"> {{mainVm.newTasks.length}} </h2>
                 <md-grid-tile-footer>
                   <h3 class="white-text">Nouvelles tâches</h3>
                 </md-grid-tile-footer>
               </md-grid-tile>
 
               <md-grid-tile md-whiteframe="2" class="green-tile tile-effect" ng-click="mainVm.showTasks(mainVm.completedTasks)">
-                <h2 class="white-text tile-content"> {{mainVm.nbCompletedTasks}} </h2>
+                <h2 class="white-text tile-content"> {{mainVm.completedTasks.length}} </h2>
                 <md-grid-tile-footer>
                   <h3 class="white-text">Tâches terminées</h3>
                 </md-grid-tile-footer>
               </md-grid-tile>
 
               <md-grid-tile md-whiteframe="2" class="gray-tile tile-effect" ng-click="mainVm.showTasks(mainVm.canceledTasks)">
-                <h2 class="tile-content"> {{mainVm.nbCanceledTasks}} </h2>
+                <h2 class="tile-content"> {{mainVm.canceledTasks.length}} </h2>
                 <md-grid-tile-footer>
                   <h3 class="white-text">Tâches annulées</h3>
                 </md-grid-tile-footer>
@@ -57,12 +57,12 @@
             </md-grid-list>
             <br>
 
-            <div layout flex layout-align="center">
+            <div layout flex layout-align="center" ng-show="mainVm.tableParams.data.length > 0">
               <div md-whiteframe="2" layout-padding>
 
                 <md-toolbar layout="row" layout-align="center center" style="background-color:whitesmoke;">
                   <span flex></span>
-                  <div style="padding-top:12px;color:black">
+                  <div style="padding-top:12px;">
                     <md-checkbox ng-model="mainVm.isFiltersEnabled">
                       Filtre
                     </md-checkbox>
@@ -111,20 +111,19 @@
                 <table ng-table="mainVm.tableProjectsParams" show-filter="mainVm.isFiltersEnabled" class="table table-striped table-hover">
                   <tr ng-repeat="row in $data" ng-dblClick="mainVm.redirectProjectsDetails($event, row._id)">
 
-                    <td title="'Code'" filter="{code: 'text'}" sortable="'code'"><a ui-sref="projects.details.info({id:row._id})"> <b>{{ row.code }}</b> </a></td>
-                    <td title="'Nom'" filter="{nom: 'text'}" sortable="'nom'"><a ui-sref="projects.details.info({id:row._id})"> <b>{{ row.nom }}</b> </a></td>
-                    <!--<td title="'Chef de projet'" sortable="'chef_projet.identite'">{{row.chef_projet.identite}}</td>-->
-                    <!--<td title="'Date début'" filter="{date_debut: 'text'}" sortable="'date_debut'">{{row.date_debut | date:"dd/MM/yyyy" }}</td>-->
-                    <td title="'Statut'" sortable="'statut.statut'"> <span class="{{row.statut.class}}" style="color:{{row.statut.color}};font-size:1.5em;"><md-tooltip md-direction="left">{{row.statut.statut}}</md-tooltip></span></td>
+                    <td class="vert-align" title="'Code'" filter="{code: 'text'}" sortable="'code'"><a ui-sref="projects.details.info({id:row._id})"> <b>{{ row.code }}</b> </a></td>
+                    <td class="vert-align" title="'Nom'" filter="{nom: 'text'}" sortable="'nom'"><a ui-sref="projects.details.info({id:row._id})"> <b>{{ row.nom }}</b> </a></td>
+  
+                    <td class="vert-align" title="'Statut'" sortable="'statut.statut'"> <span class="{{row.statut.class}}" style="color:{{row.statut.color}};font-size:1.5em;"><md-tooltip md-direction="left">{{row.statut.statut}}</md-tooltip></span></td>
 
                     <!-- Toutes les informations de durée et de budget que l'on connait -->
-                    <td title="'Nb collaborateurs affecté'" sortable="'realDuration'"><b>{{row.collaborateurs.length}}</b></td>
-                    <td title="'Durée théorique totale'" sortable="'duration'"><b>{{row.duration}}</b> jours</td>
-                    <td title="'Durée théorique restante'" sortable="'leftDuration'"><b>{{row.leftDuration}}</b> jours</td>
+                    <td class="vert-align" title="'Nb collaborateurs affecté'" sortable="'realDuration'"><b>{{row.collaborateurs.length}}</b></td>
+                    <td class="vert-align" title="'Durée théorique totale'" sortable="'duration'"><b>{{row.duration}}</b> jours</td>
+                    <td class="vert-align" title="'Durée théorique restante'" sortable="'leftDuration'"><b>{{row.leftDuration}}</b> jours</td>
 
-                    <td title="'Durée théorique passée'" sortable="'passedDuration'"><b>{{row.passedDuration}}</b> jours</td>
+                    <td class="vert-align" title="'Durée théorique passée'" sortable="'passedDuration'"><b>{{row.passedDuration}}</b> jours</td>
 
-                    <td title="'Durée réelle totale'" sortable="'realDuration'"><b>{{row.realDuration}}</b> jours</td>
+                    <td class="vert-align" title="'Durée réelle totale'" sortable="'realDuration'"><b>{{row.realDuration}}</b> jours</td>
 
                     <td title="'Pourcentage temps utilisé'">{{ row.timeAdvancement | number:0 }}%
                       <div class="progress">

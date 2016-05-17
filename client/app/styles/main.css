@@ -82,7 +82,7 @@ md-toolbar .md-toolbar-tools h2
   }
   /* Space out the masthead */
   .header {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
   }
 }
 
@@ -194,3 +194,20 @@ md-toolbar .md-toolbar-tools h2
 .navbar-default .navbar-nav > li > a > #a_propos { color: #FF893D; }
 .navbar-default .navbar-nav > li > a > #aide { color: gray; }
 
+#home_icon{
+    border-radius:30%;    
+    -webkit-transition: -webkit-transform .8s ease-in-out;
+    -ms-transition: -ms-transform .8s ease-in-out;
+    transition: transform .8s ease-in-out;
+    
+    
+}
+#home_icon:hover{
+    transform:rotate(360deg);
+    -ms-transform:rotate(360deg);
+    -webkit-transform:rotate(360deg);
+}
+.md-toolbar-tools, md-toolbar {
+  height: 40px;
+  min-height: 40px;
+}

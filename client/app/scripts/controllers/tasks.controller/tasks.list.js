@@ -28,6 +28,7 @@ function TasksListCtrl($scope, $state, databaseService, flashService, $statePara
     
     databaseService.getObjectById('projects', $stateParams.id)
       .success(function (data) {
+        vm.projectName = data.nom;
         vm.tasks = data.taches;
         for (var i = data.taches.length - 1; i >= 0; i--) {
           switch (data.taches[i].categorie)
