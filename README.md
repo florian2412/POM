@@ -14,8 +14,11 @@ sous un système UNIX.
 ## Installation :	
 - Lancer le fichier setup.bat pour installer POM et tous ses composants
 
-## Lancement du serveur (API) et du client (POM) :
-- Lancer le fichier launch.bat
+## Lancement du serveur (API) :
+- Lancer le fichier launchServer.bat et laissez le terminal ouvert
+
+## Lancement du client POM :
+- Lancer le fichier launchApp.bat et laissez le terminal ouvert
 
 ##### Vous pouvez maintenant accéder à l'application via l'URL suivante : [POM](http://localhost:9000)
 
