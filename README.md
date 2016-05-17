@@ -12,13 +12,14 @@ sous un système UNIX.
 # 1. Installation et lancement simplifié de POM
 
 ## Installation :	
-- Lancer le fichier setup.bat pour installer POM et tous ses composants
+- Lancer le fichier setupServer.bat pour installer tous les composants du serveur de POM
+- Lancer le fichier setupPOM.bat pour installer POM et tous ses composants
 
 ## Lancement du serveur (API) :
 - Lancer le fichier launchServer.bat et laissez le terminal ouvert
 
 ## Lancement du client POM :
-- Lancer le fichier launchApp.bat et laissez le terminal ouvert
+- Lancer le fichier launchPOM.bat et laissez le terminal ouvert
 
 ##### Vous pouvez maintenant accéder à l'application via l'URL suivante : [POM](http://localhost:9000)
 
