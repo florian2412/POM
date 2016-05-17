@@ -125,17 +125,36 @@
 
                     <td class="vert-align" title="'Durée réelle totale'" sortable="'realDuration'"><b>{{row.realDuration}}</b> jours</td>
 
-                    <td title="'Pourcentage temps utilisé'">{{ row.timeAdvancement | number:0 }}%
-                      <div class="progress">
-                        <div class="progress-bar" style="width: {{ row.timeAdvancement | number:0 }}%;"></div>
+                    <td class="vert-align" title="'Temps utilisé'">
+                      <div ng-show="row.timeAdvancement <= 100">
+                        <label>{{ row.timeAdvancement | number:0 }}%</label>
+                        <div class="progress">
+                          <div class="progress-bar" style="width: {{ row.timeAdvancement | number:0 }}%;"></div>
+                        </div>
+                      </div> 
+                      <div ng-show="row.timeAdvancement > 100">
+                        <label style="color:red">{{ row.timeAdvancement | number:0 }}%</label>
+                        <div class="progress">
+                          <div class="progress-bar progress-bar-danger" style="width: {{ row.timeAdvancement | number:0 }}%;"></div>
+                        </div>
                       </div>
                     </td>
 
-                    <td title="'Pourcentage budget utilisé'">{{ row.advancement | number:0 }}%
-                      <div class="progress">
-                        <div class="progress-bar" style="width: {{ row.advancement | number:0 }}%;"></div>
+                    <td class="vert-align" title="'Budget utilisé'">
+                      <div ng-show="row.advancement <= 100">
+                        <label>{{ row.advancement | number:0 }}%</label>
+                        <div class="progress">
+                          <div class="progress-bar" style="width: {{ row.advancement | number:0 }}%;"></div>
+                        </div>
+                      </div>
+                      <div ng-show="row.advancement > 100">
+                        <label style="color:red">{{ row.advancement | number:0 }}%</label>
+                        <div class="progress">
+                          <div class="progress-bar progress-bar-danger" style="width: {{ row.advancement | number:0 }}%;"></div>
+                        </div>
                       </div>
                     </td>
+                
                   </tr>
                 </table>
               </div>
@@ -163,31 +182,51 @@
                 </md-toolbar>
 
                 <table ng-table="mainVm.tableTasksParams" show-filter="mainVm.isFiltersEnabled" class="table table-striped table-hover">
-                  <tr ng-repeat="row in $data" ng-dblClick="mainVm.redirectTasksDetails($event, row._id)">
+                  <tr ng-repeat="row in $data" ng-dblClick="mainVm.redirectTasksDetails(row._id,row.projet_id)">
 
-                    <td title="'Code'" filter="{code: 'text'}" sortable="'code'"><a ui-sref="projects.details.tasks.details({idtask:row._id, id: row.projet_id})"> <b>{{ row.code }}</b> </a></td>
-                    <td title="'Nom'" filter="{nom: 'text'}" sortable="'nom'"><a ui-sref="projects.details.tasks.details({idtask:row._id, id: row.projet_id})"> <b>{{ row.libelle }}</b> </a></td>
-                    <td title="'Statut'" sortable="'statut.statut'"> <span class="{{row.statut.class}}" style="color:{{row.statut.color}};font-size:1.5em;"><md-tooltip md-direction="left">{{row.statut.statut}}</md-tooltip></span></td>
+                    <td class="vert-align" title="'Code'" filter="{code: 'text'}" sortable="'code'"><a ui-sref="projects.details.tasks.details({idtask:row._id, id: row.projet_id})"> <b>{{ row.code }}</b> </a></td>
+                    <td class="vert-align" title="'Nom'" filter="{nom: 'text'}" sortable="'nom'"><a ui-sref="projects.details.tasks.details({idtask:row._id, id: row.projet_id})"> <b>{{ row.libelle }}</b> </a></td>
+                    <td class="vert-align" title="'Statut'" sortable="'statut.statut'"> <span class="{{row.statut.class}}" style="color:{{row.statut.color}};font-size:1.5em;"><md-tooltip md-direction="left">{{row.statut.statut}}</md-tooltip></span></td>
 
-                    <td title="'Nb collaborateurs affecté'" sortable="'realDuration'"><b>{{row.collaborateurs.length}}</b></td>
-                    <td title="'Durée théorique totale'" sortable="'duration'"><b>{{row.duration}}</b> jours</td>
-                    <td title="'Durée théorique restante'" sortable="'leftDuration'"><b>{{row.leftDuration}}</b> jours</td>
+                    <td class="vert-align"  title="'Nb collaborateurs affecté'" sortable="'realDuration'"><b>{{row.collaborateurs.length}}</b></td>
+                    <td class="vert-align" title="'Durée théorique totale'" sortable="'duration'"><b>{{row.duration}}</b> jours</td>
+                    <td class="vert-align" title="'Durée théorique restante'" sortable="'leftDuration'"><b>{{row.leftDuration}}</b> jours</td>
 
-                    <td title="'Durée théorique passée'" sortable="'passedDuration'"><b>{{row.passedDuration}}</b> jours</td>
+                    <td class="vert-align" title="'Durée théorique passée'" sortable="'passedDuration'"><b>{{row.passedDuration}}</b> jours</td>
 
-                    <td title="'Durée réelle totale'" sortable="'realDuration'"><b>{{row.realDuration}}</b> jours</td>
+                    <td class="vert-align" title="'Durée réelle totale'" sortable="'realDuration'"><b>{{row.realDuration}}</b> jours</td>
 
-                    <td title="'Pourcentage temps utilisé'">{{ row.timeAdvancement | number:0 }}%
-                      <div class="progress">
-                        <div class="progress-bar" style="width: {{ row.timeAdvancement | number:0 }}%;"></div>
+                    <td class="vert-align" title="'Temps utilisé'" >
+                      <div ng-show="row.timeAdvancement <= 100">
+                        <label>{{ row.timeAdvancement | number:0 }}%</label>
+                        <div class="progress">
+                          <div class="progress-bar" style="width: {{ row.timeAdvancement | number:0 }}%;"></div>
+                        </div>
+                      </div>
+                      <div ng-show="row.timeAdvancement > 100">
+                        <label style="color:red">{{ row.timeAdvancement | number:0 }}%</label>
+                        <div class="progress">
+                          <div class="progress-bar progress-bar-danger" style="width: {{ row.timeAdvancement | number:0 }}%;"></div>
+                        </div>
                       </div>
                     </td>
 
-                    <td title="'Pourcentage budget utilisé'">{{ row.advancement | number:0 }}%
-                      <div class="progress">
-                        <div class="progress-bar" style="width: {{ row.advancement | number:0 }}%;"></div>
+                    <td class="vert-align" title="'Budget utilisé'">
+                      <div ng-show="row.advancement <= 100">
+                        <label>{{ row.advancement | number:0 }}%</label>
+                        <div class="progress">
+                          <div class="progress-bar" style="width: {{ row.advancement | number:0 }}%;"></div>
+                        </div>
+                      </div> 
+
+                      <div ng-show="row.advancement > 100">
+                        <label style="color:red">{{ row.advancement | number:0 }}%</label>
+                        <div class="progress">
+                          <div class="progress-bar  progress-bar-danger" style="width: {{ row.advancement | number:0 }}%;"></div>
+                        </div>
                       </div>
                     </td>
+
                   </tr>
                 </table>
               </div>

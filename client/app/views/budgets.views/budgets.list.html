@@ -23,8 +23,14 @@
           <td class="vert-align"><a> {{ budget.libelle }} </a></td>
           <td class="vert-align"> {{ budget.montant }} € </td>
           <td class="vert-align"> {{ budget.description }} </td>
-          <td class="vert-align"> 
-            {{ budget.percentage | number:0 }}%
+          <td class="vert-align" ng-show="budget.percentage > 100"> 
+            <label style="color:red">{{ budget.percentage | number:0 }}%</label>
+            <div class="progress">
+              <div class="progress-bar progress-bar-danger" style="width: {{ budget.percentage | number:0 }}%;"></div>
+            </div>
+          </td>
+          <td class="vert-align" ng-show="budget.percentage <= 100"> 
+            <label>{{ budget.percentage | number:0 }}%</label>
             <div class="progress">
               <div class="progress-bar" style="width: {{ budget.percentage | number:0 }}%;"></div>
             </div>

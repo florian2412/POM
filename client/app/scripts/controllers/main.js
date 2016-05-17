@@ -24,7 +24,7 @@ function MainCtrl($scope, $state, $timeout, localStorageService, databaseService
     $state.go('projects.details.tasks.details',{"idtask":taskId, "id":projectId});
   }
 
-  function redirectProjectsDetails(id){
+  function redirectProjectsDetails(event,id){
     $state.go('projects.details.info',{"id":id});
   }
 
@@ -191,6 +191,7 @@ function MainCtrl($scope, $state, $timeout, localStorageService, databaseService
       }
       vm.projects[i] = statisticsService.projectStats(vm.projects[i], vm.saveBudgets, sumTotalCostProject);
     }
+    console.log(vm.projects);
   }
 
   // Au chargement de la page
