@@ -25,10 +25,10 @@
 
         <td title="'Dernière modification'" filter="{date_derniere_modif: 'text'}" sortable="'date_derniere_modif'" >{{ row.date_derniere_modif | date:"dd/MM/yyyy 'à' HH:mm:ss" }}</td>
 
-        <td ng-click="projectsListVm.archiveProject(row._id)">
+        <td ng-click="projectsListVm.archiveProject(row._id)" nra-auth="['manager','admin']">
           <span class="fa fa-archive fa-lg" style="color: gray;"></span>
         </td>
-        <td ng-click="projectsListVm.deleteProject(row._id)">
+        <td ng-click="projectsListVm.deleteProject(row._id)" nra-auth="['manager','admin']">
           <span class="fa fa-trash-o fa-lg" style="color: red;"></span>
         </td>
 
