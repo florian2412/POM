@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc function
- * @name pomApp.controller:CollaboratorCtrl
+ * @name pomApp.controller:CollaboratorDetailCtrl
  * @description
- * # CollaboratorCtrl
+ * # CollaboratorDetailCtrl
  * Controller of the pomApp
  */
 
@@ -17,8 +17,10 @@ function CollaboratorsDetailsCtrl($scope, $stateParams, $state, $mdDialog, datab
 
   vm.updateCollaborator = updateCollaborator;
   vm.showCancelDialog = showCancelDialog;
-
-
+  
+  /**
+   * Met à jour en base de données un collaborateur
+   */
   function updateCollaborator() {
 
     var data = {
@@ -40,9 +42,11 @@ function CollaboratorsDetailsCtrl($scope, $stateParams, $state, $mdDialog, datab
       .error(function (err) {
         console.log(err);
       });
-  };
+  }
 
-  // Permet de lancer au chargement de la page : récupère tous les projets
+  /**
+   * Permet de lancer au chargement de la page
+   */
   $scope.$on('$viewContentLoaded', function() {
 
     databaseService.getObjectById('collaborators', $stateParams.id).success(function (data) {
@@ -83,10 +87,13 @@ function CollaboratorsDetailsCtrl($scope, $stateParams, $state, $mdDialog, datab
       vm.collaborator.n_role = 'collaborateur';
       vm.collaborator.n_manager = currentUser._id;
     }
-
   });
 
-
+  /**
+   * Affiche la boite de dialogue de confirmation d'annulation
+   *
+   * @param event
+   */
   function showCancelDialog(event) {
     var confirm = $mdDialog.confirm()
       .title('Alerte')
@@ -99,6 +106,6 @@ function CollaboratorsDetailsCtrl($scope, $stateParams, $state, $mdDialog, datab
       $state.go("collaborators");
     }, function() {
     });
-  };
+  }
 
-};
+}

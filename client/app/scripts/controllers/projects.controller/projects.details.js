@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc function
- * @name pomApp.controller:ProjectCtrl
+ * @name pomApp.controller:ProjectDetailsCtrl
  * @description
- * # ProjectCtrl
+ * # ProjectDetailsCtrl
  * Controller of the pomApp
  */
 angular.module('pomApp').controller('ProjectsDetailsCtrl', ProjectsDetailsCtrl);
@@ -22,6 +22,9 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
   vm.showCollaboratorPicker = showCollaboratorPicker;
   vm.closeProject = closeProject;
 
+  /**
+   * Enregistre en base de données le projet actuel en "Terminé(e)" après avoir controller que toutes les tâches sont fermées ou annulées
+   */
   function closeProject() {
     var projectTasks = vm.project.taches;
     var isValid = true;
@@ -52,9 +55,13 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
       showFinishTasksDialog();
     }
 
-  };
+  }
 
-
+  /**
+   * Récupère un projet en fonction d'un id
+   *
+   * @param id
+   */
   function getProjectById(id) {
     databaseService.getObjectById('projects', id)
       .success(function (data) {
@@ -87,14 +94,15 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
           });
 
       })
-  };
+  }
 
-
+  /**
+   * Met à jour un projet en base
+   */
   function updateProject() {
 
     var idProject = vm.project._id;
 
-    // TODO SAVE BUDGETS
     var ligne_budgetaire_id = vm.selectedBudget._id;
     var ligne_budgetaire = {
       "id": ligne_budgetaire_id,
@@ -114,17 +122,19 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
       "description" : vm.project.description
     };
 
-
     databaseService.updateObject('projects', idProject, data)
-      .success(function (data) {
+      .success(function () {
         flashService.success("Le projet " + vm.project.nom + " a bien été mis à jour !", "", "bottom-right", true, 4);
         $state.go("projects");
       })
       .error(function (err) {
         console.log(err);
       });
-  };
+  }
 
+  /**
+   * Affiche la boite de dialogue de d'erreur de fermeture projet lorsque toutes les tâches ne sont pas terminés ou annulées
+   */
   function showFinishTasksDialog() {
     var alert = $mdDialog.alert()
       .parent(angular.element(document.querySelector('#popupContainer')))
@@ -135,8 +145,11 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
       .ok('Ok');
 
     $mdDialog.show(alert);
-  };
+  }
 
+  /**
+   * Affiche la boite de dialogue de confirmation d'annulation
+   */
   function showCancelDialog() {
     var confirm = $mdDialog.confirm()
       .title('Alerte')
@@ -149,9 +162,11 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
         $state.go("projects");
       }, function() {}
     );
-  };
+  }
 
-  // Lancer au chargement de la page
+  /**
+   * Lancer au chargement de la page
+   */
   $scope.$on('$viewContentLoaded', function() {
 
     databaseService.getAllObjects('budgets').success(function (data) { vm.budgets = data.data; });
@@ -170,6 +185,9 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
 
   });
 
+  /**
+   * affiche la boite de dialogue de sélection collaborateurs
+   */
   function showCollaboratorPicker(ev) {
     $mdDialog.show({
       controller: _CollaboratorPickerController,
@@ -186,9 +204,16 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
         console.log(count);
         //vm.numberOfCollaborators = count.length;
       });
-  };
+  }
 
-
+  /**
+   * Controller de la boite de dialogue de sélection collaborateurs
+   * @param $rootScope
+   * @param $scope
+   * @param $mdDialog
+   * @param collaborators
+   * @private
+   */
   function _CollaboratorPickerController($rootScope, $scope, $mdDialog, collaborators) {
 
     $scope.collaborators = collaborators;
@@ -206,6 +231,5 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
         if (indexCol > -1) { collaborateursId.splice(indexCol, 1); }
       }
     };
-
   }
-};
+}

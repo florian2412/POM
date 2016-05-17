@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc function
- * @name pomApp.controller:TaskCtrl
+ * @name pomApp.controller:TaskDetailsCtrl
  * @description
- * # TaskCtrl
+ * # TaskDetailsCtrl
  * Controller of the pomApp
  */
 
@@ -22,6 +22,9 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
   vm.filterOnlyWeekDays = utilsService.filterOnlyWeekDays;
   vm.changedValue = changedValue;
 
+  /**
+   * Met à jour une tache d'un projet en base
+   */
   function updateTask() {
 
     var updatedTask = vm.currentProject.taches[vm.currentIndexTask];
@@ -37,12 +40,6 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
       updatedTask.date_fin_reelle = utilsService.returnValidDate(vm.task.date_fin_reelle);
     }
 
-    console.log("vm.task.date_fin_reelle");
-    console.log(vm.task.date_fin_reelle);
-
-    console.log("vm.currentProject");
-    console.log(vm.currentProject);
-
     databaseService.updateObject('projects', $stateParams.id, vm.currentProject)
       .success(function () {
         flashService.success("La tâche " + vm.task.libelle + " a été mise à jour.", "", "bottom-right", true, 4);
@@ -50,6 +47,11 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
       });
   }
 
+  /**
+   * Affiche la boite de dialogue de confirmation d'annulation
+   *
+   * @param event
+   */
   function showCancelDialog(event) {
     var confirm = $mdDialog.confirm()
       .title('Alerte')
@@ -65,6 +67,11 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
     });
   }
 
+  /**
+   * Affiche la boite de dialogue de sélection de collaborateurs a affecter à la tâche
+   *
+   * @param ev
+   */
   function showCollaboratorPicker(ev) {
 
     $mdDialog.show({
@@ -80,6 +87,14 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
     });
   }
 
+  /**
+   * Controller de la boite de dialogue de sélection de collaborateurs
+   * @param $rootScope
+   * @param $scope
+   * @param $mdDialog
+   * @param collaborators
+     * @private
+     */
   function _CollaboratorPickerController($rootScope, $scope, $mdDialog, collaborators) {
 
     $scope.collaborators = collaborators;
@@ -103,6 +118,9 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
     vm.isDateReelleEnable = (selected === "Terminé(e)");
   }
 
+  /**
+   * Méthode lancée lorsque la page est chargée
+   */
   $scope.$on('$viewContentLoaded', function() {
 
     databaseService.getObjectById('projects', $stateParams.id)
@@ -135,7 +153,7 @@ function TasksDetailsCtrl($scope, $state, $rootScope, $stateParams, $mdDialog, d
         console.log(err);
       });
 
-
+    // On récupère les settings
     databaseService.getSettings('statuts').success(function(data){
       data.splice(data.indexOf("Archivé(e)"),1);
       for (var i = data.length - 1; i >= 0; i--) {

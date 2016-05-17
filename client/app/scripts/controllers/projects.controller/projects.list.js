@@ -20,10 +20,19 @@ function ProjectsListCtrl($scope,$state, NgTableParams, databaseService, utilsSe
   vm.redirectProjectsDetails = redirectProjectsDetails;
   vm.isFiltersEnabled = false;
 
+  /**
+   * Redirige la page vers la page de details d'un projet
+   *
+   * @param event
+   * @param id
+   */
   function redirectProjectsDetails(event,id){
     $state.go('projects.details.info',{"id":id});
   }
 
+  /**
+   * Récupère tous les projets d'un collaborateurs selon son id pour les afficher
+   */
   function showAllProjects(){
     var currentUser = localStorageService.get('currentUser');
 
@@ -57,6 +66,11 @@ function ProjectsListCtrl($scope,$state, NgTableParams, databaseService, utilsSe
     });
   }
 
+  /**
+   * Passe un projet au statut "Archivée"
+   *
+   * @param id
+   */
   function archiveProject(id){
     var projectToArchive = utilsService.getElementById(id, vm.projects);
     var allTasksAreDone = false;
@@ -99,6 +113,10 @@ function ProjectsListCtrl($scope,$state, NgTableParams, databaseService, utilsSe
     }
   }
 
+  /**
+   * Supprime un projet en base selon son id
+   * @param id
+   */
   function deleteProject(id) {
     databaseService.deleteObject('projects', id)
       .success(function (data) {
@@ -122,7 +140,9 @@ function ProjectsListCtrl($scope,$state, NgTableParams, databaseService, utilsSe
       });
   }
 
-  // Affiche la liste des projets au chargement de la page
+  /**
+   * Se lance lorsque la page est chargée
+   */
   $scope.$on('$viewContentLoaded', function() {
     vm.showAllProjects();
   });

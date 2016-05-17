@@ -20,15 +20,10 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams,utilsService, d
   vm.showCollaboratorPicker = showCollaboratorPicker;
   vm.showCancelDialog = showCancelDialog;
   vm.filterOnlyWeekDays = utilsService.filterOnlyWeekDays;
-    
-  
-  function _incrementCodeProject(lastCode){
-    var begin = lastCode.substring(0,5);
-    var code = parseInt(lastCode.substring(5,8)) + 1;
-    var newCode = begin + utilsService.addZero(code,3);
-    return newCode;
-  };
 
+  /**
+   * Création d'une tâche et stockage en base de donnée
+   */
   function createTask() {
 
     databaseService.getObjectById('projects',$stateParams.id)
@@ -79,9 +74,11 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams,utilsService, d
       .error(function (err) {
         console.log(err);
       });
-  };
+  }
 
-  // Lancement au chargement de la page
+  /**
+   * Lancement au chargement de la page
+   */
   $scope.$on('$viewContentLoaded', function() {
 
     databaseService.getSettings('statuts').success(function(data){ vm.statuts = data; });
@@ -95,7 +92,7 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams,utilsService, d
         collaboratorsIds = data.collaborateurs;
         vm.minDate = new Date(data.date_debut);
         vm.maxDate = new Date(data.date_fin_theorique);
-        
+
         for (var i=0; i < collaboratorsIds.length; i++) {
 
           databaseService.getObjectById('collaborators',collaboratorsIds[i])
@@ -111,9 +108,13 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams,utilsService, d
       .error(function (err) {
         console.log(err);
       });
-
   });
 
+  /**
+   * Affiche la boite de dialogue de confirmation d'annulation
+   *
+   * @param event
+   */
   function showCancelDialog(event) {
 
     var confirm = $mdDialog.confirm()
@@ -129,8 +130,13 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams,utilsService, d
     }, function() {
 
     });
-  };
+  }
 
+  /**
+   * Affiche la boite de dialogue de choix des collaborateurs
+   *
+   * @param ev
+   */
   function showCollaboratorPicker(ev) {
 
     $mdDialog.show({
@@ -142,10 +148,18 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams,utilsService, d
       fullscreen: false,
       locals: {
         collaborators: vm.collaborators
-      },
+      }
     });
-  };
+  }
 
+  /**
+   * Controller de la boite de dialogue de choix des collaborateurs
+   * @param $rootScope
+   * @param $scope
+   * @param $mdDialog
+   * @param collaborators
+   * @private
+   */
   function _CollaboratorPickerController($rootScope, $scope, $mdDialog, collaborators) {
 
     $scope.collaborators = collaborators;
@@ -164,7 +178,6 @@ function TasksCreateCtrl($scope, $state, $mdDialog, $stateParams,utilsService, d
       }
     };
   }
-
 
 }
 

@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc function
- * @name pomApp.controller:ProjectsCreateCtrl
+ * @name pomApp.controller:BudgetListCtrl
  * @description
- * # ProjectsCreateCtrl
- * Controller of the projects.create
+ * # BudgetListCtrl
+ * Controller of the budgets.list
  */
 
 angular.module('pomApp').controller('BudgetsListCtrl', BudgetsListCtrl);
@@ -17,6 +17,11 @@ function BudgetsListCtrl($scope, databaseService, flashService, utilsService, st
   vm.deleteBudget = deleteBudget;
   vm.showAllBudgets = showAllBudgets;
 
+  /**
+   * Supprime une ligne budgétaire en base selon un id
+   *
+   * @param idBudget
+   */
   function deleteBudget(idBudget) {
     databaseService.deleteObject('budgets', idBudget)
       .success(function (data) {
@@ -26,13 +31,16 @@ function BudgetsListCtrl($scope, databaseService, flashService, utilsService, st
           flashService.success("Succés ! ", data.message, "bottom-right", true, 4);
         }
         else flashService.error("Erreur ! ", data.message, "bottom-right", true, 4);
-         
+
       })
       .error(function (err) {
         console.log(err);
       });
-  };
+  }
 
+  /**
+   * Récupère et affiche tous les budgets
+   */
   function showAllBudgets() {
     databaseService.getAllObjects('budgets')
       .success(function (data) {
@@ -40,12 +48,11 @@ function BudgetsListCtrl($scope, databaseService, flashService, utilsService, st
           vm.budgets = data.data;
 
             databaseService.getAllObjects('projects').success(function (projects) {
-              
+
               vm.projects = projects;
 
               databaseService.getAllObjects('collaborators').success(function(collaborators){
 
-                var percentage;
                 for (var i = vm.budgets.length - 1; i >= 0; i--) {
                   var percentage = statisticsService.calculateBudgetConsumption( vm.budgets[i], vm.projects, collaborators);
                   percentage = percentage * 100;
@@ -56,10 +63,13 @@ function BudgetsListCtrl($scope, databaseService, flashService, utilsService, st
         }
         else flashService.error("Erreur ! ", data.message, "bottom-right", true, 4);
       });
-  };
+  }
 
+  /**
+   * Se lance au chargement de la page
+   */
   $scope.$on('$viewContentLoaded', function() {
     vm.showAllBudgets();
   });
 
-};
+}

@@ -1,13 +1,10 @@
-/**
- * Created by sarra on 26/04/2016.
- */
 'use strict';
 
 /**
  * @ngdoc function
- * @name pomApp.controller:TasksCtrl
+ * @name pomApp.controller:TasksListCtrl
  * @description
- * # TasksCtrl
+ * # TasksListCtrl
  * Controller of the pomApp
  */
 
@@ -22,10 +19,19 @@ function TasksListCtrl($scope, $state, databaseService, flashService, $statePara
   vm.redirectTasksDetails = redirectTasksDetails;
   vm.isFiltersEnabled = false;
 
+  /**
+   * Redirige la page vers la page de details d'une tâche
+   *
+   * @param event
+   * @param id
+   */
   function redirectTasksDetails(event,id){ $state.go('projects.details.tasks.details',{"idtask":id}); }
 
+  /**
+   * Récupère toutes les tache d'un projet selon son id pour les afficher
+   */
   function showAllTasks(){
-    
+
     databaseService.getObjectById('projects', $stateParams.id)
       .success(function (data) {
         vm.projectName = data.nom;
@@ -65,8 +71,13 @@ function TasksListCtrl($scope, $state, databaseService, flashService, $statePara
       .error(function (err) {
         console.error(err);
       });
-  };
+  }
 
+  /**
+   * Supprime une tâche d'un projet de la base de données selon son id
+   *
+   * @param id
+   */
   function deleteTask(id) {
     databaseService.getObjectById('projects', $stateParams.id)
       .success(function (data) {
@@ -91,13 +102,15 @@ function TasksListCtrl($scope, $state, databaseService, flashService, $statePara
       .error(function(err) {
         console.log(err);
       });
-  };
+  }
 
-  // Permet de lancer au chargement de la page : récupère tous les projets
+  /**
+   * Se lance lorsque la page est chargée
+   */
   $scope.$on('$viewContentLoaded', function() {
 
     vm.showAllTasks();
   });
 
-};
+}
 

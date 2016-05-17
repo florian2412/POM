@@ -20,6 +20,9 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
   vm.showCollaboratorPicker = showCollaboratorPicker;
   vm.filterOnlyWeekDays = utilsService.filterOnlyWeekDays;
 
+  /**
+   * Créé et stocke en base le nouveau projet
+   */
   function createProject() {
 
     if(!vm.project.startDate) vm.project.startDate = new Date();
@@ -56,7 +59,9 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
     });
   }
 
-  // Lancement au chargement de la page
+  /**
+   * Lancement au chargement de la page
+   */
   $scope.$on('$viewContentLoaded', function() {
     vm.currentUser = localStorageService.get('currentUser');
     vm.numberOfCollaborators = 0;
@@ -72,6 +77,12 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
       .error(function (err) { console.log(err); });
   });
 
+  /**
+   * Génère le code projet du nouveau projet
+   *
+   * @param year
+   * @param callback
+   */
   function generateProjectCode(year, callback){
     databaseService.getAllObjects('projects').success(function(data){
 
@@ -91,9 +102,14 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
 
       callback(vm.code);
     });
-
   }
 
+  /**
+   * Incrémente le code projet à destination du nouveau projet
+   * @param lastCode
+   * @returns {string}
+   * @private
+   */
   function _incrementCodeProject(lastCode){
     var begin = lastCode.substring(0,5);
     var code = parseInt(lastCode.substring(5,8)) + 1;
@@ -101,6 +117,11 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
     return newCode;
   }
 
+  /**
+   * Affiche la boite de dialogue de confirmation d'annulation
+   *
+   * @param event
+   */
   function showCancelDialog(event) {
 
     var confirm = $mdDialog.confirm()
@@ -116,6 +137,11 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
     }, function() { });
   }
 
+  /**
+   * Affiche la boite de dialogue de choix des collaborateurs
+   *
+   * @param ev
+   */
   function showCollaboratorPicker(ev) {
 
     $mdDialog.show({
@@ -134,6 +160,15 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
       });
   }
 
+  /**
+   * Controller de la boite de dialogue de choix des collaborateurs
+   *
+   * @param $rootScope
+   * @param $scope
+   * @param $mdDialog
+   * @param collaborators
+   * @private
+   */
   function _CollaboratorPickerController($rootScope, $scope, $mdDialog, collaborators) {
 
     $scope.collaborators = collaborators;

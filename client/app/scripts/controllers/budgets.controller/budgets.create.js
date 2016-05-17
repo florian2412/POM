@@ -18,6 +18,9 @@ function BudgetsCreateCtrl($scope, $state, $mdDialog, databaseService, flashServ
   vm.showCancelDialog = showCancelDialog;
 
 
+  /**
+   * Créé et insère une nouvelle ligne budgétaire en base
+   */
   function createBudget() {
 
     var budget = {
@@ -31,14 +34,19 @@ function BudgetsCreateCtrl($scope, $state, $mdDialog, databaseService, flashServ
         if(data.success){
           flashService.success("Succés ! ", "Création du budget " + vm.budget.libelle + " réussie.", "bottom-right", true, 4);
           $state.go("budgets");
-        } 
-        else flashService.error("Erreur ! ", data.message, "bottom-right", true, 4);        
+        }
+        else flashService.error("Erreur ! ", data.message, "bottom-right", true, 4);
       })
       .error(function (err) {
         console.log(err);
       });
-  };
+  }
 
+  /**
+   * Affiche la boite de dialogue de confirmation d'annulation de création de ligne budgétaire
+   *
+   * @param event
+   */
   function showCancelDialog(event) {
 
     var confirm = $mdDialog.confirm()
@@ -52,11 +60,12 @@ function BudgetsCreateCtrl($scope, $state, $mdDialog, databaseService, flashServ
     $mdDialog.show(confirm).then(function() {
       $state.go("budgets");
     }, function() {});
-  };
+  }
 
-    // Lancement au chargement de la page
+  /**
+   * Lancement au chargement de la page
+   */
   $scope.$on('$viewContentLoaded', function() {
-
   });
 
-};
+}
