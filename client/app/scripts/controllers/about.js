@@ -9,6 +9,4 @@
  */
 angular.module('pomApp').controller('AboutCtrl', AboutCtrl);
 
-function AboutCtrl() {
-  
-};
+function AboutCtrl() {};

@@ -6,6 +6,9 @@
  * @description
  */
 
+/**
+ * Permet d'afficher une image lors du chargement d'une page (Statistiques)
+ */
 angular.module('pomApp')
   .directive('loading', function () {
     return {

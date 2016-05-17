@@ -7,11 +7,9 @@
   style.innerHTML = '.nra-hide { display: none !important; }';
   document.getElementsByTagName('head')[0].appendChild(style);
 
-  // document.getElementById('someElementId').className = 'cssClass';
-
   var mod = angular.module("ngRoleAuth", []);
 
-  mod.constant("NRA_MSG", {accessDenied : "nra.access_denied"})
+  mod.constant("NRA_MSG", {accessDenied : "nra.access_denied"});
 
   function run($rootScope, auth){
     $rootScope.$on("$stateChangeStart", auth.onChange);
@@ -22,16 +20,16 @@
 })();
 (function(){
 	var dtCheck = 0;
-	
+
 	function Directive($interval, authService){
-		
+
 		function link(scope, element, attrs){
-			
+
 			var insertionElement = element.parent();
 			var removed = false;
-		
+
 			function compile(){
-		
+
 				if(!authService.isAuthorized(scope.authorized)){
 					if(!removed){
 						element.addClass("nra-hide");
@@ -44,23 +42,23 @@
 					}
 				}
 			}
-		
+
 			compile();
-		
+
 			$interval(compile, dtCheck);
 		}
-		
+
 		var dir = {
-			restrict: "A", 
+			restrict: "A",
 			scope: {
 				authorized: "=nraAuth",
 			},
 			link: link
 		};
-		
+
 		return dir;
 	}
-	
+
 	angular.module("ngRoleAuth").directive("nraAuth", ["$interval", "AuthService", Directive]);
 })();
 (function(){

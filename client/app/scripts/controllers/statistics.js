@@ -10,6 +10,7 @@
 angular.module('pomApp')
   .controller('StatisticsCtrl', function ($scope, $rootScope, $location, $timeout, localStorageService, databaseService, utilsService, chartsService, statisticsService) {
 
+    // Booléen définissant l'affichage de l'image de chargement
     $scope.loading = true;
 
     $('#statisticsCard').hide();
@@ -18,6 +19,10 @@ angular.module('pomApp')
 
     vm.updateChartProject = updateChartProject;
 
+    /**
+     * Peuple la page lorsque elle est chargée
+     *
+     */
     function populatePage() {
       buildProjectsStatusChart();
       buildProjectsByStatusBarChart();
@@ -25,6 +30,10 @@ angular.module('pomApp')
       buildBarChartTasksByProjects();
     }
 
+    /**
+     * Met à jour les graphes concernant un projet dans le second onglet
+     *
+     */
     function updateChartProject() {
       var project = JSON.parse(vm.project);
 
@@ -42,9 +51,9 @@ angular.module('pomApp')
       buildTasksByStatusBarChart(project._id);
     }
 
-    /**********************************************************************************************************
-     Pie chart of all projects
-     *********************************************************************************************************/
+    /**
+     * Construit le pie chart des projets en fonction de leurs status
+     */
     function buildProjectsStatusChart() {
       var nbProjectsAndStatus = initDataProjectsStatus();
       var dataChart = chartsService.calculDataChart(nbProjectsAndStatus[1], nbProjectsAndStatus[0]);
@@ -54,6 +63,9 @@ angular.module('pomApp')
       chartsService.buildPieChart(idChart, titleChart, pointFormatChart, dataChart);
     }
 
+    /**
+     * Construit le bar chart des projets en fonction de leurs status
+     */
     function buildProjectsByStatusBarChart() {
       var nbProjectsAndStatus = initDataProjectsStatus();
       var idChart = 'barchartstatus-projects';
@@ -62,6 +74,11 @@ angular.module('pomApp')
       chartsService.buildBarChartProjectsByStatus(idChart, titleChart, pointFormatChart, nbProjectsAndStatus[0], nbProjectsAndStatus[1]);
     }
 
+    /**
+     * Construit le pie chart des tâches en fonction de leurs status
+     *
+     * @param projectId
+     */
     function buildTasksStatusChart(projectId) {
       var project = searchProjectInProjects(projectId);
       var nbProjectsAndStatus = initDataTasksStatus(project);
@@ -72,6 +89,11 @@ angular.module('pomApp')
       chartsService.buildPieChart(idChart, titleChart, pointFormatChart, dataChart);
     }
 
+    /**
+     * Construit le bar chart des tâches en fonction de leurs status
+     *
+     * @param projectId
+     */
     function buildTasksByStatusBarChart(projectId) {
       var project = searchProjectInProjects(projectId);
       var nbProjectsAndStatus = initDataTasksStatus(project);
@@ -81,6 +103,11 @@ angular.module('pomApp')
       chartsService.buildBarChartProjectsByStatus(idChart, titleChart, pointFormatChart, nbProjectsAndStatus[0], nbProjectsAndStatus[1]);
     }
 
+    /**
+     * Initialise les données des projets pour la création de graphes
+     *
+     * @returns {*|*[]}
+     */
     function initDataProjectsStatus() {
       var statuts = [];
       var projects = vm.saveProjects;
@@ -89,6 +116,12 @@ angular.module('pomApp')
       return statisticsService.countObjectsByTermFromNbTerm(statuts);
     }
 
+    /**
+     * Initialise les données des tâches d'un projet pour la création de graphes sur les status
+     *
+     * @param project
+     * @returns {*|*[]}
+     */
     function initDataTasksStatus(project) {
       var statuts = [];
       var tasks = project.taches;
@@ -97,6 +130,12 @@ angular.module('pomApp')
       return statisticsService.countObjectsByTermFromNbTerm(statuts);
     }
 
+    /**
+     * Initialise les données des tâches d'un projet pour la création de graphes sur les catégories
+     *
+     * @param project
+     * @returns {*|*[]}
+     */
     function initDataTasksCategorie(project) {
       var categories = [];
       var tasks = project.taches;
@@ -105,6 +144,9 @@ angular.module('pomApp')
       return statisticsService.countObjectsByTermFromNbTerm(categories);
     }
 
+    /**
+     * Construit le bar chart des tâches d'un projet
+     */
     function buildBarChartTasksByProjects() {
       var projects = vm.saveProjects;
       var status = vm.saveStatus;
@@ -148,6 +190,12 @@ angular.module('pomApp')
       chartsService.buildBarChartTasksByProjects(idChart, titleChart, projectsName, data)
     }
 
+    /**
+     * Retourne un projet d'une liste de projet selon un id de projet
+     *
+     * @param projectId
+     * @returns {*}
+     */
     function searchProjectInProjects(projectId) {
       var indexProject = utilsService.arrayObjectIndexOf(vm.saveProjects, projectId, '_id');
       if(indexProject > -1)
@@ -156,6 +204,11 @@ angular.module('pomApp')
         return -1;
     }
 
+    /**
+     * Construit le pie chart des couts des tâches d'un projet
+     *
+     * @param projectId
+     */
     function buildTasksCostChart(projectId) {
       var project = searchProjectInProjects(projectId);
       var tasks = project.taches;
@@ -176,7 +229,11 @@ angular.module('pomApp')
       chartsService.buildPieChart(idChart, titleChart, pointFormatChart, dataChart);
     }
 
-
+    /**
+     * Construit le pie chart des couts des tâches d'un projet en fonction du budget du projet
+     *
+     * @param projectId
+     */
     function buildTasksCostProjectBudgetChart(projectId) {
       var project = searchProjectInProjects(projectId);
       var tasks = project.taches;
@@ -208,6 +265,11 @@ angular.module('pomApp')
       chartsService.buildPieChart(idChart, titleChart, pointFormatChart, dataChart);
     }
 
+    /**
+     * Construit le bar chart de la durée des tâches d'un projet
+     *
+     * @param projectId
+     */
     function buildTasksDurationBarChart(projectId) {
       var project = searchProjectInProjects(projectId);
       var tasks = project.taches;
@@ -230,7 +292,11 @@ angular.module('pomApp')
       chartsService.buildBarChartTasksDuration(idChart, titleChart, pointFormatChart, tasksName, tasksTheoricDuration, tasksRealDuration);
     }
 
-    function buildProjectsDurationBarChart(projectId) {
+    /**
+     * Construit le bar chart de la durée des projet
+     *
+     */
+    function buildProjectsDurationBarChart() {
       var projects = vm.saveProjects;
       var projectTheoricDuration = [];
       var projectRealDuration = [];
@@ -250,6 +316,11 @@ angular.module('pomApp')
       chartsService.buildBarChartTasksDuration(idChart, titleChart, pointFormatChart, projectsName, projectTheoricDuration, projectRealDuration);
     }
 
+    /**
+     * Construit le pie chart des catégories des tâches d'un projet
+     *
+     * @param projectId
+     */
     function buildTasksCategoriesProject(projectId) {
       var project = searchProjectInProjects(projectId);
       var nbTasksAndCategories = initDataTasksCategorie(project);
@@ -260,8 +331,9 @@ angular.module('pomApp')
       chartsService.buildPieChart(idChart, titleChart, pointFormatChart, dataChart);
     }
 
-
-    // Au chargement de la page
+    /**
+     * Méthode lancée lorsqu la page est chargée
+     */
     $scope.$on('$viewContentLoaded', function() {
 
       // On récupère tout ce dont on a besoin de la BDD et on stocke dans des variables

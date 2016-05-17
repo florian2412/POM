@@ -30,6 +30,7 @@ function MainCtrl($scope, $state, $timeout, localStorageService, databaseService
 
   /**
    * Trie les tâches des projets en cours dans des listes pour le dashboard
+   *
    * @param projects
    */
   function allTasksDetails(projects){
@@ -76,6 +77,7 @@ function MainCtrl($scope, $state, $timeout, localStorageService, databaseService
 
   /**
    * Associe une couleur à une tâche en fonction de sa catégorie
+   *
    * @param taskCategorie
    * @returns {*}
    */
@@ -104,6 +106,7 @@ function MainCtrl($scope, $state, $timeout, localStorageService, databaseService
 
   /**
    * Associe une couleur à une tâche en fonction de son statut
+   *
    * @param status
    * @returns {*}
    */
@@ -132,6 +135,7 @@ function MainCtrl($scope, $state, $timeout, localStorageService, databaseService
 
   /**
    * Trie les tâches en fonction du statut de la tache et la met dans la liste voulu
+   *
    * @param task
    * @param new_tasks
    * @param upcoming_tasks
@@ -139,7 +143,6 @@ function MainCtrl($scope, $state, $timeout, localStorageService, databaseService
    * @param completed_tasks
    * @param canceled_tasks
    */
-
   function putTaskInRightList(task, new_tasks, upcoming_tasks, urgent_tasks, completed_tasks, canceled_tasks) {
     var diffUrgentTasks = utilsService.dateDiffWorkingDates(new Date(),new Date(task.date_fin_theorique));
     var diffUpcomingTasks = utilsService.dateDiffWorkingDates(new Date(),new Date(task.date_debut));
@@ -166,6 +169,7 @@ function MainCtrl($scope, $state, $timeout, localStorageService, databaseService
 
   /**
    * Injecte les taches dans la table dashboard
+   *
    * @param tasks
    */
   function showTasks(tasks){
@@ -174,6 +178,7 @@ function MainCtrl($scope, $state, $timeout, localStorageService, databaseService
 
   /**
    * Injecte les projets dans la table des projets
+   *
    * @param projects
    */
   function showProjects(projects){
@@ -182,6 +187,7 @@ function MainCtrl($scope, $state, $timeout, localStorageService, databaseService
 
   /**
    * Injecte les taches dans la table des tâches
+   * 
    * @param tasks
    */
   function showCollaboratorTasks(tasks) {
@@ -210,7 +216,7 @@ function MainCtrl($scope, $state, $timeout, localStorageService, databaseService
   }
 
   /**
-   *
+   * Calcul les différentes données des projets que l'on va afficher
    */
   function allProjectsDetails () {
     vm.numberProjects = vm.projects.length;

@@ -9,21 +9,24 @@
  */
 angular.module('pomApp').controller('AccountCtrl',AccountCtrl);
 
-function AccountCtrl($scope, $rootScope, $location, $mdDialog,utilsService, localStorageService, databaseService, authenticateService, flashService) {
+
+function AccountCtrl($scope, $mdDialog,utilsService, localStorageService, databaseService, authenticateService, flashService) {
 
   var vm = this;
- 
+
   vm.showUpdatePassword = showUpdatePassword;
- 
-  
+
+  /**
+   * Méthode lancée lorsque la page est chargée
+   */
   $scope.$on('$viewContentLoaded', function() {
-    
+
     vm.user = localStorageService.get('currentUser');
-    
+
     if(vm.user.manager){
     databaseService.getAllObjects('collaborators')
-      .success(function (data) { 
-       
+      .success(function (data) {
+
         if(vm.user.manager){
           var m = utilsService.getElementById(vm.user.manager, data);
           vm.user.manager = {"id" : m._id, "prenom" : m.prenom , "nom" : m.nom };
@@ -31,6 +34,12 @@ function AccountCtrl($scope, $rootScope, $location, $mdDialog,utilsService, loca
       });
     }
   });
+
+  /**
+   * Ouvre la boite de dialog permettant de changer le mot de passe d'un utilisateur
+   *
+   * @param ev
+   */
   function showUpdatePassword(ev) {
 
     $mdDialog.show({
@@ -43,6 +52,13 @@ function AccountCtrl($scope, $rootScope, $location, $mdDialog,utilsService, loca
     });
   };
 
+  /**
+   * Change le mot de passe d'un utilisateur
+   *
+   * @param $scope
+   * @param $mdDialog
+   * @private
+   */
   function _PasswordUpdateController($scope, $mdDialog) {
     $scope.cancel = function() { $mdDialog.hide(); }
     $scope.updatePassword = function(user){

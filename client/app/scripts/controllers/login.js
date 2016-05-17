@@ -10,7 +10,7 @@
 angular.module('pomApp').controller('LoginCtrl', LoginCtrl);
 
 function LoginCtrl($scope, $state, $mdDialog, $rootScope, authenticateService, flashService, AuthService){
-	
+
   var vm = this;
 
   vm.authenticate = authenticate;
