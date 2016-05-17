@@ -4,11 +4,20 @@
  * @ngdoc service
  * @name pomApp.authenticate.service
  * @description
- * # collaboratorsService
+ * # authenticateService
  * Service in the pomApp.
  */
 angular.module('pomApp').factory('authenticateService', Service);
 
+/**
+ * Service pour l'authentification sur l'application
+ *
+ * @param $http
+ * @param $rootScope
+ * @param localStorageService
+ * @returns {{}}
+ * @constructor
+ */
 function Service($http, $rootScope, localStorageService){
   var service = {};
 
@@ -51,11 +60,6 @@ function Service($http, $rootScope, localStorageService){
     $rootScope.userLastname = collaborator.nom;
     $rootScope.userRole = collaborator.role;
   }
-
-
-  /*function ClearCredentials() {
-   localStorageService.remove('currentUser');
-   delete $rootScope.isAuthenticated;*/
 
   function ClearCredentials() {
     localStorageService.remove('currentUser');

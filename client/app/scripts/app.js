@@ -9,13 +9,26 @@
  * Main module of the application.
  */
 
+/**
+ * On charge les dépendences que l'on a besoin dans l'application
+ */
 var pomApp = angular.module('pomApp', ['ui.router', 'ngMaterial', 'ngMessages', 'ngRoleAuth', 'ngSanitize', 'ngPassword',
                                         'LocalStorageModule', 'mgcrea.ngStrap', 'ngTable', 'ngLetterAvatar']);
 
+/**
+ * Méthode de configuration initial du client POM
+ *
+ * @param $stateProvider
+ * @param $urlRouterProvider
+ * @param $mdDateLocaleProvider
+ * @param $mdThemingProvider
+ */
 function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $mdThemingProvider) {
   $mdThemingProvider.theme('default').primaryPalette('green',{'default':'500'}).accentPalette('blue');
   $mdDateLocaleProvider.formatDate = function(date) { return moment(date).format('DD/MM/YYYY');};
   $urlRouterProvider.otherwise('/');
+
+  // Déclaration de toutes les routes de POM avec une URL, un titreun template html, un controller et son identifiant ainsi que les authorisation
   $stateProvider
   // Menu's routes
     .state('/', {
@@ -30,7 +43,6 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
       url : '/about',
       title : 'A propos',
       templateUrl: 'views/about.html',
-      /*controller: 'AboutCtrl',*/
       controllerAs: 'aboutVm',
       authorized: [ "collaborateur", "admin", "manager"]
     })
@@ -193,6 +205,19 @@ function appConfig($stateProvider, $urlRouterProvider, $mdDateLocaleProvider, $m
     });
 }
 
+/**
+ * Méthode de lancement de POM
+ *
+ * @param $rootScope
+ * @param $state
+ * @param $location
+ * @param $http
+ * @param $mdSidenav
+ * @param $mdDialog
+ * @param authenticateService
+ * @param AuthService
+ * @param localStorageService
+ */
 function appRun($rootScope, $state, $location, $http,$mdSidenav, $mdDialog, authenticateService, AuthService, localStorageService) {
   var cur_user = localStorageService.get('currentUser');
   getVersion();
@@ -232,5 +257,9 @@ function appRun($rootScope, $state, $location, $http,$mdSidenav, $mdDialog, auth
 
   Highcharts.setOptions({ global: { useUTC: false }});
 }
+
+// On envoit la configuration dans notre application
 pomApp.config(appConfig);
+
+// On démarre POM avec la méthode appRun
 pomApp.run(appRun);

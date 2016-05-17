@@ -5,11 +5,17 @@
  * @name pomApp.utils
  * @description
  * # utils
- * Service in the pomApp for utils methods.
+ * Service in the pomApp for charts methods.
  */
 angular.module('pomApp').factory('chartsService', Service);
 
-function Service(utilsService) {
+/**
+ * Service permettant de charger des graphiques avec leurs données
+ *
+ * @returns {{}}
+ * @constructor
+ */
+function Service() {
 
   var service = {};
 
@@ -21,7 +27,13 @@ function Service(utilsService) {
 
   return service;
 
-  // Génère le bon format de donnée pour les graphs en fonction des données values et names en entrées
+  /**
+   * Génère le bon format de donnée pour les graphs en fonction des données values et names en entrées
+   *
+   * @param values
+   * @param names
+   * @returns {Array}
+   */
   function calculDataChart(values, names) {
     var dataChart = [];
     for (var j = 0; j < names.length; j++) {
@@ -34,7 +46,14 @@ function Service(utilsService) {
     return dataChart;
   }
 
-  // Constuit un grah selon un emplacement, un titre, un format pour le survol de la souris et les données (values, names)
+  /**
+   * Constuit un pie grah selon un emplacement, un titre, un format pour le survol de la souris et les données (values, names)
+   *
+   * @param id
+   * @param title
+   * @param pointFormat
+   * @param data
+   */
   function buildPieChart(id, title, pointFormat, data) {
     $(document).ready(function () {
       // Build the chart
@@ -77,6 +96,15 @@ function Service(utilsService) {
   }
 
   // Constuit un bar grah
+  /**
+   *
+   * @param id
+   * @param title
+   * @param pointFormat
+   * @param legend
+   * @param theoricData
+   * @param realData
+   */
   function buildBarChartTasksDuration(id, title, pointFormat, legend, theoricData, realData) {
     $(document).ready(function () {
       $('#' + id).highcharts({
