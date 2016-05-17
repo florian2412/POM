@@ -113,7 +113,7 @@
 
                     <td class="vert-align" title="'Code'" filter="{code: 'text'}" sortable="'code'"><a ui-sref="projects.details.info({id:row._id})"> <b>{{ row.code }}</b> </a></td>
                     <td class="vert-align" title="'Nom'" filter="{nom: 'text'}" sortable="'nom'"><a ui-sref="projects.details.info({id:row._id})"> <b>{{ row.nom }}</b> </a></td>
-  
+
                     <td class="vert-align" title="'Statut'" sortable="'statut.statut'"> <span class="{{row.statut.class}}" style="color:{{row.statut.color}};font-size:1.5em;"><md-tooltip md-direction="left">{{row.statut.statut}}</md-tooltip></span></td>
 
                     <!-- Toutes les informations de durée et de budget que l'on connait -->
@@ -131,7 +131,7 @@
                         <div class="progress">
                           <div class="progress-bar" style="width: {{ row.timeAdvancement | number:0 }}%;"></div>
                         </div>
-                      </div> 
+                      </div>
                       <div ng-show="row.timeAdvancement > 100">
                         <label style="color:red">{{ row.timeAdvancement | number:0 }}%</label>
                         <div class="progress">
@@ -154,7 +154,7 @@
                         </div>
                       </div>
                     </td>
-                
+
                   </tr>
                 </table>
               </div>
@@ -211,13 +211,14 @@
                       </div>
                     </td>
 
+                    <!--
                     <td class="vert-align" title="'Budget utilisé'">
                       <div ng-show="row.advancement <= 100">
                         <label>{{ row.advancement | number:0 }}%</label>
                         <div class="progress">
                           <div class="progress-bar" style="width: {{ row.advancement | number:0 }}%;"></div>
                         </div>
-                      </div> 
+                      </div>
 
                       <div ng-show="row.advancement > 100">
                         <label style="color:red">{{ row.advancement | number:0 }}%</label>
@@ -226,6 +227,7 @@
                         </div>
                       </div>
                     </td>
+-->
 
                   </tr>
                 </table>
