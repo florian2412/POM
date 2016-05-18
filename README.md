@@ -18,7 +18,7 @@ sous un système UNIX.
 # 1. Installation et lancement simplifié de POM
 
 ## IMPORTANT
-###### Avant de commencer, veuillez vérifier que le répertoire du projet POM et le répertoire d'installation de MongoDB soit sur le même disque, en général le disque C et que le chemin du projet ne contienne pas d'espaces.
+###### Avant de commencer, veuillez vérifier que le répertoire du projet POM et le répertoire d'installation de MongoDB soit sur le même disque, en général le disque C et que le chemin du projet ne contient pas d'espaces.
 
 ## Installation :	
 - Lancer le fichier setup.bat pour installer POM, le serveur et tous leurs composants
