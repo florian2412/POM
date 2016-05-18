@@ -40,7 +40,7 @@ Vous pouvez utiliser le compte suivant pour vour connecter la premiere fois à l
 
 A partir de ce compte, vous pouvez accéder à tous les autres comptes collaborateurs.
 
-Chaque collaborateurs possèdent la mot de passe 'password'.
+Chaque collaborateurs possèdent le mot de passe 'password'.
 
 ## (Optionnel) Mise à jour des composants de POM
 - Lancer le fichier update.bat
