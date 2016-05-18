@@ -6,5 +6,7 @@ cd ..
 echo ## Installation de POM ##
 echo ## Installation du client POM en local sur le port 9000 ##
 cd client/
+call npm install -g grunt-cli
+call npm install grunt --save-dev
 call npm install
 call bower install
