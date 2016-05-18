@@ -32,6 +32,16 @@ sous un système UNIX.
 ##### Deux invités de commandes doivent s'ouvrir et lancer l'application dans votre navigateur favori
 ##### Vous pouvez maintenant accéder à l'application via l'URL suivante : [POM](http://localhost:9000)
 
+## Première connexion
+Vous pouvez utiliser le compte suivant pour vour connecter la premiere fois à l'application :
+
+    Pseudo : admin
+    Mot de passe : password
+
+A partir de ce compte, vous pouvez accéder à tous les autres comptes collaborateurs.
+
+Chaque collaborateurs possèdent la mot de passe 'password'.
+
 ## (Optionnel) Mise à jour des composants de POM
 - Lancer le fichier update.bat
 
