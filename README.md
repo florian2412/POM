@@ -17,7 +17,7 @@ sous un système UNIX.
 ## Installation :	
 - Lancer le fichier setup.bat pour installer POM, le serveur et tous leurs composants
 
-## Chargement du base de données de démo :
+## Chargement de la base de données de démo :
 - Lancer le fichier loadDataset.bat, une nouvelle base de données de POM se charge
 
 ## Lancement du serveur (API) et du client (POM) :
@@ -28,7 +28,7 @@ sous un système UNIX.
 
 ## (Optionnel) Mise à jour des composants de POM
 - Lancer le fichier update.bat
-	
+
 # 2. Installation et lancement manuel de POM
 	
 ## Installation :
