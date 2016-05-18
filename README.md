@@ -9,6 +9,12 @@ sous un système UNIX.
 	- MongoDB avec une instance du service démarrée
 	- Git (Optionnel : Si vous voulez récupérer les sources via Github)
 
+[Lien NodeJS téléchargement](https://nodejs.org/en/)
+
+[Lien MongoDB documentation d'installation](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/)
+
+[Lien GIT téléchargement](https://git-scm.com/download/win)
+
 # 1. Installation et lancement simplifié de POM
 
 ## IMPORTANT
