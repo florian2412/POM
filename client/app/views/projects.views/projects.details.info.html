@@ -62,6 +62,16 @@
       <br>
       <br>
 
+      <!-- ajouter une description -->
+      <div layout layout-align="center">
+        <div flex="100">
+          <md-input-container class="md-block" flex-xs="100">
+            <label>Description</label>
+            <textarea ng-model="projectsDetailsVm.project.description" name="description" maxlength="250" md-maxlength="250" rows="10"></textarea>
+          </md-input-container>
+        </div>
+      </div>
+
       <div layout layout-align="center center">
         <md-input-container class="md-block">
           <div layout="row" flex>

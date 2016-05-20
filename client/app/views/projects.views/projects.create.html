@@ -52,6 +52,11 @@
         <div flex="50" flex-xs="100" layout="row" layout-align="center">
 
           <div layout="column" layout-align="center" flex >
+            <!-- ajout de la description-->
+            <md-input-container class="md-block" flex-xs="100">
+              <label>Description</label>
+              <textarea ng-model="projectCreateVm.project.description" name="description" maxlength="250" md-maxlength="250" rows="10"></textarea>
+            </md-input-container>
 
             <div layout-align="center" layout>
               <md-input-container class="md-block" flex="80" flex-xs="100">
@@ -87,7 +92,7 @@
                 </p>
               </div>
             </div>
-          
+
           </div>
 
         </div>

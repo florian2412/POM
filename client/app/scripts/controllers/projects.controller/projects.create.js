@@ -38,7 +38,8 @@ function ProjectsCreateCtrl($scope, $state, $mdDialog, databaseService, flashSer
         "date_debut" : vm.project.startDate,
         "date_fin_theorique" : vm.project.endDate,
         "date_derniere_modif" : new Date(),
-        "collaborateurs": collaborateursId,
+        "collaborateurs": collaborateursId, 
+          "description" : vm.project.description,
         "ligne_budgetaire": {
             "id": budget._id,
             "montant_restant": budget.montant

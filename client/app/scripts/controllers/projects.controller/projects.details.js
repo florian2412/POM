@@ -98,7 +98,8 @@ function ProjectsDetailsCtrl($rootScope, $scope, $stateParams, $mdSidenav, $mdDi
       "date_fin_theorique" : vm.project.date_fin_theorique,
       "ligne_budgetaire" : ligne_budgetaire,
       "date_derniere_modif" : new Date(),
-      "collaborateurs": collaborateursId
+      "collaborateurs": collaborateursId,
+      "description" : vm.project.description
     };
 
 
