@@ -1,0 +1,47 @@
+# Render Blueprint — POM Backend (server-v2)
+#
+# Ce fichier définit l'infrastructure Render du backend POM en tant que code.
+# Il est lu automatiquement par Render quand vous connectez ce repository via
+# Dashboard → New → Blueprint.
+#
+# Documentation Render : https://render.com/docs/blueprint-spec
+#
+# ⚠️  Vous DEVEZ renseigner les variables marquées "sync: false" dans le
+#     tableau de bord Render après le premier déploiement (elles sont secrètes).
+
+services:
+  - type: web
+    name: pom-api
+    runtime: node
+    # Render supporte les monorepos : on pointe directement sur server-v2/
+    rootDir: server-v2
+    region: frankfurt   # Changez selon votre préférence (oregon, ohio, singapore…)
+    plan: free          # Passez à "starter" pour un service always-on
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/version
+    # Variables d'environnement
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "3000"
+      - key: MONGODB_URI
+        # Remplacez par votre chaîne de connexion MongoDB Atlas dans le dashboard Render
+        # Format : mongodb+srv://<user>:<password>@<cluster>.mongodb.net/dbPOM?retryWrites=true&w=majority
+        sync: false
+      - key: JWT_SECRET
+        # Générez avec : node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+        # Doit faire au minimum 64 caractères
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: "8h"
+      - key: CORS_ORIGINS
+        # URL de votre frontend Vercel, ex : https://pom-votrecompte.vercel.app
+        sync: false
+      - key: MAILGUN_API_KEY
+        sync: false
+      - key: MAILGUN_DOMAIN
+        sync: false
+      - key: MAILGUN_FROM
+        value: "POM <noreply@yourdomain.com>"

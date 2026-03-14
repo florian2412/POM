@@ -1,14 +1,16 @@
-<!-- Client -->
-/client/node_modules
-/client/dist
-/client/.tmp
-/client/bower_components
-/client/npm-debug.*
+# ─── Angular frontend (client-ng) ────────────────────────────────────────────
+/client-ng/node_modules
+/client-ng/dist
+/client-ng/.angular
 
-<!-- Server -->
-/server/node_modules
-/server/npm-debug.*
+# ─── Express/TypeScript API (server-v2) ──────────────────────────────────────
+/server-v2/node_modules
+/server-v2/dist
+/server-v2/.env
 
+# ─── Misc ────────────────────────────────────────────────────────────────────
 .idea
-utils
+.vscode
+*.log
 npm-debug.*
+.DS_Store

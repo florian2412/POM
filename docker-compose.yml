@@ -1,0 +1,64 @@
+services:
+  # ── MongoDB ───────────────────────────────────────────────────────────────
+  mongodb:
+    image: mongo:6
+    container_name: pom-mongodb
+    restart: unless-stopped
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: dbPOM
+    networks:
+      - pom-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Backend (API) ─────────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./server-v2
+      dockerfile: Dockerfile
+    container_name: pom-backend
+    restart: unless-stopped
+    env_file:
+      - ./server-v2/.env
+    environment:
+      NODE_ENV: production
+      MONGODB_URI: mongodb://mongodb:27017/dbPOM
+      CORS_ORIGINS: http://localhost
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - pom-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/api/version"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
+  # ── Frontend (Angular + nginx) ────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./client-ng
+      dockerfile: Dockerfile
+    container_name: pom-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - pom-network
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  pom-network:
+    driver: bridge
